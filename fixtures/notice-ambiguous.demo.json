@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "notice_id": "demo-notice-03",
+  "title": "缺少发布日期的虚构通知",
+  "published_at": null,
+  "extracted_at": "2026-09-19T12:00:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "event": {"start": null, "end": null, "date": null, "precision": "unknown"},
+  "due": {"at": null, "date": null, "precision": "unknown"},
+  "estimated_minutes": null,
+  "earliest_start": null,
+  "materials": [],
+  "source_spans": [
+    {"field": "due", "quote": "请于本周五前提交材料。", "source_ref": "自创测试通知03"}
+  ],
+  "needs_confirmation": [
+    "published_at_or_explicit_reference_date",
+    "due_time",
+    "estimated_minutes"
+  ]
+}
