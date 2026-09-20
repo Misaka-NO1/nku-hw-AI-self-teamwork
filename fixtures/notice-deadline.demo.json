@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "notice_id": "demo-notice-02",
+  "title": "虚构截止任务",
+  "published_at": "2026-09-19T09:00:00+08:00",
+  "extracted_at": "2026-09-19T12:00:00+08:00",
+  "timezone": "Asia/Shanghai",
+  "event": {"start": null, "end": null, "date": null, "precision": "unknown"},
+  "due": {"at": "2026-09-21T10:10:00+08:00", "date": null, "precision": "datetime"},
+  "estimated_minutes": 20,
+  "earliest_start": "2026-09-21T09:40:00+08:00",
+  "materials": [],
+  "source_spans": [
+    {"field": "due", "quote": "请在2026年9月21日10:10前完成测试提交。", "source_ref": "自创测试通知02"},
+    {"field": "estimated_minutes", "quote": "用户确认预计用时20分钟，最早09:40开始。", "source_ref": "测试用户确认"}
+  ],
+  "needs_confirmation": []
+}

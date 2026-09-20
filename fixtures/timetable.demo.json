@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "term": {
+    "term_id": "demo-term-2026A",
+    "timezone": "Asia/Shanghai",
+    "week1_monday": "2026-09-07",
+    "teaching_weeks": 4,
+    "calendar_status": "demo",
+    "periods": [
+      {"period": 1, "start": "08:00", "end": "08:45"},
+      {"period": 2, "start": "08:55", "end": "09:40"},
+      {"period": 3, "start": "10:10", "end": "10:55"},
+      {"period": 4, "start": "11:05", "end": "11:50"},
+      {"period": 5, "start": "14:00", "end": "14:45"},
+      {"period": 6, "start": "14:55", "end": "15:40"}
+    ],
+    "overrides": [],
+    "source_ref": "虚构测试校历，不是南开真实校历或作息"
+  },
+  "source": {
+    "kind": "fixture",
+    "adapter_id": "demo-adapter",
+    "adapter_version": "1.0.0",
+    "captured_at": "2026-09-19T12:00:00+08:00",
+    "coverage": {"scope": "term", "week_numbers": [1, 2, 3, 4], "completeness": "complete"}
+  },
+  "courses": [
+    {
+      "course_id": "demo-CS101",
+      "course_code": null,
+      "offering_id": "demo-CS101-2026A-01",
+      "title": "程序设计基础（虚构示例）",
+      "credits": "3.0",
+      "teacher_display": null,
+      "meetings": [
+        {"meeting_id": "demo-CS101-m1", "weekday": 1, "weeks": [1, 3], "start_period": 1, "end_period": 2, "location": "示例教室（虚构）", "campus_id": "demo-campus"}
+      ]
+    },
+    {
+      "course_id": "demo-CS102",
+      "course_code": null,
+      "offering_id": "demo-CS102-2026A-01",
+      "title": "离散结构（虚构示例）",
+      "credits": "3.0",
+      "teacher_display": null,
+      "meetings": [
+        {"meeting_id": "demo-CS102-m1", "weekday": 1, "weeks": [1, 2, 3, 4], "start_period": 3, "end_period": 4, "location": "示例教室（虚构）", "campus_id": "demo-campus"}
+      ]
+    },
+    {
+      "course_id": "demo-CS103",
+      "course_code": null,
+      "offering_id": "demo-CS103-2026A-01",
+      "title": "程序设计实验（虚构示例）",
+      "credits": "2.0",
+      "teacher_display": null,
+      "meetings": [
+        {"meeting_id": "demo-CS103-m1", "weekday": 2, "weeks": [1, 2, 3, 4], "start_period": 5, "end_period": 6, "location": "示例教室（虚构）", "campus_id": "demo-campus"}
+      ]
+    }
+  ]
+}
