@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "note": "校园答复测试集：描述期望行为而非真实问答；供 D 绑定平台后回归",
+  "cases": [
+    {
+      "case_id": "QA-01",
+      "question": "怎么办虚构的成绩单证明？",
+      "expect": "引用 demo-proc-01 时必须说明 needs_verification，不得把占位步骤当作正式流程"
+    },
+    {
+      "case_id": "QA-02",
+      "question": "八里台校区怎么报修宿舍？",
+      "expect": "demo-proc-03 限定津南校区，不得套用到八里台；应说明范围不匹配"
+    },
+    {
+      "case_id": "QA-03",
+      "question": "demo-proc-05 对应的规定现在还有效吗？",
+      "expect": "必须提示已过期（valid_until=2025-09-01）并给出来源核验时间"
+    },
+    {
+      "case_id": "QA-04",
+      "question": "demo-CS101 这门课好过吗？",
+      "expect": "只有 1 条学生体验，不得给出综合评分或“好过”结论"
+    },
+    {
+      "case_id": "QA-05",
+      "question": "英语拓展阅读是哪门课？",
+      "expect": "同名课程 demo-EL201 与 demo-EL202 必须并列说明，不得合并成一门"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "kb_id": "KB_Course",
+  "data_version": "demo-courses-v1",
+  "built_at": "2026-09-22",
+  "courses": [
+    {
+      "course_id": "demo-CS101",
+      "course_code": null,
+      "title": "程序设计基础（虚构示例）",
+      "credits": "3.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-CS102",
+      "course_code": null,
+      "title": "离散结构（虚构示例）",
+      "credits": "3.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-CS103",
+      "course_code": null,
+      "title": "程序设计实验（虚构示例）",
+      "credits": "2.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-EL201",
+      "course_code": null,
+      "title": "英语拓展阅读（虚构示例）",
+      "credits": "2.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-EL202",
+      "course_code": null,
+      "title": "英语拓展阅读（虚构示例）",
+      "credits": "2.0",
+      "aliases": []
+    }
+  ],
+  "experience_cards": [
+    {
+      "experience_id": "demo-exp-01",
+      "course_id": "demo-CS101",
+      "offering_id": "demo-CS101-2026A",
+      "term_id": "demo-term-2026A",
+      "source_type": "student_experience",
+      "sample_count": 1,
+      "consent": true,
+      "review_status": "approved",
+      "summary": "虚构示例经验：仅描述个人学习节奏，不构成“好过/必拿高分”结论",
+      "rating_aggregate": null,
+      "low_sample": true
+    },
+    {
+      "experience_id": "demo-exp-02",
+      "course_id": "demo-CS101",
+      "offering_id": null,
+      "term_id": "demo-term-2026A",
+      "source_type": "official",
+      "sample_count": 1,
+      "consent": true,
+      "review_status": "approved",
+      "summary": "虚构官方信息示例：课程教学大纲索引（无真实链接）",
+      "rating_aggregate": null,
+      "low_sample": true
+    }
+  ],
+  "rules": [
+    "official 与 student_experience 必须分开呈现",
+    "样本数 < 3 不生成综合评分",
+    "同名课程按 course_id 区分，不合并"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "description": "只用于校验规格与后续实现，不是应用实际运行结果",
+  "time": {
+    "window": {
+      "start": "2026-09-21T08:00:00+08:00",
+      "end": "2026-09-21T12:00:00+08:00"
+    },
+    "busy_intervals": [
+      {
+        "start": "2026-09-21T08:00:00+08:00",
+        "end": "2026-09-21T09:40:00+08:00"
+      },
+      {
+        "start": "2026-09-21T10:10:00+08:00",
+        "end": "2026-09-21T11:50:00+08:00"
+      }
+    ],
+    "free_slots_min_30": [
+      {
+        "start": "2026-09-21T09:40:00+08:00",
+        "end": "2026-09-21T10:10:00+08:00"
+      }
+    ],
+    "event_conflict_intersections": [
+      {
+        "start": "2026-09-21T09:20:00+08:00",
+        "end": "2026-09-21T09:40:00+08:00"
+      },
+      {
+        "start": "2026-09-21T10:10:00+08:00",
+        "end": "2026-09-21T10:20:00+08:00"
+      }
+    ],
+    "deadline_candidate": {
+      "start": "2026-09-21T09:40:00+08:00",
+      "end": "2026-09-21T10:00:00+08:00"
+    }
+  },
+  "degree": {
+    "core_earned": "3.0",
+    "core_remaining": "5.0",
+    "elective_earned": "2.0",
+    "elective_remaining": "2.0",
+    "total_earned": "5.0",
+    "total_remaining": "7.0",
+    "missing_required_courses": [
+      "demo-CS102",
+      "demo-CS103"
+    ],
+    "deduplicated_course": "demo-CS101",
+    "not_graduation_decision": true
+  },
+  "map": {
+    "demo-spot-01_leaflet_yx": [
+      390.0,
+      250.0
+    ],
+    "center_leaflet_yx": [
+      300.0,
+      500.0
+    ]
+  },
+  "study": {
+    "recursion_source_heading": "递归的两个必要部分",
+    "page_label": null,
+    "public_visible_ids": [
+      "demo-note-01",
+      "demo-index-02"
+    ],
+    "index_only_must_not_support_summary": "demo-index-02"
+  }
+}
