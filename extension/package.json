@@ -1,0 +1,21 @@
+{
+  "name": "@campus/extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "课表导入扩展（owner: B）：MV3 骨架、白名单校验、消息协议、独立预览页。nku-adapter-v1 未完成真实核查前保持 disabled。",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@campus/import-core": "file:../packages/import-core"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.8",
+    "@types/node": "^24.0.0",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}
