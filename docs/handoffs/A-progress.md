@@ -28,9 +28,10 @@ node --experimental-strip-types --test frontend/src/features/scenic/geometry.tes
 
 两个 TSX 页经 esbuild `transformSync(..., {loader:'tsx'})` 语法检查通过；临时 TypeScript 5.9 + React 19 类型环境对 A 的六个 TS/TSX 文件做严格检查，0 条诊断；React 服务端渲染检查验证未知点位、缺底图和私有材料深链接错误态。仓库尚无 C 的 `frontend/package.json`/React 构建配置，因此未宣称完整前端构建、路由联调或浏览器端交互验收通过。
 
+GitHub 交付：原仓库对 `sunjx3316-cell` 无直接写权限，已通过 Fork 工作流将 `feat/agent-a-map-review` 推送到 `sunjx3316-cell/nku-hw-AI-self-teamwork`，并创建指向原仓库 `main` 的 [PR #4](https://github.com/Misaka-NO1/nku-hw-AI-self-teamwork/pull/4)。等待负责人审查，未触碰或合并 `main`。
+
 未解决问题：
 
-- GitHub 交付：本地分支 `feat/agent-a-map-review` 已提交，但 `git push -u origin feat/agent-a-map-review` 返回 403：`Permission to Misaka-NO1/nku-hw-AI-self-teamwork.git denied to sunjx3316-cell`。当前 `gh auth status` 也报告保存的令牌无效。需要仓库拥有者给当前 GitHub 账号写权限，或在本机切换到有写权限的账号；推送成功前无法创建 PR。未触碰 `main`。
 - A10：D 的服务目前只有健康探针，未注册 A 的 REST/MCP 工具；真实 HTTPS、平台知识库导入和 GenioS 调用未完成。
 - A11：没有真实底图、照片、花期来源或获授权的课程资料。页面和知识库明确为 demo。
 - A12：B/C/D 尚未完成全体 P0 联调，不能替其签收最终演示范围。
