@@ -17,5 +17,9 @@
     "noFallthroughCasesInSwitch": true,
     "types": ["vite/client", "vitest/globals"]
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": [
+    // A 的独立预览工程：自带依赖与构建配置（rolldown），不属于公共前端的类型检查范围
+    "src/features/scenic/preview"
+  ]
 }
