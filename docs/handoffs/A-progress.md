@@ -37,7 +37,7 @@ npm run build
 
 地图手工试用：在 `frontend/src/features/scenic/preview/` 运行 `npm run dev`，打开 `http://127.0.0.1:5173/?mode=authoring`。先放大再拖动画布；点击“添加景点”后点地图空白处，在弹窗输入名称、简介和标签并保存。底图可临时选本地 PNG/JPEG/WebP；点位 JSON 与图片必须分别保存，刷新前先导出 JSON。详见该目录 README。
 
-GitHub 交付：原仓库对 `sunjx3316-cell` 无直接写权限，已通过 Fork 工作流将 `feat/agent-a-map-review` 推送到 `sunjx3316-cell/nku-hw-AI-self-teamwork`，并创建指向原仓库 `main` 的 [PR #4](https://github.com/Misaka-NO1/nku-hw-AI-self-teamwork/pull/4)。等待负责人审查，未触碰或合并 `main`。
+GitHub 交付：原仓库对 `sunjx3316-cell` 无直接写权限，已通过 Fork 工作流将 `feat/agent-a-map-review` 推送到 `sunjx3316-cell/nku-hw-AI-self-teamwork`，并创建指向原仓库 `main` 的 [PR #4](https://github.com/Misaka-NO1/nku-hw-AI-self-teamwork/pull/4)。该 PR 已由仓库负责人合并；本次三维地图代码快照另开分支与 PR，不直接向 `main` 提交。
 
 未解决问题：
 
@@ -66,3 +66,9 @@ GitHub 交付：原仓库对 `sunjx3316-cell` 无直接写权限，已通过 For
 2. `resolve_download` 只返回被目录白名单校验过的本地文件路径，D 负责登录/访问控制和 FileResponse。
 3. 在 GenioS 试导入 `knowledge/study/exports/KB_Study_demo.md` 和 `knowledge/scenic/KB_Scenic_demo.md`，再按 `A-knowledge-test-cases.md` 实测引用和工具返回；测试成功前不可说已接入平台。
 4. 私人资料访问需另行审查身份绑定；当前 A 服务只暴露公开且已授权目录。
+
+## 津南三维地图代码快照（待真实数据）
+
+新增 `frontend/src/features/scenic/three-preview/`：从仓库外已验收的总图版原型提取当前可运行的三维模型与只读公测页面。只保留当前总图版、模型代码、已生成 GLB、离线 Three.js 安装包及回归测试；未复制本机 `data/`、高德代理、原始参考截图和其他历史模型。默认服务只读，服务端拒绝景点写入与照片上传；本机可显式开启录入模式，具体命令和风险见该目录 README。
+
+这仍是**独立预览**，不替换既有 `ScenicPage`，未修改共享 `contracts/`。正式使用前需把真实景点/照片转换为 `ScenicCatalog`，确认发布授权及花期来源，再由 C/D 接通公共页面、REST/MCP 和 GenioS；不能因代码已提交而把地图或 Agent 查询标记为联调完成。
