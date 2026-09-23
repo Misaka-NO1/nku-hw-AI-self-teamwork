@@ -1,14 +1,15 @@
 # A 模块进度交接：赏景地图与期末复习
 
-任务状态：A01、A02、A05、A07、A08 `LOCAL_PASS`；A03、A04、A06、A09 已写入并完成本地纯函数、类型、服务端渲染空态检查，但浏览器交互和平台知识问答仍待联调；A10–A12 `WAITING_HUMAN` / 依赖其他成员。
+任务状态：A01、A02、A05、A07、A08 `LOCAL_PASS`；A03、A04 已有独立地图预览并通过点位详情、缩放按钮、新增窗口与保存的浏览器冒烟检查，拖动手感和本地图片导入仍待人工验收；A06、A09 已完成本地纯函数、类型、服务端渲染空态检查，平台知识问答仍待联调；A10–A12 `WAITING_HUMAN` / 依赖其他成员。
 
 修改文件：仅 `frontend/src/features/scenic/`、`frontend/src/features/study/`、`backend/app/domains/scenic/`、`backend/app/domains/study/`、A 对应测试、`knowledge/scenic/`、`knowledge/study/`、`prompts/scenic-routing.md`、`prompts/study-answer.md`、`docs/handoffs/A-progress.md`、`docs/blockers/A-assets.md`。未修改 `contracts/`、公共路由/样式、数据库、认证、MCP 注册或其他 Agent 的业务代码。
 
 新增页面和函数：
 
-- 默认导出 `frontend/src/features/scenic/ScenicPage.tsx` 的 `ScenicPage`：示意地图、标签筛选、点位详情、深链接、返回、放大、无底图/照片状态；开发构建经 `enableAuthoring` 开启的本地编辑/导入导出。
+- 默认导出 `frontend/src/features/scenic/ScenicPage.tsx` 的 `ScenicPage`：可拖动/缩放的 2D 示意地图、标签筛选、点位详情、深链接、返回、无底图/照片状态；开发构建经 `enableAuthoring` 开启新增景点窗口、本地底图临时预览、点位编辑/导入导出。
+- `frontend/src/features/scenic/preview/` 提供只依赖 A 模块的 Vite 独立预览入口；这是网页组件测试入口，不是已导入 NK-GenioS 的插件。
 - 默认导出 `frontend/src/features/study/StudyPage.tsx` 的 `StudyPage`：课程与主题筛选、正文/索引区分、来源定位、无权限/不存在错误态。
-- `geometry.ts`：`toMapPoint`、`fromMapPoint`、`validateSpot`、安全资产路径、花期历史表述；`authoring.ts`：本地目录导出/导入与校验。
+- `geometry.ts`：`toMapPoint`、`fromMapPoint`、`validateSpot`、安全资产路径、花期历史表述；`authoring.ts`：新点位创建校验、本地目录导出/导入与校验。
 - Python：`search_spots`、`get_spot`、`search_materials`、`get_material`、`resolve_download`、公共正文导出器。
 - 公开数据：虚构 scenic 目录、资产清单、自创笔记与材料目录、KB 候选文件、15 条平台知识回归题。
 
@@ -23,10 +24,18 @@ C:\Users\29950\AppData\Local\Temp\nku-a-venv-20260923\Scripts\python.exe -m pyte
 
 cd ..
 node --experimental-strip-types --test frontend/src/features/scenic/geometry.test.mjs frontend/src/features/scenic/authoring.test.mjs frontend/src/features/study/demoCatalog.test.mjs
-# 11 passed
+# 12 passed
+
+cd frontend/src/features/scenic/preview
+npm ci
+npm run typecheck
+npm run build
+# 类型检查与独立地图构建通过
 ```
 
-两个 TSX 页经 esbuild `transformSync(..., {loader:'tsx'})` 语法检查通过；临时 TypeScript 5.9 + React 19 类型环境对 A 的六个 TS/TSX 文件做严格检查，0 条诊断；React 服务端渲染检查验证未知点位、缺底图和私有材料深链接错误态。仓库尚无 C 的 `frontend/package.json`/React 构建配置，因此未宣称完整前端构建、路由联调或浏览器端交互验收通过。
+两个 TSX 页经 esbuild `transformSync(..., {loader:'tsx'})` 语法检查通过；A 地图预览的严格 TypeScript 检查 0 条诊断；React 服务端渲染检查验证未知点位、缺底图和私有材料深链接错误态。独立预览在浏览器已检查点位详情、缩放按钮、新增窗口和保存后新标记。拖动手感、真实底图图片导入和 C 的公共路由尚未完整验收；仓库仍无 C 的 `frontend/package.json`/React 构建配置，因此不把独立预览等同于整站前端联调。
+
+地图手工试用：在 `frontend/src/features/scenic/preview/` 运行 `npm run dev`，打开 `http://127.0.0.1:5173/?mode=authoring`。先放大再拖动画布；点击“添加景点”后点地图空白处，在弹窗输入名称、简介和标签并保存。底图可临时选本地 PNG/JPEG/WebP；点位 JSON 与图片必须分别保存，刷新前先导出 JSON。详见该目录 README。
 
 GitHub 交付：原仓库对 `sunjx3316-cell` 无直接写权限，已通过 Fork 工作流将 `feat/agent-a-map-review` 推送到 `sunjx3316-cell/nku-hw-AI-self-teamwork`，并创建指向原仓库 `main` 的 [PR #4](https://github.com/Misaka-NO1/nku-hw-AI-self-teamwork/pull/4)。等待负责人审查，未触碰或合并 `main`。
 

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildAuthoringBundle, parseAuthoringBundle } from "./authoring.ts";
+import { buildAuthoringBundle, createSpotFromDraft, parseAuthoringBundle } from "./authoring.ts";
 import { demoScenicCatalog } from "./demoCatalog.ts";
 import { safeAssetPath, validateSpot } from "./geometry.ts";
 
@@ -26,4 +26,17 @@ test("A04 import rejects wrong map, duplicate IDs, and unsafe file paths", () =>
   bundle.catalog.spots[0].photos = [{ photo_id: "p", asset_path: "javascript:alert(1)",
     caption: "bad", captured_at: null, rights_status: "owned" }];
   assert.throws(() => parseAuthoringBundle(JSON.stringify(bundle), "demo-map-01", validateSpot));
+});
+
+test("A04 map authoring creates a valid point and rejects incomplete or off-map entries", () => {
+  const point = createSpotFromDraft("demo-map-01", 0.3, 0.7,
+    { name: "  示例樱花点  ", description: "自建测试点", tags: "赏花，拍照,赏花" }, "demo-new-01");
+  assert.equal(validateSpot(point), true);
+  assert.equal(point.name, "示例樱花点");
+  assert.deepEqual(point.tags, ["赏花", "拍照"]);
+  assert.deepEqual([point.x_norm, point.y_norm], [0.3, 0.7]);
+  assert.throws(() => createSpotFromDraft("demo-map-01", 0.3, 0.7,
+    { name: " ", description: "有简介", tags: "" }, "bad"));
+  assert.throws(() => createSpotFromDraft("demo-map-01", 1.1, 0.7,
+    { name: "有名称", description: "有简介", tags: "" }, "bad"));
 });
