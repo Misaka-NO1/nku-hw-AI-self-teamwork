@@ -2,54 +2,124 @@
   "schema_version": "1.0.0",
   "dataset_kind": "demo",
   "kb_id": "KB_Campus",
-  "data_version": "demo-affairs-v1",
+  "data_version": "nku-entries-2026-09-23",
   "built_at": "2026-09-23",
   "items": [
     {
-      "entry_id": "demo-entry-01",
+      "entry_id": "nku-entry-01",
       "kind": "entry",
-      "title": "示例入口：教务系统（虚构，不是真实链接）",
+      "title": "教务系统（EAMIS）",
       "category": "academic",
       "campus_scope": [],
       "audience": [
         "本科生",
         "研究生"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://eamis.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "教务系统官方入口",
+          "url": "https://eamis.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-02",
+      "entry_id": "nku-entry-02",
       "kind": "entry",
-      "title": "示例入口：校园门户/信息门户（虚构）",
+      "title": "南开大学 AI 融合门户",
       "category": "it",
       "campus_scope": [],
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://i.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "AI 融合门户官方入口",
+          "url": "https://i.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-03",
+      "entry_id": "nku-entry-03",
       "kind": "entry",
-      "title": "示例入口：图书馆（虚构）",
+      "title": "图书馆 IC 空间管理系统",
+      "category": "venue",
+      "campus_scope": [
+        "八里台",
+        "津南"
+      ],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://libic.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "图书馆 IC 空间官方入口",
+          "url": "https://libic.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-entry-04",
+      "kind": "entry",
+      "title": "图书馆空间预约系统",
+      "category": "venue",
+      "campus_scope": [
+        "八里台",
+        "津南"
+      ],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://libroom.nankai.edu.cn/",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "图书馆空间预约官方入口",
+          "url": "https://libroom.nankai.edu.cn/",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-entry-05",
+      "kind": "entry",
+      "title": "图书馆馆藏资源查询系统",
       "category": "academic",
       "campus_scope": [
         "八里台",
@@ -58,165 +128,152 @@
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://space.nankai.edu.cn",
+      "login_required": "no",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "馆藏查询官方入口",
+          "url": "https://space.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-04",
+      "entry_id": "nku-entry-06",
       "kind": "entry",
-      "title": "示例入口：财务处/缴费平台（虚构）",
-      "category": "finance",
-      "campus_scope": [],
-      "audience": [
-        "全体"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-05",
-      "kind": "entry",
-      "title": "示例入口：一卡通服务（虚构）",
-      "category": "life",
-      "campus_scope": [
-        "八里台",
-        "津南"
-      ],
-      "audience": [
-        "全体"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-06",
-      "kind": "entry",
-      "title": "示例入口：学生工作部/奖助（虚构）",
-      "category": "life",
+      "title": "体育理论考试系统",
+      "category": "academic",
       "campus_scope": [],
       "audience": [
         "本科生"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://tyxx.nankai.edu.cn/",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "体育理论考试官方入口",
+          "url": "https://tyxx.nankai.edu.cn/",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-07",
+      "entry_id": "nku-entry-07",
       "kind": "entry",
-      "title": "示例入口：研究生院（虚构）",
-      "category": "academic",
+      "title": "软件正版化平台",
+      "category": "it",
       "campus_scope": [],
-      "audience": [
-        "研究生"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-08",
-      "kind": "entry",
-      "title": "示例入口：体育场馆预约（虚构）",
-      "category": "venue",
-      "campus_scope": [
-        "津南"
-      ],
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://ca.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "软件正版化官方入口",
+          "url": "https://ca.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达，首页检测到登录表单"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-09",
+      "entry_id": "nku-entry-08",
       "kind": "entry",
-      "title": "示例入口：校医院（虚构）",
+      "title": "在线南开网上办事大厅",
+      "category": "service",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://online.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "网上办事大厅官方入口",
+          "url": "https://online.nankai.edu.cn",
+          "locator": "2026-09-23 实测跳转 iam.nankai.edu.cn 统一身份认证"
+        }
+      ],
+      "verified_at": "2026-09-23",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-entry-09",
+      "kind": "entry",
+      "title": "南开大学志愿服务平台",
       "category": "life",
-      "campus_scope": [
-        "八里台",
-        "津南"
-      ],
+      "campus_scope": [],
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://zyfw.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "志愿服务平台官方入口",
+          "url": "https://zyfw.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达，首页检测到登录表单"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-10",
+      "entry_id": "nku-entry-10",
       "kind": "entry",
-      "title": "示例入口：就业指导中心（虚构）",
-      "category": "career",
+      "title": "南开大学团委成长服务平台",
+      "category": "life",
       "campus_scope": [],
       "audience": [
-        "本科生",
-        "研究生"
+        "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://czfw.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "团委成长服务平台官方入口",
+          "url": "https://czfw.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达，首页检测到登录表单"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
       "entry_id": "demo-proc-01",

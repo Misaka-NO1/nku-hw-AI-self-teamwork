@@ -71,8 +71,10 @@ cd backend && ./.venv/Scripts/python -m pytest
 
 ## 待核验校园来源
 
-全部 15 条事务/入口为虚构 demo 模板，待人工核验清单见 `docs/blockers/C-01-campus-sources.md`；
-真实培养方案见 `docs/blockers/C-02-degree-plan.md`。
+- 10 条官方入口已于 2026-09-23 核验（用户提供正式网址 + 校外网络实测 HTTP 200，
+  清单与依据见 `docs/blockers/C-01-campus-sources.md`）
+- 5 条办事流程仍为虚构 demo 模板，待正式依据（同文件）
+- 真实培养方案见 `docs/blockers/C-02-degree-plan.md`
 
 ## 给 A 的下一步
 

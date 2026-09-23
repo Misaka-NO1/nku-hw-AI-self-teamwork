@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { EmptyState, SourceCard, StatusBanner } from "../../shared/components";
 import {
-  AFFAIRS_DATASET_KIND,
   AFFAIRS_DATA_VERSION,
   entryDisplayState,
   entrySources,
@@ -104,13 +103,17 @@ export function AffairsPage() {
     () => filterAffairs(all, { query, category, campus }),
     [all, query, category, campus]
   );
+  const verifiedCount = all.filter(
+    (e) => entryDisplayState(e, today) === "verified"
+  ).length;
+  const pendingCount = all.length - verifiedCount;
 
   return (
     <section>
       <h2>校园事务</h2>
       <StatusBanner
-        kind="demo"
-        message={`当前数据为虚构演示集（${AFFAIRS_DATASET_KIND} / ${AFFAIRS_DATA_VERSION}），正式来源核验完成前不代表学校规定。`}
+        kind={pendingCount > 0 ? "partial" : "demo"}
+        message={`数据版本 ${AFFAIRS_DATA_VERSION}：${verifiedCount} 条已核验官方入口，${pendingCount} 条仍为待核验/演示模板。待核验条目不代表学校规定。`}
       />
       <div className="toolbar">
         <input

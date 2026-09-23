@@ -35,4 +35,5 @@ export const CATEGORY_LABELS: Record<string, string> = {
   finance: "财务缴费",
   venue: "场馆预约",
   career: "就业实习",
+  service: "办事服务",
 };
