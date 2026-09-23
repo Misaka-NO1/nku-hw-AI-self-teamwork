@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "transcript_id": "demo-transcript-01",
+  "records": [
+    {
+      "attempt_id": "a1",
+      "course_id": "demo-CS101",
+      "credits": "3.0",
+      "result": "passed"
+    },
+    {
+      "attempt_id": "a2",
+      "course_id": "demo-CS101",
+      "credits": "3.0",
+      "result": "passed"
+    },
+    {
+      "attempt_id": "a3",
+      "course_id": "demo-CS102",
+      "credits": "3.0",
+      "result": "failed"
+    },
+    {
+      "attempt_id": "a4",
+      "course_id": "demo-CS103",
+      "credits": "2.0",
+      "result": "in_progress"
+    },
+    {
+      "attempt_id": "a5",
+      "course_id": "demo-EL201",
+      "credits": "2.0",
+      "result": "passed"
+    }
+  ]
+}
