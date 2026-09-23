@@ -30,6 +30,16 @@ def test_study_01_full_text_recursion_and_real_heading(principal, catalog):
     assert items[0]["evidence"][0]["page_label"] is None
 
 
+def test_study_title_match_keeps_body_available_without_matching_excerpt(principal, catalog):
+    items = search_materials(query(topic="程序设计"), principal, catalog)
+    assert [item["material_id"] for item in items] == ["demo-note-01"]
+    assert items[0]["content_available"] is True
+    assert items[0]["evidence"] == []
+    detail = get_material("demo-note-01", principal, catalog)
+    assert detail["content_available"] is True
+    assert detail["evidence"]
+
+
 def test_study_02_index_cannot_support_body_answer(principal, catalog):
     items = search_materials(query(topic="排序"), principal, catalog)
     assert [item["material_id"] for item in items] == ["demo-index-02"]

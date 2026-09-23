@@ -4,6 +4,7 @@ import { demoScenicCatalog } from "./demoCatalog";
 import { buildAuthoringBundle, createSpotFromDraft, parseAuthoringBundle, type SpotDraft } from "./authoring";
 import { findSpot, historicalBloomText, safeAssetPath, validateSpot,
   type ScenicCatalog, type ScenicSpot } from "./geometry";
+import { activeMap, displaySpots, hasDraftConflict, type LocalDraft } from "./viewModel";
 
 type Props = { catalog?: ScenicCatalog; enableAuthoring?: boolean };
 type Point = { x_norm: number; y_norm: number };
@@ -23,46 +24,68 @@ function querySpot(): string | null {
   return typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("spot_id");
 }
 
+function queryMap(): string | null {
+  return typeof window === "undefined" ? null : new URLSearchParams(window.location.search).get("map_id");
+}
+
 export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthoring = false }: Props) {
-  const [spots, setSpots] = useState<ScenicSpot[]>(catalog.spots);
+  const [localDraft, setLocalDraft] = useState<LocalDraft | null>(null);
   const [spotId, setSpotId] = useState<string | null>(querySpot);
+  const [selectedMapId, setSelectedMapId] = useState<string | null>(queryMap);
   const [tag, setTag] = useState("all");
   const [zoom, setZoom] = useState(1);
   const [dragging, setDragging] = useState(false);
   const [addMode, setAddMode] = useState(false);
   const [pendingPoint, setPendingPoint] = useState<Point | null>(null);
   const [draft, setDraft] = useState<SpotDraft>(emptyDraft);
-  const [localMap, setLocalMap] = useState<LocalMap | null>(null);
+  const [localMaps, setLocalMaps] = useState<Record<string, LocalMap>>({});
   const [authoringError, setAuthoringError] = useState("");
   const viewportRef = useRef<HTMLDivElement>(null);
   const panRef = useRef<PanStart | null>(null);
   const suppressClickRef = useRef(false);
   const zoomAnchorRef = useRef<ZoomAnchor | null>(null);
+  const previousLocalMapsRef = useRef<Record<string, LocalMap>>({});
 
-  const map = catalog.maps[0];
+  const canAuthor = enableAuthoring && (import.meta as ImportMeta & { env?: { DEV?: boolean } }).env?.DEV === true
+    && typeof window !== "undefined" && new URLSearchParams(window.location.search).get("mode") === "authoring";
+  // Published data always comes from props. Unsaved edits are isolated to development authoring.
+  const spots = displaySpots(catalog, localDraft, canAuthor);
+  const hasCatalogConflict = hasDraftConflict(catalog, localDraft, canAuthor);
   const currentCatalog = useMemo(() => ({ ...catalog, spots }), [catalog, spots]);
   const current = findSpot(spotId, currentCatalog);
   const missing = spotId !== null && current === null;
+  const map = activeMap(catalog.maps, current, selectedMapId);
   const visible = spots.filter((spot) => spot.map_id === map?.map_id && spot.rights_status !== "pending"
     && (tag === "all" || spot.tags.includes(tag)));
-  const tags = [...new Set(spots.filter((spot) => spot.rights_status !== "pending")
+  const tags = [...new Set(spots.filter((spot) => spot.map_id === map?.map_id && spot.rights_status !== "pending")
     .flatMap((spot) => spot.tags))];
+  const localMap = map ? localMaps[map.map_id] : undefined;
   const mapImage = localMap?.url ?? safeAssetPath(map?.asset_path ?? null);
   const mapWidth = localMap?.width ?? map?.width ?? 1000;
   const mapHeight = localMap?.height ?? map?.height ?? 600;
   const isDemo = map?.data_status === "demo" || spots.some((spot) => spot.data_status === "demo");
-  const canAuthor = enableAuthoring && (import.meta as ImportMeta & { env?: { DEV?: boolean } }).env?.DEV === true
-    && typeof window !== "undefined" && new URLSearchParams(window.location.search).get("mode") === "authoring";
-
   useEffect(() => {
-    const update = () => setSpotId(querySpot());
+    const update = () => { setSpotId(querySpot()); setSelectedMapId(queryMap()); setTag("all"); };
     window.addEventListener("popstate", update);
     return () => window.removeEventListener("popstate", update);
   }, []);
 
+  useEffect(() => {
+    for (const [id, previous] of Object.entries(previousLocalMapsRef.current)) {
+      if (localMaps[id]?.url !== previous.url) URL.revokeObjectURL(previous.url);
+    }
+    previousLocalMapsRef.current = localMaps;
+  }, [localMaps]);
+
   useEffect(() => () => {
-    if (localMap?.url) URL.revokeObjectURL(localMap.url);
-  }, [localMap?.url]);
+    for (const image of Object.values(previousLocalMapsRef.current)) URL.revokeObjectURL(image.url);
+  }, []);
+
+  useEffect(() => {
+    setZoom(1);
+    setTag("all");
+    viewportRef.current?.scrollTo({ left: 0, top: 0 });
+  }, [map?.map_id]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -108,10 +131,43 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
 
   function openSpot(id: string | null) {
     const url = new URL(window.location.href);
+    const target = id ? findSpot(id, currentCatalog) : current;
+    if (target) {
+      url.searchParams.set("map_id", target.map_id);
+      setSelectedMapId(target.map_id);
+    }
     if (id) url.searchParams.set("spot_id", id);
     else url.searchParams.delete("spot_id");
     window.history.pushState({}, "", url);
     setSpotId(id);
+  }
+
+  function selectMap(id: string) {
+    const url = new URL(window.location.href);
+    url.searchParams.set("map_id", id);
+    url.searchParams.delete("spot_id");
+    window.history.pushState({}, "", url);
+    setSelectedMapId(id);
+    setSpotId(null);
+    setAddMode(false);
+  }
+
+  function editSpots(update: (items: ScenicSpot[]) => ScenicSpot[]) {
+    setLocalDraft((previous) => ({ sourceCatalog: previous?.sourceCatalog ?? catalog,
+      spots: update(previous?.spots ?? catalog.spots) }));
+  }
+
+  function discardLocalDraft() {
+    setLocalDraft(null);
+    setPendingPoint(null);
+    setAddMode(false);
+    setAuthoringError("");
+    if (spotId && !findSpot(spotId, catalog)) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("spot_id");
+      window.history.replaceState({}, "", url);
+      setSpotId(null);
+    }
   }
 
   function changeZoom(factor: number, clientX?: number, clientY?: number) {
@@ -181,7 +237,7 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
       const id = `point-${crypto.randomUUID()}`;
       const next = createSpotFromDraft(map.map_id, pendingPoint.x_norm, pendingPoint.y_norm,
         draft, id, map.data_status === "demo" ? "demo" : "needs_verification");
-      setSpots((old) => [...old, next]);
+      editSpots((old) => [...old, next]);
       setPendingPoint(null);
       setAuthoringError("");
       openSpot(id);
@@ -192,7 +248,7 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
 
   function updateCurrent(changes: Partial<ScenicSpot>) {
     if (!current) return;
-    setSpots((old) => old.map((spot) => spot.spot_id === current.spot_id ? { ...spot, ...changes } : spot));
+    editSpots((old) => old.map((spot) => spot.spot_id === current.spot_id ? { ...spot, ...changes } : spot));
   }
 
   async function loadLocalMap(file: File | undefined) {
@@ -207,7 +263,9 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
       const height = bitmap.height;
       bitmap.close();
       if (!width || !height) throw new Error("图片尺寸无效");
-      setLocalMap({ url: URL.createObjectURL(file), width, height, fileName: file.name });
+      if (!map) throw new Error("没有可编辑的底图");
+      setLocalMaps((old) => ({ ...old, [map.map_id]: { url: URL.createObjectURL(file),
+        width, height, fileName: file.name } }));
       setAuthoringError("");
       setZoom(1);
       viewportRef.current?.scrollTo({ left: 0, top: 0 });
@@ -217,7 +275,8 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
   }
 
   function exportCatalog() {
-    const blob = new Blob([JSON.stringify(buildAuthoringBundle({ ...catalog, spots }, safeAssetPath), null, 2)],
+    const base = localDraft?.sourceCatalog ?? catalog;
+    const blob = new Blob([JSON.stringify(buildAuthoringBundle({ ...base, spots }, safeAssetPath), null, 2)],
       { type: "application/json" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
@@ -229,8 +288,8 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
   async function importCatalog(file: File | undefined) {
     if (!file) return;
     try {
-      const next = parseAuthoringBundle(await file.text(), map?.map_id ?? "", validateSpot);
-      setSpots(next);
+      const next = parseAuthoringBundle(await file.text(), catalog.maps.map((item) => item.map_id), validateSpot);
+      setLocalDraft({ sourceCatalog: catalog, spots: next });
       setAuthoringError("");
       if (spotId && !next.some((spot) => spot.spot_id === spotId)) openSpot(null);
     } catch (error) {
@@ -257,6 +316,21 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
             <button type="button" style={button} onClick={() => changeZoom(1.25)} aria-label="放大地图">＋</button>
           </div>
         </div>
+        {catalog.maps.length > 1 && <label style={{ display: "block", marginBottom: 12 }}>
+          选择底图：<select aria-label="选择底图" value={map?.map_id ?? ""}
+            onChange={(event) => selectMap(event.target.value)}>
+            {catalog.maps.map((candidate) => <option key={candidate.map_id} value={candidate.map_id}>
+              {candidate.campus_id} · {candidate.map_id}
+            </option>)}
+          </select>
+        </label>}
+        {hasCatalogConflict && <div role="alert" style={{ border: "1px solid #bd7a23", borderRadius: 10,
+          padding: 10, marginBottom: 12, background: "#fff8e9" }}>
+          服务端目录已更新；本地编辑未自动合并。请先导出 JSON 备份，再选择使用新目录。
+          <button type="button" style={{ ...button, marginLeft: 8 }} onClick={discardLocalDraft}>
+            放弃本地编辑并使用新目录
+          </button>
+        </div>}
         {canAuthor && <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 10, marginBottom: 12 }}>
           <button type="button" style={{ ...button, background: addMode ? "#0a7281" : "white",
             color: addMode ? "white" : "#16466b" }} onClick={() => { setAddMode((old) => !old); openSpot(null); }}>
@@ -320,7 +394,8 @@ export default function ScenicPage({ catalog = demoScenicCatalog, enableAuthorin
             </ul>{visible.length === 0 && <p>此筛选条件下暂无点位。</p>}
           </>}
         {canAuthor && <div style={{ borderTop: "1px solid #ddd", paddingTop: 12 }}>
-          <h3>本地点位数据</h3><p>导出保存 JSON 与资产清单；底图文件需另外保存，页面不会上传。</p>
+          <h3>本地点位数据</h3><p>服务端目录为公开浏览的准确信息；此处编辑仅为开发模式的本地草稿。
+            收到新目录时不会静默覆盖草稿，导出保存 JSON 与资产清单；底图文件需另外保存，页面不会上传。</p>
           <label>导入本地 JSON<input type="file" accept="application/json,.json"
             onChange={(e) => void importCatalog(e.target.files?.[0])} /></label>
           <button type="button" style={{ ...button, display: "block", marginTop: 10 }} onClick={exportCatalog}>

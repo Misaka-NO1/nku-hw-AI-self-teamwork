@@ -1,42 +1,56 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import { demoStudyItems, filterStudyItems, publicStudyItems, type StudyItem } from "./demoCatalog";
+import { resolveDownloadUrl, type DownloadUrlFor } from "./downloadUrl";
+import { readStudyRoute, studyRouteUrl } from "./navigation";
 
-type Props = { materials?: StudyItem[]; enableDownloads?: boolean };
+type Props = { materials?: StudyItem[]; enableDownloads?: boolean; downloadUrlFor?: DownloadUrlFor };
 const card: CSSProperties = { background: "white", border: "1px solid #dce4ef", borderRadius: 16, padding: 20,
   boxShadow: "0 8px 28px rgba(30,52,77,.05)" };
 
 function params() {
-  if (typeof window === "undefined") return { course: "", material: "" };
-  const search = new URLSearchParams(window.location.search);
-  return { course: search.get("course_id") ?? "", material: search.get("material_id") ?? "" };
+  return readStudyRoute(typeof window === "undefined" ? "" : window.location.search);
 }
 
-export default function StudyPage({ materials = demoStudyItems, enableDownloads = false }: Props) {
+export default function StudyPage({ materials = demoStudyItems, enableDownloads = false, downloadUrlFor }: Props) {
   const initial = params();
   const availableCourses = [...new Set(publicStudyItems(materials).map((item) => item.course_id))];
-  const [courseId, setCourseId] = useState(initial.course || availableCourses[0] || "");
-  const [materialId, setMaterialId] = useState(initial.material);
+  const [courseId, setCourseId] = useState(initial.courseId || availableCourses[0] || "");
+  const [materialId, setMaterialId] = useState(initial.materialId);
   const [topic, setTopic] = useState("");
   const publicItems = publicStudyItems(materials);
   const courses = [...new Set(publicItems.map((item) => item.course_id))];
   const results = filterStudyItems(materials, courseId, topic);
   const selected = materialId ? publicItems.find((item) => item.material_id === materialId && item.course_id === courseId) : null;
+  const downloadUrl = enableDownloads && selected?.content_available
+    && ["owned", "authorized"].includes(selected.rights_status)
+    ? resolveDownloadUrl(selected.material_id, downloadUrlFor) : null;
 
   useEffect(() => {
-    const onBack = () => { const next = params(); setCourseId(next.course || courses[0] || ""); setMaterialId(next.material); };
+    const onBack = () => {
+      const next = params();
+      setCourseId(next.courseId || courses[0] || "");
+      setMaterialId(next.materialId);
+    };
     window.addEventListener("popstate", onBack);
     return () => window.removeEventListener("popstate", onBack);
   }, [courses[0]]);
 
   useEffect(() => {
-    if (!initial.course && !courses.includes(courseId)) setCourseId(courses[0] || "");
-  }, [courses.join("|"), courseId, initial.course]);
+    if (!initial.courseId && !courses.includes(courseId)) setCourseId(courses[0] || "");
+  }, [courses.join("|"), courseId, initial.courseId]);
+
+  function changeCourse(nextCourseId: string) {
+    window.history.pushState({}, "", studyRouteUrl(window.location.href,
+      { courseId: nextCourseId, materialId: "" }));
+    setCourseId(nextCourseId);
+    setMaterialId("");
+    setTopic("");
+  }
 
   function select(item: StudyItem | null) {
-    const url = new URL(window.location.href);
-    if (item) { url.searchParams.set("course_id", item.course_id); url.searchParams.set("material_id", item.material_id); }
-    else url.searchParams.delete("material_id");
-    window.history.pushState({}, "", url);
+    window.history.pushState({}, "", studyRouteUrl(window.location.href,
+      { courseId: item?.course_id ?? courseId, materialId: item?.material_id ?? "" }));
+    if (item) setCourseId(item.course_id);
     setMaterialId(item?.material_id ?? "");
   }
 
@@ -50,7 +64,7 @@ export default function StudyPage({ materials = demoStudyItems, enableDownloads 
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(100%,340px),1fr))", gap: 18 }}>
       <section style={card} aria-label="资料检索">
         <label style={{ display: "block", marginBottom: 12 }}>课程 ID<br />
-          <select value={courseId} onChange={(e) => { setCourseId(e.target.value); setMaterialId(""); }}>
+          <select value={courseId} onChange={(e) => changeCourse(e.target.value)}>
             {!courses.includes(courseId) && <option value={courseId}>{courseId || "请选择课程"}</option>}
             {courses.map((id) => <option key={id} value={id}>{id}</option>)}
           </select></label>
@@ -78,9 +92,11 @@ export default function StudyPage({ materials = demoStudyItems, enableDownloads 
               {selected.evidence.map((chunk) => <article key={chunk.chunk_id} style={{ borderTop: "1px solid #e4e9f1" }}>
                 <h4>{chunk.heading}</h4><p>{chunk.excerpt}</p>
                 <small>定位：{chunk.source_excerpt_ref}{chunk.page_label ? ` · 第 ${chunk.page_label} 页` : " · 原文无页码"}</small>
-              </article>)}</> : <p role="status">此条只有目录索引，无法基于它生成正文总结或复习提纲。</p>}
-            {enableDownloads && selected.content_available && ["owned", "authorized"].includes(selected.rights_status)
-              ? <a href={`/api/v1/study/materials/${encodeURIComponent(selected.material_id)}/download`}>下载已授权材料</a>
+              </article>)}</> : selected.content_available
+                ? <p role="status">此材料有可用正文，但本次检索未返回正文片段；不能把标题命中当作正文证据。</p>
+                : <p role="status">此条只有目录索引，无法基于它生成正文总结或复习提纲。</p>}
+            {downloadUrl
+              ? <a href={downloadUrl}>下载已授权材料</a>
               : <p>下载接口待 D 接入，或当前资料不允许下载。</p>}
           </> : <><h2>选择一份材料</h2><p>点击左侧结果查看来源、版本和正文状态。</p></>}
       </aside>

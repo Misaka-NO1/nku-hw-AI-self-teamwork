@@ -40,3 +40,10 @@ test("A04 map authoring creates a valid point and rejects incomplete or off-map 
   assert.throws(() => createSpotFromDraft("demo-map-01", 1.1, 0.7,
     { name: "有名称", description: "有简介", tags: "" }, "bad"));
 });
+
+test("review-3 authoring bundle can include points on multiple declared maps", () => {
+  const bundle = buildAuthoringBundle(structuredClone(demoScenicCatalog), safeAssetPath);
+  bundle.catalog.spots.push({ ...bundle.catalog.spots[0], spot_id: "second-map-spot", map_id: "demo-map-02" });
+  assert.equal(parseAuthoringBundle(JSON.stringify(bundle), ["demo-map-01", "demo-map-02"], validateSpot).length, 4);
+  assert.throws(() => parseAuthoringBundle(JSON.stringify(bundle), ["demo-map-01"], validateSpot));
+});

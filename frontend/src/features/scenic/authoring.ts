@@ -41,15 +41,16 @@ export function buildAuthoringBundle(
 
 export function parseAuthoringBundle(
   raw: string,
-  map_id: string,
+  map_ids: string | readonly string[],
   validateSpot: (value: unknown) => value is ScenicSpot,
 ): ScenicSpot[] {
   const parsed: unknown = JSON.parse(raw);
   if (!parsed || typeof parsed !== "object" || !("catalog" in parsed)) throw new Error("缺少目录");
   const catalog = (parsed as { catalog: unknown }).catalog as Partial<ScenicCatalog>;
+  const allowedMaps = new Set(typeof map_ids === "string" ? [map_ids] : map_ids);
   if (catalog.schema_version !== "1.0.0" || !Array.isArray(catalog.spots)
     || !catalog.spots.every(validateSpot)
-    || catalog.spots.some((spot) => spot.map_id !== map_id)
+    || catalog.spots.some((spot) => !allowedMaps.has(spot.map_id))
     || new Set(catalog.spots.map((spot) => spot.spot_id)).size !== catalog.spots.length) {
     throw new Error("目录结构、地图 ID 或点位不合法");
   }

@@ -18,4 +18,12 @@ export default defineConfig({
   server: {
     fs: { allow: [fileURLToPath(new URL("..", import.meta.url))] },
   },
+  build: {
+    rolldownOptions: {
+      input: {
+        preview: fileURLToPath(new URL("./index.html", import.meta.url)),
+        review: fileURLToPath(new URL("./review.html", import.meta.url)),
+      },
+    },
+  },
 });

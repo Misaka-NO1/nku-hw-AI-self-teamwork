@@ -73,6 +73,11 @@ def _sections(material: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def _has_body(material: dict[str, Any]) -> bool:
+    """Body availability is independent of a particular search term's evidence hits."""
+    return bool(material["content_available"] and _public(material) and _source_path(material))
+
+
 def _summary(material: dict[str, Any], evidence: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "material_id": material["material_id"],
@@ -84,7 +89,7 @@ def _summary(material: dict[str, Any], evidence: list[dict[str, Any]]) -> dict[s
         "rights_status": material["rights_status"],
         "access_scope": material["access_scope"],
         "source_label": material["source_label"],
-        "content_available": bool(evidence),
+        "content_available": _has_body(material),
         "evidence": evidence,
         "material_url": (
             f"/tools/study?course_id={quote(material['course_id'], safe='')}"

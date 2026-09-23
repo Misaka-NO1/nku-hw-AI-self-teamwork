@@ -15,5 +15,5 @@
       "react-dom/*": ["./node_modules/@types/react-dom/*"]
     }
   },
-  "include": ["../*.ts", "../*.tsx", "./*.tsx", "./vite.config.ts"]
+  "include": ["../*.ts", "../*.tsx", "../../study/*.ts", "../../study/*.tsx", "./*.tsx", "./vite.config.ts"]
 }
