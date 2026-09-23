@@ -202,6 +202,76 @@ def test_repeat_policy_missing_with_duplicates_suspends_course(
     assert any("repeat_policy_missing" in r for r in result["unresolved_rules"])
 
 
+def test_repeat_credits_conflict_needs_policy_regardless_of_order() -> None:
+    """PR #3 审核意见：学分不一致的重复通过记录不得按输入顺序决定结论。"""
+    plan = {
+        "schema_version": "1.0.0",
+        "dataset_kind": "demo",
+        "plan_id": "demo-plan-conflict",
+        "program": "虚构专业",
+        "cohort": "demo-cohort",
+        "version": "demo-v1",
+        "status": "demo",
+        "source_ref": "自创测试规则",
+        "repeat_policy": "once_per_course",
+        "modules": [
+            {
+                "module_id": "core",
+                "required_course_ids": [],
+                "eligible_course_ids": ["demo-CS101"],
+                "min_credits": "3.0",
+                "allocation_priority": 1,
+            }
+        ],
+    }
+    low = {"attempt_id": "r1", "course_id": "demo-CS101", "credits": "1.0", "result": "passed"}
+    high = {"attempt_id": "r2", "course_id": "demo-CS101", "credits": "3.0", "result": "passed"}
+
+    for records in ([low, high], [high, low]):
+        result = audit_degree_progress(plan, records)
+        assert result["status"] == "needs_policy"
+        assert any(
+            "repeat_credits_conflict" in r for r in result["unresolved_rules"]
+        )
+        core = _module(result, "core")
+        assert core["counted_attempts"] == []
+        assert core["earned_credits"] == "0"
+
+
+def test_repeat_same_credits_counts_once_order_independent() -> None:
+    """同学分的重复通过记录按 once_per_course 只计一次，与顺序无关。"""
+    plan = {
+        "schema_version": "1.0.0",
+        "dataset_kind": "demo",
+        "plan_id": "demo-plan-same",
+        "program": "虚构专业",
+        "cohort": "demo-cohort",
+        "version": "demo-v1",
+        "status": "demo",
+        "source_ref": "自创测试规则",
+        "repeat_policy": "once_per_course",
+        "modules": [
+            {
+                "module_id": "core",
+                "required_course_ids": [],
+                "eligible_course_ids": ["demo-CS101"],
+                "min_credits": "3.0",
+                "allocation_priority": 1,
+            }
+        ],
+    }
+    first = {"attempt_id": "s1", "course_id": "demo-CS101", "credits": "3.0", "result": "passed"}
+    second = {"attempt_id": "s2", "course_id": "demo-CS101", "credits": "3.0", "result": "passed"}
+
+    results = [audit_degree_progress(plan, rs) for rs in ([first, second], [second, first])]
+    for result in results:
+        assert result["status"] == "complete_under_supported_rules"
+        core = _module(result, "core")
+        assert core["earned_credits"] == "3.0"
+        assert len(core["counted_attempts"]) == 1
+        assert len(core["excluded_attempts"]) == 1
+
+
 def test_degree_06_demo_fixture_matches_expected_results(
     plan: dict, records: list[dict]
 ) -> None:

@@ -95,4 +95,64 @@ describe("SHELL-02 API client 错误处理", () => {
     );
     await expect(apiClient.get("/api/v1/x")).rejects.toBeInstanceOf(ApiError);
   });
+
+  it("HTTP 503 携带 ok=true 信封时仍按失败处理并保留 request_id", async () => {
+    const { apiClient, ApiError } = await import("../shared/api/client");
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(
+            JSON.stringify({
+              ok: true,
+              data: { pretend: "success" },
+              error: null,
+              meta: {
+                schema_version: "1.0.0",
+                request_id: "req-inconsistent",
+                data_version: null,
+                calculation_version: null,
+                warnings: [],
+                evidence_refs: [],
+              },
+            }),
+            { status: 503, headers: { "Content-Type": "application/json" } }
+          )
+      )
+    );
+    try {
+      await apiClient.get("/api/v1/x");
+      expect.unreachable("HTTP 失败不得按成功返回");
+    } catch (err) {
+      expect(err).toBeInstanceOf(ApiError);
+      const apiErr = err as InstanceType<typeof ApiError>;
+      expect(apiErr.code).toBe("DEPENDENCY_UNAVAILABLE");
+      expect(apiErr.status).toBe(503);
+      expect(apiErr.requestId).toBe("req-inconsistent");
+    }
+  });
+
+  it("响应体读取阶段同样受超时保护", async () => {
+    const { apiClient, ApiError } = await import("../shared/api/client");
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => {
+        // 响应头立即返回，但响应体永远不结束
+        return {
+          ok: true,
+          status: 200,
+          json: () => new Promise(() => {}),
+        } as unknown as Response;
+      })
+    );
+    try {
+      await apiClient.get("/api/v1/x", { timeoutMs: 30 });
+      expect.unreachable("响应体超时不得一直挂起");
+    } catch (err) {
+      expect(err).toBeInstanceOf(ApiError);
+      const apiErr = err as InstanceType<typeof ApiError>;
+      expect(apiErr.code).toBe("DEPENDENCY_UNAVAILABLE");
+      expect(apiErr.message).toContain("超时");
+    }
+  });
 });

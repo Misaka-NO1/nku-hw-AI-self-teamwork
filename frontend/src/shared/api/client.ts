@@ -81,57 +81,93 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     options;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const onOuterAbort = () => controller.abort();
   if (signal) {
     if (signal.aborted) controller.abort();
-    else signal.addEventListener("abort", () => controller.abort(), { once: true });
+    else signal.addEventListener("abort", onOuterAbort, { once: true });
   }
 
-  let response: Response;
-  try {
-    response = await fetch(`${apiBaseUrl()}${path}`, {
-      method,
-      credentials: "include",
-      signal: controller.signal,
-      headers: {
-        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
-        ...headers,
-      },
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+  const abortError = () =>
+    new ApiError({
+      code: "DEPENDENCY_UNAVAILABLE",
+      message: "请求超时或已取消",
+      status: null,
+      requestId: null,
+      retryable: true,
     });
+  // 覆盖响应头与响应体两个阶段：controller 中止时两个 race 都会立即失败。
+  const aborted = new Promise<never>((_resolve, reject) => {
+    if (controller.signal.aborted) {
+      reject(abortError());
+      return;
+    }
+    controller.signal.addEventListener(
+      "abort",
+      () => reject(abortError()),
+      { once: true }
+    );
+  });
+
+  let response: Response;
+  let payload: unknown = null;
+  try {
+    response = await Promise.race([
+      fetch(`${apiBaseUrl()}${path}`, {
+        method,
+        credentials: "include",
+        signal: controller.signal,
+        headers: {
+          ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+          ...headers,
+        },
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+      }),
+      aborted,
+    ]);
+    // 响应体读取同样受超时保护；读取失败（非中止）按无信封处理。
+    try {
+      payload = await Promise.race([response.json(), aborted]);
+    } catch (bodyErr) {
+      if (bodyErr instanceof ApiError) throw bodyErr;
+      payload = null;
+    }
   } catch (err) {
     if (err instanceof ApiError) throw err;
-    const aborted = err instanceof DOMException && err.name === "AbortError";
+    const abortedFetch = err instanceof DOMException && err.name === "AbortError";
+    if (abortedFetch) throw abortError();
     throw new ApiError({
       code: "DEPENDENCY_UNAVAILABLE",
-      message: aborted ? "请求超时或已取消" : "网络请求失败，请检查后端是否可达",
+      message: "网络请求失败，请检查后端是否可达",
       status: null,
       requestId: null,
       retryable: true,
     });
   } finally {
     clearTimeout(timer);
-  }
-
-  let payload: unknown = null;
-  try {
-    payload = await response.json();
-  } catch {
-    payload = null;
+    if (signal) signal.removeEventListener("abort", onOuterAbort);
   }
 
   if (isEnvelope(payload)) {
     const requestId = payload.meta?.request_id ?? null;
-    if (payload.ok) {
+    // HTTP 状态与业务信封必须一致：HTTP 失败时即使信封 ok=true 也按失败处理。
+    if (response.ok && payload.ok) {
       return snakeToCamel(payload.data) as T;
     }
     const error: ApiErrorBody | null = payload.error;
     throw new ApiError({
-      code: error?.code ?? FALLBACK_CODE_BY_STATUS[response.status] ?? "INTERNAL_ERROR",
-      message: error?.message ?? `请求失败（HTTP ${response.status}）`,
+      code:
+        error?.code ??
+        FALLBACK_CODE_BY_STATUS[response.status] ??
+        "INTERNAL_ERROR",
+      message:
+        error?.message ??
+        (payload.ok
+          ? `HTTP ${response.status} 与成功信封不一致，按失败处理`
+          : `请求失败（HTTP ${response.status}）`),
       status: response.status,
       requestId,
       fieldErrors: error?.field_errors ?? [],
-      retryable: error?.retryable ?? false,
+      retryable: error?.retryable ?? response.status >= 500,
     });
   }
 

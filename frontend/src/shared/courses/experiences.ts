@@ -41,17 +41,17 @@ export function listExperienceCards(courseId: string): ExperienceCard[] {
 
 /**
  * 样本不足或来源混用时返回 null——一条评价不构成“总体结论”。
+ * 最低样本门槛只统计真正带评分的样本：未评分卡不得把单条评分抬过门槛。
  */
 export function aggregateRating(cards: ExperienceCard[]): number | null {
-  const studentCards = cards.filter((c) => c.sourceType === "student_experience");
-  const samples = studentCards.reduce((sum, c) => sum + c.sampleCount, 0);
-  if (samples < MIN_SAMPLES_FOR_AGGREGATE) return null;
-  const rated = studentCards.filter((c) => c.ratingAggregate !== null);
-  if (rated.length === 0) return null;
+  const rated = cards.filter(
+    (c) => c.sourceType === "student_experience" && c.ratingAggregate !== null
+  );
+  const ratedSamples = rated.reduce((sum, c) => sum + c.sampleCount, 0);
+  if (rated.length === 0 || ratedSamples < MIN_SAMPLES_FOR_AGGREGATE) return null;
   const total = rated.reduce(
     (sum, c) => sum + (c.ratingAggregate ?? 0) * c.sampleCount,
     0
   );
-  const ratedSamples = rated.reduce((sum, c) => sum + c.sampleCount, 0);
-  return ratedSamples > 0 ? total / ratedSamples : null;
+  return total / ratedSamples;
 }

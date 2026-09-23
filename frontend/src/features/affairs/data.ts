@@ -57,6 +57,38 @@ export function entryDisplayState(
   return "verified";
 }
 
+export interface DisplaySource {
+  label: string;
+  href?: string;
+  locator?: string;
+  verifiedAt?: string;
+}
+
+/**
+ * 页面来源列表：official_url 作为正式入口优先展示，
+ * 与 entryDisplayState() 的“有来源”判断保持一致；两者皆空时返回空数组，
+ * 由页面显示“暂无正式来源”。
+ */
+export function entrySources(entry: AffairEntry): DisplaySource[] {
+  const sources: DisplaySource[] = [];
+  if (entry.officialUrl) {
+    sources.push({
+      label: `官方入口：${entry.title}`,
+      href: entry.officialUrl,
+      verifiedAt: entry.verifiedAt ?? undefined,
+    });
+  }
+  for (const ref of entry.sourceRefs) {
+    sources.push({
+      label: ref.label,
+      href: ref.url ?? undefined,
+      locator: ref.locator ?? undefined,
+      verifiedAt: entry.verifiedAt ?? undefined,
+    });
+  }
+  return sources;
+}
+
 export interface AffairFilter {
   query?: string;
   category?: string;

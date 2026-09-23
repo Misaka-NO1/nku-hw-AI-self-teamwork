@@ -49,9 +49,10 @@ export function DegreePage() {
   const [isDemo, setIsDemo] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  async function runDemoAudit() {
+  async function runAudit() {
     setLoading(true);
     setError(null);
+    setIsDemo(false);
     try {
       const audited = await auditDegree({
         workspaceRef: "demo-workspace-01",
@@ -59,20 +60,21 @@ export function DegreePage() {
         transcriptRef: "demo-transcript-01",
       });
       setResult(audited);
-      setIsDemo(false);
     } catch (err) {
-      if (import.meta.env.PROD) {
-        // 生产模式：失败就是失败，不用夹具伪装成功。
-        setResult(null);
-        setError(err);
-      } else {
-        // 开发模式：后端未接入时展示带标签的夹具预期结果。
-        setResult(demoAuditResult());
-        setIsDemo(true);
-      }
+      // 任何真实请求失败（认证/权限/参数/服务不可用）都保留错误与 request_id，
+      // 不用夹具结果顶替。
+      setResult(null);
+      setError(err);
     } finally {
       setLoading(false);
     }
+  }
+
+  function showDemoFixture() {
+    // 离线演示是用户明确选择的模式，只在开发模式提供。
+    setError(null);
+    setIsDemo(true);
+    setResult(demoAuditResult());
   }
 
   return (
@@ -86,16 +88,23 @@ export function DegreePage() {
         成绩记录由后端按 transcript_ref 授权解析，本页面不接收任意成绩数据；
         结果仅反映“所选规则下的学习进度”，不构成毕业资格结论。
       </p>
-      <button type="button" onClick={runDemoAudit} disabled={loading}>
-        {loading ? "审计中…" : "运行演示审计"}
-      </button>
-      {error ? <ErrorState error={error} retry={runDemoAudit} /> : null}
+      <div className="toolbar">
+        <button type="button" onClick={runAudit} disabled={loading}>
+          {loading ? "审计中…" : "请求后端审计"}
+        </button>
+        {import.meta.env.DEV ? (
+          <button type="button" onClick={showDemoFixture} disabled={loading}>
+            查看夹具演示结果（离线 demo）
+          </button>
+        ) : null}
+      </div>
+      {error ? <ErrorState error={error} retry={runAudit} /> : null}
       {result ? (
         <div className="card">
           {isDemo ? (
             <StatusBanner
               kind="demo"
-              message="后端审计接口尚未接入，以下为夹具预期结果演示（demo），不是实际审计输出。"
+              message="以下为夹具预期结果的离线演示（demo），不是实际审计输出。"
             />
           ) : null}
           <h3>

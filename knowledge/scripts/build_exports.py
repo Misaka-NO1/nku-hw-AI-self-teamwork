@@ -5,12 +5,16 @@
 供 D 导入知识库并发布。正式事实与学生体验分文件、分字段，
 未核验条目保留显式状态，不被“洗白”为官方规定。
 
+发布过滤：学生经验卡仅导出「已获投稿同意且审核通过」的记录；
+pending / rejected / consent=false 一律不进入导出文件。
+
 用法：python knowledge/scripts/build_exports.py
 """
 
 import json
 from datetime import date
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 KNOWLEDGE = ROOT / "knowledge"
@@ -21,8 +25,16 @@ def load(rel: str) -> dict:
     return json.loads((KNOWLEDGE / rel).read_text(encoding="utf-8"))
 
 
-def build_kb_campus() -> dict:
-    affairs = load("affairs/entries.json")
+def publishable_experience_cards(experiences: dict[str, Any]) -> list[dict[str, Any]]:
+    """仅返回可发布的经验卡：consent=True 且 review_status=approved。"""
+    return [
+        card
+        for card in experiences["cards"]
+        if card.get("consent") is True and card.get("review_status") == "approved"
+    ]
+
+
+def build_kb_campus(affairs: dict[str, Any]) -> dict[str, Any]:
     items = []
     for entry in affairs["entries"]:
         items.append(
@@ -60,9 +72,8 @@ def build_kb_campus() -> dict:
     }
 
 
-def build_kb_course() -> dict:
-    catalog = load("courses/catalog.json")
-    experiences = load("courses/experiences.json")
+def build_kb_course(catalog: dict, experiences: dict) -> dict[str, Any]:
+    cards = publishable_experience_cards(experiences)
     return {
         "schema_version": "1.0.0",
         "dataset_kind": catalog["dataset_kind"],
@@ -71,8 +82,7 @@ def build_kb_course() -> dict:
         "built_at": date.today().isoformat(),
         "courses": catalog["courses"],
         "experience_cards": [
-            {**card, "low_sample": card["sample_count"] < 3}
-            for card in experiences["cards"]
+            {**card, "low_sample": card["sample_count"] < 3} for card in cards
         ],
         "rules": [
             "official 与 student_experience 必须分开呈现",
@@ -84,8 +94,10 @@ def build_kb_course() -> dict:
 
 def main() -> None:
     EXPORTS.mkdir(parents=True, exist_ok=True)
-    campus = build_kb_campus()
-    course = build_kb_course()
+    campus = build_kb_campus(load("affairs/entries.json"))
+    course = build_kb_course(
+        load("courses/catalog.json"), load("courses/experiences.json")
+    )
     (EXPORTS / "KB_Campus.json").write_text(
         json.dumps(campus, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )

@@ -60,10 +60,12 @@ cd backend && ./.venv/Scripts/python -m pytest
 
 ## 测试实际结果
 
-- 前端 Vitest：4 个文件 17 项全部通过（SHELL-01 路由导出、SHELL-02 401/403/422/503
-  错误与 request_id、CAMPUS-01/02/03、COURSE-01）
+- 前端 Vitest：4 个文件 23 项全部通过（SHELL-01 路由导出、SHELL-02 401/403/422/503
+  错误与 request_id、CAMPUS-01/02/03、COURSE-01，及 PR #3 审核回归：HTTP 失败不视为成功、
+  响应体超时保护、officialUrl 展示一致性、有效评分样本门槛）
 - 前端构建：`tsc --noEmit && vite build` 通过
-- 后端 pytest：33 项全部通过（含 D 基线 23 项 + 新增 DEGREE-01~06 及夹具/Schema 校验 10 项；
+- 后端 pytest：41 项全部通过（含 D 基线 23 项、DEGREE-01~06 及夹具/Schema 校验、
+  KB 导出发布过滤 6 项、重复课程学分冲突顺序无关 2 项；
   DEGREE-06 与 `fixtures/expected-results.demo.json` 完全一致：已计 5.0、总缺口 7.0、
   缺必修 demo-CS102/demo-CS103）
 

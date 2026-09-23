@@ -33,4 +33,53 @@ describe("COURSE-01 同名课程不合并", () => {
     expect(cards).toHaveLength(1);
     expect(aggregateRating(cards)).toBeNull();
   });
+
+  it("未评分样本不得把单条评分抬过最低门槛（PR #3 审核回归）", () => {
+    const oneRated = [
+      {
+        experienceId: "t1",
+        courseId: "demo-CS101",
+        offeringId: null,
+        termId: "demo-term-2026A",
+        sourceType: "student_experience" as const,
+        sampleCount: 1,
+        consent: true,
+        reviewStatus: "approved" as const,
+        summary: "x",
+        ratingAggregate: 5,
+      },
+      {
+        experienceId: "t2",
+        courseId: "demo-CS101",
+        offeringId: null,
+        termId: "demo-term-2026A",
+        sourceType: "student_experience" as const,
+        sampleCount: 2,
+        consent: true,
+        reviewStatus: "approved" as const,
+        summary: "x",
+        ratingAggregate: null,
+      },
+    ];
+    // 总样本 3 但真正评分的只有 1 个，不得返回综合评分
+    expect(aggregateRating(oneRated)).toBeNull();
+  });
+
+  it("有效评分样本达到门槛才计算加权平均", () => {
+    const mk = (id: string, samples: number, rating: number) => ({
+      experienceId: id,
+      courseId: "demo-CS101",
+      offeringId: null,
+      termId: "demo-term-2026A",
+      sourceType: "student_experience" as const,
+      sampleCount: samples,
+      consent: true,
+      reviewStatus: "approved" as const,
+      summary: "x",
+      ratingAggregate: rating,
+    });
+    const cards = [mk("a", 2, 4), mk("b", 1, 5)];
+    // (4*2 + 5*1) / 3 = 4.33…
+    expect(aggregateRating(cards)).toBeCloseTo(13 / 3, 5);
+  });
 });

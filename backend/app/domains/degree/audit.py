@@ -86,38 +86,53 @@ def audit_degree_progress(
             )
 
     # 3. 依据明确 repeat_policy 去重；无政策且出现重复时停止该课程核算。
-    counted_by_course: dict[str, Mapping[str, Any]] = {}
-    duplicates_suspended: set[str] = set()
+    #    同一课程多条通过记录且学分不一致时，“保留哪条”也是政策问题：
+    #    仅凭输入顺序选择会让审计结论随记录顺序翻转，因此一律返回 needs_policy。
+    passed_by_course: dict[str, list[Mapping[str, Any]]] = {}
     for record in passed_attempts:
-        course_id = str(record.get("course_id"))
-        attempt_id = str(record.get("attempt_id"))
-        if course_id in counted_by_course:
-            if repeat_policy == "once_per_course":
+        passed_by_course.setdefault(str(record.get("course_id")), []).append(record)
+
+    counted_by_course: dict[str, Mapping[str, Any]] = {}
+    for course_id in sorted(passed_by_course):
+        attempts = passed_by_course[course_id]
+        if len(attempts) == 1:
+            counted_by_course[course_id] = attempts[0]
+            continue
+        if repeat_policy is None:
+            for record in attempts:
                 excluded_by_course.setdefault(course_id, []).append(
-                    (attempt_id, "duplicate_once_per_course")
+                    (str(record.get("attempt_id")), "repeat_policy_missing")
                 )
-                continue
-            if repeat_policy is None:
-                duplicates_suspended.add(course_id)
-                continue
+            unresolved.append(
+                f"repeat_policy_missing:{course_id}: 存在重复通过记录但未提供去重规则，"
+                "该课程暂不核算"
+            )
+            continue
+        if repeat_policy != "once_per_course":
+            for record in attempts:
+                excluded_by_course.setdefault(course_id, []).append(
+                    (str(record.get("attempt_id")), "unsupported_repeat_policy")
+                )
             unresolved.append(
                 f"unsupported_repeat_policy:{repeat_policy}: 不支持的重复修读规则"
             )
-            excluded_by_course.setdefault(course_id, []).append(
-                (attempt_id, "unsupported_repeat_policy")
+            continue
+        credit_set = {_credits(r.get("credits")) for r in attempts}
+        if len(credit_set) > 1:
+            for record in attempts:
+                excluded_by_course.setdefault(course_id, []).append(
+                    (str(record.get("attempt_id")), "repeat_credits_conflict")
+                )
+            unresolved.append(
+                f"repeat_credits_conflict:{course_id}: 重复通过记录的学分不一致，"
+                "once_per_course 未规定选哪条，拒绝按输入顺序硬算"
             )
             continue
-        counted_by_course[course_id] = record
-    for course_id in sorted(duplicates_suspended):
-        first = counted_by_course[course_id]
-        excluded_by_course.setdefault(course_id, []).append(
-            (str(first.get("attempt_id")), "repeat_policy_missing")
-        )
-        del counted_by_course[course_id]
-        unresolved.append(
-            f"repeat_policy_missing:{course_id}: 存在重复通过记录但未提供去重规则，"
-            "该课程暂不核算"
-        )
+        counted_by_course[course_id] = attempts[0]
+        for record in attempts[1:]:
+            excluded_by_course.setdefault(course_id, []).append(
+                (str(record.get("attempt_id")), "duplicate_once_per_course")
+            )
 
     # 4. 分配课程到模块：只按候选范围和 allocation_priority；同分只计一次。
     allocated: dict[str, str] = {}  # course_id -> module_id

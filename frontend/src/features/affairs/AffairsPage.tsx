@@ -4,6 +4,7 @@ import {
   AFFAIRS_DATASET_KIND,
   AFFAIRS_DATA_VERSION,
   entryDisplayState,
+  entrySources,
   filterAffairs,
   listAffairs,
   listCategories,
@@ -66,21 +67,24 @@ function AffairCard({ entry, today }: { entry: AffairEntry; today: string }) {
         <p>所需材料：{entry.requiredMaterials.join("、")}</p>
       ) : null}
       <div>
-        {entry.sourceRefs.length > 0 ? (
-          entry.sourceRefs.map((s) => (
-            <SourceCard
-              key={s.label}
-              source={{
-                label: s.label,
-                href: s.url ?? undefined,
-                locator: s.locator ?? undefined,
-                verifiedAt: entry.verifiedAt ?? undefined,
-              }}
-            />
-          ))
-        ) : (
-          <SourceCard source={{ label: "暂无正式来源", verifiedAt: undefined }} />
-        )}
+        {(() => {
+          const sources = entrySources(entry);
+          return sources.length > 0 ? (
+            sources.map((s) => (
+              <SourceCard
+                key={s.label}
+                source={{
+                  label: s.label,
+                  href: s.href,
+                  locator: s.locator,
+                  verifiedAt: s.verifiedAt,
+                }}
+              />
+            ))
+          ) : (
+            <SourceCard source={{ label: "暂无正式来源", verifiedAt: undefined }} />
+          );
+        })()}
         {entry.validUntil ? (
           <p className="state__hint">有效期至：{entry.validUntil}</p>
         ) : null}
