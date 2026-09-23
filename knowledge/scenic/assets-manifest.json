@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "demo-v1",
+  "assets": [
+    {
+      "asset_id": "demo-map-01",
+      "kind": "map",
+      "asset_path": null,
+      "source_ref": "自创虚构地图坐标夹具；未提供南开校区底图",
+      "rights_status": "pending",
+      "data_status": "demo",
+      "required_before_publication": ["授权底图文件", "真实尺寸", "点位定位依据"]
+    }
+  ]
+}
