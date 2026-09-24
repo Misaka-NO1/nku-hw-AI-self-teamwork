@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "data_version": "demo-courses-v1",
+  "note": "虚构课程目录，仅供 course_id 映射联调；course_code 只有官方来源确认后才填写",
+  "courses": [
+    {
+      "course_id": "demo-CS101",
+      "course_code": null,
+      "title": "程序设计基础（虚构示例）",
+      "credits": "3.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-CS102",
+      "course_code": null,
+      "title": "离散结构（虚构示例）",
+      "credits": "3.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-CS103",
+      "course_code": null,
+      "title": "程序设计实验（虚构示例）",
+      "credits": "2.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-EL201",
+      "course_code": null,
+      "title": "英语拓展阅读（虚构示例）",
+      "credits": "2.0",
+      "aliases": []
+    },
+    {
+      "course_id": "demo-EL202",
+      "course_code": null,
+      "title": "英语拓展阅读（虚构示例）",
+      "credits": "2.0",
+      "aliases": []
+    }
+  ]
+}

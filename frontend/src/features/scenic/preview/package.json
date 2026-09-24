@@ -1,0 +1,22 @@
+{
+  "name": "nku-scenic-standalone-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "test:logic": "node --experimental-strip-types --test ../authoring.test.mjs ../geometry.test.mjs ../viewModel.test.mjs ../../study/demoCatalog.test.mjs ../../study/navigation.test.mjs ../../study/downloadUrl.test.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3",
+    "vite": "8.3.0"
+  }
+}

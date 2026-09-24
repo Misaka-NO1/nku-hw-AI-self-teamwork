@@ -8,3 +8,4 @@ htmlcov/
 backend/data/
 node_modules/
 dist/
+*.tsbuildinfo

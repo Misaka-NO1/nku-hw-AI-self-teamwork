@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "plan_id": "demo-cs-plan-v1",
+  "program": "虚构计算机专业",
+  "cohort": "demo-cohort",
+  "version": "demo-v1",
+  "status": "demo",
+  "source_ref": "自创测试规则，不是南开培养方案",
+  "repeat_policy": "once_per_course",
+  "modules": [
+    {
+      "module_id": "core",
+      "required_course_ids": [
+        "demo-CS101",
+        "demo-CS102",
+        "demo-CS103"
+      ],
+      "eligible_course_ids": [
+        "demo-CS101",
+        "demo-CS102",
+        "demo-CS103"
+      ],
+      "min_credits": "8.0",
+      "allocation_priority": 1
+    },
+    {
+      "module_id": "elective",
+      "required_course_ids": [],
+      "eligible_course_ids": [
+        "demo-EL201",
+        "demo-EL202"
+      ],
+      "min_credits": "4.0",
+      "allocation_priority": 2
+    }
+  ]
+}
