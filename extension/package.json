@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "npm run build:js && npm run build:copy",
+    "build:js": "esbuild src/background.ts src/content.ts --bundle --format=esm --target=chrome110 --outdir=dist && esbuild src/preview/preview.ts --bundle --format=esm --target=chrome110 --outfile=dist/preview.js",
+    "build:copy": "node scripts/copy-static.mjs"
   },
   "dependencies": {
     "@campus/import-core": "file:../packages/import-core"
@@ -14,6 +17,7 @@
   "devDependencies": {
     "@types/chrome": "^0.1.8",
     "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
     "jsdom": "^26.1.0",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"

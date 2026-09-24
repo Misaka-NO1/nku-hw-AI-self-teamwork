@@ -62,10 +62,10 @@ chrome.runtime.onMessage.addListener((raw, sender, sendResponse) => {
         return;
       }
       try {
-        const payload = message.payload as { workspaceRef: string; timetable: unknown };
+        const payload = message.payload as { timetable: unknown };
         const result = await submitConfirmedDraft(
           stored.importTicket,
-          payload.workspaceRef,
+          stored.importTicket.workspaceRef,
           payload.timetable,
           { backendOrigin: BACKEND_ORIGIN },
         );

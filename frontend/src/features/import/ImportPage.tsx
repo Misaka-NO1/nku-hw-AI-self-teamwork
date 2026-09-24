@@ -29,9 +29,14 @@ export interface ImportPageProps {
   /** 用户自己提供/确认的学期日历；未提供时只显示原始星期/节次/周次 */
   calendar: TermCalendar | null;
   datasetKind: "demo" | "personal";
+  /**
+   * 服务端校验端点 /api/v1/schedules/validate 是否已由 D 接入。
+   * 默认 false：按钮禁用并说明原因，绝不表现为已可用（PR #2 审核意见 4）。
+   */
+  serverValidateAvailable?: boolean;
 }
 
-export default function ImportPage({ calendar, datasetKind }: ImportPageProps) {
+export default function ImportPage({ calendar, datasetKind, serverValidateAvailable = false }: ImportPageProps) {
   const [fileName, setFileName] = useState<string | null>(null);
   const [result, setResult] = useState<ParseResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -150,9 +155,15 @@ export default function ImportPage({ calendar, datasetKind }: ImportPageProps) {
               )}
             </tbody>
           </table>
-          <button type="button" onClick={onValidateRemote}>
+          <button type="button" onClick={onValidateRemote} disabled={!serverValidateAvailable}>
             发送到服务端校验（不保存）
           </button>
+          {!serverValidateAvailable && (
+            <p role="note">
+              服务端校验接口（POST /api/v1/schedules/validate）尚未由后端接入，暂不可用；
+              本地解析与离线导出不受影响。
+            </p>
+          )}
           {remoteCheck && <p>{remoteCheck}</p>}
         </section>
       )}

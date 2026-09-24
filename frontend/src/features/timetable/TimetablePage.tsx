@@ -1,13 +1,16 @@
 import { useMemo, useState } from "react";
 
-import type { TermCalendar, TimetableImport } from "@campus/import-core";
+import { actualDateFor, getEffectiveTemplate } from "@campus/import-core";
+import type { Course, Meeting, TermCalendar, TimetableImport } from "@campus/import-core";
 
 /**
  * TimetablePage（/tools/timetable，owner: B；路由接入由 C 负责）。
  *
- * 周课表：选择教学周，按 星期 × 节次 网格展示课程卡片（课程/地点/周次），
- * 并保留 coverage 提示——课表不完整时不宣称“全天有空”。
- * 与“我的日程”共享同一 TermCalendar 规则；未确认条目明确标记。
+ * 周课表：选择教学周，按 星期 × 节次 网格展示课程卡片。
+ * - 同一格可显示多门课程，不互相覆盖；
+ * - 跨多节的课程在每个所占节次都出现；
+ * - 调休/停课 override 应用到选中周：cancel 显示停课，replace 显示替换模板课程；
+ * - 保留 coverage 提示——课表不完整时不宣称“全天有空”。
  */
 
 const WEEKDAY_LABELS = ["一", "二", "三", "四", "五", "六", "日"];
@@ -17,36 +20,64 @@ export interface TimetablePageProps {
   timetable: TimetableImport | null;
 }
 
-interface Cell {
-  courseTitle: string;
-  location: string | null;
-  weeks: number[];
-  startPeriod: number;
-  endPeriod: number;
+interface CellEntry {
+  course: Course;
+  meeting: Meeting;
+}
+
+interface DayView {
+  /** null 表示当日因调休 cancel 无课程 */
+  template: { week: number; weekday: number } | null;
+  overridden: boolean;
+  overrideNote: string | null;
 }
 
 export default function TimetablePage({ timetable }: TimetablePageProps) {
   const term: TermCalendar | null = timetable?.term ?? null;
   const [week, setWeek] = useState(1);
 
+  // 每个星期的实际模板（应用调休/停课后）
+  const dayViews = useMemo<DayView[]>(() => {
+    if (!term) return [];
+    return WEEKDAY_LABELS.map((_, index) => {
+      const weekday = index + 1;
+      const actualDate = actualDateFor(term, week, weekday);
+      const template = getEffectiveTemplate(term, actualDate, week, weekday);
+      if (template === null) {
+        return { template: null, overridden: true, overrideNote: "调休/停课" };
+      }
+      return {
+        template: { week: template.week, weekday: template.weekday },
+        overridden: template.overridden,
+        overrideNote: template.overridden
+          ? `按第${template.week}周周${WEEKDAY_LABELS[template.weekday - 1]}上课`
+          : null,
+      };
+    });
+  }, [term, week]);
+
+  // key: `${列星期}-${节次}` → 该格全部课程（不覆盖、跨节填充）
   const cells = useMemo(() => {
-    const grid = new Map<string, Cell>();
+    const grid = new Map<string, CellEntry[]>();
     if (!timetable) return grid;
-    timetable.courses.forEach((course, courseIndex) => {
-      for (const meeting of course.meetings) {
-        if (!meeting.weeks.includes(week)) continue;
-        grid.set(`${meeting.weekday}-${meeting.start_period}`, {
-          courseTitle: course.title,
-          location: meeting.location,
-          weeks: meeting.weeks,
-          startPeriod: meeting.start_period,
-          endPeriod: meeting.end_period,
-        });
-        void courseIndex;
+    dayViews.forEach((day, columnIndex) => {
+      if (day.template === null) return;
+      const column = columnIndex + 1;
+      for (const course of timetable.courses) {
+        for (const meeting of course.meetings) {
+          if (meeting.weekday !== day.template.weekday) continue;
+          if (!meeting.weeks.includes(day.template.week)) continue;
+          for (let period = meeting.start_period; period <= meeting.end_period; period += 1) {
+            const key = `${column}-${period}`;
+            const list = grid.get(key) ?? [];
+            list.push({ course, meeting });
+            grid.set(key, list);
+          }
+        }
       }
     });
     return grid;
-  }, [timetable, week]);
+  }, [timetable, dayViews]);
 
   if (!timetable || !term) {
     return (
@@ -58,8 +89,7 @@ export default function TimetablePage({ timetable }: TimetablePageProps) {
   }
 
   const coverage = timetable.source.coverage;
-  const coverageWarning =
-    coverage.completeness !== "complete" || coverage.scope !== "term";
+  const coverageWarning = coverage.completeness !== "complete" || coverage.scope !== "term";
 
   return (
     <main>
@@ -89,8 +119,16 @@ export default function TimetablePage({ timetable }: TimetablePageProps) {
         <thead>
           <tr>
             <th>节次</th>
-            {WEEKDAY_LABELS.map((label) => (
-              <th key={label}>周{label}</th>
+            {WEEKDAY_LABELS.map((label, index) => (
+              <th key={label}>
+                周{label}
+                {dayViews[index]?.overrideNote && (
+                  <>
+                    <br />
+                    <em>{dayViews[index].overrideNote}</em>
+                  </>
+                )}
+              </th>
             ))}
           </tr>
         </thead>
@@ -103,27 +141,36 @@ export default function TimetablePage({ timetable }: TimetablePageProps) {
                 {period.start}-{period.end}
               </th>
               {WEEKDAY_LABELS.map((_, weekdayIndex) => {
-                const cell = cells.get(`${weekdayIndex + 1}-${period.period}`);
-                if (!cell) {
+                const entries = cells.get(`${weekdayIndex + 1}-${period.period}`) ?? [];
+                if (entries.length === 0) {
                   return <td key={weekdayIndex} />;
                 }
-                const color =
-                  COURSE_COLORS[
-                    Math.abs(hashCode(cell.courseTitle)) % COURSE_COLORS.length
-                  ];
                 return (
-                  <td key={weekdayIndex} style={{ backgroundColor: color }}>
-                    <strong>{cell.courseTitle}</strong>
-                    <br />
-                    {cell.location ?? "地点待确认"}
-                    <br />
-                    周次：{cell.weeks.join(",")}
-                    {term.calendar_status !== "official_verified" && (
-                      <>
+                  <td key={weekdayIndex}>
+                    {entries.map(({ course, meeting }) => (
+                      <div
+                        key={`${course.course_id}-${meeting.meeting_id}`}
+                        style={{
+                          backgroundColor:
+                            COURSE_COLORS[Math.abs(hashCode(course.course_id)) % COURSE_COLORS.length],
+                          marginBottom: 4,
+                          padding: 4,
+                          borderRadius: 4,
+                        }}
+                      >
+                        <strong>{course.title}</strong>
                         <br />
-                        <em>待确认</em>
-                      </>
-                    )}
+                        {meeting.location ?? "地点待确认"}
+                        <br />
+                        周次：{meeting.weeks.join(",")}
+                        {term.calendar_status !== "official_verified" && (
+                          <>
+                            <br />
+                            <em>待确认</em>
+                          </>
+                        )}
+                      </div>
+                    ))}
                   </td>
                 );
               })}

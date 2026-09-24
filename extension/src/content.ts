@@ -1,6 +1,8 @@
 import { REQUIRED_TABLE_HEADERS } from "@campus/import-core";
 import type { PageObservation } from "@campus/import-core";
 
+import { parseMessage } from "./messages";
+
 /**
  * content script 的白名单课程区域提取。
  *
@@ -64,4 +66,45 @@ export function extractCourseObservation(
     hasPagination: doc.querySelector("[data-pagination], .pagination") !== null,
     hasVirtualRows: doc.querySelector("[data-virtual], .virtual-list") !== null,
   };
+}
+
+/**
+ * content script 运行入口：接收 service worker 的 extract-visible-schedule，
+ * 提取白名单课程区域后回传 schedule-observation；失败时回传结构化错误。
+ */
+export function registerContentListener(
+  chromeApi: typeof chrome,
+  doc: Document,
+  pageUrl: string,
+): void {
+  chromeApi.runtime.onMessage.addListener((raw, _sender, sendResponse) => {
+    const message = parseMessage(raw);
+    if (!message || message.type !== "extract-visible-schedule") {
+      return false;
+    }
+    try {
+      const observation = extractCourseObservation(doc, { pageUrl });
+      void chromeApi.runtime.sendMessage({
+        type: "schedule-observation",
+        payload: observation,
+      });
+      sendResponse({ ok: true });
+    } catch (error) {
+      const unsupported = error as Partial<UnsupportedPageError>;
+      sendResponse({
+        ok: false,
+        error: {
+          code: unsupported.code ?? "UNKNOWN",
+          message: error instanceof Error ? error.message : String(error),
+          fallback: unsupported.fallback ?? null,
+        },
+      });
+    }
+    return false;
+  });
+}
+
+// 真实 content script 环境中自动注册；单测中显式调用 registerContentListener
+if (typeof chrome !== "undefined" && chrome.runtime?.onMessage) {
+  registerContentListener(chrome, document, location.href);
 }

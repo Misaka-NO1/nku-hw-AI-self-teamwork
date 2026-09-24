@@ -49,7 +49,13 @@ export async function submitConfirmedDraft(
   ticket: ImportTicket,
   workspaceRef: string,
   payload: unknown,
-  options: { backendOrigin: string; now?: number; fetchImpl?: typeof fetch },
+  options: {
+    backendOrigin: string;
+    now?: number;
+    fetchImpl?: typeof fetch;
+    /** 可选：调用方提供与票据无关的幂等键；默认 crypto.randomUUID() */
+    idempotencyKey?: string;
+  },
 ): Promise<SubmitResult> {
   const now = options.now ?? Date.now();
   assertTicketUsable(ticket, workspaceRef, now);
@@ -57,13 +63,17 @@ export async function submitConfirmedDraft(
     throw new TicketError("UPLOAD_DISABLED", "后端地址未配置，请使用离线 JSON 导出降级");
   }
   const fetchImpl = options.fetchImpl ?? fetch;
+  // 幂等键使用与票据无关的随机值；服务端只保存票据 hash，
+  // 不允许把原始票据拼进任何会被持久化的字段。
+  const idempotencyKey =
+    options.idempotencyKey ?? globalThis.crypto.randomUUID();
   const response = await fetchImpl(`${options.backendOrigin}/api/v1/schedules/import-drafts`, {
     method: "POST",
     credentials: "omit",
     headers: {
       "Content-Type": "application/json",
       Authorization: `ImportTicket ${ticket.token}`,
-      "Idempotency-Key": `${ticket.token}:submit`,
+      "Idempotency-Key": idempotencyKey,
     },
     body: JSON.stringify(payload),
   });

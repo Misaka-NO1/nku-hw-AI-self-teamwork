@@ -1,4 +1,5 @@
 import { recognizePage, unsupportedIssue } from "./adapters";
+import { shanghaiIsoNow } from "./calendar";
 import { normalizeCourses, parsePeriodRange, parseWeekday } from "./normalize";
 import type { NormalizeOptions, RawMeetingRow } from "./normalize";
 import { validateTimetableStructure } from "./schema";
@@ -120,37 +121,60 @@ function checkLimits(input: ImportFileInput): ParseIssue | null {
   return null;
 }
 
-function parseCsv(content: string): { headers: string[]; rows: string[][] } {
-  const lines = content.split(/\r?\n/).filter((line) => line.trim() !== "");
-  const parseLine = (line: string): string[] => {
-    const cells: string[] = [];
-    let current = "";
-    let inQuotes = false;
-    for (let i = 0; i < line.length; i += 1) {
-      const char = line[i];
-      if (inQuotes) {
-        if (char === '"' && line[i + 1] === '"') {
-          current += '"';
+/**
+ * 标准 CSV 解析：按字符流处理，引号内允许换行、逗号与双引号转义（""）。
+ * 不能先按换行切分，否则引号内带换行的字段会被截断（PR #2 审核意见 6）。
+ */
+function parseCsvRecords(content: string): string[][] {
+  const records: string[][] = [];
+  let field = "";
+  let record: string[] = [];
+  let inQuotes = false;
+  let i = 0;
+  while (i < content.length) {
+    const char = content[i];
+    if (inQuotes) {
+      if (char === '"') {
+        if (content[i + 1] === '"') {
+          field += '"';
           i += 1;
-        } else if (char === '"') {
-          inQuotes = false;
         } else {
-          current += char;
+          inQuotes = false;
         }
-      } else if (char === '"') {
-        inQuotes = true;
-      } else if (char === ",") {
-        cells.push(current);
-        current = "";
       } else {
-        current += char;
+        field += char;
       }
+    } else if (char === '"') {
+      inQuotes = true;
+    } else if (char === ",") {
+      record.push(field);
+      field = "";
+    } else if (char === "\n" || char === "\r") {
+      if (char === "\r" && content[i + 1] === "\n") {
+        i += 1;
+      }
+      record.push(field);
+      field = "";
+      records.push(record);
+      record = [];
+    } else {
+      field += char;
     }
-    cells.push(current);
-    return cells.map((cell) => cell.trim());
-  };
-  const headers = lines.length > 0 ? parseLine(lines[0]) : [];
-  return { headers, rows: lines.slice(1).map(parseLine) };
+    i += 1;
+  }
+  if (field !== "" || record.length > 0) {
+    record.push(field);
+    records.push(record);
+  }
+  return records
+    .filter((cells) => cells.some((cell) => cell.trim() !== ""))
+    .map((cells) => cells.map((cell) => cell.trim()));
+}
+
+function parseCsv(content: string): { headers: string[]; rows: string[][] } {
+  const records = parseCsvRecords(content);
+  const headers = records.length > 0 ? records[0] : [];
+  return { headers, rows: records.slice(1) };
 }
 
 /**
@@ -200,7 +224,7 @@ export function parseImportFile(
     return blockingParseResult([limitIssue], adapterId, adapterVersion);
   }
 
-  const capturedAt = options?.capturedAt ?? new Date().toISOString();
+  const capturedAt = options?.capturedAt ?? shanghaiIsoNow();
   const normalizeOptions: Omit<NormalizeOptions, "kind" | "completenessHint"> = {
     calendar,
     adapterId,
@@ -325,7 +349,7 @@ export function parseObservation(
     kind: "visible_dom",
     adapterId: recognition.adapterId,
     adapterVersion: "1.0.0",
-    capturedAt: options?.capturedAt ?? new Date().toISOString(),
+    capturedAt: options?.capturedAt ?? shanghaiIsoNow(),
     datasetKind: options?.datasetKind ?? "personal",
     completenessHint: completeness,
   });

@@ -55,10 +55,19 @@ cd extension && npm install && npm test && npm run typecheck
 
 ## 测试实际结果
 
-- backend：`53 passed`（其中 B 新增 30 例；D 既有 23 例全部保持通过，未改动 D 代码）
-- import-core：`23 passed`，tsc 无错误
-- extension：`15 passed`，tsc 无错误
+- backend：`55 passed`（含 B 新增 33 例：30 例时间/导入 + 3 例 TimeResult 契约一致性；D 既有测试全部保持通过，未改动 D 代码）
+- import-core：`31 passed`，tsc 无错误
+- extension：`24 passed`，tsc 无错误；`npm run build` 产出 `dist/{background,content,preview}.js` 与 `dist/preview.html`
 - TIME-01~08、IMPORT-01~03、EXT-01~03 全部覆盖且通过；预期值取自 `fixtures/expected-results.demo.json`，未改预期迎合实现
+
+## PR #2 审核意见修复（2026-09-24）
+
+1. 时间结果符合契约：`kind` 改为 `free_time`；`calculation_version` 移出 data（由适配层放 meta）；新增 `backend/tests/test_time_contract.py` 用真实返回值校验 `TimeResult`。
+2. 扩展运行链路补全：content script 注册 `extract-visible-schedule` 监听并回传观察值/结构化错误；预览页 `initPreview` 从 `chrome.storage.session` 读取观察值并渲染；`npm run build`（esbuild）生成 `dist/`。
+3. 幂等键改为 `crypto.randomUUID()`，不再把票据明文拼进 `Idempotency-Key`；提交时 workspace 取自票据本身。
+4. 导入页服务端校验按钮默认禁用并说明“接口待后端接入”，不再表现为已可用。
+5. 周课表：同格多课程并存、跨节课程在每个所占节次显示、选中周应用 cancel/replace 调休规则（`import-core` 新增 `getEffectiveTemplate`，与后端同语义）。
+6. CSV 改为字符流解析（支持引号内换行/逗号/转义）；`captured_at` 默认输出 `+08:00` 而非 `Z`。
 
 ## 真实教务页面是否验证
 

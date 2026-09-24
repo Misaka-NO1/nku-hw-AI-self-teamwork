@@ -25,9 +25,13 @@ from app.domains.schedule.service import (
     parse_datetime,
 )
 
-FREE_SLOTS_KIND = "free_slots"
+# kind 取值遵循 contracts/api.schema.json 的 TimeResult 枚举。
+FREE_TIME_KIND = "free_time"
 EVENT_CONFLICT_KIND = "event_conflict"
 DEADLINE_FEASIBILITY_KIND = "deadline_feasibility"
+
+# calculation_version 由 D 的适配层放入外层 meta，不进入 data（TimeResult 不允许该字段）。
+__all__ = ["CALCULATION_VERSION"]
 
 
 # ---------------------------------------------------------------------------
@@ -86,7 +90,7 @@ def find_free_slots(
 ) -> dict[str, Any]:
     """在已知安排下查询 window 内的空档。
 
-    返回 ``{kind, slots, coverage, needs_confirmation, calculation_version}``；
+    返回 ``{kind, slots, coverage, needs_confirmation}``；
     结果只代表“基于已导入安排”的空档，不保证用户一定有空。
     """
 
@@ -150,11 +154,10 @@ def find_free_slots(
     ]
 
     return {
-        "kind": FREE_SLOTS_KIND,
+        "kind": FREE_TIME_KIND,
         "slots": result_slots,
         "coverage": _coverage_from_events(events),
         "needs_confirmation": [],
-        "calculation_version": CALCULATION_VERSION,
     }
 
 
@@ -256,7 +259,6 @@ def _check_event_conflict(
             "conflicts": [],
             "coverage": coverage,
             "needs_confirmation": needs_confirmation,
-            "calculation_version": CALCULATION_VERSION,
         }
 
     event_start = parse_datetime(event["start"], field="event.start")
@@ -292,7 +294,6 @@ def _check_event_conflict(
         "conflicts": conflicts,
         "coverage": coverage,
         "needs_confirmation": needs_confirmation,
-        "calculation_version": CALCULATION_VERSION,
     }
 
 
@@ -330,7 +331,6 @@ def _check_deadline_feasibility(
             "candidate_slots": [],
             "coverage": coverage,
             "needs_confirmation": needs_confirmation,
-            "calculation_version": CALCULATION_VERSION,
         }
 
     assert due_at is not None and earliest_start is not None and estimated_minutes is not None
@@ -343,7 +343,6 @@ def _check_deadline_feasibility(
             "candidate_slots": [],
             "coverage": coverage,
             "needs_confirmation": [],
-            "calculation_version": CALCULATION_VERSION,
         }
 
     free = find_free_slots(
@@ -370,5 +369,4 @@ def _check_deadline_feasibility(
         "candidate_slots": candidate_slots,
         "coverage": coverage,
         "needs_confirmation": [],
-        "calculation_version": CALCULATION_VERSION,
     }

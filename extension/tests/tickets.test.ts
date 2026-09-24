@@ -75,3 +75,23 @@ describe("EXT-02 票据过期不上传", () => {
     ).rejects.toSatisfy((error: unknown) => error instanceof TicketError && error.code === "TOKEN_EXPIRED");
   });
 });
+
+describe("PR #2 审核意见 3：幂等键不携带票据明文", () => {
+  it("Idempotency-Key 是随机 UUID，不包含票据内容", async () => {
+    const fetchSpy = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ data: { draft_id: "d1", review_url: null } }),
+    });
+    await submitConfirmedDraft(ticket, "demo-workspace-01", {}, {
+      backendOrigin: "https://api.example.invalid",
+      now: ticket.expiresAt - 1000,
+      fetchImpl: fetchSpy,
+    });
+    const [, init] = fetchSpy.mock.calls[0] as [string, RequestInit];
+    const key = (init.headers as Record<string, string>)["Idempotency-Key"];
+    expect(key).toBeDefined();
+    expect(key).not.toContain(ticket.token);
+    expect(key).toMatch(/^[0-9a-f-]{36}$/);
+  });
+});
