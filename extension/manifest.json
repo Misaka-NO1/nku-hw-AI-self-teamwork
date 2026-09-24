@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "南开校园助手 · 课表导入（开发版）",
+  "version": "0.1.0",
+  "description": "仅在用户点击扩展后读取白名单教务页面的课程区域，本地预览核对后导出或经短期票据上传。不读取密码、Cookie、SSO 字段。",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": [],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "action": {
+    "default_title": "导入当前页课表"
+  },
+  "web_accessible_resources": []
+}

@@ -5,6 +5,8 @@
 import { PlaceholderPage } from "./PlaceholderPage";
 export { AffairsPage } from "../features/affairs/AffairsPage";
 export { DegreePage } from "../features/degree/DegreePage";
+export { default as ImportPage } from "../features/import/ImportPage";
+export { default as TimetablePage } from "../features/timetable/TimetablePage";
 
 export function ScenicPage() {
   return <PlaceholderPage componentName="ScenicPage" owner="A" />;
@@ -12,14 +14,6 @@ export function ScenicPage() {
 
 export function StudyPage() {
   return <PlaceholderPage componentName="StudyPage" owner="A" />;
-}
-
-export function ImportPage() {
-  return <PlaceholderPage componentName="ImportPage" owner="B" />;
-}
-
-export function TimetablePage() {
-  return <PlaceholderPage componentName="TimetablePage" owner="B" />;
 }
 
 export function TasksPage() {
