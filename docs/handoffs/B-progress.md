@@ -77,6 +77,15 @@ cd extension && npm install && npm test && npm run typecheck
 
 `nku-adapter-v1`：disabled（生产白名单为空）。待核查字段见 `docs/evidence/B/adapter-observation.md`。
 
+## PR #2 第二轮复审修复（2026-09-24）
+
+- P1 扩展产物无法作为经典脚本执行：`background/content/preview` 全部改为 IIFE 打包；新增 `tests/dist.test.ts` 用 node:vm 以经典脚本方式编译 dist 产物（`npm run verify` = 构建+测试，产物缺失时该用例显式跳过）。
+- P1 合入 main 后整站编译失败：已合入 main（含 C 的前端骨架与 A 的地图），在 `frontend/package.json` 声明 `@campus/import-core: workspace:*` 并更新 `pnpm-lock.yaml`（应审核要求代办，已同步 C）；`pages.tsx` 按 C 预留的注释接入 B 的 `ImportPage`/`TimetablePage`。`pnpm --filter web build`（tsc --noEmit + vite build）通过，前端 23 项测试通过。本机 Windows 无符号链接权限，pnpm 工作区链接在本机用 junction 兜底验证，配置文件与锁文件均为标准 pnpm 格式。
+- P2 离线导出无法回导：导入器现在识别扩展导出的 PageObservation JSON，在页面内关联学期日历后重新解析为标准 TimetableImport；预览页支持“未关联日历先导出观察值、之后在导入页闭环”。新增导出→导入双向回归测试。
+- 其他：`ImportPage` 增加学期日历上传步骤（未关联日历不生成公历日期）；`captured_at` 输出 +08:00。
+
+本轮测试：backend 55 passed；import-core 33 passed；extension 25 passed（含产物加载验证）；web build 通过、web 23 passed。
+
 ## 给 C 的下一步
 
 - 接入路由 `/tools/import` → `ImportPage`、`/tools/timetable` → `TimetablePage`（默认导出）

@@ -277,6 +277,21 @@ function normalizeJsonPayload(
       options.adapterVersion,
     );
   }
+  // 观察值文件（扩展离线导出的 PageObservation）可在关联学期日历后重新解析，
+  // 形成“离线导出 → 文件导入”的闭环（PR #2 复审 P2）。
+  const maybeObservation = parsed as Partial<PageObservation>;
+  if (
+    Array.isArray(maybeObservation.tableHeaders) &&
+    Array.isArray(maybeObservation.rows) &&
+    typeof maybeObservation.origin === "string" &&
+    typeof maybeObservation.pathname === "string"
+  ) {
+    return parseObservation(maybeObservation as PageObservation, options.calendar, {
+      datasetKind: options.datasetKind,
+      capturedAt: options.capturedAt,
+    });
+  }
+
   // 标准 JSON 导入直接接受 TimetableImport 结构；周次等语义校验在后端 validate_timetable 复核
   const candidate = parsed as { courses?: unknown; source?: { coverage?: unknown } };
   if (!Array.isArray(candidate.courses) || candidate.courses.length === 0) {

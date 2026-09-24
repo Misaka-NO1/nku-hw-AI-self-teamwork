@@ -8,11 +8,12 @@
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json",
     "build": "npm run build:js && npm run build:copy",
-    "build:js": "esbuild src/background.ts src/content.ts --bundle --format=esm --target=chrome110 --outdir=dist && esbuild src/preview/preview.ts --bundle --format=esm --target=chrome110 --outfile=dist/preview.js",
-    "build:copy": "node scripts/copy-static.mjs"
+    "build:js": "esbuild src/background.ts src/content.ts --bundle --format=iife --target=chrome110 --outdir=dist && esbuild src/preview/preview.ts --bundle --format=iife --target=chrome110 --outfile=dist/preview.js",
+    "build:copy": "node scripts/copy-static.mjs",
+    "verify": "npm run build && vitest run"
   },
   "dependencies": {
-    "@campus/import-core": "file:../packages/import-core"
+    "@campus/import-core": "workspace:*"
   },
   "devDependencies": {
     "@types/chrome": "^0.1.8",

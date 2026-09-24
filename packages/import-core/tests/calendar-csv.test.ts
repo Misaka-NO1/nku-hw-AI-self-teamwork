@@ -101,3 +101,42 @@ describe("CSV 引号内换行（PR #2 审核意见 6）", () => {
     expect(result.payload!.courses[0].title).toBe('课程"甲"（虚构）');
   });
 });
+
+describe("观察值导出→导入闭环（PR #2 复审 P2）", () => {
+  it("扩展导出的 PageObservation JSON 可在关联日历后重新导入", () => {
+    const observation = {
+      origin: "https://fixtures.example.invalid",
+      pathname: "/demo/timetable",
+      frameOrigin: null,
+      tableHeaders: ["课程", "星期", "节次", "周次", "地点"],
+      rows: [["高等数学（虚构）", "周一", "1-2", "1-4", "示例楼101"]],
+      selectedTerm: "demo-term-2026A",
+      selectedWeeks: [],
+      hasPagination: false,
+      hasVirtualRows: false,
+    };
+    const result = parseImportFile(
+      { name: "observation-export.json", content: JSON.stringify(observation) },
+      "json",
+      term,
+      { datasetKind: "demo", capturedAt: "2026-09-19T12:00:00+08:00" },
+    );
+    expect(result.payload).not.toBeNull();
+    expect(result.payload!.courses[0].title).toBe("高等数学（虚构）");
+    expect(result.payload!.source.kind).toBe("visible_dom");
+    expect(result.payload!.source.adapter_id).toBe("demo-fixture-adapter");
+  });
+
+  it("导出的标准 TimetableImport 仍可回导（两种导出格式都能闭环）", () => {
+    const standard = JSON.parse(
+      readFileSync(resolve(repoRoot, "fixtures/timetable.demo.json"), "utf-8"),
+    );
+    const result = parseImportFile(
+      { name: "timetable.json", content: JSON.stringify(standard) },
+      "json",
+      term,
+    );
+    expect(result.payload).not.toBeNull();
+    expect(result.payload!.courses).toHaveLength(3);
+  });
+});

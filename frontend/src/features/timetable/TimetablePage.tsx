@@ -17,7 +17,7 @@ const WEEKDAY_LABELS = ["一", "二", "三", "四", "五", "六", "日"];
 const COURSE_COLORS = ["#dbeafe", "#dcfce7", "#fef9c3", "#fee2e2", "#ede9fe", "#ffedd5"];
 
 export interface TimetablePageProps {
-  timetable: TimetableImport | null;
+  timetable?: TimetableImport | null;
 }
 
 interface CellEntry {
@@ -32,7 +32,7 @@ interface DayView {
   overrideNote: string | null;
 }
 
-export default function TimetablePage({ timetable }: TimetablePageProps) {
+export default function TimetablePage({ timetable = null }: TimetablePageProps) {
   const term: TermCalendar | null = timetable?.term ?? null;
   const [week, setWeek] = useState(1);
 

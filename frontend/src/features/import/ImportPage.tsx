@@ -26,9 +26,9 @@ const FORMAT_BY_EXT: Record<string, ImportFormat> = {
 };
 
 export interface ImportPageProps {
-  /** 用户自己提供/确认的学期日历；未提供时只显示原始星期/节次/周次 */
-  calendar: TermCalendar | null;
-  datasetKind: "demo" | "personal";
+  /** 可选：外部传入的学期日历；也可在页面内上传 TermCalendar JSON */
+  calendar?: TermCalendar | null;
+  datasetKind?: "demo" | "personal";
   /**
    * 服务端校验端点 /api/v1/schedules/validate 是否已由 D 接入。
    * 默认 false：按钮禁用并说明原因，绝不表现为已可用（PR #2 审核意见 4）。
@@ -36,7 +36,25 @@ export interface ImportPageProps {
   serverValidateAvailable?: boolean;
 }
 
-export default function ImportPage({ calendar, datasetKind, serverValidateAvailable = false }: ImportPageProps) {
+function isTermCalendar(value: unknown): value is TermCalendar {
+  const candidate = value as Partial<TermCalendar> | null;
+  return (
+    typeof candidate === "object" &&
+    candidate !== null &&
+    typeof candidate.term_id === "string" &&
+    typeof candidate.week1_monday === "string" &&
+    typeof candidate.teaching_weeks === "number" &&
+    Array.isArray(candidate.periods) &&
+    Array.isArray(candidate.overrides)
+  );
+}
+
+export default function ImportPage({
+  calendar: initialCalendar = null,
+  datasetKind = "demo",
+  serverValidateAvailable = false,
+}: ImportPageProps) {
+  const [calendar, setCalendar] = useState<TermCalendar | null>(initialCalendar);
   const [fileName, setFileName] = useState<string | null>(null);
   const [result, setResult] = useState<ParseResult | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +68,24 @@ export default function ImportPage({ calendar, datasetKind, serverValidateAvaila
     () => result?.issues.filter((issue) => !issue.blocking) ?? [],
     [result],
   );
+
+  async function onCalendarFileChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    setError(null);
+    if (!file) return;
+    try {
+      const parsed: unknown = JSON.parse(await file.text());
+      if (!isTermCalendar(parsed)) {
+        setError("该 JSON 不是有效的学期日历（TermCalendar），请核对后重试");
+        return;
+      }
+      setCalendar(parsed);
+      setResult(null);
+      setFileName(null);
+    } catch {
+      setError("学期日历 JSON 解析失败");
+    }
+  }
 
   async function onFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -92,7 +128,28 @@ export default function ImportPage({ calendar, datasetKind, serverValidateAvaila
         或使用浏览器扩展读取当前页面。
       </p>
 
-      <input type="file" accept=".json,.csv,.html,.htm" onChange={onFileChange} />
+      <section>
+        <h2>第一步：关联学期日历</h2>
+        {calendar ? (
+          <p>
+            当前学期：{calendar.term_id}（{calendar.calendar_status}）{" "}
+            <button type="button" onClick={() => setCalendar(null)}>
+              更换
+            </button>
+          </p>
+        ) : (
+          <p>
+            请先上传你自己确认的学期日历 JSON（TermCalendar）。未关联日历前只做原始
+            星期/节次/周次核对，不生成公历日期。
+            <input type="file" accept=".json" onChange={onCalendarFileChange} />
+          </p>
+        )}
+      </section>
+
+      <section>
+        <h2>第二步：选择课表文件</h2>
+        <input type="file" accept=".json,.csv,.html,.htm" onChange={onFileChange} />
+      </section>
       {fileName && <p>已选择文件：{fileName}</p>}
       {error && <p role="alert">{error}</p>}
 
