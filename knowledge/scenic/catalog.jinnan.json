@@ -1,0 +1,1327 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "jinnan-2026-09-26",
+  "maps": [
+    {
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "campus_id": "nku-jinnan",
+      "width": 1440,
+      "height": 1062,
+      "asset_path": null,
+      "rights_status": "pending",
+      "data_status": "needs_verification"
+    }
+  ],
+  "spots": [
+    {
+      "spot_id": "84998d8e-c391-46fa-aa9b-412153c1fd14",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "思源道海棠",
+      "x_norm": 0.21343644902861014,
+      "y_norm": 0.42466270845721354,
+      "tags": [
+        "flower",
+        "海棠"
+      ],
+      "description": "NKU超绝海棠花打卡圣地",
+      "photos": [
+        {
+          "photo_id": "29b75532-cd98-4cc9-831e-4c13ba86b0b8",
+          "asset_path": "assets/scenic/29b75532-cd98-4cc9-831e-4c13ba86b0b8.webp",
+          "caption": "思源道海棠实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "25eb2f03-1fe4-4170-869a-b5f682b25cfc",
+          "asset_path": "assets/scenic/25eb2f03-1fe4-4170-869a-b5f682b25cfc.webp",
+          "caption": "思源道海棠实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "0cc4d8d7-8290-4a68-b1cf-a18f58cdf600",
+          "asset_path": "assets/scenic/0cc4d8d7-8290-4a68-b1cf-a18f58cdf600.webp",
+          "caption": "思源道海棠实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "3c726f3b-b312-4ce9-8c16-b6fef22a153c",
+          "asset_path": "assets/scenic/3c726f3b-b312-4ce9-8c16-b6fef22a153c.webp",
+          "caption": "思源道海棠实景照片 4",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "45e75d1b-66ce-45b8-862e-9743a4081cbb",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "木斋图书馆",
+      "x_norm": 0.2759558709957478,
+      "y_norm": 0.4589515903159394,
+      "tags": [
+        "architecture"
+      ],
+      "description": "地标性建筑，超绝出片地点",
+      "photos": [
+        {
+          "photo_id": "3b8c4e54-b67d-427e-937b-5c1a773bf682",
+          "asset_path": "assets/scenic/3b8c4e54-b67d-427e-937b-5c1a773bf682.webp",
+          "caption": "木斋图书馆实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "4d709175-4c38-433b-b066-09cf2211590b",
+          "asset_path": "assets/scenic/4d709175-4c38-433b-b066-09cf2211590b.webp",
+          "caption": "木斋图书馆实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "87ae5b2a-a221-48ab-878f-5c08cd8c2a81",
+          "asset_path": "assets/scenic/87ae5b2a-a221-48ab-878f-5c08cd8c2a81.webp",
+          "caption": "木斋图书馆实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "0c2fa69e-e5c5-4d1b-98e7-0b74e9327e79",
+          "asset_path": "assets/scenic/0c2fa69e-e5c5-4d1b-98e7-0b74e9327e79.webp",
+          "caption": "木斋图书馆实景照片 4",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "70e7f96f-4632-4007-b848-543793e113ee",
+          "asset_path": "assets/scenic/70e7f96f-4632-4007-b848-543793e113ee.webp",
+          "caption": "木斋图书馆实景照片 5",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "43d5304e-a806-4f8d-acdc-4b626cdd2ab0",
+          "asset_path": "assets/scenic/43d5304e-a806-4f8d-acdc-4b626cdd2ab0.webp",
+          "caption": "木斋图书馆实景照片 6",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "ed3253c4-f263-48a2-87e1-5ecb5bedfe9b",
+          "asset_path": "assets/scenic/ed3253c4-f263-48a2-87e1-5ecb5bedfe9b.webp",
+          "caption": "木斋图书馆实景照片 7",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "56a2c10d-b06f-4f8d-a2d6-6f613770c267",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "思源堂",
+      "x_norm": 0.3116898677311577,
+      "y_norm": 0.43702082042187584,
+      "tags": [
+        "architecture"
+      ],
+      "description": "NKU唯一在战火中保留下来的建筑（津南是复刻版）",
+      "photos": [
+        {
+          "photo_id": "63a09c57-4306-4093-9393-5d87f2663fba",
+          "asset_path": "assets/scenic/63a09c57-4306-4093-9393-5d87f2663fba.webp",
+          "caption": "思源堂实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "ddbc8787-ab9b-495e-bc11-ef13717a9c61",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "秀山堂",
+      "x_norm": 0.29523506166151514,
+      "y_norm": 0.4969757980650972,
+      "tags": [
+        "architecture"
+      ],
+      "description": "标志性建筑",
+      "photos": [
+        {
+          "photo_id": "5e7f6196-9c16-43f2-aabd-d0b0fd540ff9",
+          "asset_path": "assets/scenic/5e7f6196-9c16-43f2-aabd-d0b0fd540ff9.webp",
+          "caption": "秀山堂实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "4de85ee1-b95c-4e8e-9eb9-30b7415927ad",
+          "asset_path": "assets/scenic/4de85ee1-b95c-4e8e-9eb9-30b7415927ad.webp",
+          "caption": "秀山堂实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "18aacecb-c362-40de-a7cf-93a461ba5c3c",
+          "asset_path": "assets/scenic/18aacecb-c362-40de-a7cf-93a461ba5c3c.webp",
+          "caption": "秀山堂实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "d25e837c-be5a-44a4-a010-d44bb1a9cc3c",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "马蹄湖观景亭",
+      "x_norm": 0.2979324009650983,
+      "y_norm": 0.5706638516508671,
+      "tags": [
+        "architecture"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "f5e782af-ec55-4f01-8ce4-524950319b86",
+          "asset_path": "assets/scenic/f5e782af-ec55-4f01-8ce4-524950319b86.webp",
+          "caption": "马蹄湖观景亭实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "718f6ee0-da38-4724-8e1a-f4c2d420f72f",
+          "asset_path": "assets/scenic/718f6ee0-da38-4724-8e1a-f4c2d420f72f.webp",
+          "caption": "马蹄湖观景亭实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "880a87a6-661a-4545-8caa-4206ac049fd2",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "梨园",
+      "x_norm": 0.43777922293210453,
+      "y_norm": 0.661681910916545,
+      "tags": [
+        "flower",
+        "梨花"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "1d46f0c6-cb24-438e-826a-ced20b7853f8",
+          "asset_path": "assets/scenic/1d46f0c6-cb24-438e-826a-ced20b7853f8.webp",
+          "caption": "梨园实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "3b2a476e-47d2-4fce-99cb-4ccd2601507b",
+          "asset_path": "assets/scenic/3b2a476e-47d2-4fce-99cb-4ccd2601507b.webp",
+          "caption": "梨园实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "d3b3f451-32aa-4159-a0c6-95a1b89e3520",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "南开大学图书馆",
+      "x_norm": 0.5378204694953516,
+      "y_norm": 0.6744135567125653,
+      "tags": [
+        "architecture"
+      ],
+      "description": "标志性建筑",
+      "photos": [
+        {
+          "photo_id": "f738e808-cb22-41ed-a630-ee7bb0b85d4d",
+          "asset_path": "assets/scenic/f738e808-cb22-41ed-a630-ee7bb0b85d4d.webp",
+          "caption": "南开大学图书馆实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "be2ce640-644d-427a-ba6f-09be87ce670d",
+          "asset_path": "assets/scenic/be2ce640-644d-427a-ba6f-09be87ce670d.webp",
+          "caption": "南开大学图书馆实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "00d0adc5-ae8f-4149-bac4-3381f785ac8e",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "贴梗海棠",
+      "x_norm": 0.4949902855752223,
+      "y_norm": 0.6317589605757085,
+      "tags": [
+        "flower",
+        "海棠"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "2c09c5f8-a2ac-42f7-a516-89fbc9ded3fb",
+          "asset_path": "assets/scenic/2c09c5f8-a2ac-42f7-a516-89fbc9ded3fb.webp",
+          "caption": "贴梗海棠实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3,
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "2d778595-6917-4410-a4b3-fd27b3e1ce50",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "芙蓉葵",
+      "x_norm": 0.44902228917642056,
+      "y_norm": 0.6869502464277399,
+      "tags": [
+        "flower",
+        "芙蓉葵"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "323cdf15-8970-4493-97f7-8defcc4fdd84",
+          "asset_path": "assets/scenic/323cdf15-8970-4493-97f7-8defcc4fdd84.webp",
+          "caption": "芙蓉葵实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        7,
+        8,
+        9
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "10b1c883-6673-4f4c-b2e8-9e1a0c110c51",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "山桃",
+      "x_norm": 0.29226929106235805,
+      "y_norm": 0.6221870622128934,
+      "tags": [
+        "flower",
+        "山桃"
+      ],
+      "description": "环马蹄湖有一整圈儿的山桃",
+      "photos": [
+        {
+          "photo_id": "da12694f-2b25-4e38-a8ac-f6d20a1d3d4c",
+          "asset_path": "assets/scenic/da12694f-2b25-4e38-a8ac-f6d20a1d3d4c.webp",
+          "caption": "山桃实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "3c70637d-e2b3-4322-95ed-55d3d1f49bbc",
+          "asset_path": "assets/scenic/3c70637d-e2b3-4322-95ed-55d3d1f49bbc.webp",
+          "caption": "山桃实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "e4bab185-65a5-49da-b266-68596850a32e",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "黑天鹅",
+      "x_norm": 0.2860818083132312,
+      "y_norm": 0.5886424370049085,
+      "tags": [
+        "waterside",
+        "wildlife"
+      ],
+      "description": "随机刷新的唯一一只黑天鹅",
+      "photos": [
+        {
+          "photo_id": "490855fd-3fb1-40ef-a259-f4888c802261",
+          "asset_path": "assets/scenic/490855fd-3fb1-40ef-a259-f4888c802261.webp",
+          "caption": "黑天鹅实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "5d50cbc6-7f80-420a-82d5-576a1c8d5722",
+          "asset_path": "assets/scenic/5d50cbc6-7f80-420a-82d5-576a1c8d5722.webp",
+          "caption": "黑天鹅实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "139002cb-6cac-4161-a5c9-916729acb664",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "一颗低垂的海棠",
+      "x_norm": 0.419198192058034,
+      "y_norm": 0.7470174722822079,
+      "tags": [
+        "flower",
+        "海棠"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "154402e1-985d-4064-a134-65a493bb92f4",
+          "asset_path": "assets/scenic/154402e1-985d-4064-a134-65a493bb92f4.webp",
+          "caption": "一颗低垂的海棠实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "9f5a3658-9da5-4040-9953-33c8f6c9b8ad",
+          "asset_path": "assets/scenic/9f5a3658-9da5-4040-9953-33c8f6c9b8ad.webp",
+          "caption": "一颗低垂的海棠实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "403ccfc8-4437-457a-98b5-f159b9d4cc74",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "樱花树",
+      "x_norm": 0.3356060127604283,
+      "y_norm": 0.6642491215849685,
+      "tags": [
+        "flower",
+        "樱花"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "a2300b93-26b7-4121-863f-6d0a5c1392b4",
+          "asset_path": "assets/scenic/a2300b93-26b7-4121-863f-6d0a5c1392b4.webp",
+          "caption": "樱花树实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "8e726e16-dd50-4d8f-8139-262f34fc3491",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "重瓣樱花",
+      "x_norm": 0.39098751360084,
+      "y_norm": 0.7391507869952275,
+      "tags": [
+        "flower",
+        "樱花"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "f9c56c20-2344-4dd4-a5bc-52edb5d2113b",
+          "asset_path": "assets/scenic/f9c56c20-2344-4dd4-a5bc-52edb5d2113b.webp",
+          "caption": "重瓣樱花实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "5c7cf5a4-2fa1-4ee6-acf6-e451061e4c97",
+          "asset_path": "assets/scenic/5c7cf5a4-2fa1-4ee6-acf6-e451061e4c97.webp",
+          "caption": "重瓣樱花实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "ef548efb-818d-4c39-b6ff-3d1409a0da17",
+          "asset_path": "assets/scenic/ef548efb-818d-4c39-b6ff-3d1409a0da17.webp",
+          "caption": "重瓣樱花实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "eefbd244-b2eb-4182-a9ae-45f810284041",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "楼内赏海棠",
+      "x_norm": 0.4908442165145968,
+      "y_norm": 0.5982805697510595,
+      "tags": [
+        "flower",
+        "海棠"
+      ],
+      "description": "在公教楼A楼的南侧，在窗外可以看见大片盛开的海棠。",
+      "photos": [
+        {
+          "photo_id": "b7c7217b-866e-4f60-b139-3e8c80b140ea",
+          "asset_path": "assets/scenic/b7c7217b-866e-4f60-b139-3e8c80b140ea.webp",
+          "caption": "楼内赏海棠实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "aab1706b-4e3a-45d3-b22e-cf62de6fb6b8",
+          "asset_path": "assets/scenic/aab1706b-4e3a-45d3-b22e-cf62de6fb6b8.webp",
+          "caption": "楼内赏海棠实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "ff695442-7ec7-49ad-80b6-0937450d9b2b",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "红叶李",
+      "x_norm": 0.3028758281034555,
+      "y_norm": 0.3275277651461309,
+      "tags": [
+        "flower",
+        "红叶李"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "16e9f8a9-b70b-4675-9c26-5cba12899f19",
+          "asset_path": "assets/scenic/16e9f8a9-b70b-4675-9c26-5cba12899f19.webp",
+          "caption": "红叶李实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3,
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "b431f585-033b-4401-888f-643d5d06b8a4",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "油菜花",
+      "x_norm": 0.32726978013768393,
+      "y_norm": 0.3851595533592373,
+      "tags": [
+        "flower",
+        "油菜花"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "2c3b735e-cefb-4e65-93d8-db1f939b5d77",
+          "asset_path": "assets/scenic/2c3b735e-cefb-4e65-93d8-db1f939b5d77.webp",
+          "caption": "油菜花实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "3bbc3c0b-fba6-47e2-89a5-3e8975ce514e",
+          "asset_path": "assets/scenic/3bbc3c0b-fba6-47e2-89a5-3e8975ce514e.webp",
+          "caption": "油菜花实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "5a45f671-2d3e-4c4e-bc28-0d7800f0a308",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "重瓣榆叶梅",
+      "x_norm": 0.47059995621807216,
+      "y_norm": 0.667891110915201,
+      "tags": [
+        "flower",
+        "榆叶梅"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "8a37450c-adec-4f2c-876b-13fc78b927f4",
+          "asset_path": "assets/scenic/8a37450c-adec-4f2c-876b-13fc78b927f4.webp",
+          "caption": "重瓣榆叶梅实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "6553fc59-edf1-48b9-a1a9-db2cab0556bb",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "西南门口的小花园",
+      "x_norm": 0.26958745099364334,
+      "y_norm": 0.8115230296382685,
+      "tags": [
+        "flower",
+        "格桑花",
+        "二月兰"
+      ],
+      "description": "不同季节有不同的花景",
+      "photos": [
+        {
+          "photo_id": "a89e4cfb-f93e-4356-928e-04459caf7d76",
+          "asset_path": "assets/scenic/a89e4cfb-f93e-4356-928e-04459caf7d76.webp",
+          "caption": "西南门口的小花园实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "03917b90-3813-4e73-9861-46cd01f1e7df",
+          "asset_path": "assets/scenic/03917b90-3813-4e73-9861-46cd01f1e7df.webp",
+          "caption": "西南门口的小花园实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "b57c96c0-9c92-4291-aecc-c14dd27451c1",
+          "asset_path": "assets/scenic/b57c96c0-9c92-4291-aecc-c14dd27451c1.webp",
+          "caption": "西南门口的小花园实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3,
+        4,
+        8,
+        9,
+        10
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "d8a80b56-074e-4a1f-b984-e0f1757364e7",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "枫叶园",
+      "x_norm": 0.10795924569384996,
+      "y_norm": 0.550309222071472,
+      "tags": [
+        "foliage",
+        "枫树"
+      ],
+      "description": "神秘打野点，超多美丽的枫树，出片的好地方",
+      "photos": [
+        {
+          "photo_id": "69fa1c2d-a43d-43f5-856d-ab66fbf7e0ac",
+          "asset_path": "assets/scenic/69fa1c2d-a43d-43f5-856d-ab66fbf7e0ac.webp",
+          "caption": "枫叶园实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "300ea787-24bc-461a-8537-a7baefff347f",
+          "asset_path": "assets/scenic/300ea787-24bc-461a-8537-a7baefff347f.webp",
+          "caption": "枫叶园实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "9d56189e-6477-49ae-a019-d6580755d68f",
+          "asset_path": "assets/scenic/9d56189e-6477-49ae-a019-d6580755d68f.webp",
+          "caption": "枫叶园实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "f47bc931-b24a-4b53-af2d-c4923cd12c29",
+          "asset_path": "assets/scenic/f47bc931-b24a-4b53-af2d-c4923cd12c29.webp",
+          "caption": "枫叶园实景照片 4",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "3ad4eeab-87ae-4956-bf69-4194c6844600",
+          "asset_path": "assets/scenic/3ad4eeab-87ae-4956-bf69-4194c6844600.webp",
+          "caption": "枫叶园实景照片 5",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "cc5cd5f8-7a62-43fb-bdc8-08c01342d5f5",
+          "asset_path": "assets/scenic/cc5cd5f8-7a62-43fb-bdc8-08c01342d5f5.webp",
+          "caption": "枫叶园实景照片 6",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "422e9ee6-f2e1-4f49-8000-939f76224045",
+          "asset_path": "assets/scenic/422e9ee6-f2e1-4f49-8000-939f76224045.webp",
+          "caption": "枫叶园实景照片 7",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        9,
+        10,
+        11
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "0d6ed73c-0181-424f-890d-c0691c0eb218",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "小花园",
+      "x_norm": 0.13058851098988244,
+      "y_norm": 0.7399963872904589,
+      "tags": [
+        "flower",
+        "菊花桃",
+        "碧桃",
+        "榆叶梅"
+      ],
+      "description": "种植着菊花桃和大量碧桃，榆叶梅的地方",
+      "photos": [
+        {
+          "photo_id": "838ef954-239f-4446-ab60-8643eab127e8",
+          "asset_path": "assets/scenic/838ef954-239f-4446-ab60-8643eab127e8.webp",
+          "caption": "小花园实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "e510efb5-af01-43eb-8d0a-dc1735ccb0e5",
+          "asset_path": "assets/scenic/e510efb5-af01-43eb-8d0a-dc1735ccb0e5.webp",
+          "caption": "小花园实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "ace50c09-901a-4fc1-9ddb-dd28bfbfd755",
+          "asset_path": "assets/scenic/ace50c09-901a-4fc1-9ddb-dd28bfbfd755.webp",
+          "caption": "小花园实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "d6991a3f-69e3-4f4d-8b54-6d61c78575db",
+          "asset_path": "assets/scenic/d6991a3f-69e3-4f4d-8b54-6d61c78575db.webp",
+          "caption": "小花园实景照片 4",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "45479e18-e12f-46b4-9e0c-623ca8d36aa6",
+          "asset_path": "assets/scenic/45479e18-e12f-46b4-9e0c-623ca8d36aa6.webp",
+          "caption": "小花园实景照片 5",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "908d127d-5ed6-4fea-9317-61acb4772e88",
+          "asset_path": "assets/scenic/908d127d-5ed6-4fea-9317-61acb4772e88.webp",
+          "caption": "小花园实景照片 6",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "91d9bf30-10aa-4973-8128-ca6892de201b",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "杏花园",
+      "x_norm": 0.44890504298822137,
+      "y_norm": 0.8490174293700371,
+      "tags": [
+        "flower",
+        "杏花"
+      ],
+      "description": "隐匿于大量白杨银杏树之后的杏花园",
+      "photos": [
+        {
+          "photo_id": "753d6f0d-39b1-4093-8300-f445a333bb6a",
+          "asset_path": "assets/scenic/753d6f0d-39b1-4093-8300-f445a333bb6a.webp",
+          "caption": "杏花园实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "284c1405-4556-43f8-a0d4-52ca00f94325",
+          "asset_path": "assets/scenic/284c1405-4556-43f8-a0d4-52ca00f94325.webp",
+          "caption": "杏花园实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "84099693-6ca2-4d9a-b7a8-43ee8d1fd1fd",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "绝美小路",
+      "x_norm": 0.46358993494192147,
+      "y_norm": 0.7843598478841645,
+      "tags": [
+        "flower",
+        "丁香",
+        "海棠"
+      ],
+      "description": "这条小路一边开满了丁香，一边开满了海棠",
+      "photos": [
+        {
+          "photo_id": "d42e8ff7-adfa-49cb-8965-43ef80729042",
+          "asset_path": "assets/scenic/d42e8ff7-adfa-49cb-8965-43ef80729042.webp",
+          "caption": "绝美小路实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "5d6e60d4-2453-45d9-adc0-5bbf5c8e92f3",
+          "asset_path": "assets/scenic/5d6e60d4-2453-45d9-adc0-5bbf5c8e92f3.webp",
+          "caption": "绝美小路实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "55c8675c-5241-4697-bfcb-ab31a06209fb",
+          "asset_path": "assets/scenic/55c8675c-5241-4697-bfcb-ab31a06209fb.webp",
+          "caption": "绝美小路实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "21f7b9c5-b58b-4b44-8184-eddc5db19a1d",
+          "asset_path": "assets/scenic/21f7b9c5-b58b-4b44-8184-eddc5db19a1d.webp",
+          "caption": "绝美小路实景照片 4",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "05c0dc4a-e4f9-4404-8721-1dc292996ccd",
+          "asset_path": "assets/scenic/05c0dc4a-e4f9-4404-8721-1dc292996ccd.webp",
+          "caption": "绝美小路实景照片 5",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "f22885d2-efa5-4ac5-a1ac-6242e15a0fb2",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "小”祭坛“？",
+      "x_norm": 0.43835420125556374,
+      "y_norm": 0.7856620290336529,
+      "tags": [
+        "foliage",
+        "银杏"
+      ],
+      "description": "圆形露台中了一圈银杏树",
+      "photos": [
+        {
+          "photo_id": "7ed2dd3d-73c5-4804-807f-cfb976349ce2",
+          "asset_path": "assets/scenic/7ed2dd3d-73c5-4804-807f-cfb976349ce2.webp",
+          "caption": "小”祭坛“？实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        11
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "38e97e48-5d2e-4cd9-a018-c05dc9206f25",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "银杏林",
+      "x_norm": 0.46853849152097793,
+      "y_norm": 0.8170490617133503,
+      "tags": [
+        "foliage",
+        "银杏"
+      ],
+      "description": "超多银杏树，冷门出片地",
+      "photos": [
+        {
+          "photo_id": "d9869a5c-c6a7-4360-a949-52c02c906c6c",
+          "asset_path": "assets/scenic/d9869a5c-c6a7-4360-a949-52c02c906c6c.webp",
+          "caption": "银杏林实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "2eeff1c8-9aa2-4954-a3a3-25081633ca07",
+          "asset_path": "assets/scenic/2eeff1c8-9aa2-4954-a3a3-25081633ca07.webp",
+          "caption": "银杏林实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "e1c18c2f-0c57-468b-b6f5-cdf9cd5d570f",
+          "asset_path": "assets/scenic/e1c18c2f-0c57-468b-b6f5-cdf9cd5d570f.webp",
+          "caption": "银杏林实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        11
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "dedc004b-efad-4cd4-b64a-55eaba3d8393",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "银杏街道",
+      "x_norm": 0.5118590371639294,
+      "y_norm": 0.801218917102557,
+      "tags": [
+        "foliage",
+        "银杏"
+      ],
+      "description": "两边种满银杏树的“网红”打卡地",
+      "photos": [
+        {
+          "photo_id": "7d348af3-99aa-4cd2-9196-2f2c275197d6",
+          "asset_path": "assets/scenic/7d348af3-99aa-4cd2-9196-2f2c275197d6.webp",
+          "caption": "银杏街道实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "3c93c089-cdb7-4af3-9813-fc642fffcb15",
+          "asset_path": "assets/scenic/3c93c089-cdb7-4af3-9813-fc642fffcb15.webp",
+          "caption": "银杏街道实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "b17c8677-a1e3-40e6-9fdc-151f38e1a9f6",
+          "asset_path": "assets/scenic/b17c8677-a1e3-40e6-9fdc-151f38e1a9f6.webp",
+          "caption": "银杏街道实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        11
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "36cea9ac-6fdf-4594-8f05-0705b7b97b02",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "总理雕像and校友牌",
+      "x_norm": 0.519958268387652,
+      "y_norm": 0.7427587699936462,
+      "tags": [
+        "architecture"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "e8bd590b-5d09-44c7-8444-862fa7f66921",
+          "asset_path": "assets/scenic/e8bd590b-5d09-44c7-8444-862fa7f66921.webp",
+          "caption": "总理雕像and校友牌实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "fec3d56a-f2a1-484a-802a-5d2d96f1badc",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "红叶李and榆叶梅",
+      "x_norm": 0.4088704089842637,
+      "y_norm": 0.32793917381984505,
+      "tags": [
+        "flower",
+        "红叶李",
+        "榆叶梅"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "a2f81aa3-82f5-4ee2-9a9a-9850b5dffed5",
+          "asset_path": "assets/scenic/a2f81aa3-82f5-4ee2-9a9a-9850b5dffed5.webp",
+          "caption": "红叶李and榆叶梅实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3,
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "12b2aeb6-502e-4d10-af76-6a49f6ed44da",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "津南大草原",
+      "x_norm": 0.3921139976114577,
+      "y_norm": 0.5085324253573485,
+      "tags": [
+        "architecture"
+      ],
+      "description": "大块儿草地，种着梨树，柳树，桃树，丁香等等，野餐散步的好地方",
+      "photos": [
+        {
+          "photo_id": "40c533a0-9303-439c-9aca-5711769ec45d",
+          "asset_path": "assets/scenic/40c533a0-9303-439c-9aca-5711769ec45d.webp",
+          "caption": "津南大草原实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "bc861560-7625-4921-8a42-bbb0a0520872",
+          "asset_path": "assets/scenic/bc861560-7625-4921-8a42-bbb0a0520872.webp",
+          "caption": "津南大草原实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "7281b891-d627-4e61-9ee1-64e275f12de6",
+          "asset_path": "assets/scenic/7281b891-d627-4e61-9ee1-64e275f12de6.webp",
+          "caption": "津南大草原实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "68c8c9ca-0e05-4358-8e22-f8d062bf45bd",
+          "asset_path": "assets/scenic/68c8c9ca-0e05-4358-8e22-f8d062bf45bd.webp",
+          "caption": "津南大草原实景照片 4",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "a330bb8e-6105-4d07-a9ae-0fdb41a6b1e8",
+          "asset_path": "assets/scenic/a330bb8e-6105-4d07-a9ae-0fdb41a6b1e8.webp",
+          "caption": "津南大草原实景照片 5",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "2aae5893-ab75-484c-b5ac-f102b09b73e9",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "红宝石海棠",
+      "x_norm": 0.4412681104555464,
+      "y_norm": 0.7313992963773108,
+      "tags": [
+        "flower",
+        "海棠"
+      ],
+      "description": "暗红色的海棠花",
+      "photos": [
+        {
+          "photo_id": "97524d87-a55d-4331-a919-e0a74025b78c",
+          "asset_path": "assets/scenic/97524d87-a55d-4331-a919-e0a74025b78c.webp",
+          "caption": "红宝石海棠实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "a88e2118-b8fd-4b5b-ae45-ecf24efd1b28",
+          "asset_path": "assets/scenic/a88e2118-b8fd-4b5b-ae45-ecf24efd1b28.webp",
+          "caption": "红宝石海棠实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "91361ea9-0adb-491a-b4bd-258e90c13c56",
+          "asset_path": "assets/scenic/91361ea9-0adb-491a-b4bd-258e90c13c56.webp",
+          "caption": "红宝石海棠实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "72bfd6ef-0874-4e70-9206-b88c283ab572",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "大广场",
+      "x_norm": 0.302826995613787,
+      "y_norm": 0.47420842326195917,
+      "tags": [
+        "foliage",
+        "银杏"
+      ],
+      "description": "三个建筑中间种植了大量银杏树，可拍人像，可构图拍建筑",
+      "photos": [
+        {
+          "photo_id": "4329cb6a-f9b0-49a1-b1d8-0d8dd36c4a9c",
+          "asset_path": "assets/scenic/4329cb6a-f9b0-49a1-b1d8-0d8dd36c4a9c.webp",
+          "caption": "大广场实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "7b3f3efd-b9b7-4c49-a612-82cf4ae30f61",
+          "asset_path": "assets/scenic/7b3f3efd-b9b7-4c49-a612-82cf4ae30f61.webp",
+          "caption": "大广场实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "ab05c2b8-df25-41ac-bef2-a2e2fe00d86a",
+          "asset_path": "assets/scenic/ab05c2b8-df25-41ac-bef2-a2e2fe00d86a.webp",
+          "caption": "大广场实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        11
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "95faa292-49e6-4fd2-80f3-2634bfe728dc",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "大通学生中心",
+      "x_norm": 0.6610226525141147,
+      "y_norm": 0.5607023839002442,
+      "tags": [
+        "architecture"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "dc14d6e9-0f86-41d6-8a95-4749add517eb",
+          "asset_path": "assets/scenic/dc14d6e9-0f86-41d6-8a95-4749add517eb.webp",
+          "caption": "大通学生中心实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "4bfec91c-ab8d-4d73-b09b-418cd7734e89",
+          "asset_path": "assets/scenic/4bfec91c-ab8d-4d73-b09b-418cd7734e89.webp",
+          "caption": "大通学生中心实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "fa7feebc-8601-41bb-9f7e-0e733eac463d",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "绝美廊桥",
+      "x_norm": 0.7409615601688289,
+      "y_norm": 0.5573565037314562,
+      "tags": [
+        "flower",
+        "美人梅",
+        "海棠"
+      ],
+      "description": "廊桥一侧是美人梅，一侧是海棠花，出片的好地方",
+      "photos": [
+        {
+          "photo_id": "f7988ef9-5498-41e4-8fc9-4af226425c77",
+          "asset_path": "assets/scenic/f7988ef9-5498-41e4-8fc9-4af226425c77.webp",
+          "caption": "绝美廊桥实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "617207a5-8f8c-45c8-b24f-4109e9375fc8",
+          "asset_path": "assets/scenic/617207a5-8f8c-45c8-b24f-4109e9375fc8.webp",
+          "caption": "绝美廊桥实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "c78babf2-3d44-4241-a18d-4c177bcaa4da",
+          "asset_path": "assets/scenic/c78babf2-3d44-4241-a18d-4c177bcaa4da.webp",
+          "caption": "绝美廊桥实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "c174e15a-b1af-4618-89fc-112e2d0deb8a",
+          "asset_path": "assets/scenic/c174e15a-b1af-4618-89fc-112e2d0deb8a.webp",
+          "caption": "绝美廊桥实景照片 4",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3,
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    },
+    {
+      "spot_id": "8e4f0772-5f7b-4d35-a64e-9bc88607e7d1",
+      "map_id": "nku-jinnan-overview-pixels-v1",
+      "name": "美人梅",
+      "x_norm": 0.6943303731034474,
+      "y_norm": 0.5168540455046813,
+      "tags": [
+        "flower",
+        "美人梅"
+      ],
+      "description": "",
+      "photos": [
+        {
+          "photo_id": "c80061b4-09b9-46ea-b73e-760d01930782",
+          "asset_path": "assets/scenic/c80061b4-09b9-46ea-b73e-760d01930782.webp",
+          "caption": "美人梅实景照片 1",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "75f4ad7e-41ff-4402-8ebb-01e6534270de",
+          "asset_path": "assets/scenic/75f4ad7e-41ff-4402-8ebb-01e6534270de.webp",
+          "caption": "美人梅实景照片 2",
+          "captured_at": null,
+          "rights_status": "authorized"
+        },
+        {
+          "photo_id": "878cea40-26e3-4a06-b5bb-9b47d5d61cb2",
+          "asset_path": "assets/scenic/878cea40-26e3-4a06-b5bb-9b47d5d61cb2.webp",
+          "caption": "美人梅实景照片 3",
+          "captured_at": null,
+          "rights_status": "authorized"
+        }
+      ],
+      "historical_bloom_months": [
+        3,
+        4
+      ],
+      "observation": null,
+      "rights_status": "authorized",
+      "data_status": "needs_verification"
+    }
+  ]
+}

@@ -31,7 +31,7 @@
 <dialog id="spot-dialog"><form id="spot-form"><div class="dialog-head"><div><span class="eyebrow">SAVE A PLACE</span><h2 id="dialog-title">添加一处风景</h2></div><button id="close-dialog" type="button" aria-label="关闭">×</button></div>
   <p id="point-coordinate"></p><label>景点名称 <span>*</span><input name="name" required maxlength="80" placeholder="例如：图书馆旁的樱花"></label>
   <label>景点介绍<textarea name="description" maxlength="1000" rows="3" placeholder="描述环境、拍摄方向或你的发现"></textarea></label>
-  <div class="form-row"><label>花种 / 分类<input name="flower" maxlength="80" placeholder="樱花、湖景、建筑…"></label><label>建议时间<input name="season_note" maxlength="120" placeholder="例如：待观察确认"></label></div>
+  <div class="form-row"><label>花种 / 分类<input name="flower" maxlength="80" placeholder="樱花、湖景、建筑…"></label><label>建议时间<input name="season_note" maxlength="120" placeholder="例如：4月上旬"></label></div>
   <label>实景照片（可多选，项目最多 100 张）<input id="photo-file" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
   <div id="photo-preview" class="photo-drafts" hidden></div>
   <p id="form-error" role="alert"></p><div class="dialog-actions"><button id="cancel-dialog" type="button">取消</button><button type="submit" class="primary">保存景点</button></div>
@@ -40,9 +40,9 @@
   <button id="scenic-close" class="scenic-close" type="button" aria-label="关闭景点详情">×</button>
   <div class="scenic-layout">
     <div class="scenic-visual"><div id="scenic-hero" class="scenic-hero"></div><div id="scenic-thumbs" class="scenic-thumbs"></div></div>
-    <article class="scenic-story"><span class="scenic-kicker">津南 · 实景档案</span><h2 id="scenic-title"></h2>
+    <article class="scenic-story"><div class="scenic-content"><span class="scenic-kicker">津南 · 实景档案</span><h2 id="scenic-title"></h2>
       <p id="scenic-flower" class="scenic-flower"></p><p id="scenic-description" class="scenic-description"></p>
-      <p id="scenic-season" class="scenic-season"></p><div id="scenic-actions" class="scenic-actions" hidden><button id="scenic-edit" type="button">编辑景点</button><button id="scenic-delete" type="button">删除景点</button></div>
+      <p id="scenic-season" class="scenic-season"></p></div><div id="scenic-actions" class="scenic-actions" hidden><button id="scenic-edit" type="button">编辑景点</button><button id="scenic-delete" type="button">删除景点</button></div>
     </article>
   </div>
 </dialog>

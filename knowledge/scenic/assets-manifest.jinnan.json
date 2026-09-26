@@ -1,0 +1,462 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "jinnan-2026-09-26",
+  "note": "用户指示发布的压缩展示图；不包含桌面原片或 EXIF。",
+  "photos": [
+    {
+      "asset_path": "assets/scenic/29b75532-cd98-4cc9-831e-4c13ba86b0b8.webp",
+      "sha256": "c3e4849f9d216c455ded6bef5bdd34712d6295f3578a60d6b72eab0aa56328be",
+      "bytes": 92940
+    },
+    {
+      "asset_path": "assets/scenic/25eb2f03-1fe4-4170-869a-b5f682b25cfc.webp",
+      "sha256": "96ae80b386fa44320c2e9383f068a2c565956d6110fbca2293801e95f34a4ba1",
+      "bytes": 968592
+    },
+    {
+      "asset_path": "assets/scenic/0cc4d8d7-8290-4a68-b1cf-a18f58cdf600.webp",
+      "sha256": "14a312d906094a1abb0ad0bd210adb8bf234d69a47255fa3af697acef24ec345",
+      "bytes": 455792
+    },
+    {
+      "asset_path": "assets/scenic/3c726f3b-b312-4ce9-8c16-b6fef22a153c.webp",
+      "sha256": "c2b24bc08ce3b7caab6d7a0ff00bf9fb5cd76f5fc67e929164d14684bda2d9ea",
+      "bytes": 596824
+    },
+    {
+      "asset_path": "assets/scenic/3b8c4e54-b67d-427e-937b-5c1a773bf682.webp",
+      "sha256": "c2b24bc08ce3b7caab6d7a0ff00bf9fb5cd76f5fc67e929164d14684bda2d9ea",
+      "bytes": 596824
+    },
+    {
+      "asset_path": "assets/scenic/4d709175-4c38-433b-b066-09cf2211590b.webp",
+      "sha256": "91c218e9a82714de4c1373b2cd69ceac7962a3a57d6ec34b67282e3de2323222",
+      "bytes": 237552
+    },
+    {
+      "asset_path": "assets/scenic/87ae5b2a-a221-48ab-878f-5c08cd8c2a81.webp",
+      "sha256": "5effaa216c91e6f453ba3f76219daf29b835e5e44d29d5300c44187ef9c89295",
+      "bytes": 249502
+    },
+    {
+      "asset_path": "assets/scenic/0c2fa69e-e5c5-4d1b-98e7-0b74e9327e79.webp",
+      "sha256": "dd007e7da4c3c9b06db42792d41bea236d7adb6e3d5da081166f15147bd185ca",
+      "bytes": 633680
+    },
+    {
+      "asset_path": "assets/scenic/70e7f96f-4632-4007-b848-543793e113ee.webp",
+      "sha256": "79371770765a21f2638862a7611d30b264d30c241cf766a6b042457955ad6f51",
+      "bytes": 253056
+    },
+    {
+      "asset_path": "assets/scenic/43d5304e-a806-4f8d-acdc-4b626cdd2ab0.webp",
+      "sha256": "529d2368128a365f033dca52563c7b1c1a13424afb3d0a15541cdbf8b540c97a",
+      "bytes": 271854
+    },
+    {
+      "asset_path": "assets/scenic/ed3253c4-f263-48a2-87e1-5ecb5bedfe9b.webp",
+      "sha256": "b6a94493a1bfe3ae19aade86a54ca5baee1bcbf834dc1dbe1aaeeca3f88403ba",
+      "bytes": 201680
+    },
+    {
+      "asset_path": "assets/scenic/63a09c57-4306-4093-9393-5d87f2663fba.webp",
+      "sha256": "4ed0f436f35c2203574347d51add51ef698221683252b528a8b7644b478fec7e",
+      "bytes": 244620
+    },
+    {
+      "asset_path": "assets/scenic/5e7f6196-9c16-43f2-aabd-d0b0fd540ff9.webp",
+      "sha256": "80e6383da70192178feecc144a751f7d032599075bf7ed082cc1077480432f16",
+      "bytes": 365366
+    },
+    {
+      "asset_path": "assets/scenic/4de85ee1-b95c-4e8e-9eb9-30b7415927ad.webp",
+      "sha256": "5233457e72e3a9f8ecb5aabe63d5dac78766f0da8f695dc7fe3879adfd535847",
+      "bytes": 285810
+    },
+    {
+      "asset_path": "assets/scenic/18aacecb-c362-40de-a7cf-93a461ba5c3c.webp",
+      "sha256": "1c5a104d7bea94426046c31106dd27e3071accfb1546030db7500abf240390d2",
+      "bytes": 222522
+    },
+    {
+      "asset_path": "assets/scenic/f5e782af-ec55-4f01-8ce4-524950319b86.webp",
+      "sha256": "33d16e9005084e09b105b1100e44dde02ce436c1e1d4ef964c5b780d154bf45f",
+      "bytes": 266586
+    },
+    {
+      "asset_path": "assets/scenic/718f6ee0-da38-4724-8e1a-f4c2d420f72f.webp",
+      "sha256": "0b8c9818a50842163f7c3b49527b2f1839742fdbe2aba2527961ea40c1006aa0",
+      "bytes": 322614
+    },
+    {
+      "asset_path": "assets/scenic/1d46f0c6-cb24-438e-826a-ced20b7853f8.webp",
+      "sha256": "ea282da4693e98e6054e89d2d32bb55c42f129d6d5f9decfb0becb3f5e70ea1b",
+      "bytes": 79712
+    },
+    {
+      "asset_path": "assets/scenic/3b2a476e-47d2-4fce-99cb-4ccd2601507b.webp",
+      "sha256": "4ae1fd9dbcd0bb74169ba3137c081daec397b4d98d4fcec60bbb22c57e272f36",
+      "bytes": 106770
+    },
+    {
+      "asset_path": "assets/scenic/f738e808-cb22-41ed-a630-ee7bb0b85d4d.webp",
+      "sha256": "3a39e84fda3ec0a1a9c5363e8e0a930ab97151d9fb31f7605d572299ffc4e813",
+      "bytes": 357958
+    },
+    {
+      "asset_path": "assets/scenic/be2ce640-644d-427a-ba6f-09be87ce670d.webp",
+      "sha256": "b2f1728c20e1ce4169545b2f7cdd470d293fc3611e228d029c6b7e1d00acf314",
+      "bytes": 541742
+    },
+    {
+      "asset_path": "assets/scenic/2c09c5f8-a2ac-42f7-a516-89fbc9ded3fb.webp",
+      "sha256": "b2f1728c20e1ce4169545b2f7cdd470d293fc3611e228d029c6b7e1d00acf314",
+      "bytes": 541742
+    },
+    {
+      "asset_path": "assets/scenic/323cdf15-8970-4493-97f7-8defcc4fdd84.webp",
+      "sha256": "3ba7496ca538e25a57183634bb23840d5fbccc69c864301f6dd16754e64e10db",
+      "bytes": 133558
+    },
+    {
+      "asset_path": "assets/scenic/da12694f-2b25-4e38-a8ac-f6d20a1d3d4c.webp",
+      "sha256": "5b67fbcba11fc269147416cfe298db074c435c732e4ccb10b9ea19c607c6a9a2",
+      "bytes": 268796
+    },
+    {
+      "asset_path": "assets/scenic/3c70637d-e2b3-4322-95ed-55d3d1f49bbc.webp",
+      "sha256": "bddba4c6b8300396574346e3a748834499917e528bb9720e5989328c5f354d5c",
+      "bytes": 177976
+    },
+    {
+      "asset_path": "assets/scenic/490855fd-3fb1-40ef-a259-f4888c802261.webp",
+      "sha256": "ac7a15b69c1eb631e945f961ebfd325cb9f6ee2a45c6720390b084566745b168",
+      "bytes": 223550
+    },
+    {
+      "asset_path": "assets/scenic/5d50cbc6-7f80-420a-82d5-576a1c8d5722.webp",
+      "sha256": "e6f43ed7dd5fffd4a6ea26c1102fa35cb656f564f35fb4157142077123e65968",
+      "bytes": 313766
+    },
+    {
+      "asset_path": "assets/scenic/154402e1-985d-4064-a134-65a493bb92f4.webp",
+      "sha256": "b0a2af213ada3a006d39d94e722ef60331f471e01014a9681a6328b9d8c43a83",
+      "bytes": 204302
+    },
+    {
+      "asset_path": "assets/scenic/9f5a3658-9da5-4040-9953-33c8f6c9b8ad.webp",
+      "sha256": "c675f86cba08ee320dd614782a81a354e5b7c18eb9ac0bc31d2f4120a5a3f2be",
+      "bytes": 231952
+    },
+    {
+      "asset_path": "assets/scenic/a2300b93-26b7-4121-863f-6d0a5c1392b4.webp",
+      "sha256": "c1a5646b4ba94b25a5fbb1bf957ac02feefbf71c2dc59195cda07c2c6e5265c8",
+      "bytes": 801666
+    },
+    {
+      "asset_path": "assets/scenic/f9c56c20-2344-4dd4-a5bc-52edb5d2113b.webp",
+      "sha256": "ed790ec7538da03f14f0a72178a4979d5d35d7a14d62d0af94985a0249e35691",
+      "bytes": 90298
+    },
+    {
+      "asset_path": "assets/scenic/5c7cf5a4-2fa1-4ee6-acf6-e451061e4c97.webp",
+      "sha256": "4d7decf1b4b94adb453567bf31a4d31fccad098adeaddc5496ebaeebcc187452",
+      "bytes": 260748
+    },
+    {
+      "asset_path": "assets/scenic/ef548efb-818d-4c39-b6ff-3d1409a0da17.webp",
+      "sha256": "5e1491d64591bb9fa85df9a8bedeaacd402fb4c9bec304af4e61bda75ae880fd",
+      "bytes": 211166
+    },
+    {
+      "asset_path": "assets/scenic/b7c7217b-866e-4f60-b139-3e8c80b140ea.webp",
+      "sha256": "9ed94f84340b992fdebb9d722887524b7d1b4d3f339bc63b1791c57274181bd7",
+      "bytes": 189030
+    },
+    {
+      "asset_path": "assets/scenic/aab1706b-4e3a-45d3-b22e-cf62de6fb6b8.webp",
+      "sha256": "a2debb48e3cfc7505cd5a4f1a364ed036faa9afe2125bf358eb422b856270c94",
+      "bytes": 367684
+    },
+    {
+      "asset_path": "assets/scenic/16e9f8a9-b70b-4675-9c26-5cba12899f19.webp",
+      "sha256": "cc3c9f7d35eb29896a9edcbddd39c27ed828561271124e7a5cb6dcf88f690d3e",
+      "bytes": 905022
+    },
+    {
+      "asset_path": "assets/scenic/2c3b735e-cefb-4e65-93d8-db1f939b5d77.webp",
+      "sha256": "41ccf018e0b55d9e1c4ea37f92b551df1fd415be856a78786d6cde3842bd32d1",
+      "bytes": 986468
+    },
+    {
+      "asset_path": "assets/scenic/3bbc3c0b-fba6-47e2-89a5-3e8975ce514e.webp",
+      "sha256": "33c84f66c194afb04b4e7ef53c6cc8f2aea53217b3203a26b6088b7959366fa7",
+      "bytes": 246836
+    },
+    {
+      "asset_path": "assets/scenic/8a37450c-adec-4f2c-876b-13fc78b927f4.webp",
+      "sha256": "fd45cc11db5b7e81bad7c718c2288722229ba2ccd96413c609535d51bf5605aa",
+      "bytes": 120494
+    },
+    {
+      "asset_path": "assets/scenic/a89e4cfb-f93e-4356-928e-04459caf7d76.webp",
+      "sha256": "200bc96f112cd03e2211d6ce347e83272e45e2cd6d98c0177c62134c5fcacce5",
+      "bytes": 159786
+    },
+    {
+      "asset_path": "assets/scenic/03917b90-3813-4e73-9861-46cd01f1e7df.webp",
+      "sha256": "d87c0e8d1ebab69af7ed08135196638866549171fc21034e3d6531eedfc0a646",
+      "bytes": 855790
+    },
+    {
+      "asset_path": "assets/scenic/b57c96c0-9c92-4291-aecc-c14dd27451c1.webp",
+      "sha256": "680d11d6a701bf1eb14d24ee3ec2d71fc5daf2237e432cc21003f27b6878f16d",
+      "bytes": 960338
+    },
+    {
+      "asset_path": "assets/scenic/69fa1c2d-a43d-43f5-856d-ab66fbf7e0ac.webp",
+      "sha256": "265f0f5dfd9868ad8ec435c9b259eb7bf91c2317f476ba563fb5c8518caaeaf6",
+      "bytes": 366964
+    },
+    {
+      "asset_path": "assets/scenic/300ea787-24bc-461a-8537-a7baefff347f.webp",
+      "sha256": "3df0ee4b10f48a7b764313c96b3c6a95b4d9d02f0b8f4a9273e715624ffefdaa",
+      "bytes": 1026866
+    },
+    {
+      "asset_path": "assets/scenic/9d56189e-6477-49ae-a019-d6580755d68f.webp",
+      "sha256": "fe8974924e18515f37f7f26edfee25e72af69789829304f1db93362a02c9e9c2",
+      "bytes": 533572
+    },
+    {
+      "asset_path": "assets/scenic/f47bc931-b24a-4b53-af2d-c4923cd12c29.webp",
+      "sha256": "35f8444af544c1c6bb30587a5fb5ed169049ba4a231a104ed2e13c2eb251ed72",
+      "bytes": 119712
+    },
+    {
+      "asset_path": "assets/scenic/3ad4eeab-87ae-4956-bf69-4194c6844600.webp",
+      "sha256": "9aa702528ff1ea23ca72e14604e17501bdb3146bf56e066d5f43a36e2d254fbe",
+      "bytes": 911750
+    },
+    {
+      "asset_path": "assets/scenic/cc5cd5f8-7a62-43fb-bdc8-08c01342d5f5.webp",
+      "sha256": "1bc65837b88660c840c8d8db9eb7608d95fdfb6013bdbb7b74a87f01ea9195c1",
+      "bytes": 388368
+    },
+    {
+      "asset_path": "assets/scenic/422e9ee6-f2e1-4f49-8000-939f76224045.webp",
+      "sha256": "029c8fa6a153ee1af86f27894fe4f29bab2fc8f6fbf686f2a063102032a8434d",
+      "bytes": 475610
+    },
+    {
+      "asset_path": "assets/scenic/838ef954-239f-4446-ab60-8643eab127e8.webp",
+      "sha256": "94ba478c274f3c57eb03f5566cb367249fd4ff45c741927e6a489daa4cbb1c90",
+      "bytes": 169068
+    },
+    {
+      "asset_path": "assets/scenic/e510efb5-af01-43eb-8d0a-dc1735ccb0e5.webp",
+      "sha256": "e28d43f8682a490fd760b21fcc832839967c74019ff7c93de3828285c28c28b4",
+      "bytes": 129930
+    },
+    {
+      "asset_path": "assets/scenic/ace50c09-901a-4fc1-9ddb-dd28bfbfd755.webp",
+      "sha256": "e410de589f3f037a19aa38143eccf253309ad5588b989700064a1e6ee1843fbd",
+      "bytes": 169896
+    },
+    {
+      "asset_path": "assets/scenic/d6991a3f-69e3-4f4d-8b54-6d61c78575db.webp",
+      "sha256": "1452c3b2833d498eefd740e00a452f53d386518f2a39ff2d3b54231c5dbf69f0",
+      "bytes": 204058
+    },
+    {
+      "asset_path": "assets/scenic/45479e18-e12f-46b4-9e0c-623ca8d36aa6.webp",
+      "sha256": "48528bb8c5a2efff4b496c92af5bc24b353f893b2937c9ccfa035eabb0378007",
+      "bytes": 131608
+    },
+    {
+      "asset_path": "assets/scenic/908d127d-5ed6-4fea-9317-61acb4772e88.webp",
+      "sha256": "bf4e614fad145788f2430dcd711e25e1f7b51fb9f1933c4236bc2be0e73bb740",
+      "bytes": 122194
+    },
+    {
+      "asset_path": "assets/scenic/753d6f0d-39b1-4093-8300-f445a333bb6a.webp",
+      "sha256": "8e54c9bdcfe3d19396e92a87bbc93b748e9e4898fc822acc93ce14af1c508e80",
+      "bytes": 83198
+    },
+    {
+      "asset_path": "assets/scenic/284c1405-4556-43f8-a0d4-52ca00f94325.webp",
+      "sha256": "9e8514d41694b615e9d2469744b35e2507b401e98c761c8d9c0bc64980ce01e8",
+      "bytes": 236790
+    },
+    {
+      "asset_path": "assets/scenic/d42e8ff7-adfa-49cb-8965-43ef80729042.webp",
+      "sha256": "1a3d89ad1f9b52e4fb0e269c6f73076e5bf115b2f0e9e04b2904449872cf4ebe",
+      "bytes": 119776
+    },
+    {
+      "asset_path": "assets/scenic/5d6e60d4-2453-45d9-adc0-5bbf5c8e92f3.webp",
+      "sha256": "27a0322aef3ac7a9f6a51a2a702d6286cd613a7d4261185e999e4b39e02448f0",
+      "bytes": 763400
+    },
+    {
+      "asset_path": "assets/scenic/55c8675c-5241-4697-bfcb-ab31a06209fb.webp",
+      "sha256": "814bf4eebad6bea8ddd0e3ca1b78ab38c095846e93ad247396765fbb06a14c80",
+      "bytes": 226810
+    },
+    {
+      "asset_path": "assets/scenic/21f7b9c5-b58b-4b44-8184-eddc5db19a1d.webp",
+      "sha256": "0d8a32bbb4fd54be2c4dee8ae820420a23e3f1e16eec52db79385a3f2990e308",
+      "bytes": 254670
+    },
+    {
+      "asset_path": "assets/scenic/05c0dc4a-e4f9-4404-8721-1dc292996ccd.webp",
+      "sha256": "f72de344a16e7013f4ead30d92f7bf1bb53bc919a9c3751240097c50232b7d0e",
+      "bytes": 522126
+    },
+    {
+      "asset_path": "assets/scenic/7ed2dd3d-73c5-4804-807f-cfb976349ce2.webp",
+      "sha256": "8629e4426aac8e931b3ad25cc6f66f94022344a7126645a9f317c109c28ab7d1",
+      "bytes": 331600
+    },
+    {
+      "asset_path": "assets/scenic/d9869a5c-c6a7-4360-a949-52c02c906c6c.webp",
+      "sha256": "d3d34aa5cb2101014df7515f6e392e49457ed90a2b91c149ca99cb0d0f89b6ba",
+      "bytes": 973628
+    },
+    {
+      "asset_path": "assets/scenic/2eeff1c8-9aa2-4954-a3a3-25081633ca07.webp",
+      "sha256": "e448f42c644317216329e145daec88fdf19adcde65c83f90eb0f127cd45da8bd",
+      "bytes": 876624
+    },
+    {
+      "asset_path": "assets/scenic/e1c18c2f-0c57-468b-b6f5-cdf9cd5d570f.webp",
+      "sha256": "51ddf495fbaab99bba6d62d3b18132b3c7e68edf8e325d333900d3fa72aa7dd7",
+      "bytes": 624088
+    },
+    {
+      "asset_path": "assets/scenic/7d348af3-99aa-4cd2-9196-2f2c275197d6.webp",
+      "sha256": "58b3a5106a2d188b9ebc2d07082852c2a8bbd91e03c068ce562cafdcb8703b2e",
+      "bytes": 611002
+    },
+    {
+      "asset_path": "assets/scenic/3c93c089-cdb7-4af3-9813-fc642fffcb15.webp",
+      "sha256": "c59de58304796edc50fad85e487ef01be100037f66ab78519c6db6162f8d6ec3",
+      "bytes": 593096
+    },
+    {
+      "asset_path": "assets/scenic/b17c8677-a1e3-40e6-9fdc-151f38e1a9f6.webp",
+      "sha256": "77413ad92b0460e59db1022954e28415ce8d80d2767414c43017e54c989dc681",
+      "bytes": 862340
+    },
+    {
+      "asset_path": "assets/scenic/e8bd590b-5d09-44c7-8444-862fa7f66921.webp",
+      "sha256": "ed423a964300d1cd1db8f11b5f6fc9c578adc934b2b36883f2204a4825be92d3",
+      "bytes": 319912
+    },
+    {
+      "asset_path": "assets/scenic/a2f81aa3-82f5-4ee2-9a9a-9850b5dffed5.webp",
+      "sha256": "62804343513f7cf51ada674ecf45fe6515213966ba2ea4b831ef6446e5bfc3f1",
+      "bytes": 317564
+    },
+    {
+      "asset_path": "assets/scenic/40c533a0-9303-439c-9aca-5711769ec45d.webp",
+      "sha256": "145d24adc0790ab22547dfb695bff2f59371b365b0edc09082cbc98e766cd9d5",
+      "bytes": 116002
+    },
+    {
+      "asset_path": "assets/scenic/bc861560-7625-4921-8a42-bbb0a0520872.webp",
+      "sha256": "d8b74b62059f3abfb3e581b317a8ea10ac176d1c5975619697ba91ef6c1a9608",
+      "bytes": 818750
+    },
+    {
+      "asset_path": "assets/scenic/7281b891-d627-4e61-9ee1-64e275f12de6.webp",
+      "sha256": "57c8a3d22f8ea0f0ab33ef1e3400603dcb6721ea5f1f095ea8f3a9e94616eb64",
+      "bytes": 398596
+    },
+    {
+      "asset_path": "assets/scenic/68c8c9ca-0e05-4358-8e22-f8d062bf45bd.webp",
+      "sha256": "c740688f3860b13b08c426cfe5e7ca78a63fe0a5e99693688453c35b997b417d",
+      "bytes": 282980
+    },
+    {
+      "asset_path": "assets/scenic/a330bb8e-6105-4d07-a9ae-0fdb41a6b1e8.webp",
+      "sha256": "30895a670b73b219f6adc9930f35e45e225f0217776b51d2a594ba2069158c65",
+      "bytes": 242506
+    },
+    {
+      "asset_path": "assets/scenic/97524d87-a55d-4331-a919-e0a74025b78c.webp",
+      "sha256": "c0f1d6c0f8de5de288fd9dd53de485d29e4dc54a4a4ef63b6ffcc9a840bec67f",
+      "bytes": 139296
+    },
+    {
+      "asset_path": "assets/scenic/a88e2118-b8fd-4b5b-ae45-ecf24efd1b28.webp",
+      "sha256": "196e7ee3e08cd0c6db15b67218fe9cf614fe4483d1c3b46f8be9d82483677d5e",
+      "bytes": 116216
+    },
+    {
+      "asset_path": "assets/scenic/91361ea9-0adb-491a-b4bd-258e90c13c56.webp",
+      "sha256": "bd8fd43cf2ee057b9c73bfc4629fea16df523561458472bd26f20f117c2040c0",
+      "bytes": 179822
+    },
+    {
+      "asset_path": "assets/scenic/4329cb6a-f9b0-49a1-b1d8-0d8dd36c4a9c.webp",
+      "sha256": "5233457e72e3a9f8ecb5aabe63d5dac78766f0da8f695dc7fe3879adfd535847",
+      "bytes": 285810
+    },
+    {
+      "asset_path": "assets/scenic/7b3f3efd-b9b7-4c49-a612-82cf4ae30f61.webp",
+      "sha256": "1c5a104d7bea94426046c31106dd27e3071accfb1546030db7500abf240390d2",
+      "bytes": 222522
+    },
+    {
+      "asset_path": "assets/scenic/ab05c2b8-df25-41ac-bef2-a2e2fe00d86a.webp",
+      "sha256": "12b5e5a8a37749882bd3e8fd99098f1caf3914b4813dfe83dabee6bc9c386bd4",
+      "bytes": 246600
+    },
+    {
+      "asset_path": "assets/scenic/dc14d6e9-0f86-41d6-8a95-4749add517eb.webp",
+      "sha256": "5e5f72f4cb3f021a64c418735f70d9713d830cb4044e1de0858bf6be809ac589",
+      "bytes": 420138
+    },
+    {
+      "asset_path": "assets/scenic/4bfec91c-ab8d-4d73-b09b-418cd7734e89.webp",
+      "sha256": "466ed1909c264cd86118b02a8d7bd4d5da6743315e97075d9c20c49634375fdb",
+      "bytes": 322636
+    },
+    {
+      "asset_path": "assets/scenic/f7988ef9-5498-41e4-8fc9-4af226425c77.webp",
+      "sha256": "a04d0a33e8cc5af0bc2cfe45fcf483a709425331aed33e27a569ccf473259c2f",
+      "bytes": 913546
+    },
+    {
+      "asset_path": "assets/scenic/617207a5-8f8c-45c8-b24f-4109e9375fc8.webp",
+      "sha256": "7705dfb300889eccce01702d41f82ffc50995d4d359d1c2924b8a680f4c8b22a",
+      "bytes": 144816
+    },
+    {
+      "asset_path": "assets/scenic/c78babf2-3d44-4241-a18d-4c177bcaa4da.webp",
+      "sha256": "c354583195570e11e487936727724fae38fc4d1514f31712d4ab81fd1d23a17b",
+      "bytes": 191348
+    },
+    {
+      "asset_path": "assets/scenic/c174e15a-b1af-4618-89fc-112e2d0deb8a.webp",
+      "sha256": "8926ae5c39e36e113a33a411531a3aa11afcfdf8b251d252221a3ae7b4bcb2f9",
+      "bytes": 300508
+    },
+    {
+      "asset_path": "assets/scenic/c80061b4-09b9-46ea-b73e-760d01930782.webp",
+      "sha256": "aab1995e9d52ff3bb961fc4c28157ef0427b4da4effe37620f211160d9a80aba",
+      "bytes": 245976
+    },
+    {
+      "asset_path": "assets/scenic/75f4ad7e-41ff-4402-8ebb-01e6534270de.webp",
+      "sha256": "ae4371452498107d7458bbd507191009036a0aca01dc6b4fb61fd931be1c5806",
+      "bytes": 120704
+    },
+    {
+      "asset_path": "assets/scenic/878cea40-26e3-4a06-b5bb-9b47d5d61cb2.webp",
+      "sha256": "c8c5e5b5958095240fa8c18d8dd7821c022b7cd719542dfe3b7fc273237871fe",
+      "bytes": 268194
+    }
+  ]
+}
