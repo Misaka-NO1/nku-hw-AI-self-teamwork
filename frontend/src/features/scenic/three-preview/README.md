@@ -15,7 +15,7 @@ npm start
 
 打开 <http://127.0.0.1:5178/>。默认只读：可看模型、搜索景点、查看照片与简介；添加、编辑、删除、导入、导出入口均隐藏，写入 API 返回 403。运行 `npm test` 检查模型、道路、照片引用和只读写入边界。若 5178 端口已被原型占用，先停止原型服务，再启动本预览；不要同时运行两个实例。
 
-Windows 免安装版位于 fork 的 `v0.2.0-jinnan-windows-preview` Release。下载 ZIP、完整解压后双击 `启动地图.cmd`，内置 Node.js 会自动挑选空闲端口并打开浏览器，无需另装 Node.js 或执行 `npm ci`。便携版强制只读、只监听本机；关闭启动窗口即可停止。打包脚本为仓库根目录的 `scripts/package-windows-portable.ps1`，只复制 Git 已跟踪的地图和照片文件，并包含 Node.js 与 Three.js 的许可证。
+Windows 免安装版位于 fork 的 `v0.2.1-jinnan-windows-preview` Release。下载 ZIP、完整解压后双击 `启动地图.cmd`，内置 Node.js 会自动挑选空闲端口并打开浏览器，无需另装 Node.js 或执行 `npm ci`。便携版强制只读、只监听本机；关闭启动窗口即可停止。打包脚本为仓库根目录的 `scripts/package-windows-portable.ps1`，只复制 Git 已跟踪的地图和照片文件、Three.js 必需运行模块，并包含 Node.js 与 Three.js 的许可证。
 
 ## 录入与交付边界
 
