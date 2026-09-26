@@ -5,9 +5,13 @@ import path from 'node:path';
 
 const root=fileURLToPath(new URL('.',import.meta.url));
 const dataDir=path.join(root,'data');
-const photoDir=path.join(dataDir,'scenic-photos');
+// One public asset copy serves both the standalone 3D preview and the main frontend.
+const photoDir=path.resolve(root,'../../../../public/assets/scenic');
 const spotFiles=new Map([
-  ['nku-jinnan-overview-pixels-v1','scenic-spots.json']
+  ['nku-jinnan-overview-pixels-v1','scenic-spots.json'],
+  ['nku-jinnan-reference-v1','scenic-spots-reference-v1.json'],
+  ['nku-jinnan-guide-plan-v1','scenic-spots-guide-v1.json'],
+  ['nku-jinnan-gcj02-v2','scenic-spots-gcj02-v2.json']
 ]);
 const photoName=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(png|jpg|webp)$/;
 

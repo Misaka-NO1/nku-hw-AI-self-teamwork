@@ -22,6 +22,9 @@ export const sceneToPixel=([x,z])=>[x/.1+720,z/.1+531];
 export const campusBoundary=trace.campus_boundary.map(pixelToScene);
 const rects=list=>list.map(([x0,y0,x1,y1])=>[...pixelToScene([x0,y0]),...pixelToScene([x1,y1])]);
 export const surfaceRects={road:rects(trace.road_rects),curb:rects(trace.road_edge_rects),water:rects(trace.water_rects)};
+export const roadSurfaceSource={image_size:trace.image_size,road_rects:trace.road_rects,
+  road_edge_rects:trace.road_edge_rects,image_origin:metadata.image_origin,
+  units_per_pixel:metadata.units_per_pixel,spot_extent:metadata.spot_extent};
 export const buildings=trace.buildings.map((b,i)=>{
   const [x0,y0,x1,y1]=b.bbox;
   const centre=[(x0+x1)/2,(y0+y1)/2];

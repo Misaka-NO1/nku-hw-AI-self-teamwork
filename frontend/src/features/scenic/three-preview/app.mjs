@@ -1,30 +1,33 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {orbitAroundPoint} from './pointer-orbit.mjs';
-import {createCampus} from './overview-model.mjs';
-import {metadata,sceneToPixel} from './overview-data.mjs';
-import {buildingTypes} from './building-evidence.mjs';
+const modelMode=new URLSearchParams(location.search).get('model');
+const legacy=modelMode==='v1',amapArchive=modelMode==='amap',guideArchive=modelMode==='guide';
+const overview=!legacy&&!amapArchive&&!guideArchive,plan=overview||guideArchive;
+const {createCampus,updateRoads}=await import(legacy?'./model.mjs':overview?'./overview-model.mjs':guideArchive?'./plan-model.mjs':'./calibrated-model.mjs');
+const {metadata,sceneToGeo,sceneToPixel}=await import(legacy?'./campus-data.mjs':overview?'./overview-data.mjs':guideArchive?'./plan-data.mjs':'./calibrated-data.mjs');
+const {buildingTypes}=await import('./building-evidence.mjs');
 
-const $=id=>document.getElementById(id),storeKey='nku-jinnan-model-spots-overview-v1';
+const $=id=>document.getElementById(id),storeKey=legacy?'nku-jinnan-model-spots-v1':overview?'nku-jinnan-model-spots-overview-v1':guideArchive?'nku-jinnan-model-spots-guide-v1':'nku-jinnan-model-spots-gcj02-v2';
 const [spotWidth,spotDepth]=metadata.spot_extent||[100,80];
 const spotToScene=spot=>[(spot.x_norm-.5)*spotWidth,(spot.y_norm-.5)*spotDepth];
 const sceneToSpot=(x,z)=>({x_norm:x/spotWidth+.5,y_norm:z/spotDepth+.5});
-document.body.classList.add('position-model');
-$('version-badge').textContent='总图对位 · v'+metadata.revision;
-$('model-download').href='nku-jinnan-position-plan.glb';
+document.body.classList.toggle('position-model',overview);
+$('version-badge').textContent=legacy?'旧版布局 · v0.1':(overview?'总图对位 · v':plan?'原图对位 · v':'旧坐标版 · v')+metadata.revision;
+$('model-download').href=legacy?'nku-jinnan-reference.glb':overview?'nku-jinnan-position-plan.glb':guideArchive?'nku-jinnan-guide-plan.glb':'nku-jinnan-calibrated.glb';
 const host=$('canvas-host'),scene=new THREE.Scene();scene.background=new THREE.Color('#eceee1');
 const camera=new THREE.OrthographicCamera(-75,75,55,-55,.1,600);
 const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.setClearColor('#eceee1');host.append(renderer.domElement);
-renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.8;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=overview?.8:1.05;
 scene.add(new THREE.HemisphereLight('#fff9e7','#bdc8aa',1.8));
 const sun=new THREE.DirectionalLight('#fff2d9',2.4);sun.position.set(-40,95,-30);sun.castShadow=true;
 sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-90,right:90,top:85,bottom:-85,near:1,far:240});
 sun.shadow.bias=-.0003;sun.shadow.normalBias=.15;scene.add(sun);
 const {root,groups,clickable,treeCount}=createCampus();scene.add(root);
-$('building-controls').hidden=true;
-for(const [id,t] of Object.entries(buildingTypes)){
+$('building-controls').hidden=legacy||overview;
+if(!legacy)for(const [id,t] of Object.entries(buildingTypes)){
   const count=groups.filter(g=>g.userData.type===id).length;if(!count)continue;
   const option=document.createElement('option');option.value=id;option.textContent=t.label+' · '+count+' 组';$('building-type').append(option);
 }
@@ -106,12 +109,24 @@ async function save(next){
   try{localStorage.setItem(storeKey,JSON.stringify(safe));}catch{status('景点已保存到项目文件，浏览器缓存写入失败。');}
   spots=safe;refreshMarkers();renderList();
 }
+async function loadRoads(){
+  if(!overview)return;
+  try{
+    const response=await fetch('./scenic-roads.json');
+    if(!response.ok)throw new Error('道路数据暂不可用');
+    const routes=await response.json();
+    if(!Array.isArray(routes))throw new Error('道路数据格式无效');
+    updateRoads(root,routes);
+  }catch(error){status('道路暂未载入：'+error.message);}
+}
 await loadMode();
 await loadSpots();
+await loadRoads();
 // Building geometry is intentionally left unlabelled; the user will add names.
 // Internal IDs/names remain available to search, select, and edit the model.
-function addLabel(text,position,type,group=null){
-  const el=document.createElement('span');el.className='place-label'+(type==='spot'?' spot':'');el.textContent=text;
+function addLabel(text,position,type,group=null,spotId=null){
+  const el=document.createElement(spotId?'button':'span');el.className='place-label'+(type==='spot'?' spot':'');el.textContent=text;
+  if(spotId){el.type='button';el.setAttribute('aria-label','查看'+text+'赏景详情');el.addEventListener('click',()=>selectSpot(spotId));}
   $('labels').append(el);labels.push({el,position,type,group});
 }
 function refreshMarkers(){
@@ -126,7 +141,7 @@ function refreshMarkers(){
     head.position.y=4.2;head.castShadow=true;group.add(head);
     const centre=new THREE.Mesh(new THREE.SphereGeometry(.23,10,8),new THREE.MeshStandardMaterial({color:'#fff6e5'}));
     centre.position.set(0,4.9,0);group.add(centre);markers.add(group);
-    addLabel(spot.name,new THREE.Vector3(x,6,z),'spot');
+    addLabel(spot.name,new THREE.Vector3(x,6,z),'spot',null,spot.spot_id);
   }
   $('spot-count').textContent=String(spots.length).padStart(2,'0');
 }
@@ -138,7 +153,10 @@ function renderList(){
   const found=spots.filter(s=>[s.name,s.description,s.flower].some(v=>v.toLowerCase().includes(term)));
   if(!spots.length&&!term&&activeType==='all')list.append(el('p',authoring?'还没有景点，点击上方按钮添加。':'景点资料整理中，敬请期待。','empty-hint'));
   for(const spot of found){const button=action('',()=>selectSpot(spot.spot_id,true));button.className='list-item'+(selected===spot.spot_id?' selected':'');
-    button.append(el('strong',spot.name),el('small',[spot.flower,spot.season_note].filter(Boolean).join(' · ')||'未填写分类与时间'));list.append(button);}
+    button.append(el('strong',spot.name));
+    const summary=[spot.flower,spot.season_note].filter(value=>value.trim()).join(' · ');
+    if(summary)button.append(el('small',summary));
+    list.append(button);}
   const filtered=groups.filter(g=>activeType==='all'||g.userData.type===activeType);
   $('building-summary').textContent=(activeType==='all'?'当前模型：':buildingTypes[activeType].label+'：')+filtered.length+' 组建筑 / 组团';
   if(term||activeType!=='all'){const matched=filtered.filter(g=>[g.userData.name,g.userData.typeLabel||'',...(g.userData.aliases||[])].some(name=>name.toLowerCase().includes(term)));
@@ -152,9 +170,11 @@ function selectSpot(id,move=false){
   if(move)focus(...spotToScene(spot));
   $('detail').hidden=true;
   $('scenic-title').textContent=spot.name;
-  $('scenic-flower').textContent=spot.flower||'校园风景';
-  $('scenic-description').textContent=spot.description||'这处景色的故事，等待你补充。';
-  $('scenic-season').textContent=spot.season_note?'推荐时节 · '+spot.season_note:'推荐时节 · 待补充';
+  for(const [id,value] of [
+    ['scenic-flower',spot.flower],
+    ['scenic-description',spot.description],
+    ['scenic-season',spot.season_note.trim()?'推荐时节 · '+spot.season_note:''],
+  ]){const field=$(id);field.textContent=value;field.hidden=!value.trim();}
   const photos=[...spot.photo_urls,...(spot.photo_data_url?[spot.photo_data_url]:[])];
   const hero=$('scenic-hero'),thumbs=$('scenic-thumbs');hero.replaceChildren();thumbs.replaceChildren();
   if(!photos.length)hero.append(el('div','实景照片待上传','scenic-placeholder'));
@@ -179,9 +199,10 @@ function selectSpot(id,move=false){
 $('scenic-close').onclick=()=>$('scenic-dialog').close();
 function selectBuilding(group,move=false){
   selected=null;renderList();const {name,category,anchor}=group.userData;const detail=$('detail');detail.hidden=false;
-  detail.replaceChildren(el('span',category+' · 建筑体块','eyebrow'),el('h3',name),el('p',metadata.note));
-  detail.append(el('p','用途：'+group.userData.typeLabel),el('p',group.userData.verification),el('p',group.userData.note));
-  for(const source of group.userData.references||[]){const link=el('a',source.label);link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';const p=el('p');p.append(link);detail.append(p);}
+  detail.replaceChildren(el('span',category+' · 建筑体块','eyebrow'),el('h3',name),
+    el('p',legacy?'旧版导览图示意建筑。':metadata.note));
+  if(!legacy){detail.append(el('p','用途：'+group.userData.typeLabel),el('p',group.userData.verification),el('p',group.userData.note));
+    for(const source of group.userData.references||[]){const link=el('a',source.label);link.href=source.url;link.target='_blank';link.rel='noopener noreferrer';const p=el('p');p.append(link);detail.append(p);}}
   if(group.userData.position)detail.append(el('p','地图服务标注点（非入口，GCJ-02）：'+group.userData.position.join(', ')));
   if(group.userData.image_placement)detail.append(el('p','原图屋顶中心（像素）：'+group.userData.image_placement.centre.join(', ')));
   if(authoring){const actions=el('div',null,'detail-actions');actions.append(action('在此添加景点',()=>openForm(anchor[0],anchor[2])));detail.append(actions);}
@@ -227,6 +248,7 @@ function openForm(x,z,spot=null){
   $('dialog-title').textContent=spot?'编辑这处风景':'添加一处风景';
   const relative=sceneToSpot(x,z);
   $('point-coordinate').textContent=`地图相对位置 · 横向 ${(relative.x_norm*100).toFixed(1)}% / 纵向 ${(relative.y_norm*100).toFixed(1)}%`;
+  if(sceneToGeo)$('point-coordinate').textContent+=' · GCJ-02 '+sceneToGeo([x,z]).map(v=>v.toFixed(6)).join(', ');
   if(sceneToPixel)$('point-coordinate').textContent+=' · 原图像素 '+sceneToPixel([x,z]).map(Math.round).join(', ');
   for(const key of ['name','description','flower','season_note'])form.elements[key].value=spot?.[key]??'';
   photoData=spot?.photo_data_url??'';photoUrls=[...(spot?.photo_urls||[])];photoFiles=[];
@@ -304,6 +326,12 @@ renderer.domElement.addEventListener('pointerup',event=>{
   if(placing){const point=ray.ray.intersectPlane(ground,new THREE.Vector3());
     const [w,d]=metadata.ground_size||[100,80];
     if(point&&Math.abs(point.x)<=Math.min(w,spotWidth)/2&&Math.abs(point.z)<=Math.min(d,spotDepth)/2)openForm(point.x,point.z);else status('请在校园底座范围内选择位置。');return;}
+  for(const marker of markers.children){
+    const point=marker.position.clone().add(new THREE.Vector3(0,4.2,0)).project(camera);
+    if(Math.abs(point.x)>1||Math.abs(point.y)>1||Math.abs(point.z)>1)continue;
+    const x=rect.left+(point.x*.5+.5)*rect.width,y=rect.top+(-point.y*.5+.5)*rect.height;
+    if(Math.hypot(event.clientX-x,event.clientY-y)<=28){selectSpot(marker.userData.spotId);return;}
+  }
   const marker=ray.intersectObjects(markers.children,true)[0];if(marker){let target=marker.object;while(target&&!target.userData.spotId)target=target.parent;if(target)selectSpot(target.userData.spotId);return;}
   const hit=ray.intersectObjects(clickable.filter(o=>o.parent.visible),false)[0];if(hit)selectBuilding(hit.object.parent);
 });
@@ -333,10 +361,10 @@ $('json-file').onchange=async()=>{
   }catch(error){status('导入失败：'+error.message);}finally{$('json-file').value='';}
 };
 document.addEventListener('keydown',e=>{if(e.key==='Escape')setPlacing(false);});
-function resize(){const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);const span=Math.max(128,160/(w/h));
+function resize(){const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);const span=overview?Math.max(128,160/(w/h)):(w/h<1?134/(w/h):105);
   camera.left=-span*w/h/2;camera.right=span*w/h/2;camera.top=span/2;camera.bottom=-span/2;camera.updateProjectionMatrix();}
-new ResizeObserver(resize).observe(host);resize();setView('top');refreshMarkers();renderList();
-$('model-stats').textContent=`${groups.length} 个建筑轮廓 · 道路与建筑同图对位`;
+new ResizeObserver(resize).observe(host);resize();setView(overview?'top':'oblique');refreshMarkers();renderList();
+$('model-stats').textContent=overview?`${groups.length} 个建筑轮廓 · 道路与建筑同图对位`:`${groups.length} 组建筑体块 · ${plan?'原导览图平面对位':legacy?'示意布局':'GCJ-02 坐标基准'} · 非测绘`;
 const projected=new THREE.Vector3();
 renderer.setAnimationLoop(()=>{
   controls.update();renderer.render(scene,camera);
