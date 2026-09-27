@@ -27,6 +27,11 @@
       "case_id": "QA-05",
       "question": "英语拓展阅读是哪门课？",
       "expect": "同名课程 demo-EL201 与 demo-EL202 必须并列说明，不得合并成一门"
+    },
+    {
+      "case_id": "QA-06",
+      "question": "期中退课会有什么后果？",
+      "expect": "引用 nku-proc-course-select 时必须说明：成绩单记载为「W」（Withdrawn）、不计入学分绩、该阶段只退不选，并附来源链接与核验时间（verified_at=2026-09-27）"
     }
   ]
 }
