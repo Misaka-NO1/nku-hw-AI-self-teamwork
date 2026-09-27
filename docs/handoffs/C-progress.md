@@ -74,7 +74,9 @@ cd backend && ./.venv/Scripts/python -m pytest
 - 10 条官方入口已于 2026-09-23 核验（用户提供正式网址 + 校外网络实测 HTTP 200，
   清单与依据见 `docs/blockers/C-01-campus-sources.md`）
 - 5 条办事流程仍为虚构 demo 模板，待正式依据（同文件）
-- 真实培养方案见 `docs/blockers/C-02-degree-plan.md`
+- 真实培养方案：计算机科学与技术 2025 版已收集（截图），规则核验表
+  `knowledge/degree/cs-2025/plan-rules.md`；缺口与待确认项见
+  `docs/blockers/C-02-degree-plan.md`
 
 ## 给 A 的下一步
 
