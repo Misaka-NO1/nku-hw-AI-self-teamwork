@@ -1,6 +1,6 @@
 export { ADAPTERS, getAdapter, recognizePage } from "./adapters";
 export type { AdapterDescriptor, AdapterStatus, Recognition } from "./adapters";
-export { actualDateFor, getEffectiveTemplate, shanghaiIsoNow } from "./calendar";
+export { actualDateFor, getEffectiveTemplate, shanghaiIsoNow, validateTermCalendarStructure } from "./calendar";
 export type { EffectiveTemplate } from "./calendar";
 export {
   normalizeCourses,

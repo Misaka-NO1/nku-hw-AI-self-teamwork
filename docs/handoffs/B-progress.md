@@ -86,6 +86,13 @@ cd extension && npm install && npm test && npm run typecheck
 
 本轮测试：backend 55 passed；import-core 33 passed；extension 25 passed（含产物加载验证）；web build 通过、web 23 passed。
 
+## PR #2 第三轮复审修复（2026-09-27）
+
+- P2 上传日历完整校验：import-core 新增 `validateTermCalendarStructure`（按 TermCalendar 契约逐字段校验，含 periods/overrides 元素内部结构）；`ImportPage` 接收日历时使用该校验，畸形日历（如 `periods: [null]`）在接收阶段即拒绝并给出逐条错误。
+- 解析入口异常兜底：`parseImportFile` 全函数体 try/catch，任何畸形日历/文件导致的异常都转换为 blocking 的 `import_exception` 结构化错误；`ImportPage` 文件解析调用再加一层 try/catch 双保险，页面始终显示可恢复提示。
+- 新增 5 项非法日历测试（periods [null]、节次时间格式、overrides 元素、畸形日历导入 CSV 不抛异常等）。
+- 本轮测试：import-core 38 passed；web build 通过、web 23 passed；extension 25 passed（verify 含构建与产物验证）。
+
 ## 给 C 的下一步
 
 - 接入路由 `/tools/import` → `ImportPage`、`/tools/timetable` → `TimetablePage`（默认导出）

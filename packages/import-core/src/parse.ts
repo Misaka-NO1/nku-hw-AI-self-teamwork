@@ -224,6 +224,34 @@ export function parseImportFile(
     return blockingParseResult([limitIssue], adapterId, adapterVersion);
   }
 
+  try {
+    return parseImportFileInner(input, format, calendar, options, adapterId, adapterVersion);
+  } catch (error) {
+    // 畸形日历/文件不应抛出未处理异常；返回可恢复的结构化错误（PR #2 第三轮复审）
+    return blockingParseResult(
+      [
+        {
+          code: "import_exception",
+          field: "file",
+          message: `解析过程出现异常，已阻止导入：${error instanceof Error ? error.message : String(error)}`,
+          blocking: true,
+        },
+      ],
+      adapterId,
+      adapterVersion,
+    );
+  }
+}
+
+function parseImportFileInner(
+  input: ImportFileInput,
+  format: ImportFormat,
+  calendar: TermCalendar,
+  options: { datasetKind?: "demo" | "personal"; capturedAt?: string } | undefined,
+  adapterId: string,
+  adapterVersion: string,
+): ParseResult {
+
   const capturedAt = options?.capturedAt ?? shanghaiIsoNow();
   const normalizeOptions: Omit<NormalizeOptions, "kind" | "completenessHint"> = {
     calendar,

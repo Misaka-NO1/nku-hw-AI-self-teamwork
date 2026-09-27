@@ -3,6 +3,7 @@ import type { ChangeEvent } from "react";
 
 import {
   parseImportFile,
+  validateTermCalendarStructure,
   type ImportFormat,
   type ParseResult,
   type TermCalendar,
@@ -36,19 +37,6 @@ export interface ImportPageProps {
   serverValidateAvailable?: boolean;
 }
 
-function isTermCalendar(value: unknown): value is TermCalendar {
-  const candidate = value as Partial<TermCalendar> | null;
-  return (
-    typeof candidate === "object" &&
-    candidate !== null &&
-    typeof candidate.term_id === "string" &&
-    typeof candidate.week1_monday === "string" &&
-    typeof candidate.teaching_weeks === "number" &&
-    Array.isArray(candidate.periods) &&
-    Array.isArray(candidate.overrides)
-  );
-}
-
 export default function ImportPage({
   calendar: initialCalendar = null,
   datasetKind = "demo",
@@ -75,11 +63,13 @@ export default function ImportPage({
     if (!file) return;
     try {
       const parsed: unknown = JSON.parse(await file.text());
-      if (!isTermCalendar(parsed)) {
-        setError("该 JSON 不是有效的学期日历（TermCalendar），请核对后重试");
+      // 按 TermCalendar 契约校验完整结构，拒绝畸形日历（如 periods: [null]）
+      const validation = validateTermCalendarStructure(parsed);
+      if (!validation.ok) {
+        setError(`学期日历不符合 TermCalendar 契约：${validation.errors.join("；")}`);
         return;
       }
-      setCalendar(parsed);
+      setCalendar(parsed as TermCalendar);
       setResult(null);
       setFileName(null);
     } catch {
@@ -109,7 +99,12 @@ export default function ImportPage({
       return;
     }
     const content = await file.text();
-    setResult(parseImportFile({ name: file.name, content }, format, calendar, { datasetKind }));
+    try {
+      setResult(parseImportFile({ name: file.name, content }, format, calendar, { datasetKind }));
+    } catch (parseError) {
+      // 双保险：解析器本身已兜底，这里确保任何异常都变成可恢复的错误提示
+      setError(`解析过程出现异常，已阻止导入：${parseError instanceof Error ? parseError.message : String(parseError)}`);
+    }
   }
 
   async function onValidateRemote() {

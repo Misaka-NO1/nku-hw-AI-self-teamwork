@@ -4,7 +4,7 @@ import { dirname, resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { actualDateFor, getEffectiveTemplate, shanghaiIsoNow } from "../src/calendar";
+import { actualDateFor, getEffectiveTemplate, shanghaiIsoNow, validateTermCalendarStructure } from "../src/calendar";
 import { parseImportFile } from "../src/parse";
 import type { TermCalendar } from "../src/types";
 
@@ -138,5 +138,49 @@ describe("观察值导出→导入闭环（PR #2 复审 P2）", () => {
     );
     expect(result.payload).not.toBeNull();
     expect(result.payload!.courses).toHaveLength(3);
+  });
+});
+
+describe("TermCalendar 完整结构校验（PR #2 第三轮复审 P2）", () => {
+  it("有效日历通过校验", () => {
+    const result = validateTermCalendarStructure(term);
+    expect(result.ok).toBe(true);
+    expect(result.errors).toEqual([]);
+  });
+
+  it("periods 为 [null] 的畸形日历被拒绝", () => {
+    const broken = { ...term, periods: [null] };
+    const result = validateTermCalendarStructure(broken);
+    expect(result.ok).toBe(false);
+    expect(result.errors.some((message) => message.includes("periods.0"))).toBe(true);
+  });
+
+  it("节次时间格式非法被拒绝", () => {
+    const broken = {
+      ...term,
+      periods: [{ period: 1, start: "8点", end: "09:00" }],
+    };
+    expect(validateTermCalendarStructure(broken).ok).toBe(false);
+  });
+
+  it("overrides 元素结构非法被拒绝", () => {
+    const broken = {
+      ...term,
+      overrides: [{ date: "09-21", action: "swap", teaching_week: 0, weekday: 9, source_ref: 1 }],
+    };
+    const result = validateTermCalendarStructure(broken);
+    expect(result.ok).toBe(false);
+    expect(result.errors.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it("畸形日历导入正常 CSV 不再抛出异常，返回可恢复错误", () => {
+    const brokenCalendar = { ...term, periods: [null] } as unknown as TermCalendar;
+    const csv = ["课程,星期,节次,周次", "数学（虚构）,周一,1-2,1-4"].join("\n");
+    expect(() =>
+      parseImportFile({ name: "a.csv", content: csv }, "csv", brokenCalendar),
+    ).not.toThrow();
+    const result = parseImportFile({ name: "a.csv", content: csv }, "csv", brokenCalendar);
+    expect(result.payload).toBeNull();
+    expect(result.issues.some((issue) => issue.code === "import_exception" && issue.blocking)).toBe(true);
   });
 });
