@@ -5,8 +5,8 @@
   "cases": [
     {
       "case_id": "QA-01",
-      "question": "怎么办虚构的成绩单证明？",
-      "expect": "引用 demo-proc-01 时必须说明 needs_verification，不得把占位步骤当作正式流程"
+      "question": "本科生怎么办成绩单/在读证明？",
+      "expect": "引用 nku-proc-transcript 时必须附来源链接与核验时间（verified_at=2026-09-27），在读生自助打印与毕业生邮件申请两条路径须区分说明"
     },
     {
       "case_id": "QA-02",
