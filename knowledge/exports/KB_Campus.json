@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "dataset_kind": "demo",
   "kb_id": "KB_Campus",
-  "data_version": "nku-entries-2026-09-27-r2",
+  "data_version": "nku-entries-2026-09-27-r3",
   "built_at": "2026-09-27",
   "items": [
     {
@@ -483,9 +483,44 @@
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-proc-03",
+      "entry_id": "nku-proc-dorm-repair",
       "kind": "procedure",
-      "title": "示例办事：宿舍报修（虚构流程，仅津南示例）",
+      "title": "宿舍报修（后勤维修）",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/234.html",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "宿舍后勤维修由南开大学后勤保障部负责，报修三渠道：飞书「南开微应用」中的「后勤报修」应用、24 小时电话 85358535、后勤保障部微信公众号（nkuhqbzb）；电话与微信渠道无需登录，飞书渠道需统一身份认证",
+        "飞书报修：打开飞书→「南开微应用」板块→（若无则在「＋」中）添加「后勤报修」应用→进入后依次选择/填写校区、报修人、联系电话、维修类型、地址、工单类型、问题描述（先选维修类型再选地址；师生报修的工单类型均为「客户单」，无需更改）",
+        "下单后报修平台按问题类型将维修任务分配给相应专业维修人员，尽快上门维修"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "学生生活指导中心《学生生活指导中心职能「大揭秘」！宿舍服务「全知晓」！》（2021-09-02）",
+          "url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/234.html",
+          "locator": "「报修」小节；2026-09-27 校外网络实测 HTTP 200"
+        },
+        {
+          "label": "学生生活指导中心《NKUer 的暑期留校攻略》（确认同一三渠道：电话 85358535、微信 nkuhqbzb、飞书后勤报修）",
+          "url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/248.html",
+          "locator": "「维修服务」小节；2026-09-27 校外网络实测 HTTP 200"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "demo-proc-06",
+      "kind": "procedure",
+      "title": "示例办事：虚构流程占位（仅津南，校区过滤测试夹具）",
       "category": "life",
       "campus_scope": [
         "津南"
@@ -497,7 +532,7 @@
       "login_required": "unknown",
       "campus_network_required": "unknown",
       "steps": [
-        "虚构步骤占位：待正式来源核验后填写"
+        "虚构步骤占位：用于校区过滤测试，非真实流程"
       ],
       "required_materials": [],
       "source_refs": [],
@@ -507,26 +542,41 @@
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
-      "entry_id": "demo-proc-04",
+      "entry_id": "nku-proc-campus-network",
       "kind": "procedure",
-      "title": "示例办事：校园网账号问题（虚构流程）",
+      "title": "校园网账号密码修改/重置",
       "category": "it",
       "campus_scope": [],
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
+      "official_url": "https://wxb.nankai.edu.cn/info/1155/1563.htm",
+      "login_required": "yes",
       "campus_network_required": "unknown",
       "steps": [
-        "虚构步骤占位：待正式来源核验后填写"
+        "自助修改：通过校园网自助服务系统 http://netservice.nankai.edu.cn/LoginAction.action 修改个人网络账号密码（需能正常登录）",
+        "忘记密码：必须本人持有效证件（身份证、一卡通、工作证等）到网信办服务中心现场重置",
+        "主管单位：党委网络安全和信息化办公室（网信办），咨询电话 022-23509599、022-23509595"
       ],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "required_materials": [
+        "本人有效证件（仅现场重置需要）"
+      ],
+      "source_refs": [
+        {
+          "label": "网信办《南开大学校园网密码更改方式》（2023-12-21）",
+          "url": "https://wxb.nankai.edu.cn/info/1155/1563.htm",
+          "locator": "业务办理栏目正文；2026-09-27 校外网络实测 HTTP 200"
+        },
+        {
+          "label": "党委网络安全和信息化办公室官网首页（联系电话 23509599/23509595）",
+          "url": "https://wxb.nankai.edu.cn/",
+          "locator": "2026-09-27 校外网络实测 HTTP 200"
+        }
+      ],
+      "verified_at": "2026-09-27",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
       "entry_id": "demo-proc-05",

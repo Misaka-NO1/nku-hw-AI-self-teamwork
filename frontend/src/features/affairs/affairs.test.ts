@@ -58,7 +58,7 @@ describe("CAMPUS-02 校区/人群规则不混用", () => {
       }
     }
     const ids = result.map((e) => e.entryId);
-    expect(ids).not.toContain("demo-proc-03"); // 仅津南
+    expect(ids).not.toContain("demo-proc-06"); // 仅津南
     expect(ids).not.toContain("demo-entry-08"); // 仅津南
   });
 
@@ -84,7 +84,7 @@ describe("分类搜索", () => {
     const byCategory = filterAffairs(listAffairs(), { category: "academic" });
     expect(byCategory.every((e) => e.category === "academic")).toBe(true);
     const byQuery = filterAffairs(listAffairs(), { query: "报修" });
-    expect(byQuery.map((e) => e.entryId)).toContain("demo-proc-03");
+    expect(byQuery.map((e) => e.entryId)).toContain("nku-proc-dorm-repair");
   });
 });
 

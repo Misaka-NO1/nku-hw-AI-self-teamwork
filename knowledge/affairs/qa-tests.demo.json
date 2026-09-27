@@ -11,7 +11,7 @@
     {
       "case_id": "QA-02",
       "question": "八里台校区怎么报修宿舍？",
-      "expect": "demo-proc-03 限定津南校区，不得套用到八里台；应说明范围不匹配"
+      "expect": "nku-proc-dorm-repair 适用于两校区（飞书「后勤报修」/电话 85358535/微信 nkuhqbzb 三渠道），直接作答并附来源与核验时间（verified_at=2026-09-27）"
     },
     {
       "case_id": "QA-03",
