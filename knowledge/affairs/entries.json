@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
   "dataset_kind": "demo",
-  "data_version": "nku-entries-2026-09-27-r3",
-  "note": "11 条入口为南开官方域名真实入口（nku-entry-01~10 于 2026-09-23、nku-entry-11 于 2026-09-27 校外网络实测 HTTP 200 可达）；login_required 为常识判断或页面证据（online 实测跳转 iam.nankai.edu.cn 统一认证；ca/zyfw/czfw 首页检测到登录表单）。办事流程：7 条已核验——nku-proc-transcript/student-card/selfstudy 按教务部「在校生业务」栏目正式文件，nku-proc-course-select 按教务部 2026-08-17 选课通知（附件选课手册 2026-09-11 更新），nku-proc-dorm-housing 按《南开大学学生住宿管理规定》（南发字〔2018〕37 号），nku-proc-dorm-repair 按学生生活指导中心官网报修指引（飞书后勤报修/电话 85358535/微信 nkuhqbzb），nku-proc-campus-network 按网信办官网说明；demo-proc-05 为过期提示测试样例，demo-proc-06 为校区过滤测试夹具（均虚构，故意保留）。见 docs/blockers/C-01-campus-sources.md",
+  "data_version": "nku-entries-2026-09-27-r4",
+  "note": "11 条入口为南开官方域名真实入口（nku-entry-01~10 于 2026-09-23、nku-entry-11 于 2026-09-27 校外网络实测 HTTP 200 可达）；login_required 为常识判断或页面证据（online 实测跳转 iam.nankai.edu.cn 统一认证；ca/zyfw/czfw 首页检测到登录表单）。办事流程：8 条已核验——nku-proc-transcript/student-card/selfstudy 按教务部「在校生业务」栏目正式文件，nku-proc-course-select 按教务部 2026-08-17 选课通知（附件选课手册 2026-09-11 更新），nku-proc-dorm-housing 按《南开大学学生住宿管理规定》（南发字〔2018〕37 号），nku-proc-dorm-repair 按学生生活指导中心官网报修指引（飞书后勤报修/电话 85358535/微信 nkuhqbzb），nku-proc-campus-network 按网信办官网说明，nku-proc-credit-recognition 按《南开大学本科课程学分认定管理办法》（南发字〔2019〕48 号）；demo-proc-05 为过期提示测试样例，demo-proc-06 为校区过滤测试夹具（均虚构，故意保留）。见 docs/blockers/C-01-campus-sources.md",
   "entries": [
     {
       "entry_id": "nku-entry-01",
@@ -486,6 +486,36 @@
           "label": "党委网络安全和信息化办公室官网首页（联系电话 23509599/23509595）",
           "url": "https://wxb.nankai.edu.cn/",
           "locator": "2026-09-27 校外网络实测 HTTP 200"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified"
+    },
+    {
+      "entry_id": "nku-proc-credit-recognition",
+      "kind": "procedure",
+      "title": "本科课程学分认定申请（校际交流/网络课程/转校/辅修/转专业）",
+      "category": "academic",
+      "campus_scope": [],
+      "audience": ["本科生"],
+      "official_url": "https://jwc.nankai.edu.cn/2024/0907/c35930a550108/page.htm",
+      "login_required": "yes",
+      "campus_network_required": "unknown",
+      "steps": [
+        "适用范围：国际及国内校际交流项目、开放式网络课程、转校生、校内辅修、转专业等学分认定（第二条）；保留学籍自费出国（境）留学期间的课程学分不予认定，与已修课程相同或相近的不予认定",
+        "基本原则：教学目的一致、内容相符、难度相当，课程相似度不低于 70%；认定总学分不得超过毕业要求学分的 40%；校际认定学分按我校 16 学时 1 学分折算（第三、五、六条）",
+        "校际交流：离校前在本科教务教学管理系统录入校外学习计划，生成《南开大学本科生校际交流课程学分认定申请表》，经拟认定课程负责人认定、所在学院审核盖章后报教务处备案；交流结束回校后一个月内在系统上传成绩单原件扫描件与课程教学大纲等材料并提交认定申请，纸质成绩单原件交教务处备案；离校前未认定或交流期间新增课程可于返校后一个月内申请补认",
+        "开放式网络课程：修读计划录入系统生成《开放式网络课程学分认定申请表》，经课程负责人认定、学院审核盖章后报教务处备案；获得有效成绩后在系统上传成绩证明并提交认定申请，纸质原件交教务处备案",
+        "校内课程认定（含辅修/转专业）：在系统中提交申请，生成《校内课程学分认定申请表》，经课程负责人认定、学院审核盖章后交教务处审核；教务处统一安排的通识选修课一般不允许认定为主修或辅修专业课程",
+        "成绩记载：外校课程记入成绩单、课名加「△」标记、不纳入平均学分绩；校内认定课程成绩如实记载并纳入平均学分绩；认定以自愿为原则、未申请视为放弃，一经确认不得修改"
+      ],
+      "required_materials": ["学分认定申请表（系统生成）", "成绩单原件扫描件及纸质原件（校际交流/网络课程/转校生）", "相关课程教学大纲"],
+      "source_refs": [
+        {
+          "label": "《南开大学本科课程学分认定管理办法》（南发字〔2019〕48 号，2019-05-22 印发；教务部规章制度栏目 2024-09-07 发布）",
+          "url": "https://jwc.nankai.edu.cn/2024/0907/c35930a550108/page.htm",
+          "locator": "页面附件 PDF 第 2–7 页（第二至十三条）；2026-09-27 校外网络实测 HTTP 200"
         }
       ],
       "verified_at": "2026-09-27",
