@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>课表导入预览</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'none'"
+    />
+  </head>
+  <body>
+    <main id="app">
+      <h1>课表导入预览</h1>
+      <p>确认前不会上传任何数据；关闭本页后未提交的数据会丢失，可先离线导出 JSON 保存。</p>
+      <section id="summary"></section>
+      <table id="courses"></table>
+      <button id="export-json" type="button">导出 JSON</button>
+      <button id="submit-draft" type="button">确认并创建草稿</button>
+    </main>
+    <script type="module" src="./preview.js"></script>
+  </body>
+</html>
