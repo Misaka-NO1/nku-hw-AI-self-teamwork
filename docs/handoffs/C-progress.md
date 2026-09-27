@@ -85,7 +85,8 @@ cd backend && ./.venv/Scripts/python -m pytest
   《2026级南开大学本科学生手册（上册）》学则第十四/十五/十九/二十条核验；
   体育子模块规则已按选课手册「学生体育课选课说明」核验（类别制必修，无稳定
   course_code，引擎 needs_policy）；学分认定已按办法原文核验（南发字〔2019〕48 号）；
-  剩余缺口（课程替代细则、四史多选一语义）见 `docs/blockers/C-02-degree-plan.md`
+  四史「多选一」语义已确认（任选 1 门，用户口头确认待正式文件复核）；
+  剩余缺口仅剩课程替代细则，见 `docs/blockers/C-02-degree-plan.md`
 
 ## 给 A 的下一步
 
