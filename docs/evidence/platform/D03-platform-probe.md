@@ -6,6 +6,10 @@
 
 候选代码提交 `b91ca41` 已推送到 `origin/codex/d-mcp-local-readiness`，尚未 PR/合并或云端构建。2026-09-28 从当前对话打开腾讯云控制台时被重定向到登录页，未能现场查看版本、运行配置、鉴权开关或日志；等待用户接管登录后再核验，不填写猜测值。
 
+同日收到 `cloudbase-mcp-20260928-001612(1).zip`，SHA-256 为 `C43740DC868192BD14359D59D95070EF29866E9A2F11D9FDE7BB4E3AF84C24FB`。只读检查：ZIP 共含根目录 Dockerfile、锁定依赖与 37 个 Python 源文件，无 `.env`、密钥或部署元数据。依赖和 34 个 Python 文件与当前候选版相同；差异为 `main.py`（候选版启动时增加部署校验）、`config.py`（候选版严格校验 HTTPS URL/路径）及 `mcp/http.py`（候选版增加 Host/Origin 限制，保留相同的精确 GET 健康探针与 Bearer 认证），另有 Dockerfile（候选版显式设置 staging、8080、鉴权并使用非 root 用户）。ZIP 的 Dockerfile 没有这些默认值；其实际云端安全性取决于未附带的环境变量，不能只凭源码判断。该 ZIP 被视为交接资料，未执行其中的代码，也不能证明正在运行的 002 镜像与它完全一致。
+
+根据仓库候选代码本地生成新的源码上传包（`deploy/cloudbase-mcp/Build-Package.ps1`）：39 个预期条目，无缺失、额外或重复；本次 ZIP SHA-256 为 `3927AA2D72B2D42FF384C78E117D010EFF5C68F373DF65BE0785C0026D37CF6E`，文件保留在本机忽略提交的 `deploy/cloudbase-mcp/dist/`。复跑 `deploy/Test-Local.ps1`：依赖检查通过、120 项后端测试通过、真实本地 REST/MCP 联调 `LOCAL_PASS`。没有本机 Docker 构建、云端部署或 NK-GeniOS 调用证据。
+
 2026-09-27 更新：仍为 `WAITING_HUMAN`（仅指云端/学校平台）。已完成指南第一阶段本地搭建与复测，详见 [本地证据](D03-local-readiness-2026-09-27.md)。用户表示已有云服务器，尚待环境详情；未执行云端部署或真实平台调用。以下 2026-09-20 记录是历史基线，不能用旧日期的“暂不部署”描述替代当前已获授权的本地准备工作。
 
 `WAITING_HUMAN`（用户于 2026-09-20 明确选择暂不部署）

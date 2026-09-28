@@ -1,6 +1,6 @@
 # CloudBase Run：第一阶段 MCP 探针
 
-此目录是针对仓库当前后端重建的、可审核的探针部署包。交接同学提到的云端 `002` 版原始源码尚未提供，**不能声称本目录与 `002` 完全一致**；推送或重部署前请先与云端版本对照。本目录不含密钥、数据库连接、学生数据、景点资产或前端。
+此目录是针对仓库当前后端重建的、可审核的探针部署包。用户已提供一份早期 CloudBase 源码压缩包；逐文件核对见 `docs/evidence/platform/D03-platform-probe.md`。它没有部署版本指纹或云端配置，**不能据此声称本目录与云端 `002` 完全一致**；推送或重部署前仍须只读核对控制台。本目录不含密钥、数据库连接、学生数据、景点资产或前端。
 
 ## 镜像内容和入口
 
@@ -11,6 +11,8 @@ docker build -f deploy/cloudbase-mcp/Dockerfile -t nku-campus-mcp-probe:local .
 ```
 
 镜像使用 Python 3.12、锁定 `backend/requirements.lock`，只复制 `backend/app`；以非 root 用户运行 `python -m app.mcp.http`，监听 `0.0.0.0:8080`。镜像默认 `APP_ENV=staging`、`MCP_REQUIRE_AUTH=true`，未安全配置公网 URL 或令牌就拒绝启动，不会意外以开发模式开放 MCP。本机尚无 Docker，因此此 Dockerfile **尚未进行本机镜像构建验证**。云端构建也必须另记真实结果。
+
+如在 CloudBase 控制台使用“上传源码压缩包”，在仓库根目录运行 `powershell -NoProfile -ExecutionPolicy Bypass -File deploy/cloudbase-mcp/Build-Package.ps1`。脚本生成忽略提交的 `dist/` ZIP，根目录放 `Dockerfile`，仅包含锁定依赖与 `backend/app` 的 Python 源码；输出 SHA-256 供上传时核对。生成包不等于已经构建或部署。
 
 健康探针 `GET /__tcb_probe__` 只返回 `ok`，不需要 Bearer；仅这个**精确方法和路径**豁免认证，`POST /__tcb_probe__` 和 `/mcp` 仍由鉴权保护。该路径不会调用任何 MCP 工具，也不查询数据库。
 

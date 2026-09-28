@@ -32,7 +32,7 @@ python backend/scripts/check_local_stack.py
 
 用户提供的《D同学_腾讯云后端交接.md》报告：当前**没有 CVM/轻量服务器**，目标是上海地域 CloudBase 环境 `sunner-wang-d8ght8niaaaea70b7`；`nku-campus-mcp-probe` 的 002 版已作为私有探针部署，公网入口关闭。这是交接文档报告，尚未通过当前账号控制台独立核验。环境已有其他应用和 PostgreSQL 业务数据，**不改动它们**。
 
-本仓库现有 `deploy/cloudbase-mcp/` 是根据已测试后端重新制作的候选部署包；交接方原始部署包仍待提供，不能把它当作 002 的逐字复刻。CloudBase 云托管容器文件不是正式持久库，本手册下文的 SQLite 单实例路线仅适用于有可靠持久磁盘的其他托管环境；在 CloudBase 上先只运行无数据库的 MCP 健康探针。公开业务数据或个人工作流需要独立数据库方案与迁移测试，优先独立环境/实例，不能复用已有应用的业务表。
+用户现已提供一份 CloudBase 源码压缩包；它的锁定依赖及 37 个 Python 源文件中，除 `main.py`、`config.py`、`mcp/http.py` 外均与当前仓库一致，Dockerfile 也不同。仓库候选版保留了更严格的部署校验与容器默认值；压缩包不包含云端运行配置，无法证明它就是现行 002 镜像。差异见 `docs/evidence/platform/D03-platform-probe.md`。CloudBase 云托管容器文件不是正式持久库，本手册下文的 SQLite 单实例路线仅适用于有可靠持久磁盘的其他托管环境；在 CloudBase 上先只运行无数据库的 MCP 健康探针。公开业务数据或个人工作流需要独立数据库方案与迁移测试，优先独立环境/实例，不能复用已有应用的业务表。
 
 ## 3. 原服务器方案核对表（仅用于非 CloudBase 持久主机）
 
