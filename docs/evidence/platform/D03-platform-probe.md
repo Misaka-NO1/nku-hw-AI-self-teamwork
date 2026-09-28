@@ -2,6 +2,14 @@
 
 ## 当前结论
 
+2026-09-28 现场更新：用户批准只更新 CloudBase 上海环境 `sunner-wang-d8ght8niaaaea70b7` 中的 `nku-campus-mcp-probe`，并明确要求继续关闭公网。现已将仓库提交 `b7f3baef6b0b21f18a01a5bc172d8c3edb27529f` 对应的候选 ZIP 发布为部署 `003`（任务 `2251206`）。控制台显示 `003` 状态“正常”、流量 100%；旧 `002` 仍在部署版本列表且“回退”按钮可用。服务端口 8080，实例最小 0、最大 1；核对时 `003` 有 1 个实例，后续可按原配置缩到 0。默认公网域名和内网默认地址均保持关闭，自定义域名未配置。此时**不能从外部访问 MCP**，D03 仍为 `WAITING_HUMAN`，不得写作 `PLATFORM_PASS_DEMO`。
+
+本次上传包 `deploy/cloudbase-mcp/dist/nku-campus-mcp-probe-20260928-202913.zip` 含 39 个文件，上传前逐文件与仓库源码 SHA-256 一致；ZIP SHA-256 为 `C37A3EA1E9E570EBA3F74FAA5BCFE9A0FC63FC64ADEA6A6CDB3F63C72F04B104`。新版本在控制台配置 `APP_ENV=staging`、`MCP_HOST=0.0.0.0`、`MCP_PORT=8080`、`MCP_PATH=/mcp`、`MCP_PUBLIC_URL=https://nku-campus-mcp-probe-308235-6-1467707525.sh.run.tcloudbase.com/mcp`、`MCP_REQUIRE_AUTH=true`、`BUILD_ID=cloudbase-probe-20260928-b7f3bae-secure`、`AUTH_MODE=demo_fixture`、`ALLOW_PERSONAL_UPLOADS=false`。`MCP_SERVICE_TOKEN` 使用 48 字节安全随机数生成并写入云端环境变量；**不在证据文档记录令牌值**。云端列表可见以上 10 个变量键且值被遮蔽。没有配置数据库或云开发 API Key 注入，也没有更改同环境的其他服务、数据库或域名路由。
+
+部署详情记录 `003` 于 2026-09-28 20:58:30 开始，状态“正常”；容器日志于 21:00:49 显示 MCP Streamable HTTP 会话管理器及应用启动完成，21:00:51～21:00:52 的 `GET /__tcb_probe__` 返回 `200 OK`。这只证明云端新容器通过内部健康探针；公网关闭期间尚未验证无令牌/错误令牌 401、有效 Bearer 的 SDK 初始化和 `health_probe`，也未在 NK-GeniOS 由主 Agent 调用。下一步必须由用户**另行批准开启默认域名公网入口**，再立即做上述鉴权和端到端联调；不得以内部探针代替外部验收。
+
+## 历史准备记录
+
 2026-09-28 交接更新：用户提供的《D同学_腾讯云后端交接.md》报告 CloudBase 环境 `sunner-wang-d8ght8niaaaea70b7` 曾有一个私有 `nku-campus-mcp-probe` 002 版，`BUILD_ID=cloudbase-probe-20260928-002`，容器健康检查曾在云端日志得到 200，公网关闭；这些是交接文档的历史报告。现已登录控制台并核对服务列表，但未打开版本详情。当前代码补齐了同路径的精确 GET 健康检查及回归，重建了候选部署包，但未替换云端 002、未开启公网、未进行平台调用。仍为 `WAITING_HUMAN`，不能因历史容器健康检查成功升级为 `PLATFORM_PASS_DEMO`。
 
 候选代码提交 `b91ca41` 已推送到 `origin/codex/d-mcp-local-readiness`，尚未 PR/合并或云端构建。2026-09-28 首次打开腾讯云控制台时被重定向到登录页；用户稍后完成登录，见下段现场核对，不填写仍不可见的配置猜测值。
