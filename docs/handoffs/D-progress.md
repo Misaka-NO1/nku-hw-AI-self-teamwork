@@ -1,5 +1,35 @@
 # D Agent 进度交接
 
+## 2026-09-28 更新：CloudBase 私有探针交接
+
+用户提供的腾讯云交接文档报告：目前没有 CVM/轻量服务器；已有上海 CloudBase 环境 `sunner-wang-d8ght8niaaaea70b7`，其中 `nku-campus-mcp-probe` 私有 002 版已部署并通过容器探针，但公网关闭、数据库未接入、NK-GeniOS 未真实调用。当前会话尚未独立核验控制台状态。交接文档提及的原始 `deploy/cloudbase-mcp/` 不在已拉取的主分支，现已基于本仓库代码另建候选部署包，**不能声称与云端 002 源码相同**。
+
+本地变更：MCP 服务增加仅 `GET /__tcb_probe__` 返回 `ok` 的 CloudBase 健康检查，不更改工具名或业务 Schema；测试确认 `/mcp` 和错误方法/路径仍需 Bearer。新增 CloudBase Python 3.12/8080 Dockerfile 与操作说明，未连接已有 PostgreSQL，也不在容器中保存 SQLite。没有 Docker，本机镜像构建待云端或具备 Docker 的环境验证。
+
+测试：`deploy/Test-Local.ps1` 再次通过；后端 120 项测试通过（1 条第三方弃用警告），真实本地 MCP 初始化、发现、nonce、错误令牌拒绝、错误构建号失败及虚构任务重启持久化均通过。平台端到端状态仍 `WAITING_HUMAN`。
+
+下一步：先推送可追溯代码分支并记录提交；确认原始部署包/云端版本差异和对 `nku-campus-mcp-probe` 的变更授权；再更新候选探针，安全配置令牌并经独立 HTTPS 探针验证，最后在比赛空间让主 Agent 真调用。公网开关未获确认前不启用。业务存储后续选独立 PostgreSQL 或用户确认的隔离实例与迁移方案，绝不改写现有应用的表/权限。
+
+## 2026-09-27 历史更新：自建后端第一阶段
+
+## 2026-09-27 更新：自建后端第一阶段
+
+任务状态：本地 `LOCAL_PASS`；云端/学校平台 `WAITING_HUMAN`。检查基线为最新拉取的 main `a5ada91`，实现分支 `codex/d-mcp-local-readiness`。用户同意先搭建、准备测试，并表示已有云服务器，服务器详情尚待提供。
+
+本次修改：严格 MCP 探针、公共 Host/Origin 白名单、REST 启动配置校验、双进程隔离测试脚本、预发布模板和测试手册。没有更改 A/B/C 算法、公共前端、业务 Schema、REST 路径或 MCP 工具名；仍只暴露 `health_probe`。
+
+新增测试客户端配置：`MCP_PROBE_EXPECTED_BUILD_ID`。Schema：`1.0.0`；`AUTH_MODE=demo_fixture`，个人上传关闭。
+
+实际测试：119 项后端测试通过；官方客户端真实本机 HTTP 初始化、发现、调用及缺/错令牌 401、错误 build_id 退出1、空 nonce 拒绝通过；固定虚构任务确认/幂等/重启持久化通过，SQLite integrity_check=ok。运行命令见 `deploy/PREPARE-AND-TEST.md`，完整证据见 `docs/evidence/platform/D03-local-readiness-2026-09-27.md`。
+
+整站回归：前端23项、扩展25项、import-core38项通过，加后端共205项；前端生产构建、扩展构建及 B 两包类型检查通过。pnpm12旧配置警告、Ajv日期格式警告仍记录在证据中；没有修改前端依赖版本或锁文件。独立三维地图浏览器交互和平台回归不在此通过数量中。
+
+当前 A/B/C 领域函数已有交付（下方早期记录的“尚未交付”不再代表现状）。真实景点目录已校验，但景点 REST/MCP 尚未注册，公共站地图/复习/待办还为占位；下一步先完成服务器与平台探针，再推进领域薄适配和公共前端同源数据联调。
+
+平台真实调用证据：无。待提供服务器系统、运行方式、现有业务、域名/HTTPS、持久目录及授权；主 Agent 必须在比赛指定空间验收。没有远程部署、未迁移数据、不需要回滚线上服务；撤销本轮文件变更即可恢复本轮前代码，旧客户端探针命令需与对应版本说明配套。
+
+## 2026-09-20 历史交接（保留，非最新全项目状态）
+
 任务状态：本地 `LOCAL_PASS`；平台 `WAITING_HUMAN`
 
 修改文件：`backend/` 后端、MCP、SQLite 事务与写入工作流，`contracts/`、D 所有的 `fixtures/`、`deploy/`、本文件及平台证据模板。

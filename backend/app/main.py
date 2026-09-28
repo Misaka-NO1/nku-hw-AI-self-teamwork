@@ -28,7 +28,9 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    initialize_database(get_settings())
+    runtime = get_settings()
+    runtime.validate_deployment()
+    initialize_database(runtime)
     yield
 
 

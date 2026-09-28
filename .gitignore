@@ -7,5 +7,6 @@ htmlcov/
 .env
 backend/data/
 node_modules/
+.pnpm-store/
 dist/
 *.tsbuildinfo

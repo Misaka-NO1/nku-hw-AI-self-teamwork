@@ -12,7 +12,7 @@
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -r requirements.lock
-Copy-Item ..\deploy\.env.example .env
+if (-not (Test-Path -LiteralPath .env)) { Copy-Item ..\deploy\.env.example .env }
 .\.venv\Scripts\python -m pytest
 .\.venv\Scripts\python -m app.main
 ```
@@ -27,10 +27,22 @@ Copy-Item ..\deploy\.env.example .env
 
 ```powershell
 $env:MCP_PROBE_URL='http://127.0.0.1:8001/mcp'
+$env:MCP_PROBE_EXPECTED_BUILD_ID='dev' # 与服务端 BUILD_ID 一致
+# 服务端开启鉴权时，还需通过保密配置设置 MCP_PROBE_TOKEN。
 .\.venv\Scripts\python scripts\probe_mcp_url.py
 ```
 
 当前阶段默认 `AUTH_MODE=demo_fixture` 且 `ALLOW_PERSONAL_UPLOADS=false`。不要把真实令牌写入仓库；真实平台地址和凭证由部署人员通过环境变量注入。
+
+## 隔离的完整本地检查
+
+从仓库根目录运行：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File deploy/Test-Local.ps1
+```
+
+此命令运行后端回归并启动临时 REST/MCP 实例，检查认证、官方 SDK 发现/调用、错误 build_id 拒绝，以及固定演示任务重启后持久化。临时数据库与随机令牌独立于现有 `.env`/业务库，结束后停止测试进程并清理测试数据。不修改系统执行策略。详见 [`deploy/PREPARE-AND-TEST.md`](../deploy/PREPARE-AND-TEST.md)。
 
 ## D04/D05 本地写入流程
 

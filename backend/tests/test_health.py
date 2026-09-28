@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+import pytest
 
 from app.main import app
 
@@ -45,3 +46,15 @@ def test_unknown_route_uses_error_envelope() -> None:
     assert payload["ok"] is False
     assert payload["data"] is None
     assert payload["error"]["code"] == "NOT_FOUND"
+
+
+def test_rest_lifespan_rejects_invalid_deployment_before_creating_db(tmp_path, monkeypatch):
+    from app.core.config import Settings
+    database = tmp_path / "must-not-create.db"
+    runtime = Settings(app_env="staging", mcp_public_url="http://invalid/mcp",
+                       database_url="sqlite:///" + database.as_posix())
+    monkeypatch.setattr("app.main.get_settings", lambda: runtime)
+    with pytest.raises(ValueError, match="HTTPS"):
+        with TestClient(app):
+            pass
+    assert not database.exists()

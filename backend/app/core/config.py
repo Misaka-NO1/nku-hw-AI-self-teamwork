@@ -1,6 +1,7 @@
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
+from urllib.parse import urlsplit
 
 from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -56,8 +57,14 @@ class Settings(BaseSettings):
     def validate_deployment(self) -> None:
         if self.app_env not in {"staging", "production"}:
             return
-        if not self.mcp_public_url.startswith("https://"):
+        url = urlsplit(self.mcp_public_url)
+        if url.scheme != "https" or not url.hostname:
             raise ValueError("MCP_PUBLIC_URL must be an HTTPS URL outside local development")
+        if url.username is not None or url.password is not None or url.query or url.fragment:
+            raise ValueError("MCP_PUBLIC_URL must not contain credentials, query or fragment")
+        if url.path != self.mcp_path:
+            raise ValueError("MCP_PUBLIC_URL path must match MCP_PATH exactly")
+        _ = url.port  # Also validates port syntax/range.
         if not self.mcp_require_auth:
             raise ValueError("MCP_REQUIRE_AUTH must be true outside local development")
         if not self.mcp_service_token.get_secret_value():
