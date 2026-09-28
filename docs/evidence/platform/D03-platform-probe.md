@@ -8,6 +8,8 @@
 
 用户登录后，同日只读进入 CloudBase 开发平台环境 `sunner-wang-d8ght8niaaaea70b7`。云托管服务管理列表仅显示 1 个服务 `nku-campus-mcp-probe`，运行状态为**已暂停**，公网访问为**不允许**。这是控制台现场状态，比交接文档的历史描述更新；未确认暂停原因。当前浏览器中点击服务名称未打开详情，故未核实版本 002、镜像、端口、环境变量、日志或探针响应。未恢复服务、更新版本、上传文件或改变公网设置；平台结果仍为 `WAITING_HUMAN`。
 
+进一步通过键盘进入服务详情及部署版本页后确认：002 版状态**正常**，分配 100% 流量，但当前实例数为 0、实例列表为空；001 版也存在但不承载流量。服务监听端口设为 8080，运行模式为始终自动扩缩容、最小实例 0、最大 1。控制台显示“已暂停”与[官方文档所述空闲缩容到 0](https://docs.cloudbase.net/run/deploy/configuring/autoscaling/about-instance-autoscaling)相容，不能据此断定部署故障或需要强制重启。默认公网域名与内网默认地址均关闭，自定义域名列表为空，因此当前没有可用的外部 MCP 联调入口。环境变量列表仅显示 `APP_ENV`、`MCP_HOST`、`MCP_PORT`、`MCP_PATH`、`BUILD_ID` 五个键（值均隐藏）；未见 `MCP_REQUIRE_AUTH` 或 `MCP_SERVICE_TOKEN`，在未证实实际镜像鉴权前严禁开启公网。002 部署详情显示状态正常，但未重新执行云端健康检查或 MCP 调用。用户授权“恢复”后未擅自将最小实例改成 1，因为这会改变自动扩缩容与持续费用，却不能在公网关闭时完成外部联调；已向用户确认是否确实需要常驻 1 个实例。
+
 同日收到 `cloudbase-mcp-20260928-001612(1).zip`，SHA-256 为 `C43740DC868192BD14359D59D95070EF29866E9A2F11D9FDE7BB4E3AF84C24FB`。只读检查：ZIP 共含根目录 Dockerfile、锁定依赖与 37 个 Python 源文件，无 `.env`、密钥或部署元数据。依赖和 34 个 Python 文件与当前候选版相同；差异为 `main.py`（候选版启动时增加部署校验）、`config.py`（候选版严格校验 HTTPS URL/路径）及 `mcp/http.py`（候选版增加 Host/Origin 限制，保留相同的精确 GET 健康探针与 Bearer 认证），另有 Dockerfile（候选版显式设置 staging、8080、鉴权并使用非 root 用户）。ZIP 的 Dockerfile 没有这些默认值；其实际云端安全性取决于未附带的环境变量，不能只凭源码判断。该 ZIP 被视为交接资料，未执行其中的代码，也不能证明正在运行的 002 镜像与它完全一致。
 
 根据仓库候选代码本地生成新的源码上传包（`deploy/cloudbase-mcp/Build-Package.ps1`）：39 个预期条目，无缺失、额外或重复；本次 ZIP SHA-256 为 `3927AA2D72B2D42FF384C78E117D010EFF5C68F373DF65BE0785C0026D37CF6E`，文件保留在本机忽略提交的 `deploy/cloudbase-mcp/dist/`。复跑 `deploy/Test-Local.ps1`：依赖检查通过、120 项后端测试通过、真实本地 REST/MCP 联调 `LOCAL_PASS`。没有本机 Docker 构建、云端部署或 NK-GeniOS 调用证据。
