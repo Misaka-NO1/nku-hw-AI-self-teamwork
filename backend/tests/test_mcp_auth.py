@@ -42,6 +42,19 @@ def test_mcp_bearer_auth_accepts_matching_token() -> None:
     assert response.status_code == 204
 
 
+@pytest.mark.parametrize("overrides,expected_error", [
+    ({}, "HTTPS"),
+    ({"mcp_public_url": "https://campus.example.invalid/mcp"}, "MCP_REQUIRE_AUTH"),
+    ({"mcp_public_url": "https://campus.example.invalid/mcp", "mcp_require_auth": True},
+     "MCP_SERVICE_TOKEN"),
+])
+def test_cloud_listener_cannot_start_without_https_and_bearer_even_if_development(overrides, expected_error):
+    runtime = Settings(app_env="development", mcp_host="0.0.0.0", **overrides)
+
+    with pytest.raises(ValueError, match=expected_error):
+        create_http_app(runtime)
+
+
 @pytest.mark.parametrize("host,origin,status", [
     ("campus.example.invalid", None, 200),
     ("campus.example.invalid", "https://campus.example.invalid", 200),

@@ -2,6 +2,8 @@
 
 此目录是针对仓库当前后端重建的、可审核的探针部署包。用户已提供一份早期 CloudBase 源码压缩包；逐文件核对见 `docs/evidence/platform/D03-platform-probe.md`。它没有部署版本指纹或云端配置，**不能据此声称本目录与云端 `002` 完全一致**；推送或重部署前仍须只读核对控制台。本目录不含密钥、数据库连接、学生数据、景点资产或前端。
 
+2026-09-28 已现场核对 002 状态与默认域名，后续只准备安全接入，不修改云端；具体配置与发布门槛见 [安全接入准备单](SAFE-ACCESS-CHECKLIST.md)。
+
 ## 镜像内容和入口
 
 在**仓库根目录**执行（有 Docker 的机器）：
@@ -30,7 +32,7 @@ docker build -f deploy/cloudbase-mcp/Dockerfile -t nku-campus-mcp-probe:local .
 - `AUTH_MODE=demo_fixture`、`ALLOW_PERSONAL_UPLOADS=false`。
 - 第一阶段不配置数据库或直接复用已有 PostgreSQL。不要打开任何已有数据库端口。
 
-`MCP_PUBLIC_URL`、Bearer 开关和令牌在 staging 下缺失时服务应拒绝启动，不能改用 development 模式绕过鉴权上线。
+`MCP_PUBLIC_URL`、Bearer 开关和令牌在 staging 下缺失时服务应拒绝启动；非本机 MCP 监听即使被云端环境变量覆盖成 development/test，也必须满足同样门槛，不能绕过鉴权上线。
 
 ## 验收与记录
 

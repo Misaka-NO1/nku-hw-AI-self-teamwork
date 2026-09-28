@@ -55,7 +55,8 @@ class Settings(BaseSettings):
         return Path(raw_path)
 
     def validate_deployment(self) -> None:
-        if self.app_env not in {"staging", "production"}:
+        exposed_listener = self.mcp_host not in {"127.0.0.1", "localhost", "::1"}
+        if self.app_env not in {"staging", "production"} and not exposed_listener:
             return
         url = urlsplit(self.mcp_public_url)
         if url.scheme != "https" or not url.hostname:
