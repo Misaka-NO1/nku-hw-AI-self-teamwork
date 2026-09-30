@@ -10,6 +10,8 @@
 
 证据：docs/evidence/platform/D06-readonly-bundle-2026-09-30.md；发布/回退核对：deploy/cloudbase-demo-readonly/README.md。platform_verified=false、container_image_verified=false；无Docker，本机仅验解压代码/资源，云端构建待批准发布时验证。
 
+最终候选源码cda01c6739d4104b6daf10769a7f8537284417d7；BUILD_ID=cloudbase-demo-readonly-20260930-cda01c67，62条目，dirty=false。ZIP指纹与解压最终再验结果见上述证据。不提交ZIP，且不把后续文档提交号写成包源码号。
+
 未完成：更新云端版本、业务插件同步与学校主Agent实际调用、前端/通知工作流/TasksPage/KB、可信身份、生产数据库和最终发布。后续发布须单独确认实际流量范围，公网联调须另获授权；保持其他服务/数据库不变。原003保留回退，配置和平台绑定一并核对。
 
 ## 2026-09-30 D06：只读业务适配本地通过

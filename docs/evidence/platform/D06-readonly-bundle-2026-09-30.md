@@ -31,6 +31,17 @@ backend目录：
 
 生成包、构建号、源码提交、ZIP SHA、included_source_dirty记录由检查脚本实际输出，发布只使用源码已提交且dirty=false的最终包。未提交源码的中间包不可拿来宣称可追溯发布。最终包指纹另见本文件后续补充。
 
+### 最终包实际指纹
+
+- 包：`deploy/cloudbase-demo-readonly/dist/cloudbase-demo-readonly-20260930-cda01c67-114511.zip`（本机忽略文件，不提交ZIP）。
+- BUILD_ID：`cloudbase-demo-readonly-20260930-cda01c67`。
+- 包含源码提交：`cda01c6739d4104b6daf10769a7f8537284417d7`。
+- ZIP SHA256：`a7576aba3820d2bbe3553d7b0574ced50cba19a1195283bd43a844bf64321116`。
+- 条目62，included_source_dirty=false，source_sha_verified=true。
+- 最终包再验ok=true：七组正常/一组错误一致、Bearer缺/错拒绝、nonce/build、浏览器工作区拒绝、非夹具拒绝、公开正文/私有过滤全部true；platform_verified=false、container_image_verified=false。
+
+本补充是后续文档提交，未改变包内源码；包清单指向上述实际代码提交，不将补充文档的提交号冒充包源码。重建包会生成新的提交/指纹，应重新验收，不能复用此SHA。
+
 ## 下一步与回退
 
 待明确批准再更新现有服务，保持公网/内网关闭、最小0/最大1和8080不变，保留003，不触及其他服务/业务库。旧Bearer曾暴露，用户选择不换；扩大只读工具范围后持有人可能读取公开虚构结果并消耗资源，仍不能访问个人工作区。公网联调/插件业务更新/主Agent发布分别需验收与相应授权。
