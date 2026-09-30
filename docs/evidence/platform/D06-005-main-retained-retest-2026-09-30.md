@@ -2,6 +2,30 @@
 
 日期：2026-09-30，北京时间。用户明确要求“重新开启并保留，补测其他工具”，不再按本轮结束/登录失效自动关闭公网。旧令牌暴露风险已说明且用户拒绝轮换；只改变既有服务默认HTTPS入站入口的开放时长，保留鉴权，不改数据库、其他服务、实例下限或云版本。
 
+最新续测：23:14学校登录恢复，以下探针/未知方案原始卡片已补读，另完成MA-C09–C13。五类业务及探针有005主Agent真实成功证据，未知资源/非法参数/身份拒绝、缺耗时/日期无时刻和索引无正文边界均通过。课表MA-C02/R1仍不通过，未修成成功；公网持续保留，无新部署/插件发布/草稿配置变更。
+
+## 23:14后主Agent边界补测（最新）
+
+23:14:18健康200/182.80ms，23:14:19无Bearer401/65.57ms、错Bearer401/135.29ms；正确令牌未读取。恢复已保存草稿，不重建/同步/部署。
+
+补读MA-C07对应的独立工具卡Input/Output（不再打印所有历史卡）：nonce实际输入与回显均为d06-005-retained-20260930-2006，build_id实际为cloudbase-demo-readonly-20260930-853d17dd-platform-compat，server_time实际为2026-09-30T20:06:09+08:00，isError=false。此为旧调用卡的补验，不伪称23:14后新探针。
+
+补读MA-C08未知方案：实际query_json保留demo-missing-plan，没有替换默认方案；isError=true/ok=false/data=null、NOT_FOUND，request_id=94bb9652-539d-4cd6-a648-7ca493a018df，原卡时间20:06:46。以下新增用例均逐项打开实际Input/Output；query_json解析后与预期输入逐字段和类型一致。
+
+| 用例/卡片时间 | 实际输入与关键输出 | meta.request_id |
+|---|---|---|
+| MA-C09 / 23:18:53 | 景点campus_id:null/tags:[]/month:null/limit:0原样调用；isError=true/ok=false/data=null，VALIDATION_ERROR，limit/minimum；未纠正成5 | b1a36dc3-ddca-4f3c-90cd-f4e5df2cd1fc |
+| MA-C10 / 23:20:19 | 空闲查询原夹具改workspace_ref=demo-unbound-test；isError=true/ok=false/data=null，IDENTITY_NOT_VERIFIED；没有回退演示工作区或给私人数据 | 547d8abf-5b8b-4019-b572-9ae8c5f22fb0 |
+| MA-C11 / 23:21:22 | 截止原夹具estimated_minutes:null，保留event:null/due.date:null；isError=false/ok=true，candidate_slots=[]、needs_confirmation=[estimated_minutes] | 48a0d28c-0f63-4254-bf66-8fe8623cf0f4 |
+| MA-C12 / 23:22:16 | due={at:null,date:2026-09-21,precision:date_only}，耗时20不变；isError=false/ok=true，candidate_slots=[]、needs_confirmation=[due_time]；没有补23:59 | 5e20a51e-69f0-4963-85ce-987fc96707d3 |
+| MA-C13 / 23:23:19 | 资料demo-CS101/topic=排序/limit5；isError=false/ok=true，只返回demo-index-02，content_available=false/evidence=[]；Agent明确不能据正文总结 | 9703a02e-cae1-4a32-b6ea-1bfff49a490d |
+
+MA-C11/12的校验成功不等于已经可安排，模型实际说明缺信息及无候选。MA-C13真实模型回答未凭标题生成排序正文。身份用例只证明当前共享服务凭证拒绝未授权引用，不代替双真实账号可信绑定验收。所有业务仍固定公开虚构数据，无任务保存/个人数据/数据库变更。本轮没有新增云端审计逐项关联；以前审计记录和本次业务UUID不混用。
+
+独立卡定位采用当前消息列表索引及精确工具名，避免把历史展开卡内容误归到本轮。一次按“已完成”总数定位选中了课表旧卡，读到没有探针控件后未盲点，改为按MA-C07消息位置找到对应独立卡，并准确补验。
+
+本机忽略目录截图：deploy/cloudbase-demo-readonly/dist/D06-005-main-index-boundary-20260930.jpg。后续工作优先核对平台确定性工作流节点是否能原样传递课表JSON，保留REST/MCP契约与算法；未假定节点语言或新增固定演示引用工具，不因本轮补测宣布全部D06/项目完成。下文登录阻塞与待补读描述是20:01–23:02历史状态。
+
 ## 入口与版本
 
 实际重新开启nku-campus-mcp-probe默认公网域名，保存后读回“开启”、内网默认地址“关闭”、保存按钮消失；仍使用005，没有上传候选、构建或发布新云版本。公网按照用户新授权持续保留，不能把此前关闭截图当当前状态。
