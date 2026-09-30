@@ -1,0 +1,239 @@
+{
+  "status": "LOCAL_PASS",
+  "platform_status": "NOT_INTEGRATED",
+  "data_version": "y1-070600fb47f92e70",
+  "unittest": {
+    "run": 12,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "public_materials": 33,
+  "catalog_materials": 34,
+  "indexed_pages": 468,
+  "page_methods": {
+    "none": 21,
+    "pdfplumber_visible_bbox": 384,
+    "windows_ocr": 84
+  },
+  "queries": [
+    {
+      "course_id": "y1-s1-programming",
+      "topic": "数组",
+      "matched_materials": 2,
+      "samples": [
+        {
+          "title": "期末复习",
+          "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+          "pages": [
+            "PDF 第 25 页",
+            "PDF 第 24 页",
+            "PDF 第 26 页"
+          ]
+        },
+        {
+          "title": "去除手写 20-21C  上册",
+          "material_id": "study-s1-programming-26355822c1f8144c",
+          "pages": [
+            "PDF 第 5 页",
+            "PDF 第 6 页",
+            "PDF 第 1 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s2-programming",
+      "topic": "构造函数",
+      "matched_materials": 5,
+      "samples": [
+        {
+          "title": "期末复习2-2 1",
+          "material_id": "study-s2-programming-cd29346f86e832fa",
+          "pages": [
+            "PDF 第 7 页",
+            "PDF 第 12 页",
+            "PDF 第 41 页"
+          ]
+        },
+        {
+          "title": "cpp_review_notes_with_code",
+          "material_id": "study-s2-programming-f076c553a310a022",
+          "pages": [
+            "PDF 第 3 页",
+            "PDF 第 3 页",
+            "PDF 第 8 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s1-calculus",
+      "topic": "极限",
+      "matched_materials": 1,
+      "samples": [
+        {
+          "title": "高数期末复习",
+          "material_id": "study-s1-calculus-6e53f8532c216ccc",
+          "pages": [
+            "PDF 第 13 页",
+            "PDF 第 8 页",
+            "PDF 第 4 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s2-calculus",
+      "topic": "积分",
+      "matched_materials": 2,
+      "samples": [
+        {
+          "title": "高数真题",
+          "material_id": "study-s2-calculus-90f6102c4992a3c7",
+          "pages": [
+            "PDF 第 1 页",
+            "PDF 第 4 页",
+            "PDF 第 2 页"
+          ]
+        },
+        {
+          "title": "高等数学",
+          "material_id": "study-s2-calculus-0b11b3601df78a74",
+          "pages": [
+            "PDF 第 2 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s1-linear-algebra",
+      "topic": "矩阵",
+      "matched_materials": 1,
+      "samples": [
+        {
+          "title": "线性代数期末复习题",
+          "material_id": "study-s1-linear-algebra-f79a31b39bd88215",
+          "pages": [
+            "PDF 第 48 页",
+            "PDF 第 83 页",
+            "PDF 第 25 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s2-physics",
+      "topic": "电场",
+      "matched_materials": 5,
+      "samples": [
+        {
+          "title": "2020",
+          "material_id": "study-s2-physics-c6b936374c8ae864",
+          "pages": [
+            "PDF 第 1 页",
+            "PDF 第 6 页"
+          ]
+        },
+        {
+          "title": "大物2019",
+          "material_id": "study-s2-physics-46bbcebfd699f638",
+          "pages": [
+            "PDF 第 1 页",
+            "PDF 第 6 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s2-probability",
+      "topic": "条件概率",
+      "matched_materials": 3,
+      "samples": [
+        {
+          "title": "2024-2025学年春季《概率论与数理统计》期末试卷V1.1（A）【考试版】",
+          "material_id": "study-s2-probability-101feb5a6eaba5dd",
+          "pages": [
+            "PDF 第 3 页"
+          ]
+        },
+        {
+          "title": "2025-2026学年春季概率论与数理统计期中试卷A",
+          "material_id": "study-s2-probability-a7dfaf2beb4f155f",
+          "pages": [
+            "PDF 第 3 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s1-ideology",
+      "topic": "理想",
+      "matched_materials": 3,
+      "samples": [
+        {
+          "title": "1_思修大题11",
+          "material_id": "study-s1-ideology-e834581c52ce1f41",
+          "pages": [
+            "PDF 第 2 页",
+            "PDF 第 3 页",
+            "PDF 第 1 页"
+          ]
+        },
+        {
+          "title": "1_思政复习",
+          "material_id": "study-s1-ideology-8a05a12b1b8a7e09",
+          "pages": [
+            "PDF 第 4 页",
+            "PDF 第 9 页",
+            "PDF 第 1 页"
+          ]
+        }
+      ]
+    },
+    {
+      "course_id": "y1-s2-marxism",
+      "topic": "实践",
+      "matched_materials": 5,
+      "samples": [
+        {
+          "title": "马原考点总结",
+          "material_id": "study-s2-marxism-80159e7fae0c909f",
+          "pages": [
+            "PDF 第 3 页",
+            "PDF 第 4 页",
+            "PDF 第 3 页"
+          ]
+        },
+        {
+          "title": "7_马原总结2023(1)",
+          "material_id": "study-s2-marxism-0a0bec651848beaf",
+          "pages": [
+            "PDF 第 3 页",
+            "PDF 第 4 页",
+            "PDF 第 3 页"
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": [
+    "StudyCatalog JSON Schema 1.0.0",
+    "SQLite integrity and foreign keys",
+    "all public PDF SHA-256",
+    "all chunk offsets match stored page text",
+    "read-only SQL",
+    "private/pending isolation",
+    "path allowlist",
+    "Goodnotes off-page citation regression",
+    "held material body absent"
+  ],
+  "not_verified": [
+    "all formulas/code/OCR by a human",
+    "complete privacy review of every page",
+    "NK-GeniOS import/tool call",
+    "D's live backend deployment",
+    "C's official course mapping",
+    "full backend test suite"
+  ]
+}

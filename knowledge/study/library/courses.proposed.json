@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0.0",
+  "note": "供 C 映射统一课程目录；不代表官方课程代码",
+  "courses": [
+    {
+      "course_id": "y1-s1-programming",
+      "course_code": null,
+      "title": "程序设计（上学期，C/C++名称待核对）",
+      "semester": "s1",
+      "aliases": [
+        "c--",
+        "C",
+        "C++"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s2-programming",
+      "course_code": null,
+      "title": "程序设计（下学期，C++名称待核对）",
+      "semester": "s2",
+      "aliases": [
+        "c艹",
+        "C++"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s1-calculus",
+      "course_code": null,
+      "title": "高等数学（上学期）",
+      "semester": "s1",
+      "aliases": [
+        "高数"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s2-calculus",
+      "course_code": null,
+      "title": "高等数学（下学期）",
+      "semester": "s2",
+      "aliases": [
+        "高数"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s1-linear-algebra",
+      "course_code": null,
+      "title": "线性代数",
+      "semester": "s1",
+      "aliases": [
+        "线代"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s2-physics",
+      "course_code": null,
+      "title": "大学物理",
+      "semester": "s2",
+      "aliases": [
+        "大物"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s2-probability",
+      "course_code": null,
+      "title": "概率论与数理统计",
+      "semester": "s2",
+      "aliases": [
+        "概率论"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s1-ideology",
+      "course_code": null,
+      "title": "思想道德与法治（名称待核对）",
+      "semester": "s1",
+      "aliases": [
+        "思政",
+        "思修"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    },
+    {
+      "course_id": "y1-s2-marxism",
+      "course_code": null,
+      "title": "马克思主义基本原理（名称待核对）",
+      "semester": "s2",
+      "aliases": [
+        "马原"
+      ],
+      "mapping_status": "provisional_needs_C_mapping"
+    }
+  ]
+}

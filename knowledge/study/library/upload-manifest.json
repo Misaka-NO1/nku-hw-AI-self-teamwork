@@ -1,0 +1,475 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "y1-070600fb47f92e70",
+  "target": "NK-GeniOS KB_Study",
+  "platform_import_status": "not_uploaded_or_validated",
+  "authorization_status": "user_confirmed_authorized_public_2026-09-30",
+  "files": [
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s1-calculus-6e53f8532c216ccc.md",
+      "sha256": "fd7473ee50b8d6b44ea2d82711c2497d299894ea3229965e8d537a952840ccc6",
+      "material_id": "study-s1-calculus-6e53f8532c216ccc",
+      "tags": {
+        "course_id": "y1-s1-calculus",
+        "term": "s1",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:6e53f8532c216ccc6874fc9a3248c796665f8ba34c16242929591963e2fb6cdd",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s1-ideology-e834581c52ce1f41.md",
+      "sha256": "e3c79f5e748e7621b30522d110df66292d93e7a69c6a7809eb1efe540ab57739",
+      "material_id": "study-s1-ideology-e834581c52ce1f41",
+      "tags": {
+        "course_id": "y1-s1-ideology",
+        "term": "s1",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:e834581c52ce1f41575d911c0b2105b1ee2a710ee700723e2020ec26050535af",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s1-ideology-8a05a12b1b8a7e09.md",
+      "sha256": "c9d54453d5d9fca86cf5eb25269b5a1ddff24f6b19fbe3718af8c15543745f9d",
+      "material_id": "study-s1-ideology-8a05a12b1b8a7e09",
+      "tags": {
+        "course_id": "y1-s1-ideology",
+        "term": "s1",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:8a05a12b1b8a7e09fdc98e10a94b62ef9d844624bb12c1b901907540c2d7e57c",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s1-ideology-2146cd59f5c57d41.md",
+      "sha256": "2765fac20365cc798548c339f798c99efc2d8c186c7037036c57c2df032c554b",
+      "material_id": "study-s1-ideology-2146cd59f5c57d41",
+      "tags": {
+        "course_id": "y1-s1-ideology",
+        "term": "s1",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:2146cd59f5c57d412a536bf723ac152e60d9a0f9493a116fcbbc38d5caed1e19",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s1-linear-algebra-f79a31b39bd88215.md",
+      "sha256": "669f811c62d2286f3f613c9d59162005e62cc279bba2f645c8488024ccabed6e",
+      "material_id": "study-s1-linear-algebra-f79a31b39bd88215",
+      "tags": {
+        "course_id": "y1-s1-linear-algebra",
+        "term": "s1",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:f79a31b39bd88215e5c15e8928f1b3a14c77e123dc8783344cb8a38f88b78bbe",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s1-programming-26355822c1f8144c.md",
+      "sha256": "760316f0732e22fb80057cde89a9b3979ce47fec2c1a246c0826b0edce50e897",
+      "material_id": "study-s1-programming-26355822c1f8144c",
+      "tags": {
+        "course_id": "y1-s1-programming",
+        "term": "s1",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:26355822c1f8144c44853b5794e683535ccf851459c1d41bb4191ce2c317b39b",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s1-programming-b8a8c17240ffa3e4.md",
+      "sha256": "43478bcfa83eef4250942430fc9293082def77476d2ede6b1850e844b5f26835",
+      "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+      "tags": {
+        "course_id": "y1-s1-programming",
+        "term": "s1",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:b8a8c17240ffa3e480bb97cdaabd683e5e9ea21451976f5f3fdbe8a089fb4363",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-calculus-90f6102c4992a3c7.md",
+      "sha256": "62a7910c23750ace0eb9a78004c42bfea6a513850e963ce4963b053369591458",
+      "material_id": "study-s2-calculus-90f6102c4992a3c7",
+      "tags": {
+        "course_id": "y1-s2-calculus",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:90f6102c4992a3c7b131bd362fa755016a29f554a09b3075b926562109c91ec2",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-calculus-0b11b3601df78a74.md",
+      "sha256": "7afd2827edc3ccf52ba79bf74fe122cb2a4c1e1505cb62cfe0afd827749e6e08",
+      "material_id": "study-s2-calculus-0b11b3601df78a74",
+      "tags": {
+        "course_id": "y1-s2-calculus",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:0b11b3601df78a74eb154ca53a7238dd50f465e7623ddf12d16a9d5a333e8cef",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-marxism-0a0bec651848beaf.md",
+      "sha256": "a946a8be80d8a1de5b3fbb9e067dc0a2054425a9512f51bd025f19bd8185b23f",
+      "material_id": "study-s2-marxism-0a0bec651848beaf",
+      "tags": {
+        "course_id": "y1-s2-marxism",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:0a0bec651848beafc42a415b224c43e1dbd5d9d1ff26e249bd7db804eaa2f86d",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-marxism-28315c18c093abf3.md",
+      "sha256": "b9188e8312e205d54bb68c4df853773ac1680407397fae26e62fe82f17cdbec1",
+      "material_id": "study-s2-marxism-28315c18c093abf3",
+      "tags": {
+        "course_id": "y1-s2-marxism",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:28315c18c093abf30cfb57975d81364179d137a301954d8dfc62f900cf62f201",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-marxism-9ecf25ff0629bcad.md",
+      "sha256": "7ce89c861398ff8028733f9bcdc0bff342968cfc6e18703cb041423da813ebec",
+      "material_id": "study-s2-marxism-9ecf25ff0629bcad",
+      "tags": {
+        "course_id": "y1-s2-marxism",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:9ecf25ff0629bcad1c2af58c7820d3da7fd1abf466676296c0e675bb50b59ffe",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-marxism-19de0432715b4aa5.md",
+      "sha256": "d18155e9acce9682c8a4c37971a1a04b13e73d34e47b996dacb081c9526520dd",
+      "material_id": "study-s2-marxism-19de0432715b4aa5",
+      "tags": {
+        "course_id": "y1-s2-marxism",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:19de0432715b4aa5054d864ebdb7575acb17cc131b2132e4224da7f363ce78b2",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-marxism-88a5a68d925b7f84.md",
+      "sha256": "644d0bb7fb16546f3ee0c7a675a801351c1449d8d52618c8ae2079843b6a1cc5",
+      "material_id": "study-s2-marxism-88a5a68d925b7f84",
+      "tags": {
+        "course_id": "y1-s2-marxism",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:88a5a68d925b7f84527d474b0fa3e913ec49af739be8e188d81162fe731801f3",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-marxism-80159e7fae0c909f.md",
+      "sha256": "103430d5000f4726be6eb4b5b5b621ba5a235c42f7afbd63e3826a1de773cbb9",
+      "material_id": "study-s2-marxism-80159e7fae0c909f",
+      "tags": {
+        "course_id": "y1-s2-marxism",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:80159e7fae0c909ffbc56f7caa11a48362967abddd1cbe65ae7de6d6c4b163f7",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-physics-c6b936374c8ae864.md",
+      "sha256": "9da8b39c4dc6b93987b93e1bc7773fe5e91aed61d4b398dffcbdf5132efa9ee3",
+      "material_id": "study-s2-physics-c6b936374c8ae864",
+      "tags": {
+        "course_id": "y1-s2-physics",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:c6b936374c8ae8643d6f217888b673eaca884fac3a5980dc7145c74a746a5fa6",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-physics-cb6c50ee1df79476.md",
+      "sha256": "2ce66c19f2762ff11a15b9b76332fa7898ad8f1e8c1eb9f45906572e09c4e3cf",
+      "material_id": "study-s2-physics-cb6c50ee1df79476",
+      "tags": {
+        "course_id": "y1-s2-physics",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:cb6c50ee1df79476f9d6d24f7301600cd351d99927dcc9997ec21fef7da27902",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-physics-0a46c38726e23c48.md",
+      "sha256": "8b55a1590284348651f30bee93b6513dd65f0dbf5d7e99aaf9bdb27d392b84c4",
+      "material_id": "study-s2-physics-0a46c38726e23c48",
+      "tags": {
+        "course_id": "y1-s2-physics",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:0a46c38726e23c48cc58f4b2ebc93b0c121cb63a40c62d9b6c1b4585955fc2dd",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-physics-b91d080a8c79df85.md",
+      "sha256": "a56badcfe17cdcd55771f9ea7835d9b098c914d6e1e4e214e6cc799ce0863c8a",
+      "material_id": "study-s2-physics-b91d080a8c79df85",
+      "tags": {
+        "course_id": "y1-s2-physics",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:b91d080a8c79df85a2be05f2eee8cdee0f24841c64f072c7d573030b504fdf92",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-physics-efbde7e09544ed14.md",
+      "sha256": "ff80ccc5c15918db32324ddec6e0483ef9bd48af4d2b009084f77ed8e66da54e",
+      "material_id": "study-s2-physics-efbde7e09544ed14",
+      "tags": {
+        "course_id": "y1-s2-physics",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:efbde7e09544ed1453cb4810091d879cd516e5480ff80867a890c5235900b5bc",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-physics-46bbcebfd699f638.md",
+      "sha256": "284955914bab0ebfaf2c44756555875a3099f2a80f65c81c0fb9a6794b8392e3",
+      "material_id": "study-s2-physics-46bbcebfd699f638",
+      "tags": {
+        "course_id": "y1-s2-physics",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:46bbcebfd699f638b035811f084fa541118b059bd4d9548bac67d82e3d9a883c",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-physics-2329b12e32d546f8.md",
+      "sha256": "18177741c00cb0c38625fdd108e5a05816ab40bbce5fd79150aa49b97704e8d2",
+      "material_id": "study-s2-physics-2329b12e32d546f8",
+      "tags": {
+        "course_id": "y1-s2-physics",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:2329b12e32d546f8876e82f465c3937a29ff474328c806c6e3db61fc2d677768",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-probability-5f5e607db31aada8.md",
+      "sha256": "c914b5ad239a788efb69d2d99c2de33d934a6a38c6c0ad5e6d4a952b1bee89bc",
+      "material_id": "study-s2-probability-5f5e607db31aada8",
+      "tags": {
+        "course_id": "y1-s2-probability",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:5f5e607db31aada887e24361ddbfe184ed15fba55fb2736d4d4510b539a52583",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-probability-d5f582f9efde68b4.md",
+      "sha256": "230091cf0a2f5fa211e4af2bf0b6813a082acf01b30de68e5c608504180e20a5",
+      "material_id": "study-s2-probability-d5f582f9efde68b4",
+      "tags": {
+        "course_id": "y1-s2-probability",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:d5f582f9efde68b49c60a0f5da0a0fcafd6d14137f4052155f2134451de152e7",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-probability-451d99011df209b5.md",
+      "sha256": "e2881fc482e415cfec8cfad89381622bf66774187e2c827197e48e77fea6dd7c",
+      "material_id": "study-s2-probability-451d99011df209b5",
+      "tags": {
+        "course_id": "y1-s2-probability",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:451d99011df209b5a08cdafd05cbd4f94a43af021f33a631788a3408d8e1f2e7",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-probability-101feb5a6eaba5dd.md",
+      "sha256": "0911c90f73089fbe076982def15266688fd2f4035f4bd645db9a3f7340ad6576",
+      "material_id": "study-s2-probability-101feb5a6eaba5dd",
+      "tags": {
+        "course_id": "y1-s2-probability",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:101feb5a6eaba5ddae0108f30346630bdd5a6f82dbff78f6af1064d1c97915be",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-probability-a7dfaf2beb4f155f.md",
+      "sha256": "6f2da9c33ff7b0ed4faafe0940a19ca8239da0178968d08b73504323a04912c9",
+      "material_id": "study-s2-probability-a7dfaf2beb4f155f",
+      "tags": {
+        "course_id": "y1-s2-probability",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:a7dfaf2beb4f155f2c5c292a4b09e5eb5cd46c3a171e4902f660d5df747d62ca",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-probability-1334b535ee83c23e.md",
+      "sha256": "866c03675514fe6af88b61a215126fe23467d043f8f927e4eab32ad4ea888f24",
+      "material_id": "study-s2-probability-1334b535ee83c23e",
+      "tags": {
+        "course_id": "y1-s2-probability",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:1334b535ee83c23eafa93a9fb984744d6bb201c804fa5dad5a332cc04e2b3ba2",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-programming-ecb1b840316f954b.md",
+      "sha256": "a8e308384dc2bb6ebb251957da6a601eded269b2936f090d33414f47852faa6b",
+      "material_id": "study-s2-programming-ecb1b840316f954b",
+      "tags": {
+        "course_id": "y1-s2-programming",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:ecb1b840316f954b8d9a997430192621ee40901136caea95714050b86957e8ca",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-programming-69542effd80181aa.md",
+      "sha256": "37a5616cdb2c4c9191566072ffd57d1c54107c2095ff91d93d59b64e47706f1e",
+      "material_id": "study-s2-programming-69542effd80181aa",
+      "tags": {
+        "course_id": "y1-s2-programming",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:69542effd80181aaad6fb69c491380107655b11c28e7e2a01f54cbbfe83f39b7",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-programming-f076c553a310a022.md",
+      "sha256": "2ea22e0355727cc44943a5a2773076fec63cb62f16fedbd4288b2ee70431b406",
+      "material_id": "study-s2-programming-f076c553a310a022",
+      "tags": {
+        "course_id": "y1-s2-programming",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:f076c553a310a02215ab24cc3cbaae9e6bbc764cf9b2bba07326450d9e4c8316",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-programming-efb6bb2d624c4062.md",
+      "sha256": "3f81bfe7ec197622de553591409547aff174017072a0a81567b0d3d2c00d509b",
+      "material_id": "study-s2-programming-efb6bb2d624c4062",
+      "tags": {
+        "course_id": "y1-s2-programming",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:efb6bb2d624c4062d4e00c6267b2ad7e9c414926222cad1589270f36f9cef5a4",
+      "content_review": "not_manually_reviewed"
+    },
+    {
+      "file_ref": "knowledge/study/exports/year1/study-s2-programming-cd29346f86e832fa.md",
+      "sha256": "746b376127f5e2cb43b74451f36449227db88907437b07576dba8c4faabad815",
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "tags": {
+        "course_id": "y1-s2-programming",
+        "term": "s2",
+        "access_scope": "public"
+      },
+      "material_version": "sha256:cd29346f86e832fa017f1d395328aedcbbdbccb5a706c69e63b54508d7a0155e",
+      "content_review": "not_manually_reviewed"
+    }
+  ],
+  "page_methods": {
+    "none": 21,
+    "pdfplumber_visible_bbox": 384,
+    "windows_ocr": 84
+  },
+  "course_counts": [
+    {
+      "course_id": "y1-s1-calculus",
+      "title": "高等数学（上学期）",
+      "files": 1,
+      "pages": 13,
+      "indexed_pages": 13
+    },
+    {
+      "course_id": "y1-s1-ideology",
+      "title": "思想道德与法治（名称待核对）",
+      "files": 3,
+      "pages": 41,
+      "indexed_pages": 41
+    },
+    {
+      "course_id": "y1-s1-linear-algebra",
+      "title": "线性代数",
+      "files": 1,
+      "pages": 116,
+      "indexed_pages": 115
+    },
+    {
+      "course_id": "y1-s1-programming",
+      "title": "程序设计（上学期，C/C++名称待核对）",
+      "files": 2,
+      "pages": 64,
+      "indexed_pages": 60
+    },
+    {
+      "course_id": "y1-s2-calculus",
+      "title": "高等数学（下学期）",
+      "files": 2,
+      "pages": 6,
+      "indexed_pages": 6
+    },
+    {
+      "course_id": "y1-s2-marxism",
+      "title": "马克思主义基本原理（名称待核对）",
+      "files": 6,
+      "pages": 43,
+      "indexed_pages": 42
+    },
+    {
+      "course_id": "y1-s2-physics",
+      "title": "大学物理",
+      "files": 7,
+      "pages": 49,
+      "indexed_pages": 49
+    },
+    {
+      "course_id": "y1-s2-probability",
+      "title": "概率论与数理统计",
+      "files": 6,
+      "pages": 37,
+      "indexed_pages": 34
+    },
+    {
+      "course_id": "y1-s2-programming",
+      "title": "程序设计（下学期，C++名称待核对）",
+      "files": 5,
+      "pages": 115,
+      "indexed_pages": 108
+    }
+  ]
+}
