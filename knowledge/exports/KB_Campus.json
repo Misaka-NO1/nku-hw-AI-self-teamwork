@@ -2,8 +2,8 @@
   "schema_version": "1.0.0",
   "dataset_kind": "demo",
   "kb_id": "KB_Campus",
-  "data_version": "nku-entries-2026-09-27-r4",
-  "built_at": "2026-09-27",
+  "data_version": "nku-entries-2026-09-30-r5",
+  "built_at": "2026-09-30",
   "items": [
     {
       "entry_id": "nku-entry-01",
@@ -614,6 +614,125 @@
       "valid_until": null,
       "status": "verified",
       "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-card-recharge",
+      "kind": "procedure",
+      "title": "校园卡充值指引",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开微信，进入「南开大学一卡通」微信服务号",
+        "点击「卡片充值」，按页面提示操作",
+        "安全说明：本知识库不收录任何充值支付链接或收款二维码（涉及金钱安全），仅指引官方服务号入口；请勿通过他人转发的链接或二维码充值"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-electricity-recharge",
+      "kind": "procedure",
+      "title": "宿舍电费充值指引",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开飞书 APP，进入「南开微应用」板块",
+        "点击「充值」应用（若列表中没有，在「＋」/所有应用中添加）",
+        "按页面提示选择宿舍并完成电费充值",
+        "安全说明：本知识库不收录任何支付链接或二维码（涉及金钱安全），仅指引官方应用入口"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-view-plan",
+      "kind": "procedure",
+      "title": "查看个人培养计划",
+      "category": "academic",
+      "campus_scope": [],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://eamis.nankai.edu.cn/eams/myPlan!programDoc.action",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "登录教学管理信息系统 https://eamis.nankai.edu.cn （账号密码同统一身份认证，校外可直连无需 VPN）",
+        "登录后经深链直达「我的培养计划」页面（未登录访问会先跳转登录页，登录后自动进入）"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": "https://eamis.nankai.edu.cn/eams/myPlan!programDoc.action",
+          "locator": "2026-09-30 用户提供；当日校外实测 302 跳转登录页（链接有效），待团队核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-venue-booking",
+      "kind": "procedure",
+      "title": "体育场馆预约",
+      "category": "venue",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://tyggl.nankai.edu.cn/Views/User/UserChoose.html",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开体育场馆管理系统（首页为「用户类型选择」页）",
+        "按本人身份类型选择并登录，进入后选择场馆与时段预约"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": "https://tyggl.nankai.edu.cn/Views/User/UserChoose.html",
+          "locator": "2026-09-30 用户提供；当日校外实测 HTTP 200（用户类型选择页），待团队核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
       "entry_id": "demo-proc-05",
