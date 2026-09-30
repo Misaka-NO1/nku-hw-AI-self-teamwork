@@ -2,6 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://schemas.example.invalid/campus/api-1.0.0.json",
   "title": "NK Campus Assistant API Contract",
+  "x-rest-query-encoding": {
+    "paths": ["/api/v1/scenic/spots", "/api/v1/study/materials"],
+    "parameter": "query",
+    "encoding": "URL-encoded UTF-8 JSON object",
+    "notes": "Exactly one query parameter. Use the same object as MCP arguments; all required nullable fields remain explicit null. No dispersed parameters or silent defaults."
+  },
   "$defs": {
     "FieldError": {
       "type": "object",

@@ -61,7 +61,8 @@ def test_cloud_listener_cannot_start_without_https_and_bearer_even_if_developmen
     ("campus.example.invalid", "https://untrusted.example.invalid", 403),
     ("untrusted.example.invalid", None, 421),
 ])
-def test_mcp_proxy_host_and_origin_allowlist(host, origin, status):
+@pytest.mark.parametrize("protocol_version", ["2025-03-26", "2025-11-25"])
+def test_mcp_proxy_host_and_origin_allowlist(host, origin, status, protocol_version):
     runtime = Settings(app_env="staging", mcp_public_url="https://campus.example.invalid/mcp",
         mcp_require_auth=True, mcp_service_token="proxy-test-secret", mcp_host="0.0.0.0")
     headers = {"Authorization": "Bearer proxy-test-secret", "Host": host,
@@ -71,7 +72,7 @@ def test_mcp_proxy_host_and_origin_allowlist(host, origin, status):
     with TestClient(create_http_app(runtime)) as client:
         response = client.post("/mcp", headers=headers, json={
             "jsonrpc": "2.0", "id": 1, "method": "initialize",
-            "params": {"protocolVersion": "2025-11-25", "capabilities": {},
+            "params": {"protocolVersion": protocol_version, "capabilities": {},
                        "clientInfo": {"name": "proxy-check", "version": "1.0"}},
         })
     assert response.status_code == status

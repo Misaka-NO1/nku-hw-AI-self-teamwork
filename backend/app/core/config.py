@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     mcp_public_url: str = ""
     mcp_service_token: SecretStr = Field(default=SecretStr(""), repr=False)
     mcp_require_auth: bool = False
+    mcp_enable_domain_tools: bool = False
     database_url: str = "sqlite:///data/campus.db"
     import_ticket_ttl_seconds: int = Field(default=600, ge=60, le=3600)
     confirmation_ttl_seconds: int = Field(default=600, ge=60, le=3600)

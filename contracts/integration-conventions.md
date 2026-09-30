@@ -101,6 +101,10 @@ C 的纯函数接收已经解析好的 `plan` 和 `records`。公共接口只接
 { "course_id": "demo-CS101", "topic": "递归", "limit": 5 }
 ```
 
+2026-09-30 经用户确认，两个 GET 搜索路径的传输编码统一为 **一个 `query` 参数，值为完整查询 JSON 的 UTF-8 URL 编码**。例如 JavaScript 使用 `new URLSearchParams({query: JSON.stringify(query)})`；Python HTTP 客户端使用 `params={"query": json.dumps(query, ensure_ascii=False)}`。MCP arguments 直接使用同一个 JSON 对象，不嵌套 `query`。省略必需的 nullable 字段、重复 query 参数、混入分散参数均返回 `VALIDATION_ERROR`；`null`、空数组和中文不会被分别推断为默认值。详情/下载路径不使用此查询格式。
+
+当前演示读接口中的 `workspace_ref=demo-workspace-01` 专指服务器预置的**只读公开虚构夹具**，不是登录凭据，也不是浏览器创建的可写工作区。公共 demo 课表不自动纳入未确认的通知草稿。浏览器随机工作区仍须会话 owner 校验并读取已确认课表/任务；MCP 共享服务令牌不得访问这些工作区。培养方案和成绩引用仅解析服务器固定 demo 文件，不能提交 records 或文件路径。
+
 ## 6. 培养方案审计结果
 
 输入计划仍使用 `DegreePlan.version` 和模块的 `min_credits`；审计输出统一使用：

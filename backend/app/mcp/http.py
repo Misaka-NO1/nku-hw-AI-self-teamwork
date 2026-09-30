@@ -8,7 +8,7 @@ from pydantic import SecretStr
 from mcp.server.transport_security import TransportSecuritySettings
 
 from app.core.config import Settings, get_settings
-from app.mcp.server import mcp
+from app.mcp.server import create_mcp_server
 
 
 AsgiApp = Callable[[dict[str, Any], Callable[..., Awaitable[Any]], Callable[..., Awaitable[Any]]], Awaitable[None]]
@@ -78,7 +78,7 @@ def create_http_app(settings: Settings | None = None) -> AsgiApp:
         # Proxy preserves external Host; permit only the configured public authority.
         allowed_hosts.append(public.netloc)
         allowed_origins.append(f"{public.scheme}://{public.netloc}")
-    base_app = mcp.streamable_http_app(
+    base_app = create_mcp_server(runtime).streamable_http_app(
         streamable_http_path=runtime.mcp_path,
         host=runtime.mcp_host,
         transport_security=TransportSecuritySettings(

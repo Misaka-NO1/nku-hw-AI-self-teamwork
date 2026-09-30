@@ -13,6 +13,7 @@ from app.api.demo import router as demo_router
 from app.api.drafts import router as drafts_router
 from app.api.schedules import router as schedules_router
 from app.api.tasks import router as tasks_router
+from app.api.domains import router as domains_router
 from app.core.config import get_settings
 from app.core.envelope import FieldError, failure
 from app.core.errors import AppError
@@ -105,6 +106,7 @@ app.include_router(demo_router)
 app.include_router(drafts_router)
 app.include_router(schedules_router)
 app.include_router(tasks_router)
+app.include_router(domains_router)
 
 
 if __name__ == "__main__":

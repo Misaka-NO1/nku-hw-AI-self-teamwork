@@ -1,5 +1,9 @@
 # C Agent 进度交接
 
+## D 接口补充（2026-09-30，本地联调，不修改 C 页面/算法）
+
+D 已注册 degree/audit REST/MCP，接收 workspace_ref/plan_id/transcript_ref，固定 demo 解析并复用 C 算法；本机对照通过，尚未云端发布。仅支持 demo-cs-plan-v1 / demo-transcript-01，不接任意 records，结果不等于毕业资格。用户确认景点/资料 GET 搜索用一个 query JSON 参数：new URLSearchParams({query: JSON.stringify(query)})；nullable 字段显式 null，MCP arguments 直接同一对象。详情/附件下载路径不变，附件成功不是 JSON 信封。C 后续仍需为公共页面注入真实接口结果，不能把默认 props 当作后端联调通过。详见 contracts/integration-conventions.md §5、backend/README.md 和 D06 证据。
+
 任务状态：LOCAL_PASS；校园正式来源与真实培养方案：WAITING_HUMAN（见 docs/blockers/C-01、C-02）
 
 ## 修改文件

@@ -26,7 +26,7 @@ class McpAuditLoggingMiddleware(ServerMiddleware[Any]):
         except Exception:
             self._write(ctx, started, tool_name, "error")
             raise
-        self._write(ctx, started, tool_name, "ok")
+        self._write(ctx, started, tool_name, "error" if getattr(result, "is_error", False) else "ok")
         return result
 
     @staticmethod
