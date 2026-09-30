@@ -62,3 +62,31 @@ powershell -NoProfile -ExecutionPolicy Bypass -File deploy/cloudbase-demo-readon
 ## 回退
 
 优先关公网，再将流量切回保留的003。该旧版只含health_probe，须恢复003对应 BUILD_ID，并关闭 `MCP_ENABLE_DOMAIN_TOOLS`、清空包清单路径；检查旧版健康/鉴权和平台工具绑定。保留其原HTTPS/Bearer配置，避免旧版加载新增业务资源。无业务数据库迁移需要反向执行。切回与配置变更均须按实际控制台行为核对，不凭推测宣称成功。
+
+## 2026-09-30 学校平台 query_json 兼容候选（仅本地，未发布）
+
+用户仅批准实现/本地测试/准备候选包。新增六个可选 `platform_*` JSON 文本适配工具，不替换原六业务工具或REST，不改算法和Schema；完整约定见 [平台传输扩展](../../contracts/platform-mcp-compat.md)。原默认包和云端004继续7工具。
+
+在仓库根目录显式生成另一种候选：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File deploy/cloudbase-demo-readonly/Build-Package.ps1 -PlatformCompat
+```
+
+构建号附带 `-platform-compat`，清单13工具。本地解压验收脚本从清单决定隔离测试开关，不使用云端令牌；原七组REST/MCP和七组新增兼容MCP结果对比，并检查真正null、字面"null"、空数组、中文、身份边界、非夹具拒绝、重复键/NaN/错误根类型。`platform_verified=false`、`container_image_verified=false` 不变。
+
+**本次不发布**。今后获准部署兼容包时，在原门禁配置外需要 `MCP_ENABLE_PLATFORM_COMPAT_TOOLS=true`，BUILD_ID/13工具清单匹配，原004与003均保留回退。不读取服务令牌。回到004须恢复004构建配置并将兼容开关置false、恢复原插件绑定；004本身没有新增工具。回到003仍按上文探针专用配置，同时保证兼容开关false。本次没有实际回退操作。
+
+## 2026-09-30 学校平台 query_json 兼容候选（仅本地，未发布）
+
+用户仅批准实现/本地测试/准备候选包。新增六个可选 `platform_*` JSON 文本适配工具，不替换原六业务工具或REST，不改算法和Schema；完整约定见 [平台传输扩展](../../contracts/platform-mcp-compat.md)。原默认包和云端004继续7工具。
+
+在仓库根目录显式生成另一种候选：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File deploy/cloudbase-demo-readonly/Build-Package.ps1 -PlatformCompat
+```
+
+构建号附带 `-platform-compat`，清单13工具。本地解压验收脚本从清单决定隔离测试开关，不使用云端令牌；原七组REST/MCP和七组新增兼容MCP结果对比，并检查真正null、字面"null"、空数组、中文、身份边界、非夹具拒绝、重复键/NaN/错误根类型。`platform_verified=false`、`container_image_verified=false` 不变。
+
+**本次不发布**。今后获准部署兼容包时，在原门禁配置外需要 `MCP_ENABLE_PLATFORM_COMPAT_TOOLS=true`，BUILD_ID/13工具清单匹配，原004与003均保留回退。不读取服务令牌。回到004须恢复004构建配置并将兼容开关置false、恢复原插件绑定；004本身没有新增工具。回到003仍按上文探针专用配置，同时保证兼容开关false。本次没有实际回退操作。

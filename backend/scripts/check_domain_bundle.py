@@ -18,7 +18,7 @@ from zipfile import ZipFile
 
 import httpx
 
-from app.core.domain_bundle import RESOURCE_PATHS, validate_manifest
+from app.core.domain_bundle import PLATFORM_TOOL_NAMES, RESOURCE_PATHS, validate_manifest
 from check_domain_stack import authenticated_mcp, compare
 from check_local_stack import BACKEND, ROOT, require, service, unused_ports, wait_ready
 from probe_mcp_url import ProbeFailure
@@ -68,6 +68,7 @@ def run_checks(package: Path) -> dict:
         extracted.mkdir()
         work.mkdir()
         manifest = inspect_and_extract(package, extracted)
+        platform_compat = manifest["tools"] == list(PLATFORM_TOOL_NAMES)
         token = secrets.token_urlsafe(32)
         shared = {**os.environ, "PYTHONUTF8": "1", "PYTHONDONTWRITEBYTECODE": "1",
                   "APP_ENV": "test", "AUTH_MODE": "demo_fixture", "ALLOW_PERSONAL_UPLOADS": "false",
@@ -75,7 +76,8 @@ def run_checks(package: Path) -> dict:
                   "BUILD_ID": manifest["build_id"], "LOG_LEVEL": "WARNING",
                   "API_HOST": "127.0.0.1", "API_PORT": str(api_port),
                   "MCP_HOST": "127.0.0.1", "MCP_PORT": str(mcp_port), "MCP_PATH": "/mcp",
-                  "MCP_REQUIRE_AUTH": "true", "MCP_SERVICE_TOKEN": token, "MCP_ENABLE_DOMAIN_TOOLS": "true"}
+                  "MCP_REQUIRE_AUTH": "true", "MCP_SERVICE_TOKEN": token, "MCP_ENABLE_DOMAIN_TOOLS": "true",
+                  "MCP_ENABLE_PLATFORM_COMPAT_TOOLS": "true" if platform_compat else "false"}
         mcp_env = {**shared, "PYTHONPATH": str(extracted / "backend"),
                    "DATABASE_URL": "sqlite:///:memory:",
                    "DOMAIN_BUNDLE_MANIFEST_PATH": str(extracted / "domain-bundle-manifest.json")}
@@ -86,8 +88,10 @@ def run_checks(package: Path) -> dict:
                 wait_ready(http, mcp_process, mcp_url, 401, method="POST")
                 with service("app.main", api_env, work) as api_process:
                     wait_ready(http, api_process, api_url + "/readyz", 200)
-                    report = asyncio.run(compare(api_url, mcp_url, token, manifest["build_id"]))
+                    report = asyncio.run(compare(api_url, mcp_url, token, manifest["build_id"], platform_compat=platform_compat))
                     report.update(asyncio.run(check_packaged_boundaries(api_url, mcp_url, token)))
+                    if platform_compat:
+                        report.update(asyncio.run(check_platform_boundaries(mcp_url, token)))
         require(not list(extracted.rglob("*.db")), "Packaged MCP unexpectedly created a database file")
     return {"ok": True, "scope": "extracted_zip_loopback_only", "platform_verified": False,
             "container_image_verified": False, "auth_mode": "demo_fixture", "personal_uploads": False,
@@ -122,6 +126,47 @@ async def check_packaged_boundaries(api_url, mcp_url, token):
                 "Packaged study body/index boundary incorrect")
     return {"browser_workspace_rejected": True, "non_fixture_data_rejected": True,
             "public_study_body_and_private_filter_verified": True}
+
+
+async def check_platform_boundaries(mcp_url, token):
+    async with authenticated_mcp(mcp_url, token) as mcp:
+        async def adapted(name, payload):
+            return await mcp.call_tool("platform_" + name, {"query_json": json.dumps(payload, ensure_ascii=False)})
+
+        scenic = {"campus_id": None, "tags": [], "month": None, "limit": 5}
+        original = await mcp.call_tool("search_scenic_spots", scenic)
+        result = await adapted("search_scenic_spots", scenic)
+        from check_domain_stack import comparable
+        require(not result.is_error and comparable(result.structured_content) == comparable(original.structured_content),
+                "Platform null/array scenic parity failed")
+        for topic in (None, "null", "递归"):
+            query = {"course_id": "demo-CS101", "topic": topic, "limit": 5}
+            original = await mcp.call_tool("search_study_materials", query)
+            result = await adapted("search_study_materials", query)
+            require(not result.is_error and comparable(result.structured_content) == comparable(original.structured_content),
+                    "Platform study null/string/unicode parity failed")
+            if topic is None:
+                require({item["material_id"] for item in result.structured_content["data"]} == {"demo-note-01", "demo-index-02"},
+                        "Platform true-null study selection failed")
+            if topic == "null":
+                require(result.structured_content["data"] == [], "Platform coerced literal null string")
+        query = json.loads((ROOT / "fixtures/time-free-query.demo.json").read_text(encoding="utf-8"))
+        query["workspace_ref"] = "demo-unbound-test"
+        denied = await adapted("query_free_time", query)
+        require(denied.is_error and denied.structured_content["error"]["code"] == "IDENTITY_NOT_VERIFIED",
+                "Platform adapter bypassed identity boundary")
+        timetable = json.loads((ROOT / "fixtures/timetable.demo.json").read_text(encoding="utf-8"))
+        timetable["courses"][0]["title"] = "Non-fixture input"
+        denied = await adapted("validate_timetable", timetable)
+        require(denied.is_error and denied.structured_content["error"]["code"] == "DEMO_ONLY",
+                "Platform adapter accepted non-fixture timetable")
+        for text in ('{"limit":1,"limit":2}', '{"limit":NaN}', '[]', '"{}"'):
+            denied = await mcp.call_tool("platform_search_scenic_spots", {"query_json": text})
+            require(denied.is_error and denied.structured_content["error"]["code"] == "VALIDATION_ERROR",
+                    "Platform malformed JSON not rejected")
+    return {"platform_null_array_unicode_verified": True, "platform_literal_null_not_coerced": True,
+            "platform_identity_boundary_verified": True, "platform_non_fixture_rejected": True,
+            "platform_malformed_json_rejected": True}
 
 
 def main():

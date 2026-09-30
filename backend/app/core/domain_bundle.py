@@ -6,6 +6,7 @@ from pathlib import Path, PurePosixPath
 import re
 
 from app.core.config import Settings
+from app.core.platform_query import PLATFORM_OPERATIONS
 
 
 RESOURCE_PATHS = (
@@ -22,6 +23,7 @@ TOOL_NAMES = (
     "health_probe", "validate_timetable", "query_free_time", "check_time_plan",
     "search_scenic_spots", "search_study_materials", "audit_degree_progress",
 )
+PLATFORM_TOOL_NAMES = (*TOOL_NAMES, *PLATFORM_OPERATIONS)
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -39,7 +41,7 @@ def validate_manifest(manifest: dict) -> dict[str, dict]:
     if (not isinstance(manifest, dict) or manifest.get("format") != "nku-domain-bundle/v1"
             or manifest.get("auth_mode") != "demo_fixture"
             or manifest.get("personal_uploads") is not False
-            or manifest.get("tools") != list(TOOL_NAMES)
+            or manifest.get("tools") not in (list(TOOL_NAMES), list(PLATFORM_TOOL_NAMES))
             or type(manifest.get("included_source_dirty")) is not bool
             or not isinstance(manifest.get("git_head"), str)
             or not isinstance(manifest.get("build_id"), str)
@@ -59,6 +61,9 @@ def validate_manifest(manifest: dict) -> dict[str, dict]:
         index[item["path"]] = item
     if not {*RESOURCE_PATHS, "Dockerfile", "backend/requirements.lock", "backend/app/mcp/http.py", "backend/app/mcp/domains.py"}.issubset(index):
         raise ValueError("Bundle is missing required domain resources")
+    if (manifest["tools"] == list(PLATFORM_TOOL_NAMES)
+            and "backend/app/core/platform_query.py" not in index):
+        raise ValueError("Bundle is missing platform transport adapter")
     return index
 
 
@@ -78,6 +83,9 @@ def verify_domain_bundle(runtime: Settings, *, root: Path | None = None) -> None
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
         index = validate_manifest(manifest)
+        expected_tools = PLATFORM_TOOL_NAMES if runtime.mcp_enable_platform_compat_tools else TOOL_NAMES
+        if manifest["tools"] != list(expected_tools):
+            raise ValueError("Bundle tool list does not match compatibility flag")
         non_local = (runtime.app_env in {"staging", "production"}
                      or runtime.mcp_host not in {"127.0.0.1", "localhost", "::1"})
         if non_local and manifest["included_source_dirty"]:

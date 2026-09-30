@@ -1,11 +1,12 @@
 [CmdletBinding()]
-param([string]$OutputPath)
+param([string]$OutputPath, [switch]$PlatformCompat)
 
 $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '../..')).Path
 $gitHead = (& git -C $repoRoot rev-parse HEAD).Trim()
 if ($LASTEXITCODE -ne 0 -or $gitHead -notmatch '^[0-9a-f]{40}$') { throw 'Cannot identify source commit.' }
 $buildId = 'cloudbase-demo-readonly-' + (Get-Date -Format 'yyyyMMdd') + '-' + $gitHead.Substring(0, 8)
+if ($PlatformCompat) { $buildId += '-platform-compat' }
 if (-not $OutputPath) { $OutputPath = Join-Path $PSScriptRoot ('dist/' + $buildId + '-' + (Get-Date -Format 'HHmmss') + '.zip') }
 $outputFullPath = [IO.Path]::GetFullPath($OutputPath)
 if (Test-Path -LiteralPath $outputFullPath) { throw 'Choose a new output path; existing packages are not overwritten.' }
@@ -50,6 +51,9 @@ $manifest = [ordered]@{
     auth_mode = 'demo_fixture'; personal_uploads = $false
     tools = @('health_probe', 'validate_timetable', 'query_free_time', 'check_time_plan', 'search_scenic_spots', 'search_study_materials', 'audit_degree_progress')
     files = $records
+}
+if ($PlatformCompat) {
+    $manifest.tools += @($manifest.tools | Where-Object { $_ -ne 'health_probe' } | ForEach-Object { 'platform_' + $_ })
 }
 
 Add-Type -AssemblyName System.IO.Compression

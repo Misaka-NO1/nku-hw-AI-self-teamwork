@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     mcp_service_token: SecretStr = Field(default=SecretStr(""), repr=False)
     mcp_require_auth: bool = False
     mcp_enable_domain_tools: bool = False
+    mcp_enable_platform_compat_tools: bool = False
     domain_bundle_manifest_path: str = ""
     database_url: str = "sqlite:///data/campus.db"
     import_ticket_ttl_seconds: int = Field(default=600, ge=60, le=3600)
@@ -57,6 +58,8 @@ class Settings(BaseSettings):
         return Path(raw_path)
 
     def validate_deployment(self) -> None:
+        if self.mcp_enable_platform_compat_tools and not self.mcp_enable_domain_tools:
+            raise ValueError("MCP_ENABLE_PLATFORM_COMPAT_TOOLS requires MCP_ENABLE_DOMAIN_TOOLS")
         exposed_listener = self.mcp_host not in {"127.0.0.1", "localhost", "::1"}
         if self.app_env not in {"staging", "production"} and not exposed_listener:
             return

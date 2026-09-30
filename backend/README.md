@@ -1,6 +1,7 @@
 # 后端与 MCP 基座
 
-本目录已完成 D01–D06 的本地基座和固定演示领域适配。D03 云端探针曾由主 Agent 真实调用通过；D06 业务工具未做云端/平台验收。REST API 与 MCP 是两个独立入口：
+本目录已完成 D01–D06 的本地基座和固定演示领域适配。D03 云端探针曾由主 Agent 真实调用通过；D06 仍须逐项验收，不能由本地结果签收平台全部业务。REST API 与 MCP 是两个独立入口：
+最新进展：2026-09-30已做主Agent四类业务及部分边界验收，但资料nullable传参失败、两类GUI输入仍阻塞，不能签收全部D06。新query_json兼容层仅本地通过，云端仍004；详情见 [D交接](../docs/handoffs/D-progress.md)。
 
 - REST：`python -m app.main`，默认监听 `127.0.0.1:8000`
 - MCP：`python -m app.mcp.http`，默认监听 `127.0.0.1:8001/mcp`
@@ -46,7 +47,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File deploy/Test-Local.ps1
 
 ## D04/D05 本地写入流程
 
-当前云端写入只接受 `fixtures/` 中的固定虚构数据，数据集 ID 为 `demo-v1`。即使客户端填写 `dataset_kind=demo`，只要规范化内容 hash 不在夹具白名单中，服务端仍返回 `DEMO_ONLY`。
+当前本地写入只接受 `fixtures/` 中的固定虚构数据，数据集 ID 为 `demo-v1`。云端只读MCP没有开放这些写接口。即使客户端填写 `dataset_kind=demo`，只要规范化内容 hash 不在夹具白名单中，服务端仍返回 `DEMO_ONLY`。
 
 1. `POST /api/v1/demo/workspaces` 创建短期虚构工作区；响应设置 HttpOnly 会话 Cookie，并返回 CSRF 值。
 2. 浏览器写请求在 `X-CSRF-Token` 中携带该值。
@@ -93,5 +94,7 @@ MCP 默认只发现 health_probe；显式 `MCP_ENABLE_DOMAIN_TOOLS=true` 才发�
 脚本启动本机 REST/MCP，使用临时库和随机令牌，结束仅停止自己的进程，令牌不输出。原 CloudBase 单探针包不含 contracts、fixtures、知识目录和资料正文，**不可直接开启其业务开关**；部署需先明确完整资源打包和授权。D06 LOCAL_PASS 不代替平台业务联调。
 
 完整只读固定演示包另见 [`deploy/cloudbase-demo-readonly/README.md`](../deploy/cloudbase-demo-readonly/README.md)。它保留资源层级、校验清单并使用解压后的 MCP 进程进行实测；不启动 REST/数据库。
+
+学校平台专用JSON文本工具另见 [`contracts/platform-mcp-compat.md`](../contracts/platform-mcp-compat.md)，默认关闭，原接口不变；候选包需显式 `-PlatformCompat`，没有自动发布或更新学校插件。
 
 2026-09-30 后续已获准用该完整包发布CloudBase004，构建和启动完成、003回退保留、入口仍关闭。详细状态见 [`004部署记录`](../docs/evidence/platform/D06-cloudbase-004-deployment-2026-09-30.md)；学校六类业务工具和主Agent调用尚未通过。

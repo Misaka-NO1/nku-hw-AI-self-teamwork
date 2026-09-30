@@ -8,7 +8,7 @@ from zipfile import ZipFile
 import pytest
 
 from app.core.config import Settings
-from app.core.domain_bundle import RESOURCE_PATHS, TOOL_NAMES, safe_bundle_path, validate_manifest, verify_domain_bundle
+from app.core.domain_bundle import PLATFORM_TOOL_NAMES, RESOURCE_PATHS, TOOL_NAMES, safe_bundle_path, validate_manifest, verify_domain_bundle
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -129,6 +129,31 @@ def test_source_tree_local_domains_do_not_require_packaging_manifest():
                        mcp_enable_domain_tools=True, domain_bundle_manifest_path="")
     runtime.validate_deployment()
     verify_domain_bundle(runtime)
+
+
+def test_compat_flag_cannot_silently_expand_original_bundle(bundle):
+    root, _, runtime = bundle
+    runtime.mcp_enable_platform_compat_tools = True
+    with pytest.raises(ValueError, match="compatibility flag"):
+        verify_domain_bundle(runtime, root=root)
+
+
+def test_compat_bundle_requires_adapter_module_and_matching_flag(bundle):
+    root, manifest, runtime = bundle
+    manifest["tools"] = list(PLATFORM_TOOL_NAMES)
+    with pytest.raises(ValueError, match="transport adapter"):
+        validate_manifest(manifest)
+    name = "backend/app/core/platform_query.py"
+    path = root / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    data = b"# platform adapter fixture\n"
+    path.write_bytes(data)
+    manifest["files"].append({"path": name, "size": len(data), "sha256": hashlib.sha256(data).hexdigest()})
+    (root / "domain-bundle-manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    with pytest.raises(ValueError, match="compatibility flag"):
+        verify_domain_bundle(runtime, root=root)
+    runtime.mcp_enable_platform_compat_tools = True
+    verify_domain_bundle(runtime, root=root)
 
 
 def test_non_local_bundle_rejects_uncommitted_source(bundle):

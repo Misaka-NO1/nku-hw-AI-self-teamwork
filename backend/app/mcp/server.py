@@ -19,6 +19,8 @@ class HealthProbeResult(BaseModel):
 settings = get_settings()
 configure_logging(settings.log_level)
 def create_mcp_server(runtime: Settings) -> MCPServer:
+    if runtime.mcp_enable_platform_compat_tools and not runtime.mcp_enable_domain_tools:
+        raise ValueError("MCP_ENABLE_PLATFORM_COMPAT_TOOLS requires MCP_ENABLE_DOMAIN_TOOLS")
     server_type = MCPServer
     kwargs = {}
     if runtime.mcp_enable_domain_tools:

@@ -46,13 +46,17 @@ async def authenticated_mcp(url, token):
                 yield session
 
 
-async def compare(api_url, mcp_url, token, build_id):
+async def compare(api_url, mcp_url, token, build_id, *, platform_compat=False):
     async with httpx.AsyncClient(timeout=10, trust_env=False) as http:
         auth = await preflight(http, mcp_url)
         require(auth["ok"], "Local domain authentication preflight failed")
         async with authenticated_mcp(mcp_url, token) as mcp:
             tools = [tool.name for tool in (await mcp.list_tools()).tools]
-            require(tools == ["health_probe", *dict.fromkeys(case[0] for case in CASES)], "Domain tool discovery mismatch")
+            original_names = list(dict.fromkeys(case[0] for case in CASES))
+            expected = ["health_probe", *original_names]
+            if platform_compat:
+                expected += ["platform_" + name for name in original_names]
+            require(tools == expected, "Domain tool discovery mismatch")
             nonce = secrets.token_hex(16)
             probe = await mcp.call_tool("health_probe", {"nonce": nonce})
             require(not probe.is_error and probe.structured_content["nonce"] == nonce, "Local nonce mismatch")
@@ -64,12 +68,24 @@ async def compare(api_url, mcp_url, token, build_id):
                 result = await mcp.call_tool(name, payload)
                 require(response.status_code == 200 and not result.is_error, "Domain operation failed: " + name)
                 require(comparable(response.json()) == comparable(result.structured_content), "REST/MCP mismatch: " + name)
+                if platform_compat:
+                    adapted = await mcp.call_tool("platform_" + name, {"query_json": json.dumps(payload, ensure_ascii=False)})
+                    require(not adapted.is_error, "Platform adapter failed: " + name)
+                    require(comparable(result.structured_content) == comparable(adapted.structured_content),
+                            "Original/platform adapter mismatch: " + name)
             invalid = {"campus_id": None, "tags": [], "month": None, "limit": 21}
             response = await http.get(api_url + "/api/v1/scenic/spots", params={"query": json.dumps(invalid)})
             result = await mcp.call_tool("search_scenic_spots", invalid)
             require(response.status_code == 422 and result.is_error, "Invalid query was not rejected")
             require(comparable(response.json()) == comparable(result.structured_content), "Failure envelope mismatch")
+            if platform_compat:
+                adapted = await mcp.call_tool("platform_search_scenic_spots", {"query_json": json.dumps(invalid)})
+                require(adapted.is_error and comparable(result.structured_content) == comparable(adapted.structured_content),
+                        "Platform failure envelope mismatch")
     return {"tools": tools, "success_parity_cases": len(CASES), "failure_parity_cases": 1,
+            "platform_compat_enabled": platform_compat,
+            "platform_success_parity_cases": len(CASES) if platform_compat else 0,
+            "platform_failure_parity_cases": 1 if platform_compat else 0,
             "missing_and_wrong_bearer_rejected": True, "nonce_and_build_verified": True}
 
 
@@ -87,6 +103,7 @@ def run_checks():
                "API_HOST": "127.0.0.1", "API_PORT": str(api_port),
                "MCP_HOST": "127.0.0.1", "MCP_PORT": str(mcp_port), "MCP_PATH": "/mcp",
                "MCP_REQUIRE_AUTH": "true", "MCP_SERVICE_TOKEN": token, "MCP_ENABLE_DOMAIN_TOOLS": "true",
+               "MCP_ENABLE_PLATFORM_COMPAT_TOOLS": "false",
                "DOMAIN_BUNDLE_MANIFEST_PATH": "",
                "DATABASE_URL": "sqlite:///" + (directory / "campus.db").as_posix()}
         with httpx.Client(timeout=3, trust_env=False) as http:

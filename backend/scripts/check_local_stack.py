@@ -122,6 +122,7 @@ def run_checks() -> dict:
             "MCP_HOST": "127.0.0.1", "MCP_PORT": str(mcp_port), "MCP_PATH": "/mcp",
             "MCP_REQUIRE_AUTH": "true", "MCP_SERVICE_TOKEN": token,
             "MCP_ENABLE_DOMAIN_TOOLS": "false",
+            "MCP_ENABLE_PLATFORM_COMPAT_TOOLS": "false",
             "DATABASE_URL": "sqlite:///" + database.as_posix(),
         }
         # Empty cwd avoids loading the user's backend/.env. Both processes share one absolute DB path.
