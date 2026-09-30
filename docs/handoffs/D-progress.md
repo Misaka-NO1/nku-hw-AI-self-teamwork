@@ -1,5 +1,13 @@
 # D Agent 进度交接
 
+## 2026-09-30 D06：004鉴权/主Agent探针通过，业务插件类型兼容阻塞
+
+本轮已真实复测外部健康200、无/错Bearer401；主Agent health_probe原始输出isError=false，nonce回显正确、build_id=cloudbase-demo-readonly-20260930-cda01c67。14:28:24云端tools/call审计request_id=3、protocol2025-06-18、outcome=ok。首次30秒超时发生在0实例冷启动，新实例14:26:16才启动完成；未改最小0/最大1或其他配置。
+
+学校campus-tools-dev编辑列表同步成功发现7工具，未发布新版本、未发布主Agent。固定景点Debug返回isError=false/ok=true和demo-spot-01，但平台校验structuredContent.error=null为非Object，标为调试失败。导入定义还将任意data显示为String、nullable calculation_version显示String。业务平台尚不能签收，不能修改统一信封来绕过。
+
+已关闭并核对公网/内网入口；不读取正确令牌、不改数据库/算法/其他服务。等待用户确认只做平台参数映射兼容并测试，兼容方案尚未实施；其他5业务工具/主Agent业务/工作流/KB/生产身份/数据库仍待验收。详情及截图位置见 docs/evidence/platform/D06-cloudbase-004-platform-debug-2026-09-30.md；下文发布记录为历史阶段，不代表尚未做外部鉴权。
+
 ## 2026-09-30 D06：CloudBase 004发布和启动完成
 
 用户明确批准更新既有服务、可能100%新版本流量、保留003回退、入口关闭。实际发布004（task2262849，12:47:41），12:48:40镜像推送、12:49:56容器启动和平台健康200。服务概览004正常100%；003正常、0实例且回退可用，未删除旧版。
