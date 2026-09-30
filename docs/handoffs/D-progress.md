@@ -1,5 +1,23 @@
 # D Agent 进度交接
 
+## 2026-09-30 D06最新：六工具输出映射保存，四类Debug通过，两类输入表单阻塞
+
+用户重新登录后，重做景点兼容映射，随后同样处理其余五类工具；六类均点“完成”保存，并逐一重开输出定义确认structuredContent:Object不再含误推断的子类型。保留isError/content及实际完整业务JSON；只改学校平台映射，公共Schema1.0.0、A/B/C算法、云端004包和身份门禁不变。
+
+本轮恢复后14:53:17前置检查健康200、无/错Bearer401。固定虚构数据的search_scenic_spots、audit_degree_progress、search_study_materials、query_free_time真实Debug通过；云端004工具审计均可对应。景点tags=[]另测通过；limit=0返回isError=true/ok=false/VALIDATION_ERROR且平台能解析，不算业务成功。网关此前SERVICE_FORBIDDEN后来未重现，具体原因仍未证明。
+
+check_time_plan与validate_timetable的原始夹具被平台Debug表单对必填空值的“不能为空”挡住，没有发送新的业务请求；景点month=null也被同类限制挡住。输入Schema控制项不可编辑，没有擅自改公共契约、填假值或强制启用控件。此证据只定位GUI测试限制，不能证明主Agent运行时也拒绝null，也不能宣布两类算法失败。
+
+最终公网/内网入口均关闭；不读取正确令牌、不改数据库/实例下限/其他服务。新版插件未发布、六业务工具未绑定主Agent，主Agent业务调用/工作流/知识库/生产身份/数据库仍待验收。同步工具可能覆盖手工兼容映射，必须再核对。health_probe编辑列表未通过不推翻此前主Agent真实探针通过记录，但下次发布前应按当前编辑版复测。下一步须明确发布与草稿绑定范围，再验主Agent真实业务调用；不能跳过两个nullable输入阻塞。详情：[D06兼容复测](../evidence/platform/D06-platform-output-compat-results-2026-09-30.md)。下文按阶段保留历史状态，不应当作当前结论。
+
+## 2026-09-30 D06：输出兼容准备，保存未确认/网关403/学校登录过期
+
+用户已批准仅改学校参数映射、不改共用契约/算法、先测不发布。景点工具表单保留structuredContent:Object根及isError/content，仅移除其误推断子字段类型；尚未通过实际Debug。其他5业务工具未改。
+
+获准公网复测：14:43:28及14:44:13健康403，网关cbrgw明确SERVICE_FORBIDDEN，未进401/业务测试；控制台同时显示004正常1实例、入口开启。具体原因未证实，未改HTTP网关/其他路由/实例/数据库。随后关闭并核对公网/内网。
+
+点击工具完成尝试保存后Network Error，刷新实际进入学校IAM登录，持久化未知，不声称修复成功。等待学校重新登录核对保存；先排查服务网关403，再验nullable/数组及失败保真。未发布新插件或主Agent。详细操作/风险/下一轮验收见 docs/evidence/platform/D06-platform-output-compat-preparation-2026-09-30.md。
+
 ## 2026-09-30 D06：004鉴权/主Agent探针通过，业务插件类型兼容阻塞
 
 本轮已真实复测外部健康200、无/错Bearer401；主Agent health_probe原始输出isError=false，nonce回显正确、build_id=cloudbase-demo-readonly-20260930-cda01c67。14:28:24云端tools/call审计request_id=3、protocol2025-06-18、outcome=ok。首次30秒超时发生在0实例冷启动，新实例14:26:16才启动完成；未改最小0/最大1或其他配置。
