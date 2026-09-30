@@ -45,7 +45,7 @@ campus_network_required 均为 no（校外网络实测可达）。登录态内�
 - 教务部选课手册（2026.9.11 更新）第 10 页「学生体育课选课说明」，已用于培养方案
   体育子模块规则核验（类别制必修，无稳定 course_code，引擎返回 needs_policy）。
 
-## 待核验：4 条用户提供的日常指引（2026-09-30）
+## 待核验：9 条用户提供的日常指引（2026-09-30）
 
 用户提供、来源标注「在读学生日常路径」，按原则先标 needs_verification，
 已随核验清单 `docs/kb-review-2026-09-30.md` 发团队群验证，确认后升级 verified：
@@ -56,6 +56,14 @@ campus_network_required 均为 no（校外网络实测可达）。登录态内�
 | `nku-proc-electricity-recharge` | 宿舍电费充值（飞书→南开微应用→充值） | 同上安全处理 |
 | `nku-proc-view-plan` | 查看个人培养计划（eamis 深链，登录后直达） | 2026-09-30 实测校外 302 跳登录页，链接有效 |
 | `nku-proc-venue-booking` | 体育场馆预约（tyggl.nankai.edu.cn） | 2026-09-30 实测校外 HTTP 200（用户类型选择页） |
+| `nku-proc-teaching-eval` | 教学质量评价（飞书→南开微应用→教学质量平台） | 仅渠道路径，无直接链接 |
+| `nku-proc-flea-market` | 跳蚤市场（飞书→南开微应用） | 同上 |
+| `nku-proc-shuttle` | 校内班车时刻查询（飞书→南开微应用） | 同上 |
+| `nku-proc-visitor-access` | 出入校申请/外校人员来访预约（飞书→南开微应用） | 同上 |
+| `nku-proc-counseling` | 心理咨询预约（飞书→南开微应用） | 同上 |
+
+注：后勤报修已有正式条目 `nku-proc-dorm-repair`（verified），飞书「后勤报修」
+正是其官方三渠道之一，不重复收录。
 
 ## 仍待人工：无占位流程（仅保留测试夹具）
 
