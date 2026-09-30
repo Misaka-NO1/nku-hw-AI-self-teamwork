@@ -1,0 +1,135 @@
+{
+  "source_files": 34,
+  "unique_materials": 34,
+  "duplicate_files": [],
+  "pages": 489,
+  "readable_pages": 468,
+  "chunks": 578,
+  "ocr_backlog": [
+    {
+      "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+      "title": "期末复习",
+      "page": 1,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+      "title": "期末复习",
+      "page": 2,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+      "title": "期末复习",
+      "page": 5,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+      "title": "期末复习",
+      "page": 54,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s1-linear-algebra-f79a31b39bd88215",
+      "title": "线性代数期末复习题",
+      "page": 5,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-programming-ecb1b840316f954b",
+      "title": "22笔试",
+      "page": 14,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-programming-69542effd80181aa",
+      "title": "C  期中试题",
+      "page": 7,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "title": "期末复习2-2 1",
+      "page": 1,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "title": "期末复习2-2 1",
+      "page": 2,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "title": "期末复习2-2 1",
+      "page": 5,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "title": "期末复习2-2 1",
+      "page": 29,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "title": "期末复习2-2 1",
+      "page": 47,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-probability-451d99011df209b5",
+      "title": "2023-2024 学年春季《概率论与数理统计》期末试卷A",
+      "page": 5,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-probability-101feb5a6eaba5dd",
+      "title": "2024-2025学年春季《概率论与数理统计》期末试卷V1.1（A）【考试版】",
+      "page": 5,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-101feb5a6eaba5dd.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-probability-a7dfaf2beb4f155f",
+      "title": "2025-2026学年春季概率论与数理统计期中试卷A",
+      "page": 5,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    },
+    {
+      "material_id": "study-s2-marxism-0a0bec651848beaf",
+      "title": "7_马原总结2023(1)",
+      "page": 11,
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf",
+      "reason": "正文不足/扫描/空白，需 OCR 或原页复核"
+    }
+  ],
+  "extraction_errors": [],
+  "privacy_held": [
+    {
+      "material_id": "study-s1-programming-7267a3cd0b2e11aa",
+      "title": "20-21C--上册",
+      "reason": "PDF第1页含已填写的姓名、学号和成绩；整份文件暂不公开，待脱敏版本替换。",
+      "access_scope": "private",
+      "public_content_available": false
+    }
+  ],
+  "data_version": "y1-070600fb47f92e70",
+  "rights_status": "authorized",
+  "access_scope": "public"
+}

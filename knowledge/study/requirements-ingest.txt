@@ -1,0 +1,3 @@
+# Offline ingest only; query runtime uses the project's existing dependencies.
+pypdf==6.10.0
+pdfplumber==0.11.9

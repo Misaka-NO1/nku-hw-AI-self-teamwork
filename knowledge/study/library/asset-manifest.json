@@ -1,0 +1,270 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "y1-070600fb47f92e70",
+  "assets": [
+    {
+      "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf",
+      "sha256": "b8a8c17240ffa3e480bb97cdaabd683e5e9ea21451976f5f3fdbe8a089fb4363",
+      "page_count": 54,
+      "readable_pages": 50,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s1-programming-26355822c1f8144c",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf",
+      "sha256": "26355822c1f8144c44853b5794e683535ccf851459c1d41bb4191ce2c317b39b",
+      "page_count": 10,
+      "readable_pages": 10,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s1-ideology-e834581c52ce1f41",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf",
+      "sha256": "e834581c52ce1f41575d911c0b2105b1ee2a710ee700723e2020ec26050535af",
+      "page_count": 13,
+      "readable_pages": 13,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s1-ideology-8a05a12b1b8a7e09",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf",
+      "sha256": "8a05a12b1b8a7e09fdc98e10a94b62ef9d844624bb12c1b901907540c2d7e57c",
+      "page_count": 13,
+      "readable_pages": 13,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s1-ideology-2146cd59f5c57d41",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf",
+      "sha256": "2146cd59f5c57d412a536bf723ac152e60d9a0f9493a116fcbbc38d5caed1e19",
+      "page_count": 15,
+      "readable_pages": 15,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s1-linear-algebra-f79a31b39bd88215",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf",
+      "sha256": "f79a31b39bd88215e5c15e8928f1b3a14c77e123dc8783344cb8a38f88b78bbe",
+      "page_count": 116,
+      "readable_pages": 115,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s1-calculus-6e53f8532c216ccc",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf",
+      "sha256": "6e53f8532c216ccc6874fc9a3248c796665f8ba34c16242929591963e2fb6cdd",
+      "page_count": 13,
+      "readable_pages": 13,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-programming-ecb1b840316f954b",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf",
+      "sha256": "ecb1b840316f954b8d9a997430192621ee40901136caea95714050b86957e8ca",
+      "page_count": 14,
+      "readable_pages": 13,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s2-programming-69542effd80181aa",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf",
+      "sha256": "69542effd80181aaad6fb69c491380107655b11c28e7e2a01f54cbbfe83f39b7",
+      "page_count": 7,
+      "readable_pages": 6,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s2-programming-f076c553a310a022",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf",
+      "sha256": "f076c553a310a02215ab24cc3cbaae9e6bbc764cf9b2bba07326450d9e4c8316",
+      "page_count": 19,
+      "readable_pages": 19,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-programming-efb6bb2d624c4062",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf",
+      "sha256": "efb6bb2d624c4062d4e00c6267b2ad7e9c414926222cad1589270f36f9cef5a4",
+      "page_count": 28,
+      "readable_pages": 28,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf",
+      "sha256": "cd29346f86e832fa017f1d395328aedcbbdbccb5a706c69e63b54508d7a0155e",
+      "page_count": 47,
+      "readable_pages": 42,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s2-physics-c6b936374c8ae864",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf",
+      "sha256": "c6b936374c8ae8643d6f217888b673eaca884fac3a5980dc7145c74a746a5fa6",
+      "page_count": 10,
+      "readable_pages": 10,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-physics-cb6c50ee1df79476",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-cb6c50ee1df79476.pdf",
+      "sha256": "cb6c50ee1df79476f9d6d24f7301600cd351d99927dcc9997ec21fef7da27902",
+      "page_count": 2,
+      "readable_pages": 2,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-physics-0a46c38726e23c48",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-0a46c38726e23c48.pdf",
+      "sha256": "0a46c38726e23c48cc58f4b2ebc93b0c121cb63a40c62d9b6c1b4585955fc2dd",
+      "page_count": 5,
+      "readable_pages": 5,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-physics-b91d080a8c79df85",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-b91d080a8c79df85.pdf",
+      "sha256": "b91d080a8c79df85a2be05f2eee8cdee0f24841c64f072c7d573030b504fdf92",
+      "page_count": 6,
+      "readable_pages": 6,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-physics-efbde7e09544ed14",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf",
+      "sha256": "efbde7e09544ed1453cb4810091d879cd516e5480ff80867a890c5235900b5bc",
+      "page_count": 8,
+      "readable_pages": 8,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-physics-46bbcebfd699f638",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf",
+      "sha256": "46bbcebfd699f638b035811f084fa541118b059bd4d9548bac67d82e3d9a883c",
+      "page_count": 10,
+      "readable_pages": 10,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-physics-2329b12e32d546f8",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf",
+      "sha256": "2329b12e32d546f8876e82f465c3937a29ff474328c806c6e3db61fc2d677768",
+      "page_count": 8,
+      "readable_pages": 8,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-probability-5f5e607db31aada8",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-5f5e607db31aada8.pdf",
+      "sha256": "5f5e607db31aada887e24361ddbfe184ed15fba55fb2736d4d4510b539a52583",
+      "page_count": 6,
+      "readable_pages": 6,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-probability-d5f582f9efde68b4",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf",
+      "sha256": "d5f582f9efde68b49c60a0f5da0a0fcafd6d14137f4052155f2134451de152e7",
+      "page_count": 6,
+      "readable_pages": 6,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-probability-451d99011df209b5",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf",
+      "sha256": "451d99011df209b5a08cdafd05cbd4f94a43af021f33a631788a3408d8e1f2e7",
+      "page_count": 5,
+      "readable_pages": 4,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s2-probability-101feb5a6eaba5dd",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-101feb5a6eaba5dd.pdf",
+      "sha256": "101feb5a6eaba5ddae0108f30346630bdd5a6f82dbff78f6af1064d1c97915be",
+      "page_count": 5,
+      "readable_pages": 4,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s2-probability-a7dfaf2beb4f155f",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf",
+      "sha256": "a7dfaf2beb4f155f2c5c292a4b09e5eb5cd46c3a171e4902f660d5df747d62ca",
+      "page_count": 5,
+      "readable_pages": 4,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s2-probability-1334b535ee83c23e",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf",
+      "sha256": "1334b535ee83c23eafa93a9fb984744d6bb201c804fa5dad5a332cc04e2b3ba2",
+      "page_count": 10,
+      "readable_pages": 10,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-marxism-0a0bec651848beaf",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf",
+      "sha256": "0a0bec651848beafc42a415b224c43e1dbd5d9d1ff26e249bd7db804eaa2f86d",
+      "page_count": 11,
+      "readable_pages": 10,
+      "extraction_status": "partial"
+    },
+    {
+      "material_id": "study-s2-marxism-28315c18c093abf3",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-28315c18c093abf3.pdf",
+      "sha256": "28315c18c093abf30cfb57975d81364179d137a301954d8dfc62f900cf62f201",
+      "page_count": 2,
+      "readable_pages": 2,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-marxism-9ecf25ff0629bcad",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf",
+      "sha256": "9ecf25ff0629bcad1c2af58c7820d3da7fd1abf466676296c0e675bb50b59ffe",
+      "page_count": 10,
+      "readable_pages": 10,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-marxism-19de0432715b4aa5",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf",
+      "sha256": "19de0432715b4aa5054d864ebdb7575acb17cc131b2132e4224da7f363ce78b2",
+      "page_count": 9,
+      "readable_pages": 9,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-marxism-88a5a68d925b7f84",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-88a5a68d925b7f84.pdf",
+      "sha256": "88a5a68d925b7f84527d474b0fa3e913ec49af739be8e188d81162fe731801f3",
+      "page_count": 1,
+      "readable_pages": 1,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-marxism-80159e7fae0c909f",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf",
+      "sha256": "80159e7fae0c909ffbc56f7caa11a48362967abddd1cbe65ae7de6d6c4b163f7",
+      "page_count": 10,
+      "readable_pages": 10,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-calculus-90f6102c4992a3c7",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-90f6102c4992a3c7.pdf",
+      "sha256": "90f6102c4992a3c7b131bd362fa755016a29f554a09b3075b926562109c91ec2",
+      "page_count": 4,
+      "readable_pages": 4,
+      "extraction_status": "all_pages_indexed_unverified"
+    },
+    {
+      "material_id": "study-s2-calculus-0b11b3601df78a74",
+      "pdf_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-0b11b3601df78a74.pdf",
+      "sha256": "0b11b3601df78a74eb154ca53a7238dd50f465e7623ddf12d16a9d5a333e8cef",
+      "page_count": 2,
+      "readable_pages": 2,
+      "extraction_status": "all_pages_indexed_unverified"
+    }
+  ]
+}
