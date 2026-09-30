@@ -16,6 +16,27 @@
 
 原源树7工具HTTP/MCP对照与单探针/本地虚构任务确认幂等/重启持久化检查也通过，均platform_verified=false；兼容开关在隔离基线脚本中显式关闭，不因外部环境变量改变测试范围。
 
-打包命令（仓库根）：`Build-Package.ps1 -PlatformCompat`；解压包用临时随机令牌在本机HTTP实际验证，无云令牌/持久MCP数据库。正式候选构建与指纹、解压运行结果将在完成后追加，不能将源码测试冒充包或云端通过。
+打包命令（仓库根）：`Build-Package.ps1 -PlatformCompat`；解压包用临时随机令牌在本机HTTP实际验证，无云令牌/持久MCP数据库。正式候选的实际解压运行结果如下，不能将其冒充云端或Docker镜像通过。
+
+## 最终兼容候选指纹与真实本机HTTP
+
+- 源码提交：`853d17dd3557d8872f0f78e5f13a12acadc514f1`；后续证据文档提交不是此包源码。
+- BUILD_ID：`cloudbase-demo-readonly-20260930-853d17dd-platform-compat`。
+- ZIP：本机忽略目录 `deploy/cloudbase-demo-readonly/dist/cloudbase-demo-readonly-20260930-853d17dd-platform-compat-181928.zip`，不提交Git。
+- SHA256：`b2d3da2c78009492644c8a5f611f1a90d7211569a25ac0bc1be2edf9ac30c0cb`。
+- 63条目，included_source_dirty=false，source_sha_verified=true。
+- 清单明确原7工具+新增6兼容工具；不包含令牌/.env/数据库/日志/测试/前端或私有资料。
+
+实际命令（backend目录）：
+
+```powershell
+.\.venv\Scripts\python.exe scripts/check_domain_bundle.py "D:\code\华为ai比赛\deploy\cloudbase-demo-readonly\dist\cloudbase-demo-readonly-20260930-853d17dd-platform-compat-181928.zip"
+```
+
+结果ok=true，scope=extracted_zip_loopback_only；MCP导入解压包，不使用源码包冒充。无/错Bearer拒绝，正确临时令牌初始化/13工具发现/nonce/build通过；原REST/MCP7成功+1失败等价，原MCP/兼容MCP另外7成功+1失败等价。真正null/[]/中文保真，字面字符串"null"不强转，浏览器工作区及非夹具拒绝，正文/索引/私有资料过滤，重复键/NaN/错误根类型拒绝全部通过。
+
+`platform_verified=false`、`container_image_verified=false`、personal_uploads=false、mcp_persistent_database=false。本机不进行Docker镜像构建；云服务004仍没有此兼容代码或修复后的审计。
+
+另按同一已提交源码生成普通7工具回归包（未加PlatformCompat），实际解压HTTP检查也ok=true、7成功/1失败等价与身份/正文边界通过，兼容工具未发现。它仅证明默认关闭的向后兼容性，不是待部署的兼容候选：build=cloudbase-demo-readonly-20260930-853d17dd，63条目，dirty=false，SHA256=aa0db6a590de7af777633233906aeb80e87954834b30aa109b88223a62857c4d。候选发布时务必选上面的 `-platform-compat` 包。
 
 下一步仍需单独确认云端发布及团队兼容插件范围，实际验证学校生成的query_json值和返回，再逐项启用原先禁用两类。此次没有开启公网、改数据库或发布主Agent。旧令牌风险未消除。
