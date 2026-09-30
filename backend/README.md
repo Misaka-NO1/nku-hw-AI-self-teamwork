@@ -91,3 +91,5 @@ MCP 默认只发现 health_probe；显式 `MCP_ENABLE_DOMAIN_TOOLS=true` 才发�
 ```
 
 脚本启动本机 REST/MCP，使用临时库和随机令牌，结束仅停止自己的进程，令牌不输出。当前 CloudBase 探针包不含 contracts、fixtures、知识目录和资料正文，**不可直接开启其业务开关**；部署需先明确完整资源打包和授权。D06 LOCAL_PASS 不代替平台业务联调。
+
+完整只读固定演示包另见 [`deploy/cloudbase-demo-readonly/README.md`](../deploy/cloudbase-demo-readonly/README.md)。它保留资源层级、校验清单并使用解压后的 MCP 进程进行实测；不启动 REST/数据库，不等于上述云端探针已升级。

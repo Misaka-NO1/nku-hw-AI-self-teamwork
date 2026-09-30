@@ -87,6 +87,7 @@ def run_checks():
                "API_HOST": "127.0.0.1", "API_PORT": str(api_port),
                "MCP_HOST": "127.0.0.1", "MCP_PORT": str(mcp_port), "MCP_PATH": "/mcp",
                "MCP_REQUIRE_AUTH": "true", "MCP_SERVICE_TOKEN": token, "MCP_ENABLE_DOMAIN_TOOLS": "true",
+               "DOMAIN_BUNDLE_MANIFEST_PATH": "",
                "DATABASE_URL": "sqlite:///" + (directory / "campus.db").as_posix()}
         with httpx.Client(timeout=3, trust_env=False) as http:
             with service("app.mcp.http", env, directory) as mcp_process:

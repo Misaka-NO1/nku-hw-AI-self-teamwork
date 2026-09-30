@@ -22,6 +22,8 @@ def create_mcp_server(runtime: Settings) -> MCPServer:
     server_type = MCPServer
     kwargs = {}
     if runtime.mcp_enable_domain_tools:
+        from app.core.domain_bundle import verify_domain_bundle
+        verify_domain_bundle(runtime)
         # Lazy import keeps the existing cloud probe independent of business assets.
         from app.mcp.domains import DomainMCPServer
         server_type = DomainMCPServer

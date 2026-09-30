@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     mcp_service_token: SecretStr = Field(default=SecretStr(""), repr=False)
     mcp_require_auth: bool = False
     mcp_enable_domain_tools: bool = False
+    domain_bundle_manifest_path: str = ""
     database_url: str = "sqlite:///data/campus.db"
     import_ticket_ttl_seconds: int = Field(default=600, ge=60, le=3600)
     confirmation_ttl_seconds: int = Field(default=600, ge=60, le=3600)
@@ -71,6 +72,8 @@ class Settings(BaseSettings):
             raise ValueError("MCP_REQUIRE_AUTH must be true outside local development")
         if not self.mcp_service_token.get_secret_value():
             raise ValueError("MCP_SERVICE_TOKEN is required when MCP authentication is enabled")
+        if self.mcp_enable_domain_tools and not self.domain_bundle_manifest_path:
+            raise ValueError("DOMAIN_BUNDLE_MANIFEST_PATH is required for non-local domain deployment")
 
 
 @lru_cache

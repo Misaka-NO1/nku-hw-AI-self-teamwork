@@ -116,6 +116,7 @@ def run_checks() -> dict:
             "PYTHONPATH": str(BACKEND), "PYTHONUTF8": "1",
             "APP_ENV": "test", "BUILD_ID": build_id, "LOG_LEVEL": "WARNING",
             "AUTH_MODE": "demo_fixture", "ALLOW_PERSONAL_UPLOADS": "false",
+            "DOMAIN_BUNDLE_MANIFEST_PATH": "",
             "APP_ORIGIN": api_url, "GENIOS_AGENT_URL": "", "MCP_PUBLIC_URL": "",
             "API_HOST": "127.0.0.1", "API_PORT": str(api_port),
             "MCP_HOST": "127.0.0.1", "MCP_PORT": str(mcp_port), "MCP_PATH": "/mcp",

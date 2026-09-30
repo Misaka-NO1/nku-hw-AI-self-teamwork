@@ -1,5 +1,17 @@
 # D Agent 进度交接
 
+## 2026-09-30 D06：完整只读候选包本地验收
+
+任务状态：LOCAL_PASS；云端业务/平台业务尚未通过。用户已选择更新既有 nku-campus-mcp-probe，保留003回退，仅为方案决定，不是发布许可。
+
+新增独立 cloudbase-demo-readonly 资源白名单包、启动清单/完整性/配置门禁、解压包真实HTTP验收脚本和42项测试；保持A/B/C算法、Schema1.0.0、既有路径/变量/字段不变。后端214项通过，旧探针和D06回归通过，包内六类业务读取与REST一致，服务令牌不能读浏览器工作区、非夹具课表拒绝、公开正文和私有过滤通过。
+
+包只运行MCP，不运行REST/前端，不连接持久业务库，不提供写工具。MCP_ENABLE_DOMAIN_TOOLS=true和固定清单路径仅为新包配置，不擅自打开现有云端旧包开关。旧服务令牌不读取、不打印、不打包。
+
+证据：docs/evidence/platform/D06-readonly-bundle-2026-09-30.md；发布/回退核对：deploy/cloudbase-demo-readonly/README.md。platform_verified=false、container_image_verified=false；无Docker，本机仅验解压代码/资源，云端构建待批准发布时验证。
+
+未完成：更新云端版本、业务插件同步与学校主Agent实际调用、前端/通知工作流/TasksPage/KB、可信身份、生产数据库和最终发布。后续发布须单独确认实际流量范围，公网联调须另获授权；保持其他服务/数据库不变。原003保留回退，配置和平台绑定一并核对。
+
 ## 2026-09-30 D06：只读业务适配本地通过
 
 任务状态：LOCAL_PASS（D06）；D03 真实平台探针通过见下文，不混用。
