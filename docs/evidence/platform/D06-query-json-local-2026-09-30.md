@@ -1,5 +1,7 @@
 # D06 query_json兼容层本地验收
 
+后续最新：用户另行批准后，同一候选已发布CloudBase005、正常100%生效，004/003保留且入站关闭；见[005部署记录](D06-cloudbase-005-deployment-2026-09-30.md)。本文件下文保留本地验收范围，platform_verified=false仍正确：学校query_json实际调用尚未验收。
+
 状态：LOCAL_PASS；未更新云服务、未发布或同步兼容插件，学校平台兼容工具未验收。用户只批准本地实现/测试/准备候选。
 
 修改D薄适配、配置、资源清单门禁、打包/解压验收脚本及测试；不改A/B/C算法、冻结api/core Schema、REST路径或原MCP输入输出。新增6个只读platform_*工具的唯一外层String参数query_json，完整解析为原对象后走相同execute_domain/权限/信封。默认关闭，兼容开关必须与业务开关、7或13工具清单匹配，否则拒绝启动。

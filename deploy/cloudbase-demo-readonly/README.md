@@ -1,5 +1,7 @@
 # CloudBase 只读固定演示候选包
 
+最新（2026-09-30）：兼容候选获用户单独批准后已部署005，正常100%流量，004/003保留，公网默认域名/内网默认地址关闭；见 [005部署证据](../../docs/evidence/platform/D06-cloudbase-005-deployment-2026-09-30.md)。学校兼容插件和主Agent真实调用尚未验收，不能用部署成功替代业务通过。以下004及“仅本地未发布”段落保留历史背景。
+
 目标：更新已有 `nku-campus-mcp-probe`，保留 `003` 版可回退。用户已选择此方案，但发布、流量切换、公网开放须在操作前另外确认。本目录与原 `deploy/cloudbase-mcp/` 的单探针包分开，避免误将缺资源的旧包打开业务开关。
 
 2026-09-30 后续实际结果：用户明确批准后已发布004、100%流量且容器正常启动，003仍保留、公网/内网入口关闭；见 [004部署记录](../../docs/evidence/platform/D06-cloudbase-004-deployment-2026-09-30.md)。学校平台六类业务尚未验收，下面核对单继续用于获准的后续发布，不能自动重发或开放入口。
@@ -62,20 +64,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File deploy/cloudbase-demo-readon
 ## 回退
 
 优先关公网，再将流量切回保留的003。该旧版只含health_probe，须恢复003对应 BUILD_ID，并关闭 `MCP_ENABLE_DOMAIN_TOOLS`、清空包清单路径；检查旧版健康/鉴权和平台工具绑定。保留其原HTTPS/Bearer配置，避免旧版加载新增业务资源。无业务数据库迁移需要反向执行。切回与配置变更均须按实际控制台行为核对，不凭推测宣称成功。
-
-## 2026-09-30 学校平台 query_json 兼容候选（仅本地，未发布）
-
-用户仅批准实现/本地测试/准备候选包。新增六个可选 `platform_*` JSON 文本适配工具，不替换原六业务工具或REST，不改算法和Schema；完整约定见 [平台传输扩展](../../contracts/platform-mcp-compat.md)。原默认包和云端004继续7工具。
-
-在仓库根目录显式生成另一种候选：
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File deploy/cloudbase-demo-readonly/Build-Package.ps1 -PlatformCompat
-```
-
-构建号附带 `-platform-compat`，清单13工具。本地解压验收脚本从清单决定隔离测试开关，不使用云端令牌；原七组REST/MCP和七组新增兼容MCP结果对比，并检查真正null、字面"null"、空数组、中文、身份边界、非夹具拒绝、重复键/NaN/错误根类型。`platform_verified=false`、`container_image_verified=false` 不变。
-
-**本次不发布**。今后获准部署兼容包时，在原门禁配置外需要 `MCP_ENABLE_PLATFORM_COMPAT_TOOLS=true`，BUILD_ID/13工具清单匹配，原004与003均保留回退。不读取服务令牌。回到004须恢复004构建配置并将兼容开关置false、恢复原插件绑定；004本身没有新增工具。回到003仍按上文探针专用配置，同时保证兼容开关false。本次没有实际回退操作。
 
 ## 2026-09-30 学校平台 query_json 兼容候选（仅本地，未发布）
 
