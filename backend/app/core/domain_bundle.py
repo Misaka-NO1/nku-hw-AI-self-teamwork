@@ -68,6 +68,11 @@ def validate_manifest(manifest: dict) -> dict[str, dict]:
 
 
 def verify_domain_bundle(runtime: Settings, *, root: Path | None = None) -> None:
+    if runtime.public_catalog_profile != "demo":
+        if runtime.domain_bundle_manifest_path:
+            from app.core.public_content_bundle import verify_public_content_bundle
+            verify_public_content_bundle(runtime, root=root)
+        return
     if not runtime.domain_bundle_manifest_path:
         return  # Local source-tree checks remain available; non-local launch requires the manifest.
     if (not runtime.mcp_enable_domain_tools or runtime.auth_mode != "demo_fixture"

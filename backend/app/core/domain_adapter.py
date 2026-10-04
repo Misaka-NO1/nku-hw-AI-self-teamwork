@@ -1,6 +1,7 @@
 """D-owned read adapters: one dispatch path shared by REST and MCP."""
 
 import logging
+from urllib.parse import urlsplit
 from typing import Any
 
 from app.core.config import Settings
@@ -13,6 +14,7 @@ from app.domains.degree.audit import CALCULATION_VERSION as DEGREE_VERSION, audi
 from app.domains.scenic import service as scenic
 from app.domains.schedule import service as schedule
 from app.domains.study import service as study
+from app.domains.study.library import StudyLibrary
 from app.domains.tasks.service import get_current_schedule, list_tasks
 from app.domains.timeplan import service as timeplan
 
@@ -85,8 +87,57 @@ def _notice_events(notices: list[dict]) -> list[dict]:
 def _study_evidence(items: list[dict]) -> list[EvidenceRef]:
     return [EvidenceRef(
         label=item["source_label"], source_ref=chunk["source_excerpt_ref"],
-        locator=chunk["heading"],
+        locator=" · ".join(part for part in (chunk.get("page_label"), chunk["heading"]) if part),
     ) for item in items for chunk in item["evidence"]]
+
+
+def _published_links(data, runtime: Settings, field: str):
+    """Only server-configured same-origin destinations, never model-supplied URLs."""
+    origin = runtime.app_origin.rstrip("/")
+    if not origin or runtime.public_catalog_profile != "published":
+        return data
+    url = urlsplit(origin)
+    if (url.scheme not in {"http", "https"} or not url.hostname or url.username or url.password
+            or url.path or url.query or url.fragment
+            or runtime.app_env in {"staging", "production"} and url.scheme != "https"):
+        raise AppError(503, "DEPENDENCY_UNAVAILABLE", "Public content origin is misconfigured")
+    for item in data if isinstance(data, list) else [data]:
+        path = item[field]
+        allowed = (path.startswith("/api/v1/study/materials/") and path.endswith("/download")
+                   if field == "download_url" else path.startswith("/tools/"))
+        if not allowed:
+            raise AppError(503, "DEPENDENCY_UNAVAILABLE", "Public content link is unavailable")
+        item[field] = origin + item[field]
+    return data
+
+
+def _scenic_catalog(runtime: Settings):
+    if runtime.public_catalog_profile == "published":
+        return scenic.load_catalog(scenic.CATALOG_PATH.with_name("catalog.jinnan.json"))
+    return scenic.load_catalog()
+
+
+def _study_result(runtime: Settings, principal: Principal, *, query=None, identifier=None, download=False):
+    if runtime.public_catalog_profile == "published":
+        library = StudyLibrary()
+        try:
+            if download:
+                return library.resolve_download(identifier, principal)
+            data = (library.search_materials(query, principal) if query is not None
+                    else library.get_material(identifier, principal))
+            items = data if isinstance(data, list) else [data]
+            return data, library.data_version(), [WarningItem(**warning) for warning in
+                library.extraction_warnings([item["material_id"] for item in items])]
+        except ValueError:
+            raise AppError(422, "VALIDATION_ERROR", "Invalid study query") from None
+        except KeyError:
+            raise AppError(404, "NOT_FOUND", "Material not found") from None
+    catalog = study.load_catalog()
+    if download:
+        return study.resolve_download(identifier, principal, catalog)
+    data = (study.search_materials(query, principal, catalog) if query is not None
+            else study.get_material(identifier, principal, catalog))
+    return data, catalog["data_version"], [WarningItem(code="DEMO_DATA", message="Fixed fictional demonstration data")]
 
 
 def execute_domain(
@@ -105,22 +156,42 @@ def execute_domain(
         raise AppError(503, "DEPENDENCY_UNAVAILABLE", "Domain dependency unavailable", retryable=True) from None
 
 
+def public_study_catalog(runtime: Settings, request_id: str) -> ApiEnvelope:
+    """Complete public download catalog; no personal/team material or MCP schema change."""
+    _require_mode(runtime, public_principal())
+    if runtime.public_catalog_profile != "published":
+        raise AppError(404, "NOT_FOUND", "Published study catalog unavailable")
+    library = StudyLibrary()
+    materials = library.list_materials()
+    _published_links(materials, runtime, "material_url")
+    _published_links(materials, runtime, "download_url")
+    return success({"courses": library.list_courses(), "materials": materials, "total": len(materials)},
+        request_id=request_id, data_version=library.data_version(),
+        warnings=[WarningItem(code="HISTORICAL_MATERIALS", message="历史复习资料，不代表今年考试范围")])
+
+
 def _dispatch_domain(operation, payload, principal, runtime, request_id) -> ApiEnvelope:
     warnings = [WarningItem(code="DEMO_DATA", message="Fixed fictional demonstration data, not a student's live records")]
     evidence: list[EvidenceRef] = []
     version = None
+    data_version = FIXTURE_SET_ID
 
     if operation == "validate_timetable":
         enforce_demo_fixture(payload, "schedule")
         data = schedule.validate_timetable(payload)
         version = schedule.CALCULATION_VERSION
     elif operation == "search_scenic_spots":
-        catalog = scenic.load_catalog()
+        catalog = _scenic_catalog(runtime)
         data = scenic.search_spots(payload, catalog)
+        _published_links(data, runtime, "map_url")
+        if runtime.public_catalog_profile == "published":
+            data_version = catalog["data_version"]
+            warnings = [WarningItem(code="SCENIC_UNVERIFIED", message="用户录入的点位、文字和植物种类尚未逐条独立核验")]
         warnings.append(WarningItem(code="NOT_REALTIME", message="Historical bloom months do not prove current bloom conditions"))
     elif operation == "search_study_materials":
-        catalog = study.load_catalog()
-        data = study.search_materials(payload, principal, catalog)
+        data, data_version, warnings = _study_result(runtime, principal, query=payload)
+        _published_links(data, runtime, "material_url")
+        _published_links(data, runtime, "download_url")
         evidence = _study_evidence(data)
         if any(not item["content_available"] for item in data):
             warnings.append(WarningItem(code="INDEX_ONLY", message="Index-only material cannot support a body-text answer"))
@@ -150,7 +221,7 @@ def _dispatch_domain(operation, payload, principal, runtime, request_id) -> ApiE
         evidence = [EvidenceRef(label="Fictional degree-plan fixture", source_ref=plan["source_ref"], locator=plan["plan_id"])]
         warnings.append(WarningItem(code="NOT_GRADUATION_DECISION", message="Progress under supported rules, not an official graduation decision"))
 
-    return success(data, request_id=request_id, data_version=FIXTURE_SET_ID,
+    return success(data, request_id=request_id, data_version=data_version,
                    calculation_version=version, warnings=warnings, evidence_refs=evidence)
 
 
@@ -158,15 +229,24 @@ def public_detail(kind: str, identifier: str, runtime: Settings, request_id: str
     principal = public_principal()
     _require_mode(runtime, principal)
     if kind == "scenic":
-        data = scenic.get_spot(identifier, scenic.load_catalog())
+        catalog = _scenic_catalog(runtime)
+        data = scenic.get_spot(identifier, catalog)
+        _published_links(data, runtime, "map_url")
+        data_version = catalog["data_version"] if runtime.public_catalog_profile == "published" else FIXTURE_SET_ID
+        warnings = ([WarningItem(code="SCENIC_UNVERIFIED", message="点位文字和植物种类尚未逐条核验"),
+                     WarningItem(code="NOT_REALTIME", message="历史观赏建议不是实时花况")]
+                    if runtime.public_catalog_profile == "published" else
+                    [WarningItem(code="DEMO_DATA", message="Fixed fictional demonstration data")])
     else:
-        data = study.get_material(identifier, principal, study.load_catalog())
-    return success(data, request_id=request_id, data_version=FIXTURE_SET_ID,
-                   warnings=[WarningItem(code="DEMO_DATA", message="Fixed fictional demonstration data")],
+        data, data_version, warnings = _study_result(runtime, principal, identifier=identifier)
+        _published_links(data, runtime, "material_url")
+        _published_links(data, runtime, "download_url")
+    return success(data, request_id=request_id, data_version=data_version,
+                   warnings=warnings,
                    evidence_refs=_study_evidence([data]) if kind == "study" else [])
 
 
 def public_download(identifier: str, runtime: Settings):
     principal = public_principal()
     _require_mode(runtime, principal)
-    return study.resolve_download(identifier, principal, study.load_catalog())
+    return _study_result(runtime, principal, identifier=identifier, download=True)

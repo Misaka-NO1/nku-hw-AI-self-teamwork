@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { TOOL_NAV } from "./nav";
+import { TOOL_NAV, toolNavHref } from "./nav";
 
 const GENIOS_AGENT_URL = import.meta.env.VITE_GENIOS_AGENT_URL as
   | string
@@ -10,16 +10,26 @@ const GENIOS_AGENT_URL = import.meta.env.VITE_GENIOS_AGENT_URL as
  * 工具站不是产品主入口；GENIOS_AGENT_URL 未配置时按钮禁用并说明，不猜链接。
  */
 export function Layout() {
+  const identityPilot = import.meta.env.VITE_IDENTITY_PILOT === "true";
+  const publicContentOrigin = import.meta.env.VITE_PUBLIC_CONTENT_ORIGIN as string | undefined;
+  const navOptions = {
+    identityPilot,
+    publicContentOnly: import.meta.env.VITE_PUBLIC_CONTENT_ONLY === "true",
+    publicContentOrigin,
+    timetableOrigin: import.meta.env.VITE_TIMETABLE_ORIGIN as string | undefined,
+  };
   return (
     <div className="app-shell">
       <header className="app-header">
         <h1>南开校园助手 · 工具站</h1>
         <nav className="app-nav" aria-label="工具导航">
-          {TOOL_NAV.map((item) => (
-            <NavLink key={item.path} to={item.path}>
-              {item.label}
-            </NavLink>
-          ))}
+          {TOOL_NAV.map((item) => {
+            const href = toolNavHref(item.path, navOptions);
+            if (!href) return <button key={item.path} disabled title="尚未配置对应可视化服务地址">{item.label}（未配置）</button>;
+            return href === item.path
+              ? <NavLink key={item.path} to={href}>{item.label}</NavLink>
+              : <a key={item.path} href={href}>{item.label}</a>;
+          })}
         </nav>
         {GENIOS_AGENT_URL ? (
           <a className="back-to-genios" href={GENIOS_AGENT_URL}>

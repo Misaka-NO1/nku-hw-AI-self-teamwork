@@ -9,4 +9,6 @@ backend/data/
 node_modules/
 .pnpm-store/
 dist/
+frontend/dist-demo/
+frontend/dist-identity/
 *.tsbuildinfo

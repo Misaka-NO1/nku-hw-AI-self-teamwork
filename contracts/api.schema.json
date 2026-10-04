@@ -2,13 +2,102 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://schemas.example.invalid/campus/api-1.0.0.json",
   "title": "NK Campus Assistant API Contract",
+  "x-oauth-competition-demo-candidate": {
+    "status": "explicit-opt-in-fictional-read-only-not-live-accepted",
+    "activation": "CLOUD_OAUTH_PILOT_ENABLED=true and CLOUD_OAUTH_COMPETITION_COMPAT_ENABLED=true; separate additive nku_competition_oauth_v1 RPC; original strict provider unchanged.",
+    "authorize_fields": ["response_type", "client_id", "redirect_uri", "scope", "state"],
+    "protocol": "Confidential authorization-code flow without PKCE or refresh. Exact registered school callback, explicit verified owner consent, state 8-256 chars echoed unchanged, 120s one-time code, <=600s Bearer. Token endpoint accepts grant_type/code/redirect_uri plus Basic or body client authentication, not both.",
+    "scope": "demo:read only; two approved fictional owners. Existing ApiEnvelope records/time results, B algorithms and browser confirmations unchanged. No owner arguments or model writes.",
+    "limitation": "Competition interoperability choice, NOT PKCE-equivalent or production personal-data acceptance. Enabling live compatibility needs concrete action-time confirmation."
+  },
+  "x-oauth-local-pilot": {
+    "status": "experimental-local-only-default-disabled",
+    "paths": ["/oauth/authorize", "/oauth/approve", "/oauth/token", "/oauth/revoke", "/oauth/records", "/oauth/task-drafts"],
+    "protocol_exception": "OAuth control endpoints use RFC 6749 responses/redirects instead of ApiEnvelope. Business records/drafts keep ApiEnvelope. No MCP tool or public deployment registers these paths.",
+    "security": "Exact registered redirect, confidential client authentication, S256 PKCE, explicit owner consent, 120-second one-time code, <=600-second access token, read/optional draft only. No refresh or commit. Platform interoperability is not yet accepted."
+  },
+  "x-oauth-cloud-pilot-candidate": {
+    "status": "closed-fictional-pg-candidate-default-disabled-not-live-accepted",
+    "time_paths": ["/oauth/time/free-slots", "/oauth/time/check"],
+    "time_transport": "POST OAuthPilotTimeQueryRequest. query_json is FreeTimeQuery or TimeCheckRequest with workspace_ref omitted. Ownership/saved records come only from demo:read grant; no user/workspace/schedule override. TimeResult uses existing B algorithms with calculation_version, coverage and needs_confirmation. Cloud candidate only; not public MCP or local OAuth paths.",
+    "uses": "Same OAuthPilot schemas, exact registered callback and OAuth protocol exceptions as the local candidate; no changes to public MCP or A/B/C algorithms.",
+    "storage": "Isolated nku_identity_pilot_v1 PostgreSQL RPC with online-approved CloudBase owner sessions, persistent consent/code/grant hashes, atomic confirmation/idempotency and shared rate limits.",
+    "activation": "Requires action-time authorization for new server-side RPC/service access, explicit server-only configuration and live cloud/platform two-user acceptance. Personal uploads remain disabled; no Agent confirm/commit or refresh token."
+  },
   "x-rest-query-encoding": {
     "paths": ["/api/v1/scenic/spots", "/api/v1/study/materials"],
     "parameter": "query",
     "encoding": "URL-encoded UTF-8 JSON object",
     "notes": "Exactly one query parameter. Use the same object as MCP arguments; all required nullable fields remain explicit null. No dispersed parameters or silent defaults."
   },
+  "x-cloud-browser-session-candidate": {
+    "status": "closed-fictional-candidate-not-live-accepted",
+    "path": "GET /api/v1/auth/cloudbase/browser-session",
+    "transport": "No query/body/owner/bearer inputs. Same-origin credentials=include and X-Campus-Session-Read: 1; reject explicit foreign Origin or Sec-Fetch-Site. ApiEnvelope data is CloudBrowserSession.",
+    "security": "Original HttpOnly session plus MAC-bound Secure/HttpOnly/SameSite=Strict 15-minute resume context and PG owner validation. Read only; no token/CSRF rotation, expiry extension, OAuth consent or business commit. Pre-candidate sessions lacking context require one fresh login. No CORS, no-store, no raw CloudBase UID or primary session token in JSON."
+  },
   "$defs": {
+    "CloudBrowserSession": {
+      "type": "object",
+      "properties": {
+        "workspace_ref": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$"},
+        "csrf_token": {"type": "string", "pattern": "^[A-Za-z0-9_-]{32,128}$"},
+        "expires_at": {"type": "string", "format": "date-time"},
+        "dataset_kind": {"const": "demo"},
+        "personal_uploads": {"const": false},
+        "agent_paired": {"const": false}
+      },
+      "required": ["workspace_ref", "csrf_token", "expires_at", "dataset_kind", "personal_uploads", "agent_paired"],
+      "additionalProperties": false
+    },
+    "OAuthPilotTimeQueryRequest": {
+      "type": "object",
+      "properties": {
+        "query_json": {"type": "string", "minLength": 1, "maxLength": 2048, "description": "FreeTimeQuery (free-slots) or TimeCheckRequest (check) JSON object text, omitting workspace_ref. Preserve all other required fields including explicit null. Reject duplicate keys, non-finite values and owner/schedule overrides. Bearer demo:read grants select saved records; missing timetable is NOT_FOUND, not public-fixture fallback."}
+      },
+      "required": ["query_json"],
+      "additionalProperties": false
+    },
+    "OAuthPilotAuthorizationRequest": {
+      "type": "object",
+      "properties": {
+        "response_type": {"const": "code"},
+        "client_id": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{8,128}$"},
+        "redirect_uri": {"type": "string", "format": "uri"},
+        "scope": {"enum": ["demo:read", "demo:read demo:draft", "demo:draft demo:read"]},
+        "state": {"type": "string", "pattern": "^[A-Za-z0-9._~-]{16,256}$"},
+        "code_challenge": {"type": "string", "pattern": "^[A-Za-z0-9_-]{43}$"},
+        "code_challenge_method": {"const": "S256"}
+      },
+      "required": ["response_type", "client_id", "redirect_uri", "scope", "state", "code_challenge", "code_challenge_method"],
+      "additionalProperties": false
+    },
+    "OAuthPilotTokenResponse": {
+      "type": "object",
+      "properties": {
+        "access_token": {"type": "string", "pattern": "^[A-Za-z0-9_-]{43}$"},
+        "token_type": {"const": "Bearer"},
+        "expires_in": {"type": "integer", "minimum": 1, "maximum": 600},
+        "scope": {"enum": ["demo:read", "demo:draft demo:read"]}
+      },
+      "required": ["access_token", "token_type", "expires_in", "scope"],
+      "additionalProperties": false
+    },
+    "OAuthPilotError": {
+      "type": "object",
+      "properties": {"error": {"enum": ["invalid_request", "invalid_client", "invalid_grant", "invalid_scope", "unsupported_response_type", "unsupported_grant_type", "access_denied", "temporarily_unavailable", "server_error"]}},
+      "required": ["error"],
+      "additionalProperties": false
+    },
+    "OAuthPilotTaskDraftRequest": {
+      "type": "object",
+      "properties": {
+        "fixture_id": {"enum": ["notice-event.demo.json", "notice-deadline.demo.json", "notice-ambiguous.demo.json"]},
+        "idempotency_key": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{8,128}$"}
+      },
+      "required": ["fixture_id", "idempotency_key"],
+      "additionalProperties": false
+    },
     "FieldError": {
       "type": "object",
       "properties": {

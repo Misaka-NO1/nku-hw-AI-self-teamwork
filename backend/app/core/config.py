@@ -26,6 +26,30 @@ class Settings(BaseSettings):
     mcp_enable_domain_tools: bool = False
     mcp_enable_platform_compat_tools: bool = False
     domain_bundle_manifest_path: str = ""
+    # Server-selected, never an Agent argument. Personal-data gates stay separate.
+    public_catalog_profile: Literal["demo", "published"] = "demo"
+    # Closed pilot: real identity, but only exact fictional fixtures. Not a
+    # shortcut for enabling personal uploads or granting NK-GeniOS identity.
+    cloudbase_auth_pilot_enabled: bool = False
+    cloudbase_auth_env_id: str = ""
+    cloudbase_auth_profile: Literal["legacy", "pg_registered"] = "legacy"
+    cloudbase_auth_pilot_user_ids: list[str] = Field(default_factory=list, repr=False)
+    cloudbase_auth_session_seconds: int = Field(default=900, ge=60, le=900)
+    # Internal local prototype only: no REST route or MCP tool is registered.
+    agent_pairing_local_enabled: bool = False
+    agent_pairing_audience: str = ""
+    # OAuth adapter is loopback/test-only until platform protocol and cloud
+    # persistence are accepted. Registered client secret is a SHA-256 digest.
+    oauth_local_enabled: bool = False
+    oauth_client_id: str = ""
+    oauth_client_secret_hash: SecretStr = Field(default=SecretStr(""), repr=False)
+    oauth_redirect_uri: str = ""
+    cloud_identity_pilot_enabled: bool = False
+    cloud_identity_bootstrap_enabled: bool = False
+    cloud_oauth_pilot_enabled: bool = False
+    # Explicit competition-only confidential OAuth compatibility. No PKCE;
+    # two approved fictional owners, read-only, short-lived, default off.
+    cloud_oauth_competition_compat_enabled: bool = False
     database_url: str = "sqlite:///data/campus.db"
     import_ticket_ttl_seconds: int = Field(default=600, ge=60, le=3600)
     confirmation_ttl_seconds: int = Field(default=600, ge=60, le=3600)

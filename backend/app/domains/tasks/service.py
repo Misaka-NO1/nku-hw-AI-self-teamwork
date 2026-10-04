@@ -364,6 +364,9 @@ def get_draft(settings: Settings, principal: Principal, draft_id: str) -> dict[s
         ).fetchone()
     if row is None:
         raise AppError(status_code=404, code="NOT_FOUND", message="Draft not found")
+    resolve_workspace(principal, row["workspace_ref"], "demo:read", settings=settings)
+    if row["expires_at"] <= int(time.time()):
+        raise AppError(status_code=410, code="TOKEN_EXPIRED", message="Draft expired")
     return {
         "draft_id": row["draft_id"],
         "kind": row["kind"],
@@ -417,6 +420,27 @@ def update_draft(
     return get_draft(settings, principal, draft_id)
 
 
+def _require_active_draft(
+    connection: sqlite3.Connection, principal: Principal, draft: sqlite3.Row, now: int,
+) -> None:
+    workspace = connection.execute(
+        "SELECT expires_at FROM workspaces WHERE workspace_ref = ? AND owner_subject_id = ?",
+        (draft["workspace_ref"], principal.subject_id),
+    ).fetchone()
+    if workspace is None or workspace["expires_at"] <= now:
+        raise AppError(status_code=404, code="NOT_FOUND", message="Workspace not found")
+    if draft["expires_at"] <= now:
+        raise AppError(status_code=410, code="TOKEN_EXPIRED", message="Draft expired")
+
+
+def _require_resolved_notice(draft: sqlite3.Row) -> None:
+    if draft["kind"] == "task" and json.loads(draft["payload_json"])["needs_confirmation"]:
+        raise AppError(
+            status_code=409, code="CONFIRMATION_REQUIRED",
+            message="Notice fields must be resolved before confirming or saving a task",
+        )
+
+
 def create_confirmation(
     settings: Settings,
     principal: Principal,
@@ -425,32 +449,34 @@ def create_confirmation(
     expected_payload_hash: str,
     idempotency_key: str,
 ) -> dict[str, Any]:
+    if principal.kind != "browser_user" or "demo:commit" not in principal.scopes:
+        raise AppError(403, "FORBIDDEN", "Only the browser owner may confirm a draft")
     now = int(time.time())
     request_digest = payload_hash(
         {"draft_id": draft_id, "revision": revision, "payload_hash": expected_payload_hash}
     )
     with database_connection(settings) as connection:
         connection.execute("BEGIN IMMEDIATE")
-        existing = _idempotent_result(
-            connection, principal, "create_confirmation", idempotency_key, request_digest
-        )
-        if existing is not None:
-            connection.rollback()
-            return existing
         draft = connection.execute(
             "SELECT * FROM drafts WHERE draft_id = ? AND owner_subject_id = ?",
             (draft_id, principal.subject_id),
         ).fetchone()
         if draft is None:
             raise AppError(status_code=404, code="NOT_FOUND", message="Draft not found")
-        if draft["expires_at"] <= now:
-            raise AppError(status_code=410, code="TOKEN_EXPIRED", message="Draft expired")
+        _require_active_draft(connection, principal, draft, now)
+        existing = _idempotent_result(
+            connection, principal, "create_confirmation", idempotency_key, request_digest
+        )
+        if existing is not None:
+            connection.rollback()
+            return existing
         if (
             draft["status"] != "draft"
             or draft["revision"] != revision
             or draft["payload_hash"] != expected_payload_hash
         ):
             raise AppError(status_code=409, code="STALE_REVISION", message="Draft revision changed")
+        _require_resolved_notice(draft)
 
         confirmation_id = _identifier("confirmation")
         expires_at = now + settings.confirmation_ttl_seconds
@@ -499,11 +525,23 @@ def commit_draft(
     confirmation_id: str,
     idempotency_key: str,
 ) -> dict[str, Any]:
+    if principal.kind != "browser_user" or "demo:commit" not in principal.scopes:
+        raise AppError(403, "FORBIDDEN", "Only the browser owner may save a confirmed draft")
     now = int(time.time())
     request_digest = payload_hash({"kind": kind, "confirmation_id": confirmation_id})
     operation = f"commit_{kind}"
     with database_connection(settings) as connection:
         connection.execute("BEGIN IMMEDIATE")
+        # Enforce resource expiry even on an idempotent retry. A shared bearer or
+        # an expired workspace must never become an alternate write/read identity.
+        linked_draft = connection.execute(
+            """SELECT drafts.* FROM drafts JOIN confirmations
+               ON confirmations.draft_id = drafts.draft_id
+               WHERE confirmations.confirmation_hash = ? AND drafts.owner_subject_id = ?""",
+            (secret_hash(confirmation_id), principal.subject_id),
+        ).fetchone()
+        if linked_draft is not None:
+            _require_active_draft(connection, principal, linked_draft, now)
         existing = _idempotent_result(
             connection, principal, operation, idempotency_key, request_digest
         )
@@ -540,6 +578,7 @@ def commit_draft(
             or draft["payload_hash"] != confirmation["payload_hash"]
         ):
             raise AppError(status_code=409, code="STALE_REVISION", message="Draft revision changed")
+        _require_resolved_notice(draft)
 
         if kind == "task":
             resource_id = _identifier("task")
@@ -640,6 +679,7 @@ def get_task(settings: Settings, principal: Principal, task_id: str) -> dict[str
         ).fetchone()
     if row is None:
         raise AppError(status_code=404, code="NOT_FOUND", message="Task not found")
+    resolve_workspace(principal, row["workspace_ref"], "demo:read", settings=settings)
     return {
         "task_id": row["task_id"],
         "workspace_ref": row["workspace_ref"],

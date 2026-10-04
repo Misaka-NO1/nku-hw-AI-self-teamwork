@@ -10,12 +10,13 @@ from app.core.config import get_settings
 from app.core.contracts import validate_boundary
 from app.core.domain_adapter import (
     OPERATIONS, PUBLIC_DEMO_WORKSPACE_REF, execute_domain,
-    public_detail, public_download, public_principal,
+    public_detail, public_download, public_principal, public_study_catalog,
 )
 from app.core.envelope import ApiEnvelope
 from app.core.errors import AppError
 from app.core.request_id import current_request_id
 from app.core.security import resolve_browser_principal
+from app.domains.study.library import StudyLibrary
 
 
 router = APIRouter(prefix="/api/v1", tags=["domain-read"])
@@ -58,10 +59,19 @@ def study_detail_route(material_id: str, request: Request):
     return public_detail("study", material_id, get_settings(), current_request_id(request))
 
 
+@router.get("/study/catalog", response_model=ApiEnvelope)
+def study_catalog_route(request: Request):
+    return public_study_catalog(get_settings(), current_request_id(request))
+
+
 @router.get("/study/materials/{material_id}/download")
 def study_download_route(material_id: str):
     path = public_download(material_id, get_settings())
-    return FileResponse(path, filename=path.name, media_type="text/markdown; charset=utf-8")
+    filename = (StudyLibrary().get_material(material_id)["file_name"]
+                if get_settings().public_catalog_profile == "published" else path.name)
+    return FileResponse(path, filename=filename, content_disposition_type="attachment",
+                        media_type="application/pdf" if path.suffix.lower() == ".pdf" else "text/markdown; charset=utf-8",
+                        headers={"X-Content-Type-Options": "nosniff"})
 
 
 @router.post("/schedules/validate", response_model=ApiEnvelope)

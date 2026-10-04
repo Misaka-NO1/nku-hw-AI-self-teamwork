@@ -1,0 +1,10 @@
+﻿course_id,title,semester,aliases_json,course_code,mapping_status
+y1-s1-calculus,高等数学（上学期）,s1,"[""高数""]",,provisional_needs_C_mapping
+y1-s1-ideology,思想道德与法治（名称待核对）,s1,"[""思政"", ""思修""]",,provisional_needs_C_mapping
+y1-s1-linear-algebra,线性代数,s1,"[""线代""]",,provisional_needs_C_mapping
+y1-s1-programming,程序设计（上学期，C/C++名称待核对）,s1,"[""c--"", ""C"", ""C++""]",,provisional_needs_C_mapping
+y1-s2-calculus,高等数学（下学期）,s2,"[""高数""]",,provisional_needs_C_mapping
+y1-s2-marxism,马克思主义基本原理（名称待核对）,s2,"[""马原""]",,provisional_needs_C_mapping
+y1-s2-physics,大学物理,s2,"[""大物""]",,provisional_needs_C_mapping
+y1-s2-probability,概率论与数理统计,s2,"[""概率论""]",,provisional_needs_C_mapping
+y1-s2-programming,程序设计（下学期，C++名称待核对）,s2,"[""c艹"", ""C++""]",,provisional_needs_C_mapping

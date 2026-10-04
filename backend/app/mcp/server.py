@@ -32,7 +32,9 @@ def create_mcp_server(runtime: Settings) -> MCPServer:
         kwargs["runtime"] = runtime
     server = server_type(
         name="campus-tools",
-        instructions=("Read-only fictional demo tools; no personal identity binding or writes."
+        instructions=(("Authorized public scenic/review catalogs; all timetable/degree examples remain fictional. No personal identity binding or writes."
+                       if runtime.public_catalog_profile == "published" else
+                       "Read-only fictional demo tools; no personal identity binding or writes.")
                       if runtime.mcp_enable_domain_tools else "Non-sensitive health probe only."),
         version=runtime.build_id,
         middleware=[McpAuditLoggingMiddleware()],

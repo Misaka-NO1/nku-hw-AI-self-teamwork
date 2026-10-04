@@ -35,16 +35,22 @@ class DomainMCPServer(MCPServer):
 
     async def list_tools(self):
         tools = await super().list_tools()
+        descriptions = dict(DESCRIPTIONS)
+        if self.runtime.public_catalog_profile == "published":
+            descriptions.update({
+                "search_scenic_spots": "Search the authorized user-recorded Nankai Jinnan scenic catalog. Interpret user intent flexibly: strolling/relaxing uses activity:walk, couples/date uses activity:date, picnic activity:picnic, photos activity:photo, landmarks activity:landmark; physical scenes include scene:grassland, scene:bridge, scene:path, scene:garden, scene:grove, scene:plaza. These activity labels are curated recommendations, not official guarantees. A stroll is not restricted to buildings or lakes. Tags in one query mean ALL must match: alternatives require separate queries and union by spot_id, not an impossible conjunction. For general flowers use flower/month=null/limit=20; list distinct flower species excluding generic category and activity:/scene: tags. Buildings architecture, autumn foliage, lakeside waterside, lawns landscape. All 34 spots require union of these five categories; one limit=20 query may truncate. Return actual map_url after choosing a spot. Never invent navigation, quietness, access permissions or live bloom conditions.",
+                "search_study_materials": "List ALL authorized original review files for the selected course and semester: default topic=null and limit=20, not 1 or 2. Return every file with download_url/file_name/file_format, not a best-file recommendation or lecture. Only filter a topic if explicitly requested. Query all 9 known course IDs separately for the whole library; no single query covers all courses. Original files download as attachments, not the material_url preview or the school application page. Never expose private or pending materials.",
+            })
         for name, definition in OPERATIONS.items():
             tools.append(Tool(
-                name=name, description=DESCRIPTIONS[name],
+                name=name, description=descriptions[name],
                 input_schema=boundary_schema(definition), output_schema=boundary_schema("ApiEnvelope"),
                 annotations=ToolAnnotations(read_only_hint=True, destructive_hint=False, open_world_hint=False),
             ))
         if self.runtime.mcp_enable_platform_compat_tools:
             for name, operation in PLATFORM_OPERATIONS.items():
                 tools.append(Tool(
-                    name=name, description="Platform JSON-text adapter. " + DESCRIPTIONS[operation],
+                    name=name, description="Platform JSON-text adapter. " + descriptions[operation],
                     input_schema=platform_input_schema(), output_schema=boundary_schema("ApiEnvelope"),
                     annotations=ToolAnnotations(read_only_hint=True, destructive_hint=False, open_world_hint=False),
                 ))

@@ -38,9 +38,13 @@ const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamp
 controls.dampingFactor=.085;controls.minZoom=.5;controls.maxZoom=14;controls.maxPolarAngle=Math.PI*.47;
 controls.minPolarAngle=.015;controls.screenSpacePanning=true;
 const labels=[],markers=new THREE.Group();scene.add(markers);
-let spots=[],selected=null,placing=false,pending=null,editingId=null,photoData='',photoUrls=[],photoFiles=[],view='oblique',authoring=false;
+let spots=[],selected=null,placing=false,pending=null,editingId=null,photoData='',photoUrls=[],photoFiles=[],view='oblique',authoring=false,publishedMode=false;
 function status(message){$('status').textContent=message;}
 async function loadMode(){
+  try{
+    const published=await fetch('./published-config.json');
+    if(published.ok&&(await published.json()).public_catalog===true){publishedMode=true;authoring=false;return;}
+  }catch{ /* Original standalone editor keeps its existing server configuration. */ }
   try{
     const response=await fetch('/api/scenic/config');
     if(!response.ok)throw new Error('录入状态不可用');
@@ -78,6 +82,11 @@ async function sendSpots(items){
   if(!response.ok){const detail=await response.json().catch(()=>({}));throw new Error(detail.error||'景点保存失败');}
 }
 async function loadSpots(){
+  if(publishedMode){
+    const response=await fetch('./published-spots.json');
+    if(!response.ok)throw new Error('公开景点目录暂不可用');
+    spots=validate(await response.json());return;
+  }
   let cached=[];
   try{const raw=localStorage.getItem(storeKey);if(raw)cached=validate(JSON.parse(raw));}
   catch{status('浏览器旧数据读取失败，请检查导出的备份。');}
@@ -364,6 +373,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')setPlacing(false);})
 function resize(){const w=host.clientWidth,h=host.clientHeight;renderer.setSize(w,h);const span=overview?Math.max(128,160/(w/h)):(w/h<1?134/(w/h):105);
   camera.left=-span*w/h/2;camera.right=span*w/h/2;camera.top=span/2;camera.bottom=-span/2;camera.updateProjectionMatrix();}
 new ResizeObserver(resize).observe(host);resize();setView(overview?'top':'oblique');refreshMarkers();renderList();
+const requestedSpot=new URLSearchParams(location.search).get('spot_id');
+if(requestedSpot){
+  if(spots.some(spot=>spot.spot_id===requestedSpot))selectSpot(requestedSpot,true);
+  else status('此景点不存在或未公开，不会替换成其他地点。');
+}
 $('model-stats').textContent=overview?`${groups.length} 个建筑轮廓 · 道路与建筑同图对位`:`${groups.length} 组建筑体块 · ${plan?'原导览图平面对位':legacy?'示意布局':'GCJ-02 坐标基准'} · 非测绘`;
 const projected=new THREE.Vector3();
 renderer.setAnimationLoop(()=>{

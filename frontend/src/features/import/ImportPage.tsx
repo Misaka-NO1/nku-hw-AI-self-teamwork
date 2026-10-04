@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ChangeEvent } from "react";
 
 import {
@@ -27,6 +27,8 @@ const FORMAT_BY_EXT: Record<string, ImportFormat> = {
 };
 
 export interface ImportPageProps {
+  /** D's connection shell receives local previews; this callback never uploads. */
+  onPreview?: (payload: ParseResult["payload"] | null) => void;
   /** 可选：外部传入的学期日历；也可在页面内上传 TermCalendar JSON */
   calendar?: TermCalendar | null;
   datasetKind?: "demo" | "personal";
@@ -41,12 +43,14 @@ export default function ImportPage({
   calendar: initialCalendar = null,
   datasetKind = "demo",
   serverValidateAvailable = false,
+  onPreview,
 }: ImportPageProps) {
   const [calendar, setCalendar] = useState<TermCalendar | null>(initialCalendar);
   const [fileName, setFileName] = useState<string | null>(null);
   const [result, setResult] = useState<ParseResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [remoteCheck, setRemoteCheck] = useState<string | null>(null);
+  useEffect(() => { onPreview?.(result?.payload ?? null); }, [result, onPreview]);
 
   const blockingIssues = useMemo(
     () => result?.issues.filter((issue) => issue.blocking) ?? [],
