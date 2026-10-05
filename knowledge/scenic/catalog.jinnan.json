@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "data_version": "jinnan-2026-09-26",
+  "data_version": "jinnan-2026-10-04-intents-v1",
   "maps": [
     {
       "map_id": "nku-jinnan-overview-pixels-v1",
@@ -21,7 +21,9 @@
       "y_norm": 0.42466270845721354,
       "tags": [
         "flower",
-        "海棠"
+        "海棠",
+        "activity:photo",
+        "activity:walk"
       ],
       "description": "NKU超绝海棠花打卡圣地",
       "photos": [
@@ -68,7 +70,9 @@
       "x_norm": 0.2759558709957478,
       "y_norm": 0.4589515903159394,
       "tags": [
-        "architecture"
+        "architecture",
+        "activity:photo",
+        "activity:landmark"
       ],
       "description": "地标性建筑，超绝出片地点",
       "photos": [
@@ -134,7 +138,9 @@
       "x_norm": 0.3116898677311577,
       "y_norm": 0.43702082042187584,
       "tags": [
-        "architecture"
+        "architecture",
+        "activity:photo",
+        "activity:landmark"
       ],
       "description": "NKU唯一在战火中保留下来的建筑（津南是复刻版）",
       "photos": [
@@ -158,7 +164,9 @@
       "x_norm": 0.29523506166151514,
       "y_norm": 0.4969757980650972,
       "tags": [
-        "architecture"
+        "architecture",
+        "activity:photo",
+        "activity:landmark"
       ],
       "description": "标志性建筑",
       "photos": [
@@ -196,7 +204,11 @@
       "x_norm": 0.2979324009650983,
       "y_norm": 0.5706638516508671,
       "tags": [
-        "architecture"
+        "architecture",
+        "waterside",
+        "scene:pavilion",
+        "activity:walk",
+        "activity:date"
       ],
       "description": "",
       "photos": [
@@ -228,7 +240,10 @@
       "y_norm": 0.661681910916545,
       "tags": [
         "flower",
-        "梨花"
+        "梨花",
+        "scene:garden",
+        "activity:walk",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -261,7 +276,9 @@
       "x_norm": 0.5378204694953516,
       "y_norm": 0.6744135567125653,
       "tags": [
-        "architecture"
+        "architecture",
+        "activity:photo",
+        "activity:landmark"
       ],
       "description": "标志性建筑",
       "photos": [
@@ -293,7 +310,9 @@
       "y_norm": 0.6317589605757085,
       "tags": [
         "flower",
-        "海棠"
+        "海棠",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -321,7 +340,9 @@
       "y_norm": 0.6869502464277399,
       "tags": [
         "flower",
-        "芙蓉葵"
+        "芙蓉葵",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -350,7 +371,10 @@
       "y_norm": 0.6221870622128934,
       "tags": [
         "flower",
-        "山桃"
+        "山桃",
+        "waterside",
+        "activity:walk",
+        "activity:flower"
       ],
       "description": "环马蹄湖有一整圈儿的山桃",
       "photos": [
@@ -384,7 +408,9 @@
       "y_norm": 0.5886424370049085,
       "tags": [
         "waterside",
-        "wildlife"
+        "wildlife",
+        "activity:wildlife",
+        "activity:photo"
       ],
       "description": "随机刷新的唯一一只黑天鹅",
       "photos": [
@@ -416,7 +442,9 @@
       "y_norm": 0.7470174722822079,
       "tags": [
         "flower",
-        "海棠"
+        "海棠",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -450,7 +478,9 @@
       "y_norm": 0.6642491215849685,
       "tags": [
         "flower",
-        "樱花"
+        "樱花",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -477,7 +507,9 @@
       "y_norm": 0.7391507869952275,
       "tags": [
         "flower",
-        "樱花"
+        "樱花",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -518,7 +550,9 @@
       "y_norm": 0.5982805697510595,
       "tags": [
         "flower",
-        "海棠"
+        "海棠",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "在公教楼A楼的南侧，在窗外可以看见大片盛开的海棠。",
       "photos": [
@@ -552,7 +586,9 @@
       "y_norm": 0.3275277651461309,
       "tags": [
         "flower",
-        "红叶李"
+        "红叶李",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -580,7 +616,9 @@
       "y_norm": 0.3851595533592373,
       "tags": [
         "flower",
-        "油菜花"
+        "油菜花",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -614,7 +652,9 @@
       "y_norm": 0.667891110915201,
       "tags": [
         "flower",
-        "榆叶梅"
+        "榆叶梅",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -642,7 +682,10 @@
       "tags": [
         "flower",
         "格桑花",
-        "二月兰"
+        "二月兰",
+        "scene:garden",
+        "activity:walk",
+        "activity:flower"
       ],
       "description": "不同季节有不同的花景",
       "photos": [
@@ -687,7 +730,10 @@
       "y_norm": 0.550309222071472,
       "tags": [
         "foliage",
-        "枫树"
+        "枫树",
+        "scene:grove",
+        "activity:walk",
+        "activity:photo"
       ],
       "description": "神秘打野点，超多美丽的枫树，出片的好地方",
       "photos": [
@@ -760,7 +806,10 @@
         "flower",
         "菊花桃",
         "碧桃",
-        "榆叶梅"
+        "榆叶梅",
+        "scene:garden",
+        "activity:walk",
+        "activity:flower"
       ],
       "description": "种植着菊花桃和大量碧桃，榆叶梅的地方",
       "photos": [
@@ -822,7 +871,10 @@
       "y_norm": 0.8490174293700371,
       "tags": [
         "flower",
-        "杏花"
+        "杏花",
+        "scene:garden",
+        "activity:walk",
+        "activity:flower"
       ],
       "description": "隐匿于大量白杨银杏树之后的杏花园",
       "photos": [
@@ -857,7 +909,10 @@
       "tags": [
         "flower",
         "丁香",
-        "海棠"
+        "海棠",
+        "scene:path",
+        "activity:walk",
+        "activity:date"
       ],
       "description": "这条小路一边开满了丁香，一边开满了海棠",
       "photos": [
@@ -912,7 +967,9 @@
       "y_norm": 0.7856620290336529,
       "tags": [
         "foliage",
-        "银杏"
+        "银杏",
+        "activity:walk",
+        "activity:photo"
       ],
       "description": "圆形露台中了一圈银杏树",
       "photos": [
@@ -939,7 +996,10 @@
       "y_norm": 0.8170490617133503,
       "tags": [
         "foliage",
-        "银杏"
+        "银杏",
+        "scene:grove",
+        "activity:walk",
+        "activity:photo"
       ],
       "description": "超多银杏树，冷门出片地",
       "photos": [
@@ -980,7 +1040,10 @@
       "y_norm": 0.801218917102557,
       "tags": [
         "foliage",
-        "银杏"
+        "银杏",
+        "scene:path",
+        "activity:walk",
+        "activity:date"
       ],
       "description": "两边种满银杏树的“网红”打卡地",
       "photos": [
@@ -1020,7 +1083,9 @@
       "x_norm": 0.519958268387652,
       "y_norm": 0.7427587699936462,
       "tags": [
-        "architecture"
+        "architecture",
+        "activity:photo",
+        "activity:landmark"
       ],
       "description": "",
       "photos": [
@@ -1046,7 +1111,9 @@
       "tags": [
         "flower",
         "红叶李",
-        "榆叶梅"
+        "榆叶梅",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [
@@ -1073,7 +1140,11 @@
       "x_norm": 0.3921139976114577,
       "y_norm": 0.5085324253573485,
       "tags": [
-        "architecture"
+        "landscape",
+        "scene:grassland",
+        "activity:walk",
+        "activity:date",
+        "activity:picnic"
       ],
       "description": "大块儿草地，种着梨树，柳树，桃树，丁香等等，野餐散步的好地方",
       "photos": [
@@ -1126,7 +1197,9 @@
       "y_norm": 0.7313992963773108,
       "tags": [
         "flower",
-        "海棠"
+        "海棠",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "暗红色的海棠花",
       "photos": [
@@ -1167,7 +1240,10 @@
       "y_norm": 0.47420842326195917,
       "tags": [
         "foliage",
-        "银杏"
+        "银杏",
+        "scene:plaza",
+        "activity:walk",
+        "activity:photo"
       ],
       "description": "三个建筑中间种植了大量银杏树，可拍人像，可构图拍建筑",
       "photos": [
@@ -1207,7 +1283,9 @@
       "x_norm": 0.6610226525141147,
       "y_norm": 0.5607023839002442,
       "tags": [
-        "architecture"
+        "architecture",
+        "activity:photo",
+        "activity:landmark"
       ],
       "description": "",
       "photos": [
@@ -1240,7 +1318,12 @@
       "tags": [
         "flower",
         "美人梅",
-        "海棠"
+        "海棠",
+        "architecture",
+        "scene:bridge",
+        "activity:walk",
+        "activity:date",
+        "activity:photo"
       ],
       "description": "廊桥一侧是美人梅，一侧是海棠花，出片的好地方",
       "photos": [
@@ -1289,7 +1372,9 @@
       "y_norm": 0.5168540455046813,
       "tags": [
         "flower",
-        "美人梅"
+        "美人梅",
+        "activity:flower",
+        "activity:photo"
       ],
       "description": "",
       "photos": [

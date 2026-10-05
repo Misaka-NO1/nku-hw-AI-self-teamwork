@@ -1,5 +1,9 @@
 # B 进度 handoff：扩展、课表导入与时间引擎
 
+## D 接口补充（2026-09-30，本地联调，不修改 B 算法）
+
+D 已注册既定 schedules/validate、time/free-slots、time/check REST 与对应 MCP，只用固定 demo；D06 本机对照通过，尚未云端发布。POST/MCP 直接同一契约 JSON，无 payload 嵌套。公共 demo-workspace-01 只读固定课表；浏览器随机工作区需会话 owner 校验且读取已确认课表/任务，MCP 服务令牌不能访问。课表非固定内容即使标 demo 也拒绝；通知草稿未确认不占时间，due 非忙碌，缺时刻/耗时需确认。时间 calculation_version 放外层 meta；下方早期 handoff 中的 data 内版本描述已不代表契约。详见 D06 证据。
+
 日期：2026-09-22｜分支：`feat/agent-b-schedule-time`
 
 ```text

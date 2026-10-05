@@ -1,5 +1,9 @@
 # A 模块进度交接：赏景地图与期末复习
 
+## D 接口补充（2026-09-30，本地联调，不修改 A 算法）
+
+D 已接入既定景点/资料 REST 搜索、详情和白名单附件下载，对应 MCP 搜索共用薄适配；D06 本机对照通过，尚未云端发布。按用户确认，两个 GET 搜索使用一个 query JSON 参数（URLSearchParams + JSON.stringify），MCP 直接用同一个查询对象；nullable 字段不能省略。数据仍为 catalog.demo.json、公开自创 study 资料，索引不提供正文，私有/待授权不可访问。公共页面需由 C 接入同源数据，不能因后端就绪自动声称页面/平台已接通。详见 contracts/integration-conventions.md §5 和 D06 证据。
+
 任务状态：A01、A02、A05、A07、A08 `LOCAL_PASS`；A03、A04 已有独立地图预览，审核提出的异步目录更新与多底图深链接已通过浏览器回归，拖动手感和真实本地图片导入仍待人工验收；A06、A09 已完成本地纯函数、类型、服务端渲染空态检查，平台知识问答仍待联调；A10–A12 `WAITING_HUMAN` / 依赖其他成员。
 
 修改文件：仅 `frontend/src/features/scenic/`、`frontend/src/features/study/`、`backend/app/domains/scenic/`、`backend/app/domains/study/`、A 对应测试、`knowledge/scenic/`、`knowledge/study/`、`prompts/scenic-routing.md`、`prompts/study-answer.md`、`docs/handoffs/A-progress.md`、`docs/blockers/A-assets.md`。未修改 `contracts/`、公共路由/样式、数据库、认证、MCP 注册或其他 Agent 的业务代码。

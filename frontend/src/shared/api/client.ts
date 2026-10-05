@@ -187,3 +187,22 @@ export const apiClient = {
   post: <T>(path: string, body: unknown, options?: Omit<RequestOptions, "method">) =>
     request<T>(path, { ...options, method: "POST", body }),
 };
+
+/** Retrieve original bytes without navigating; never save an HTML login/notice as PDF. */
+export async function downloadOriginalPdf(materialId: string): Promise<Blob> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 60000);
+  try {
+    const response = await fetch(`${apiBaseUrl()}/api/v1/study/materials/${encodeURIComponent(materialId)}/download`,
+      {credentials: "include", signal: controller.signal});
+    if (!response.ok) throw new Error(`下载失败（HTTP ${response.status}），请稍后重试`);
+    if (!response.headers.get("content-type")?.toLowerCase().startsWith("application/pdf"))
+      throw new Error("服务未返回 PDF，可能显示了访问提示或登录页；未跳转、未保存错误文件");
+    const blob = await response.blob();
+    if (await blob.slice(0, 5).text() !== "%PDF-") throw new Error("文件内容不是原 PDF，未保存");
+    return blob;
+  } catch (error) {
+    if (controller.signal.aborted) throw new Error("下载超时，请重试");
+    throw error;
+  } finally { clearTimeout(timer); }
+}

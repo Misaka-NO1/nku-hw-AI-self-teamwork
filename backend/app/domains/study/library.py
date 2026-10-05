@@ -57,7 +57,16 @@ class StudyLibrary:
             "topics": json.loads(row["topics_json"]), "content_available": bool(row["content_available"]),
             "evidence": evidence,
             "material_url": f"/tools/study?course_id={quote(row['course_id'], safe='')}&material_id={quote(row['material_id'], safe='')}",
+            "download_url": f"/api/v1/study/materials/{quote(row['material_id'], safe='')}/download",
+            "file_format": "pdf",
+            "file_name": row["title"] + ".pdf",
         }
+
+    def list_materials(self) -> list[dict]:
+        """Complete licensed public file catalog, without snippets or top-N limits."""
+        with self._connect() as db:
+            rows = db.execute(f"SELECT m.* FROM materials m WHERE {PUBLIC_FILTER} ORDER BY course_id,title,material_id").fetchall()
+            return [self._summary(row, []) for row in rows]
 
     @staticmethod
     def _evidence(row):

@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -11,11 +12,60 @@ from app.core.errors import AppError
 
 REPOSITORY_ROOT = Path(__file__).parents[3]
 CORE_SCHEMA_PATH = REPOSITORY_ROOT / "contracts" / "core.schema.json"
+API_SCHEMA_PATH = REPOSITORY_ROOT / "contracts" / "api.schema.json"
 
 
 @lru_cache
 def _core_schema() -> dict[str, Any]:
     return json.loads(CORE_SCHEMA_PATH.read_text(encoding="utf-8"))
+
+
+@lru_cache
+def _api_schema() -> dict[str, Any]:
+    return json.loads(API_SCHEMA_PATH.read_text(encoding="utf-8"))
+
+
+def boundary_schema(definition: str) -> dict[str, Any]:
+    """Publish the frozen JSON contract, not a separately inferred tool schema."""
+    source = _api_schema() if definition in _api_schema()["$defs"] else _core_schema()
+    root = deepcopy(source["$defs"][definition])
+    required_defs: dict[str, Any] = {}
+
+    def include_refs(value: Any) -> None:
+        if isinstance(value, dict):
+            ref = value.get("$ref", "")
+            if ref.startswith("#/$defs/"):
+                name = ref.removeprefix("#/$defs/")
+                if name not in required_defs:
+                    required_defs[name] = deepcopy(source["$defs"][name])
+                    include_refs(required_defs[name])
+            for child in value.values():
+                include_refs(child)
+        elif isinstance(value, list):
+            for child in value:
+                include_refs(child)
+
+    include_refs(root)
+    if required_defs:
+        root["$defs"] = required_defs
+    return root
+
+
+def validate_boundary(payload: Any, definition: str) -> None:
+    validator = Draft202012Validator(boundary_schema(definition), format_checker=FormatChecker())
+    errors = sorted(validator.iter_errors(payload), key=lambda item: str(list(item.path)))
+    if errors:
+        # Schema error.message may embed the submitted value (including personal data).
+        raise AppError(
+            status_code=422,
+            code="VALIDATION_ERROR",
+            message=f"Request does not match {definition}",
+            field_errors=[FieldError(
+                field=".".join(str(part) for part in error.absolute_path) or "$",
+                code=error.validator or "schema",
+                message="Value does not satisfy the interface contract",
+            ) for error in errors[:20]],
+        )
 
 
 @lru_cache

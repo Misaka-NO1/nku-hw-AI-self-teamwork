@@ -1,6 +1,7 @@
 /** C 独占的路由表。刷新任一 /tools/* 路径都应落到对应页面或明确占位。 */
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./Layout";
+import CloudbaseLoginPage from "../features/auth/CloudbaseLoginPage";
 import {
   AffairsPage,
   DegreePage,
@@ -15,7 +16,8 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<Navigate to="/tools/affairs" replace />} />
+        <Route path="/tools/login" element={<CloudbaseLoginPage />} />
+        <Route path="/" element={<Navigate to={import.meta.env.VITE_PUBLIC_CONTENT_ONLY === "true" ? "/tools/map" : "/tools/timetable"} replace />} />
         <Route path="/tools/import" element={<ImportPage />} />
         <Route path="/tools/timetable" element={<TimetablePage />} />
         <Route path="/tools/tasks" element={<TasksPage />} />
