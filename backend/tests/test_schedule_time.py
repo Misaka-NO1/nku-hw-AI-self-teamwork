@@ -41,7 +41,7 @@ def courses(timetable: dict) -> list[dict]:
     return deepcopy(timetable["courses"])
 
 
-WINDOW = {"start": "2026-09-21T08:00:00+08:00", "end": "2026-09-21T12:00:00+08:00"}
+WINDOW = {"start": "2026-09-21T08:00:00+08:00", "end": "2026-09-21T12:45:00+08:00"}
 BUFFERS = {"before_minutes": 0, "after_minutes": 0}
 
 
@@ -188,7 +188,7 @@ def test_time02_half_open_interval_no_false_conflict(term: dict, courses: list[d
         "window": WINDOW,
         "event": {
             "start": "2026-09-21T09:40:00+08:00",
-            "end": "2026-09-21T10:10:00+08:00",
+            "end": "2026-09-21T10:00:00+08:00",
             "date": None,
             "precision": "datetime",
         },
@@ -258,16 +258,16 @@ def test_find_free_slots_matches_expected(term: dict, courses: list[dict], expec
     assert [(s["start"], s["end"]) for s in result["slots"]] == [
         (slot["start"], slot["end"]) for slot in expected["time"]["free_slots_min_30"]
     ]
-    assert result["slots"][0]["duration_minutes"] == 30
+    assert result["slots"][0]["duration_minutes"] == 65
 
 
 def test_find_free_slots_buffers_shrink_slots(term: dict, courses: list[dict]) -> None:
     events, _ = expand_occurrences(term, courses, WINDOW)
     buffers = {"before_minutes": 10, "after_minutes": 10}
     result = find_free_slots(events, WINDOW, 10, buffers)
-    # 08:00-09:40 与 10:10-11:50 各扩 10 分钟后，中间只剩 09:50-10:00
+    # 08:00-09:40 与 10:00-11:40 各扩 10 分钟后课间空档被填满；午后空档从 11:50 起到窗口结束
     assert [(s["start"], s["end"]) for s in result["slots"]] == [
-        ("2026-09-21T09:50:00+08:00", "2026-09-21T10:00:00+08:00")
+        ("2026-09-21T11:50:00+08:00", "2026-09-21T12:45:00+08:00")
     ]
 
 
@@ -361,7 +361,7 @@ def test_time08_override_replace_not_stacked(term: dict, courses: list[dict]) ->
     )
     # 当日只有替换后的 CS103，原周一模板（CS101/CS102）不再叠加
     assert [e["course_id"] for e in events] == ["demo-CS103"]
-    assert events[0]["start"] == "2026-09-21T14:00:00+08:00"
+    assert events[0]["start"] == "2026-09-21T12:00:00+08:00"
 
 
 def test_time08_override_cancel_removes_day(term: dict, courses: list[dict]) -> None:
