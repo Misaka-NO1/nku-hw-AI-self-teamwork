@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { actualDateFor, getEffectiveTemplate } from "@campus/import-core";
 import type { Course, Meeting, TermCalendar, TimetableImport } from "@campus/import-core";
@@ -18,6 +18,18 @@ const COURSE_COLORS = ["#dbeafe", "#dcfce7", "#fef9c3", "#fee2e2", "#ede9fe", "#
 
 export interface TimetablePageProps {
   timetable?: TimetableImport | null;
+  /** 可选：当前日期，默认取系统时间；用于打开页面时自动定位当前教学周 */
+  today?: Date;
+}
+
+/** 按 week1_monday 推算 today 所处的教学周，越界时收敛到 [1, teaching_weeks]。 */
+export function currentTeachingWeek(term: TermCalendar | null, today: Date): number {
+  if (!term) return 1;
+  const monday = new Date(`${term.week1_monday}T00:00:00`);
+  if (Number.isNaN(monday.getTime())) return 1;
+  const diffDays = Math.floor((today.getTime() - monday.getTime()) / 86_400_000);
+  const week = Math.floor(diffDays / 7) + 1;
+  return Math.min(Math.max(week, 1), term.teaching_weeks);
 }
 
 interface CellEntry {
@@ -32,9 +44,14 @@ interface DayView {
   overrideNote: string | null;
 }
 
-export default function TimetablePage({ timetable = null }: TimetablePageProps) {
+export default function TimetablePage({ timetable = null, today }: TimetablePageProps) {
   const term: TermCalendar | null = timetable?.term ?? null;
-  const [week, setWeek] = useState(1);
+  const [week, setWeek] = useState(() => currentTeachingWeek(term, today ?? new Date()));
+
+  // 课表异步就绪或换学期时，重新按现实日期定位当前教学周
+  useEffect(() => {
+    setWeek(currentTeachingWeek(term, today ?? new Date()));
+  }, [term?.term_id]);
 
   // 每个星期的实际模板（应用调休/停课后）
   const dayViews = useMemo<DayView[]>(() => {
@@ -114,6 +131,10 @@ export default function TimetablePage({ timetable = null }: TimetablePageProps) 
           ))}
         </select>
       </label>
+      <span>
+        {" "}
+        （{actualDateFor(term, week, 1)} ~ {actualDateFor(term, week, 7)}）
+      </span>
 
       <table>
         <thead>
