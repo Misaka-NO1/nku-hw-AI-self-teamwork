@@ -1,0 +1,8 @@
+【只读通知阅读的补充规则】
+一个完整活动区间才可使用event.precision=datetime，且start和end都必须非null、end晚于start。
+只有集合/签到/出发等开始时刻而没有结束时刻时，不猜持续时间，不借用另一活动的结束时间。
+这种事项使用已知日期event.date、precision=date_only，start/end均为null，标记event_time、event_end待确认；完整原句保留开始时刻供用户查看确认。没有完整日期则保持unknown。
+同一通知已经明确年份和同一活动日期时，可关联无年份的集合日期，但标记source_review；不能换成今天。
+原文用“约”给出的活动耗时保留为估计，若推导结束时间，须标记approximate_end，向用户说明“约”而非确定结束。
+“吃晚餐或者携带食品”是二选一准备建议，不把携带食品写成强制要求；正文中的集合地点、活动地点和准备建议通过unclassified或完整source_spans逐字保留。
+此流程只读、无课表查询或保存，不输出任何数据库请求，不把真实通知标为fictional_data_confirmed。
