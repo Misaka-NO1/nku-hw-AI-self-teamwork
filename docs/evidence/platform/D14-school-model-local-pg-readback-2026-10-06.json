@@ -1,0 +1,1356 @@
+{
+  "mode": "local_http_embedded_postgresql_mocked_fictional_identity",
+  "application_instance_recreated_with_existing_database": true,
+  "database_process_restart_tested": false,
+  "school_workflow_url": "https://coze.nankai.edu.cn/product/llm/workspace/datqfnm9t58vf5r4v1eg/workflow/db29gkl4shhbpg8vbkj0/update",
+  "school_model_output_unchanged": true,
+  "deadline_analysis": {
+    "workflow_version": "notice-workflow-v1",
+    "stage": "selection_required",
+    "batch": {
+      "batch_version": "notice-text-pilot-v1",
+      "reader": "reviewed-model-proposal-v1",
+      "items": [
+        {
+          "kind": "deadline_feasibility",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-4d71aec16fe5a75f521e8bd117040459",
+            "title": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": null,
+              "end": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": null,
+              "precision": "datetime"
+            },
+            "estimated_minutes": 20,
+            "earliest_start": null,
+            "materials": [
+              "实验PDF"
+            ],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "due",
+                "quote": "2026年9月21日10:10前",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "预计20分钟",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "materials",
+                "quote": "材料：实验PDF",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "due_time",
+              "estimated_minutes",
+              "earliest_start"
+            ]
+          }
+        },
+        {
+          "kind": "event_conflict",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-1ae8710ac39c33a09a505bbdba9d1581",
+            "title": "2026年9月21日11:00至11:30参加虚构讨论会。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": "2026-09-21T11:00:00+08:00",
+              "end": "2026-09-21T11:30:00+08:00",
+              "date": null,
+              "precision": "datetime"
+            },
+            "due": {
+              "at": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "estimated_minutes": null,
+            "earliest_start": null,
+            "materials": [],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "2026年9月21日11:00至11:30参加虚构讨论会。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "event",
+                "quote": "2026年9月21日11:00至11:30",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "event_time"
+            ]
+          }
+        },
+        {
+          "kind": "deadline_feasibility",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-b653ce2dcc29137507d3b7524ceff5ea",
+            "title": "本周五前提交虚构调研表。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": null,
+              "end": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "due": {
+              "at": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "estimated_minutes": null,
+            "earliest_start": null,
+            "materials": [],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "本周五前提交虚构调研表。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "due",
+                "quote": "本周五前",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "due_time",
+              "reference_date",
+              "estimated_minutes",
+              "earliest_start"
+            ]
+          }
+        }
+      ],
+      "unclassified": [
+        {
+          "quote": "本通知仅用于测试。",
+          "source_ref": "self-authored-D14"
+        }
+      ],
+      "coverage": {
+        "input_kind": "text",
+        "characters_total": 96,
+        "characters_read": 96,
+        "unread_ranges": []
+      },
+      "limitations": [
+        "模型输出仅作为提炼建议；须逐字段明确确认日期、耗时和最早开始",
+        "未覆盖原文、取消或混合事项不能只勾选复核解除"
+      ]
+    },
+    "analysis": {
+      "item": {
+        "kind": "deadline_feasibility",
+        "notice": {
+          "schema_version": "1.0.0",
+          "notice_id": "model-4d71aec16fe5a75f521e8bd117040459",
+          "title": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+          "published_at": null,
+          "extracted_at": "2026-10-06T14:58:19+08:00",
+          "timezone": "Asia/Shanghai",
+          "event": {
+            "start": null,
+            "end": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "due": {
+            "at": "2026-09-21T10:10:00+08:00",
+            "date": "2026-09-21",
+            "precision": "datetime"
+          },
+          "estimated_minutes": 20,
+          "earliest_start": "2026-09-21T09:40:00+08:00",
+          "materials": [
+            "实验PDF"
+          ],
+          "source_spans": [
+            {
+              "field": "title",
+              "quote": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "due",
+              "quote": "2026年9月21日10:10前",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "estimated_minutes",
+              "quote": "预计20分钟",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "materials",
+              "quote": "材料：实验PDF",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "estimated_minutes",
+              "quote": "20",
+              "source_ref": "user-confirmation"
+            },
+            {
+              "field": "earliest_start",
+              "quote": "2026-09-21T09:40:00+08:00",
+              "source_ref": "user-confirmation"
+            },
+            {
+              "field": "due",
+              "quote": "2026-09-21T10:10:00+08:00",
+              "source_ref": "user-confirmation"
+            }
+          ],
+          "needs_confirmation": []
+        }
+      },
+      "time_request": {
+        "workspace_ref": "pilot_workspace_S8zuT8j6mMnd2J4Nl561hEbn",
+        "kind": "deadline_feasibility",
+        "window": {
+          "start": "2026-09-21T08:00:00+08:00",
+          "end": "2026-09-21T12:00:00+08:00"
+        },
+        "event": {
+          "start": null,
+          "end": null,
+          "date": null,
+          "precision": "unknown"
+        },
+        "due": {
+          "at": "2026-09-21T10:10:00+08:00",
+          "date": "2026-09-21",
+          "precision": "datetime"
+        },
+        "estimated_minutes": 20,
+        "earliest_start": "2026-09-21T09:40:00+08:00",
+        "allow_split": false,
+        "buffers": {
+          "before_minutes": 0,
+          "after_minutes": 0
+        }
+      },
+      "time_result": {
+        "kind": "deadline_feasibility",
+        "candidate_slots": [
+          {
+            "start": "2026-09-21T09:40:00+08:00",
+            "end": "2026-09-21T10:00:00+08:00",
+            "duration_minutes": 20
+          }
+        ],
+        "coverage": {
+          "scope": "term",
+          "week_numbers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "completeness": "unknown",
+          "query_window": {
+            "start": "2026-09-21T08:00:00+08:00",
+            "end": "2026-09-21T12:00:00+08:00"
+          },
+          "timetable_coverage": {
+            "scope": "term",
+            "completeness": "complete",
+            "week_numbers": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "within_term": true
+        },
+        "needs_confirmation": []
+      },
+      "recommendations": [
+        {
+          "slot": {
+            "start": "2026-09-21T09:40:00+08:00",
+            "end": "2026-09-21T10:00:00+08:00",
+            "duration_minutes": 20
+          },
+          "candidate_index": 0,
+          "reason": "在已导入课表与已确认活动范围内，优先选择最早可完成的连续区间"
+        }
+      ],
+      "conflict_labels": {
+        "demo-CS101-m1@2026-09-21": "程序设计基础（虚构示例）",
+        "demo-CS102-m1@2026-09-21": "离散结构（虚构示例）"
+      },
+      "warnings": [
+        {
+          "code": "calendar_not_official",
+          "message": "校历状态为 demo，展开结果基于该状态"
+        }
+      ],
+      "coverage_message": "结果仅覆盖已导入虚构课表与已确认活动；课表外安排未知",
+      "plan": {
+        "plan_version": "notice-text-pilot-v1",
+        "source_text": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\n2026年9月21日11:00至11:30参加虚构讨论会。\n本周五前提交虚构调研表。\n本通知仅用于测试。",
+        "source_ref": "self-authored-D14",
+        "reference_at": null,
+        "window": {
+          "start": "2026-09-21T08:00:00+08:00",
+          "end": "2026-09-21T12:00:00+08:00"
+        },
+        "available_windows": [],
+        "user_confirmations": {
+          "source_review": true,
+          "estimated_minutes": 20,
+          "earliest_start": "2026-09-21T09:40:00+08:00",
+          "due_at": "2026-09-21T10:10:00+08:00"
+        },
+        "model_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-09-21T10:10:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":20,\"earliest_start\":null,\"materials\":[\"实验PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"2026年9月21日10:10前\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计20分钟\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"materials\",\"quote\":\"材料：实验PDF\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\",\"estimated_minutes\"]}},{\"kind\":\"event_conflict\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-2\",\"title\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":\"2026-09-21T11:00:00+08:00\",\"end\":\"2026-09-21T11:30:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"event\",\"quote\":\"2026年9月21日11:00至11:30\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\"]}},{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-3\",\"title\":\"本周五前提交虚构调研表。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"本周五前提交虚构调研表。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"本周五前\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+        "fictional_data_confirmed": true,
+        "kind": "deadline_feasibility",
+        "notice": {
+          "schema_version": "1.0.0",
+          "notice_id": "model-4d71aec16fe5a75f521e8bd117040459",
+          "title": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+          "published_at": null,
+          "extracted_at": "2026-10-06T14:58:19+08:00",
+          "timezone": "Asia/Shanghai",
+          "event": {
+            "start": null,
+            "end": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "due": {
+            "at": "2026-09-21T10:10:00+08:00",
+            "date": "2026-09-21",
+            "precision": "datetime"
+          },
+          "estimated_minutes": 20,
+          "earliest_start": "2026-09-21T09:40:00+08:00",
+          "materials": [
+            "实验PDF"
+          ],
+          "source_spans": [
+            {
+              "field": "title",
+              "quote": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "due",
+              "quote": "2026年9月21日10:10前",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "estimated_minutes",
+              "quote": "预计20分钟",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "materials",
+              "quote": "材料：实验PDF",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "estimated_minutes",
+              "quote": "20",
+              "source_ref": "user-confirmation"
+            },
+            {
+              "field": "earliest_start",
+              "quote": "2026-09-21T09:40:00+08:00",
+              "source_ref": "user-confirmation"
+            },
+            {
+              "field": "due",
+              "quote": "2026-09-21T10:10:00+08:00",
+              "source_ref": "user-confirmation"
+            }
+          ],
+          "needs_confirmation": []
+        },
+        "selected_slot": {
+          "start": "2026-09-21T09:40:00+08:00",
+          "end": "2026-09-21T10:00:00+08:00",
+          "duration_minutes": 20
+        }
+      }
+    },
+    "saved": false,
+    "steps": [
+      {
+        "step": "extract",
+        "status": "review_required",
+        "item_count": 3
+      },
+      {
+        "step": "time_analysis",
+        "status": "calculated",
+        "needs_confirmation": [],
+        "candidate_count": 1,
+        "conflict_count": 0
+      },
+      {
+        "step": "persist",
+        "status": "requires_explicit_confirmation"
+      }
+    ],
+    "save_next": {
+      "draft_path": "/api/v1/notice-text/drafts",
+      "confirmation_path": "/api/v1/notice-text/confirmations",
+      "commit_path": "/api/v1/notice-text/commit"
+    }
+  },
+  "event_analysis": {
+    "workflow_version": "notice-workflow-v1",
+    "stage": "confirmation_required",
+    "batch": {
+      "batch_version": "notice-text-pilot-v1",
+      "reader": "reviewed-model-proposal-v1",
+      "items": [
+        {
+          "kind": "deadline_feasibility",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-4d71aec16fe5a75f521e8bd117040459",
+            "title": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": null,
+              "end": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": null,
+              "precision": "datetime"
+            },
+            "estimated_minutes": 20,
+            "earliest_start": null,
+            "materials": [
+              "实验PDF"
+            ],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "due",
+                "quote": "2026年9月21日10:10前",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "预计20分钟",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "materials",
+                "quote": "材料：实验PDF",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "due_time",
+              "estimated_minutes",
+              "earliest_start"
+            ]
+          }
+        },
+        {
+          "kind": "event_conflict",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-1ae8710ac39c33a09a505bbdba9d1581",
+            "title": "2026年9月21日11:00至11:30参加虚构讨论会。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": "2026-09-21T11:00:00+08:00",
+              "end": "2026-09-21T11:30:00+08:00",
+              "date": null,
+              "precision": "datetime"
+            },
+            "due": {
+              "at": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "estimated_minutes": null,
+            "earliest_start": null,
+            "materials": [],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "2026年9月21日11:00至11:30参加虚构讨论会。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "event",
+                "quote": "2026年9月21日11:00至11:30",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "event_time"
+            ]
+          }
+        },
+        {
+          "kind": "deadline_feasibility",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-b653ce2dcc29137507d3b7524ceff5ea",
+            "title": "本周五前提交虚构调研表。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": null,
+              "end": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "due": {
+              "at": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "estimated_minutes": null,
+            "earliest_start": null,
+            "materials": [],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "本周五前提交虚构调研表。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "due",
+                "quote": "本周五前",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "due_time",
+              "reference_date",
+              "estimated_minutes",
+              "earliest_start"
+            ]
+          }
+        }
+      ],
+      "unclassified": [
+        {
+          "quote": "本通知仅用于测试。",
+          "source_ref": "self-authored-D14"
+        }
+      ],
+      "coverage": {
+        "input_kind": "text",
+        "characters_total": 96,
+        "characters_read": 96,
+        "unread_ranges": []
+      },
+      "limitations": [
+        "模型输出仅作为提炼建议；须逐字段明确确认日期、耗时和最早开始",
+        "未覆盖原文、取消或混合事项不能只勾选复核解除"
+      ]
+    },
+    "analysis": {
+      "item": {
+        "kind": "event_conflict",
+        "notice": {
+          "schema_version": "1.0.0",
+          "notice_id": "model-1ae8710ac39c33a09a505bbdba9d1581",
+          "title": "2026年9月21日11:00至11:30参加虚构讨论会。",
+          "published_at": null,
+          "extracted_at": "2026-10-06T14:58:19+08:00",
+          "timezone": "Asia/Shanghai",
+          "event": {
+            "start": "2026-09-21T11:00:00+08:00",
+            "end": "2026-09-21T11:30:00+08:00",
+            "date": "2026-09-21",
+            "precision": "datetime"
+          },
+          "due": {
+            "at": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "estimated_minutes": null,
+          "earliest_start": null,
+          "materials": [],
+          "source_spans": [
+            {
+              "field": "title",
+              "quote": "2026年9月21日11:00至11:30参加虚构讨论会。",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "event",
+              "quote": "2026年9月21日11:00至11:30",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "event",
+              "quote": "2026-09-21T11:00:00+08:00 — 2026-09-21T11:30:00+08:00",
+              "source_ref": "user-confirmation"
+            }
+          ],
+          "needs_confirmation": []
+        }
+      },
+      "time_request": {
+        "workspace_ref": "pilot_workspace_S8zuT8j6mMnd2J4Nl561hEbn",
+        "kind": "event_conflict",
+        "window": {
+          "start": "2026-09-21T08:00:00+08:00",
+          "end": "2026-09-21T12:00:00+08:00"
+        },
+        "event": {
+          "start": "2026-09-21T11:00:00+08:00",
+          "end": "2026-09-21T11:30:00+08:00",
+          "date": "2026-09-21",
+          "precision": "datetime"
+        },
+        "due": {
+          "at": null,
+          "date": null,
+          "precision": "unknown"
+        },
+        "estimated_minutes": null,
+        "earliest_start": null,
+        "allow_split": false,
+        "buffers": {
+          "before_minutes": 0,
+          "after_minutes": 0
+        }
+      },
+      "time_result": {
+        "kind": "event_conflict",
+        "conflicts": [
+          {
+            "source_event_id": "demo-CS102-m1@2026-09-21",
+            "intersection_start": "2026-09-21T11:00:00+08:00",
+            "intersection_end": "2026-09-21T11:30:00+08:00"
+          }
+        ],
+        "coverage": {
+          "scope": "term",
+          "week_numbers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "completeness": "unknown",
+          "query_window": {
+            "start": "2026-09-21T08:00:00+08:00",
+            "end": "2026-09-21T12:00:00+08:00"
+          },
+          "timetable_coverage": {
+            "scope": "term",
+            "completeness": "complete",
+            "week_numbers": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "within_term": true
+        },
+        "needs_confirmation": []
+      },
+      "recommendations": [],
+      "conflict_labels": {
+        "task:model-4d71aec16fe5a75f521e8bd117040459": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+        "demo-CS101-m1@2026-09-21": "程序设计基础（虚构示例）",
+        "demo-CS102-m1@2026-09-21": "离散结构（虚构示例）"
+      },
+      "warnings": [
+        {
+          "code": "calendar_not_official",
+          "message": "校历状态为 demo，展开结果基于该状态"
+        }
+      ],
+      "coverage_message": "结果仅覆盖已导入虚构课表与已确认活动；课表外安排未知",
+      "plan": {
+        "plan_version": "notice-text-pilot-v1",
+        "source_text": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\n2026年9月21日11:00至11:30参加虚构讨论会。\n本周五前提交虚构调研表。\n本通知仅用于测试。",
+        "source_ref": "self-authored-D14",
+        "reference_at": null,
+        "window": {
+          "start": "2026-09-21T08:00:00+08:00",
+          "end": "2026-09-21T12:00:00+08:00"
+        },
+        "available_windows": [],
+        "user_confirmations": {
+          "source_review": true,
+          "event_start": "2026-09-21T11:00:00+08:00",
+          "event_end": "2026-09-21T11:30:00+08:00",
+          "accept_conflicts": true
+        },
+        "model_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-09-21T10:10:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":20,\"earliest_start\":null,\"materials\":[\"实验PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"2026年9月21日10:10前\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计20分钟\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"materials\",\"quote\":\"材料：实验PDF\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\",\"estimated_minutes\"]}},{\"kind\":\"event_conflict\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-2\",\"title\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":\"2026-09-21T11:00:00+08:00\",\"end\":\"2026-09-21T11:30:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"event\",\"quote\":\"2026年9月21日11:00至11:30\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\"]}},{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-3\",\"title\":\"本周五前提交虚构调研表。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"本周五前提交虚构调研表。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"本周五前\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+        "fictional_data_confirmed": true,
+        "kind": "event_conflict",
+        "notice": {
+          "schema_version": "1.0.0",
+          "notice_id": "model-1ae8710ac39c33a09a505bbdba9d1581",
+          "title": "2026年9月21日11:00至11:30参加虚构讨论会。",
+          "published_at": null,
+          "extracted_at": "2026-10-06T14:58:19+08:00",
+          "timezone": "Asia/Shanghai",
+          "event": {
+            "start": "2026-09-21T11:00:00+08:00",
+            "end": "2026-09-21T11:30:00+08:00",
+            "date": "2026-09-21",
+            "precision": "datetime"
+          },
+          "due": {
+            "at": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "estimated_minutes": null,
+          "earliest_start": null,
+          "materials": [],
+          "source_spans": [
+            {
+              "field": "title",
+              "quote": "2026年9月21日11:00至11:30参加虚构讨论会。",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "event",
+              "quote": "2026年9月21日11:00至11:30",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "event",
+              "quote": "2026-09-21T11:00:00+08:00 — 2026-09-21T11:30:00+08:00",
+              "source_ref": "user-confirmation"
+            }
+          ],
+          "needs_confirmation": []
+        },
+        "selected_slot": null
+      }
+    },
+    "saved": false,
+    "steps": [
+      {
+        "step": "extract",
+        "status": "review_required",
+        "item_count": 3
+      },
+      {
+        "step": "time_analysis",
+        "status": "calculated",
+        "needs_confirmation": [],
+        "candidate_count": 0,
+        "conflict_count": 1
+      },
+      {
+        "step": "persist",
+        "status": "requires_explicit_confirmation"
+      }
+    ],
+    "save_next": {
+      "draft_path": "/api/v1/notice-text/drafts",
+      "confirmation_path": "/api/v1/notice-text/confirmations",
+      "commit_path": "/api/v1/notice-text/commit"
+    }
+  },
+  "ambiguous_analysis": {
+    "workflow_version": "notice-workflow-v1",
+    "stage": "clarification_required",
+    "batch": {
+      "batch_version": "notice-text-pilot-v1",
+      "reader": "reviewed-model-proposal-v1",
+      "items": [
+        {
+          "kind": "deadline_feasibility",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-4d71aec16fe5a75f521e8bd117040459",
+            "title": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": null,
+              "end": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": null,
+              "precision": "datetime"
+            },
+            "estimated_minutes": 20,
+            "earliest_start": null,
+            "materials": [
+              "实验PDF"
+            ],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "due",
+                "quote": "2026年9月21日10:10前",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "预计20分钟",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "materials",
+                "quote": "材料：实验PDF",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "due_time",
+              "estimated_minutes",
+              "earliest_start"
+            ]
+          }
+        },
+        {
+          "kind": "event_conflict",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-1ae8710ac39c33a09a505bbdba9d1581",
+            "title": "2026年9月21日11:00至11:30参加虚构讨论会。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": "2026-09-21T11:00:00+08:00",
+              "end": "2026-09-21T11:30:00+08:00",
+              "date": null,
+              "precision": "datetime"
+            },
+            "due": {
+              "at": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "estimated_minutes": null,
+            "earliest_start": null,
+            "materials": [],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "2026年9月21日11:00至11:30参加虚构讨论会。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "event",
+                "quote": "2026年9月21日11:00至11:30",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "event_time"
+            ]
+          }
+        },
+        {
+          "kind": "deadline_feasibility",
+          "notice": {
+            "schema_version": "1.0.0",
+            "notice_id": "model-b653ce2dcc29137507d3b7524ceff5ea",
+            "title": "本周五前提交虚构调研表。",
+            "published_at": null,
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "timezone": "Asia/Shanghai",
+            "event": {
+              "start": null,
+              "end": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "due": {
+              "at": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "estimated_minutes": null,
+            "earliest_start": null,
+            "materials": [],
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "本周五前提交虚构调研表。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "due",
+                "quote": "本周五前",
+                "source_ref": "self-authored-D14"
+              }
+            ],
+            "needs_confirmation": [
+              "source_review",
+              "due_time",
+              "reference_date",
+              "estimated_minutes",
+              "earliest_start"
+            ]
+          }
+        }
+      ],
+      "unclassified": [
+        {
+          "quote": "本通知仅用于测试。",
+          "source_ref": "self-authored-D14"
+        }
+      ],
+      "coverage": {
+        "input_kind": "text",
+        "characters_total": 96,
+        "characters_read": 96,
+        "unread_ranges": []
+      },
+      "limitations": [
+        "模型输出仅作为提炼建议；须逐字段明确确认日期、耗时和最早开始",
+        "未覆盖原文、取消或混合事项不能只勾选复核解除"
+      ]
+    },
+    "analysis": {
+      "item": {
+        "kind": "deadline_feasibility",
+        "notice": {
+          "schema_version": "1.0.0",
+          "notice_id": "model-b653ce2dcc29137507d3b7524ceff5ea",
+          "title": "本周五前提交虚构调研表。",
+          "published_at": null,
+          "extracted_at": "2026-10-06T14:58:19+08:00",
+          "timezone": "Asia/Shanghai",
+          "event": {
+            "start": null,
+            "end": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "due": {
+            "at": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "estimated_minutes": null,
+          "earliest_start": null,
+          "materials": [],
+          "source_spans": [
+            {
+              "field": "title",
+              "quote": "本周五前提交虚构调研表。",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "due",
+              "quote": "本周五前",
+              "source_ref": "self-authored-D14"
+            }
+          ],
+          "needs_confirmation": [
+            "due_time",
+            "reference_date",
+            "estimated_minutes",
+            "earliest_start"
+          ]
+        }
+      },
+      "time_request": {
+        "workspace_ref": "pilot_workspace_S8zuT8j6mMnd2J4Nl561hEbn",
+        "kind": "deadline_feasibility",
+        "window": {
+          "start": "2026-09-21T08:00:00+08:00",
+          "end": "2026-09-21T12:00:00+08:00"
+        },
+        "event": {
+          "start": null,
+          "end": null,
+          "date": null,
+          "precision": "unknown"
+        },
+        "due": {
+          "at": null,
+          "date": null,
+          "precision": "unknown"
+        },
+        "estimated_minutes": null,
+        "earliest_start": null,
+        "allow_split": false,
+        "buffers": {
+          "before_minutes": 0,
+          "after_minutes": 0
+        }
+      },
+      "time_result": {
+        "kind": "deadline_feasibility",
+        "candidate_slots": [],
+        "coverage": {
+          "scope": "term",
+          "week_numbers": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "completeness": "unknown",
+          "query_window": {
+            "start": "2026-09-21T08:00:00+08:00",
+            "end": "2026-09-21T12:00:00+08:00"
+          },
+          "timetable_coverage": {
+            "scope": "term",
+            "completeness": "complete",
+            "week_numbers": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "within_term": true
+        },
+        "needs_confirmation": [
+          "due_time",
+          "reference_date",
+          "estimated_minutes",
+          "earliest_start"
+        ]
+      },
+      "recommendations": [],
+      "conflict_labels": {
+        "task:model-4d71aec16fe5a75f521e8bd117040459": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+        "task:model-1ae8710ac39c33a09a505bbdba9d1581": "2026年9月21日11:00至11:30参加虚构讨论会。",
+        "demo-CS101-m1@2026-09-21": "程序设计基础（虚构示例）",
+        "demo-CS102-m1@2026-09-21": "离散结构（虚构示例）"
+      },
+      "warnings": [
+        {
+          "code": "calendar_not_official",
+          "message": "校历状态为 demo，展开结果基于该状态"
+        }
+      ],
+      "coverage_message": "结果仅覆盖已导入虚构课表与已确认活动；课表外安排未知",
+      "plan": {
+        "plan_version": "notice-text-pilot-v1",
+        "source_text": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\n2026年9月21日11:00至11:30参加虚构讨论会。\n本周五前提交虚构调研表。\n本通知仅用于测试。",
+        "source_ref": "self-authored-D14",
+        "reference_at": null,
+        "window": {
+          "start": "2026-09-21T08:00:00+08:00",
+          "end": "2026-09-21T12:00:00+08:00"
+        },
+        "available_windows": [],
+        "user_confirmations": {
+          "source_review": true
+        },
+        "model_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-09-21T10:10:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":20,\"earliest_start\":null,\"materials\":[\"实验PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"2026年9月21日10:10前\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计20分钟\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"materials\",\"quote\":\"材料：实验PDF\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\",\"estimated_minutes\"]}},{\"kind\":\"event_conflict\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-2\",\"title\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":\"2026-09-21T11:00:00+08:00\",\"end\":\"2026-09-21T11:30:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"event\",\"quote\":\"2026年9月21日11:00至11:30\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\"]}},{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-3\",\"title\":\"本周五前提交虚构调研表。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"本周五前提交虚构调研表。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"本周五前\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+        "fictional_data_confirmed": true,
+        "kind": "deadline_feasibility",
+        "notice": {
+          "schema_version": "1.0.0",
+          "notice_id": "model-b653ce2dcc29137507d3b7524ceff5ea",
+          "title": "本周五前提交虚构调研表。",
+          "published_at": null,
+          "extracted_at": "2026-10-06T14:58:19+08:00",
+          "timezone": "Asia/Shanghai",
+          "event": {
+            "start": null,
+            "end": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "due": {
+            "at": null,
+            "date": null,
+            "precision": "unknown"
+          },
+          "estimated_minutes": null,
+          "earliest_start": null,
+          "materials": [],
+          "source_spans": [
+            {
+              "field": "title",
+              "quote": "本周五前提交虚构调研表。",
+              "source_ref": "self-authored-D14"
+            },
+            {
+              "field": "due",
+              "quote": "本周五前",
+              "source_ref": "self-authored-D14"
+            }
+          ],
+          "needs_confirmation": [
+            "due_time",
+            "reference_date",
+            "estimated_minutes",
+            "earliest_start"
+          ]
+        },
+        "selected_slot": null
+      }
+    },
+    "saved": false,
+    "steps": [
+      {
+        "step": "extract",
+        "status": "review_required",
+        "item_count": 3
+      },
+      {
+        "step": "time_analysis",
+        "status": "clarification_required",
+        "needs_confirmation": [
+          "due_time",
+          "reference_date",
+          "estimated_minutes",
+          "earliest_start"
+        ],
+        "candidate_count": 0,
+        "conflict_count": 0
+      },
+      {
+        "step": "persist",
+        "status": "requires_explicit_confirmation"
+      }
+    ],
+    "save_next": {
+      "draft_path": "/api/v1/notice-text/drafts",
+      "confirmation_path": "/api/v1/notice-text/confirmations",
+      "commit_path": "/api/v1/notice-text/commit"
+    }
+  },
+  "ambiguous_write_http_status": 409,
+  "deadline_commit": {
+    "task_id": "notice_task_h-a7v-X0TuNhXzZL6oGG0jP6",
+    "revision": 1
+  },
+  "event_commit": {
+    "task_id": "notice_task_zf1-tcmvylj9lpYRmYc4qD0w",
+    "revision": 1
+  },
+  "task_readback": {
+    "items": [
+      {
+        "notice": {
+          "kind": "deadline_feasibility",
+          "notice": {
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": "2026-09-21",
+              "precision": "datetime"
+            },
+            "event": {
+              "end": null,
+              "date": null,
+              "start": null,
+              "precision": "unknown"
+            },
+            "title": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+            "timezone": "Asia/Shanghai",
+            "materials": [
+              "实验PDF"
+            ],
+            "notice_id": "model-4d71aec16fe5a75f521e8bd117040459",
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "published_at": null,
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "due",
+                "quote": "2026年9月21日10:10前",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "预计20分钟",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "materials",
+                "quote": "材料：实验PDF",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "20",
+                "source_ref": "user-confirmation"
+              },
+              {
+                "field": "earliest_start",
+                "quote": "2026-09-21T09:40:00+08:00",
+                "source_ref": "user-confirmation"
+              },
+              {
+                "field": "due",
+                "quote": "2026-09-21T10:10:00+08:00",
+                "source_ref": "user-confirmation"
+              }
+            ],
+            "earliest_start": "2026-09-21T09:40:00+08:00",
+            "schema_version": "1.0.0",
+            "estimated_minutes": 20,
+            "needs_confirmation": []
+          },
+          "window": {
+            "end": "2026-09-21T12:00:00+08:00",
+            "start": "2026-09-21T08:00:00+08:00"
+          },
+          "source_ref": "self-authored-D14",
+          "source_text": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\n2026年9月21日11:00至11:30参加虚构讨论会。\n本周五前提交虚构调研表。\n本通知仅用于测试。",
+          "model_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-09-21T10:10:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":20,\"earliest_start\":null,\"materials\":[\"实验PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"2026年9月21日10:10前\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计20分钟\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"materials\",\"quote\":\"材料：实验PDF\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\",\"estimated_minutes\"]}},{\"kind\":\"event_conflict\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-2\",\"title\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":\"2026-09-21T11:00:00+08:00\",\"end\":\"2026-09-21T11:30:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"event\",\"quote\":\"2026年9月21日11:00至11:30\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\"]}},{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-3\",\"title\":\"本周五前提交虚构调研表。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"本周五前提交虚构调研表。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"本周五前\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+          "plan_version": "notice-text-pilot-v1",
+          "reference_at": null,
+          "selected_slot": {
+            "end": "2026-09-21T10:00:00+08:00",
+            "start": "2026-09-21T09:40:00+08:00",
+            "duration_minutes": 20
+          },
+          "available_windows": [],
+          "user_confirmations": {
+            "due_at": "2026-09-21T10:10:00+08:00",
+            "source_review": true,
+            "earliest_start": "2026-09-21T09:40:00+08:00",
+            "estimated_minutes": 20
+          },
+          "fictional_data_confirmed": true
+        },
+        "task_id": "notice_task_h-a7v-X0TuNhXzZL6oGG0jP6",
+        "revision": 1,
+        "workspace_ref": "pilot_workspace_S8zuT8j6mMnd2J4Nl561hEbn",
+        "confirmed_at": "2026-10-06T14:58:19+08:00"
+      },
+      {
+        "notice": {
+          "kind": "event_conflict",
+          "notice": {
+            "due": {
+              "at": null,
+              "date": null,
+              "precision": "unknown"
+            },
+            "event": {
+              "end": "2026-09-21T11:30:00+08:00",
+              "date": "2026-09-21",
+              "start": "2026-09-21T11:00:00+08:00",
+              "precision": "datetime"
+            },
+            "title": "2026年9月21日11:00至11:30参加虚构讨论会。",
+            "timezone": "Asia/Shanghai",
+            "materials": [],
+            "notice_id": "model-1ae8710ac39c33a09a505bbdba9d1581",
+            "extracted_at": "2026-10-06T14:58:19+08:00",
+            "published_at": null,
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "2026年9月21日11:00至11:30参加虚构讨论会。",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "event",
+                "quote": "2026年9月21日11:00至11:30",
+                "source_ref": "self-authored-D14"
+              },
+              {
+                "field": "event",
+                "quote": "2026-09-21T11:00:00+08:00 — 2026-09-21T11:30:00+08:00",
+                "source_ref": "user-confirmation"
+              }
+            ],
+            "earliest_start": null,
+            "schema_version": "1.0.0",
+            "estimated_minutes": null,
+            "needs_confirmation": []
+          },
+          "window": {
+            "end": "2026-09-21T12:00:00+08:00",
+            "start": "2026-09-21T08:00:00+08:00"
+          },
+          "source_ref": "self-authored-D14",
+          "source_text": "请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\n2026年9月21日11:00至11:30参加虚构讨论会。\n本周五前提交虚构调研表。\n本通知仅用于测试。",
+          "model_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-09-21T10:10:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":20,\"earliest_start\":null,\"materials\":[\"实验PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请在2026年9月21日10:10前提交虚构实验报告，预计20分钟，材料：实验PDF。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"2026年9月21日10:10前\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计20分钟\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"materials\",\"quote\":\"材料：实验PDF\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\",\"estimated_minutes\"]}},{\"kind\":\"event_conflict\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-2\",\"title\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":\"2026-09-21T11:00:00+08:00\",\"end\":\"2026-09-21T11:30:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"2026年9月21日11:00至11:30参加虚构讨论会。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"event\",\"quote\":\"2026年9月21日11:00至11:30\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\"]}},{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-3\",\"title\":\"本周五前提交虚构调研表。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T06:56:06.549Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"本周五前提交虚构调研表。\",\"source_ref\":\"self-authored-D14\"},{\"field\":\"due\",\"quote\":\"本周五前\",\"source_ref\":\"self-authored-D14\"}],\"needs_confirmation\":[\"source_review\",\"due_time\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+          "plan_version": "notice-text-pilot-v1",
+          "reference_at": null,
+          "selected_slot": null,
+          "available_windows": [],
+          "user_confirmations": {
+            "event_end": "2026-09-21T11:30:00+08:00",
+            "event_start": "2026-09-21T11:00:00+08:00",
+            "source_review": true,
+            "accept_conflicts": true
+          },
+          "fictional_data_confirmed": true
+        },
+        "task_id": "notice_task_zf1-tcmvylj9lpYRmYc4qD0w",
+        "revision": 1,
+        "workspace_ref": "pilot_workspace_S8zuT8j6mMnd2J4Nl561hEbn",
+        "confirmed_at": "2026-10-06T14:58:19+08:00"
+      }
+    ],
+    "total": 2,
+    "next_offset": null
+  },
+  "http_service_restart_readback_equal": true,
+  "cloud_deployed": false
+}

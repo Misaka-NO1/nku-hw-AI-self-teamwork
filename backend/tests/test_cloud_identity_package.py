@@ -14,7 +14,8 @@ builder = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(builder)
 
 
-def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch):
+@pytest.mark.parametrize("backend_only", [False, True])
+def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch, backend_only):
     for folder in ("backend/app", "contracts", "frontend/dist-identity/assets", "fixtures", "deploy/cloudbase-identity-pilot", "backend/data"):
         (tmp_path / folder).mkdir(parents=True)
     for file, value in {
@@ -30,12 +31,18 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         (tmp_path / file).write_text(value, encoding="utf-8")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/schema.sql", tmp_path / "deploy/cloudbase-identity-pilot/schema.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql")
+    shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/notice-text-migration.sql")
+    shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql")
     for filename in builder.FIXTURES + builder.READ_ONLY_FIXTURES:
         shutil.copy2(ROOT / "fixtures" / filename, tmp_path / "fixtures" / filename)
     monkeypatch.setattr(builder, "ROOT", tmp_path)
-    report = builder.build("test-identity-r1")
+    if backend_only:
+        shutil.rmtree(tmp_path / "frontend")
+    report = builder.build("test-identity-r1", backend_only=backend_only)
     with zipfile.ZipFile(report["package"]) as archive:
         names = archive.namelist()
+        assert ("frontend/dist/index.html" in names) is not backend_only
+        assert ("Dockerfile" in names) is not backend_only
         assert not any("data/" in name or ".env" in name or "node_modules" in name for name in names)
         assert sorted(n for n in names if n.startswith("fixtures/")) == sorted("fixtures/" + n for n in builder.FIXTURES + builder.READ_ONLY_FIXTURES)
         manifest = json.loads(archive.read("package-manifest.json"))
@@ -50,8 +57,18 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         assert "CREATE SCHEMA nku_competition_oauth_v1;" in compatibility
         assert "CREATE OR REPLACE" not in compatibility and "DROP TABLE" not in compatibility
         assert "ALTER TABLE nku_identity_pilot_v1" not in compatibility
+        notice=archive.read("notice-text-migration.sql").decode()
+        assert "CREATE SCHEMA nku_notice_text_v1;" in notice
+        assert "CREATE OR REPLACE" not in notice and "DROP TABLE" not in notice
+        assert "ALTER TABLE nku_identity_pilot_v1" not in notice
+        calendar=archive.read("task-calendar-migration.sql").decode()
+        assert "CREATE SCHEMA nku_task_calendar_v1;" in calendar
+        assert "CREATE OR REPLACE FUNCTION nku_notice_text_v1.snapshot" in calendar
+        assert "DROP TABLE" not in calendar and "ALTER TABLE nku_identity_pilot_v1" not in calendar
+        assert report["calendar_migration_included"] is True
+        assert report["calendar_frontend_source_present"] is False
     with pytest.raises(ValueError, match="overwritten"):
-        builder.build("test-identity-r1")
+        builder.build("test-identity-r1", backend_only=backend_only)
 
 
 @pytest.mark.parametrize("name", ["../outside", "C:/outside", "", "secret.env"])

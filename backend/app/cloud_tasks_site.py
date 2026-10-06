@@ -38,19 +38,25 @@ RPC_URL = f"https://{ENV_ID}.api.tcloudbasegateway.com/v1/rdb/rest/rpc/nku_tasks
 
 class RequestBodyLimit:
     """Bound streamed/chunked input too; Content-Length alone is not a limit."""
-    def __init__(self, app):
+    def __init__(self, app, notice_text_enabled=False):
         self.app = app
+        self.notice_text_enabled = notice_text_enabled
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or scope["method"] not in {"POST", "PUT", "PATCH"}:
             return await self.app(scope, receive, send)
         events, total = [], 0
+        extended = self.notice_text_enabled and (
+            scope.get("path", "").startswith("/api/v1/notice-text/")
+            or scope.get("path", "").startswith("/oauth/notice/"))
+        image = self.notice_text_enabled and scope.get("path", "") == "/api/v1/notice-text/images/read"
+        limit = 3 * 1024 * 1024 if image else 524288 if extended else 32768
         while True:
             event = await receive()
             if event["type"] == "http.disconnect":
                 return
             total += len(event.get("body", b""))
-            if total > 32768:
+            if total > limit:
                 response = JSONResponse(status_code=413, content=failure(request_id=str(uuid.uuid4()),
                     code="VALIDATION_ERROR", message="Request too large").model_dump(mode="json"))
                 return await response(scope, receive, send)

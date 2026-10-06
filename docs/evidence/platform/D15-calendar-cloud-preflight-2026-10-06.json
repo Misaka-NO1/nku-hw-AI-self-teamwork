@@ -1,0 +1,34 @@
+{
+  "mode": "local_candidates_cloud_preflight_read_only",
+  "source_main": "3a31ebd",
+  "tests": {
+    "backend": 650,
+    "backend_skipped": 0,
+    "frontend": 150,
+    "sql": 29,
+    "workflow_js": 12
+  },
+  "cloud_env": "sunner-wang-d8ght8niaaaea70b7",
+  "cloud_identity_version": "016",
+  "cloud_identity_status": "paused",
+  "cloud_public_status": "paused",
+  "cloud_migration_presence": {
+    "identity": true,
+    "competition_oauth": true,
+    "notice_text": false,
+    "task_calendar": false
+  },
+  "cloud_migration_executed": false,
+  "cloud_deployed": false,
+  "waiting_for": "action-time approval for new server RPC permissions and deployment",
+  "packages": [
+    {
+      "path": "dist\\cloudbase-identity-calendar-20261006-r1.zip",
+      "sha256": "11bd75bba96e206833271e6c50e7fa0727f100ae89876d4c1db24027dd56731f"
+    },
+    {
+      "path": "dist\\cloudbase-public-content-calendar-20261006-r1.zip",
+      "sha256": "2f20f8f3735b5b5d3262f960ffa190e0f7db6b4aad8bccafd234f229701f2166"
+    }
+  ]
+}

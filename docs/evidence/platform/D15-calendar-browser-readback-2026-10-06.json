@@ -1,0 +1,1214 @@
+{
+  "mode": "local_loopback_bridge_real_pg_mocked_fictional_identity",
+  "calendar_clock": "2026-09-21T08:00:00+08:00",
+  "cloud_deployed": false,
+  "https_cookie_origin_production_tested_separately": true,
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "pending",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": null,
+              "calendar_revision": 0,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "9a817f61-c6d9-44f5-b802-f4effba61048",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/notice_task_pFn2B5mHjWiCY0RhvVXjz1q2/calendar/candidates?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "candidate_slots": [
+            {
+              "start": "2026-09-21T09:40:00+08:00",
+              "end": "2026-09-21T10:10:00+08:00",
+              "duration_minutes": 30
+            }
+          ],
+          "needs_confirmation": [],
+          "coverage": {
+            "scope": "term",
+            "week_numbers": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "completeness": "unknown",
+            "within_term": true,
+            "query_window": {
+              "start": "2026-09-21T09:40:00+08:00",
+              "end": "2026-09-21T10:10:00+08:00"
+            }
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "036d5798-3082-452b-a356-327b529c4e10",
+          "data_version": "task-calendar-v1",
+          "calculation_version": "time-v1",
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/tasks/notice_task_pFn2B5mHjWiCY0RhvVXjz1q2/calendar",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "notice": {
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": "2026-09-21",
+              "precision": "datetime"
+            },
+            "event": {
+              "end": null,
+              "date": null,
+              "start": null,
+              "precision": "unknown"
+            },
+            "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "timezone": "Asia/Shanghai",
+            "materials": [
+              "实验PDF"
+            ],
+            "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+            "extracted_at": "2026-10-06T15:39:22+08:00",
+            "published_at": null,
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "due",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "materials",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "20",
+                "source_ref": "user-confirmation"
+              },
+              {
+                "field": "earliest_start",
+                "quote": "2026-09-21T09:40:00+08:00",
+                "source_ref": "user-confirmation"
+              }
+            ],
+            "earliest_start": "2026-09-21T09:40:00+08:00",
+            "schema_version": "1.0.0",
+            "estimated_minutes": 20,
+            "needs_confirmation": []
+          },
+          "status": "pending",
+          "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+          "revision": 1,
+          "scheduled_end": "2026-09-21T10:00:00+08:00",
+          "scheduled_start": "2026-09-21T09:40:00+08:00",
+          "reminder_minutes": 0,
+          "calendar_revision": 1,
+          "confirmed_at": "2026-10-06T15:39:22+08:00"
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "8e50aa48-84cc-479b-b259-834b52b82c4b",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      },
+      "body": {
+        "workspace_ref": "pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+        "expected_revision": 0,
+        "status": "pending",
+        "scheduled_start": "2026-09-21T09:40:00+08:00",
+        "scheduled_end": "2026-09-21T02:00:00.000Z",
+        "reminder_minutes": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "pending",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": 0,
+              "calendar_revision": 1,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "7761d45c-6c3a-4db9-9115-586d8aae8562",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/tasks/notice_task_pFn2B5mHjWiCY0RhvVXjz1q2/calendar",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "notice": {
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": "2026-09-21",
+              "precision": "datetime"
+            },
+            "event": {
+              "end": null,
+              "date": null,
+              "start": null,
+              "precision": "unknown"
+            },
+            "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "timezone": "Asia/Shanghai",
+            "materials": [
+              "实验PDF"
+            ],
+            "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+            "extracted_at": "2026-10-06T15:39:22+08:00",
+            "published_at": null,
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "due",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "materials",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "20",
+                "source_ref": "user-confirmation"
+              },
+              {
+                "field": "earliest_start",
+                "quote": "2026-09-21T09:40:00+08:00",
+                "source_ref": "user-confirmation"
+              }
+            ],
+            "earliest_start": "2026-09-21T09:40:00+08:00",
+            "schema_version": "1.0.0",
+            "estimated_minutes": 20,
+            "needs_confirmation": []
+          },
+          "status": "completed",
+          "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+          "revision": 1,
+          "scheduled_end": "2026-09-21T10:00:00+08:00",
+          "scheduled_start": "2026-09-21T09:40:00+08:00",
+          "reminder_minutes": 0,
+          "calendar_revision": 2,
+          "confirmed_at": "2026-10-06T15:39:22+08:00"
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "b4dab980-29b8-4d76-ad67-8ef6c594b643",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      },
+      "body": {
+        "workspace_ref": "pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+        "expected_revision": 1,
+        "status": "completed",
+        "scheduled_start": "2026-09-21T09:40:00+08:00",
+        "scheduled_end": "2026-09-21T10:00:00+08:00",
+        "reminder_minutes": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "completed",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": 0,
+              "calendar_revision": 2,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "a173ef25-f798-46d3-b339-21ecd884b424",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/tasks/notice_task_pFn2B5mHjWiCY0RhvVXjz1q2/calendar",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "notice": {
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": "2026-09-21",
+              "precision": "datetime"
+            },
+            "event": {
+              "end": null,
+              "date": null,
+              "start": null,
+              "precision": "unknown"
+            },
+            "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "timezone": "Asia/Shanghai",
+            "materials": [
+              "实验PDF"
+            ],
+            "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+            "extracted_at": "2026-10-06T15:39:22+08:00",
+            "published_at": null,
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "due",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "materials",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "20",
+                "source_ref": "user-confirmation"
+              },
+              {
+                "field": "earliest_start",
+                "quote": "2026-09-21T09:40:00+08:00",
+                "source_ref": "user-confirmation"
+              }
+            ],
+            "earliest_start": "2026-09-21T09:40:00+08:00",
+            "schema_version": "1.0.0",
+            "estimated_minutes": 20,
+            "needs_confirmation": []
+          },
+          "status": "pending",
+          "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+          "revision": 1,
+          "scheduled_end": "2026-09-21T10:00:00+08:00",
+          "scheduled_start": "2026-09-21T09:40:00+08:00",
+          "reminder_minutes": 0,
+          "calendar_revision": 3,
+          "confirmed_at": "2026-10-06T15:39:22+08:00"
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "30c9c1de-7398-440c-ac36-168d697f4195",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      },
+      "body": {
+        "workspace_ref": "pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+        "expected_revision": 2,
+        "status": "pending",
+        "scheduled_start": "2026-09-21T09:40:00+08:00",
+        "scheduled_end": "2026-09-21T10:00:00+08:00",
+        "reminder_minutes": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "pending",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": 0,
+              "calendar_revision": 3,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "c333259b-16fa-47e8-b644-be65a6be0d1d",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/tasks/notice_task_pFn2B5mHjWiCY0RhvVXjz1q2/calendar",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "notice": {
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": "2026-09-21",
+              "precision": "datetime"
+            },
+            "event": {
+              "end": null,
+              "date": null,
+              "start": null,
+              "precision": "unknown"
+            },
+            "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "timezone": "Asia/Shanghai",
+            "materials": [
+              "实验PDF"
+            ],
+            "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+            "extracted_at": "2026-10-06T15:39:22+08:00",
+            "published_at": null,
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "due",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "materials",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "20",
+                "source_ref": "user-confirmation"
+              },
+              {
+                "field": "earliest_start",
+                "quote": "2026-09-21T09:40:00+08:00",
+                "source_ref": "user-confirmation"
+              }
+            ],
+            "earliest_start": "2026-09-21T09:40:00+08:00",
+            "schema_version": "1.0.0",
+            "estimated_minutes": 20,
+            "needs_confirmation": []
+          },
+          "status": "cancelled",
+          "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+          "revision": 1,
+          "scheduled_end": "2026-09-21T10:00:00+08:00",
+          "scheduled_start": "2026-09-21T09:40:00+08:00",
+          "reminder_minutes": 0,
+          "calendar_revision": 4,
+          "confirmed_at": "2026-10-06T15:39:22+08:00"
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "786e41f6-5ffe-4ad3-9d18-357a04419129",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      },
+      "body": {
+        "workspace_ref": "pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+        "expected_revision": 3,
+        "status": "cancelled",
+        "scheduled_start": "2026-09-21T09:40:00+08:00",
+        "scheduled_end": "2026-09-21T10:00:00+08:00",
+        "reminder_minutes": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "cancelled",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": 0,
+              "calendar_revision": 4,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "d9514179-62c5-459f-a7f8-792ef2926068",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/tasks/notice_task_pFn2B5mHjWiCY0RhvVXjz1q2/calendar",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "notice": {
+            "due": {
+              "at": "2026-09-21T10:10:00+08:00",
+              "date": "2026-09-21",
+              "precision": "datetime"
+            },
+            "event": {
+              "end": null,
+              "date": null,
+              "start": null,
+              "precision": "unknown"
+            },
+            "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "timezone": "Asia/Shanghai",
+            "materials": [
+              "实验PDF"
+            ],
+            "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+            "extracted_at": "2026-10-06T15:39:22+08:00",
+            "published_at": null,
+            "source_spans": [
+              {
+                "field": "title",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "due",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "materials",
+                "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "source_ref": "self-authored#chars=0:37"
+              },
+              {
+                "field": "estimated_minutes",
+                "quote": "20",
+                "source_ref": "user-confirmation"
+              },
+              {
+                "field": "earliest_start",
+                "quote": "2026-09-21T09:40:00+08:00",
+                "source_ref": "user-confirmation"
+              }
+            ],
+            "earliest_start": "2026-09-21T09:40:00+08:00",
+            "schema_version": "1.0.0",
+            "estimated_minutes": 20,
+            "needs_confirmation": []
+          },
+          "status": "pending",
+          "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+          "revision": 1,
+          "scheduled_end": "2026-09-21T10:00:00+08:00",
+          "scheduled_start": "2026-09-21T09:40:00+08:00",
+          "reminder_minutes": 0,
+          "calendar_revision": 5,
+          "confirmed_at": "2026-10-06T15:39:22+08:00"
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "2544682c-f7c3-4544-a2da-92a316176db7",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      },
+      "body": {
+        "workspace_ref": "pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+        "expected_revision": 4,
+        "status": "pending",
+        "scheduled_start": "2026-09-21T09:40:00+08:00",
+        "scheduled_end": "2026-09-21T10:00:00+08:00",
+        "reminder_minutes": 0
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "pending",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": 0,
+              "calendar_revision": 5,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "dc2bb16b-89b2-4e81-9f3c-5151af4084cb",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "pending",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": 0,
+              "calendar_revision": 5,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "f7a1c9b3-c5c6-40c8-8ed8-9d18effb66a5",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_939bZjP7IS6aKWAuPvD4p3dK",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "b1af5856-a45e-4c80-a877-2c31df6c45c2",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/tasks/calendar?workspace_ref=pilot_workspace_GxC41Ta4O0Zax8HvS2Y8SBlX",
+      "status": 200,
+      "response": {
+        "ok": true,
+        "data": {
+          "items": [
+            {
+              "task_id": "notice_task_pFn2B5mHjWiCY0RhvVXjz1q2",
+              "revision": 1,
+              "notice": {
+                "due": {
+                  "at": "2026-09-21T10:10:00+08:00",
+                  "date": "2026-09-21",
+                  "precision": "datetime"
+                },
+                "event": {
+                  "end": null,
+                  "date": null,
+                  "start": null,
+                  "precision": "unknown"
+                },
+                "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                "timezone": "Asia/Shanghai",
+                "materials": [
+                  "实验PDF"
+                ],
+                "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+                "extracted_at": "2026-10-06T15:39:22+08:00",
+                "published_at": null,
+                "source_spans": [
+                  {
+                    "field": "title",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "due",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "materials",
+                    "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+                    "source_ref": "self-authored#chars=0:37"
+                  },
+                  {
+                    "field": "estimated_minutes",
+                    "quote": "20",
+                    "source_ref": "user-confirmation"
+                  },
+                  {
+                    "field": "earliest_start",
+                    "quote": "2026-09-21T09:40:00+08:00",
+                    "source_ref": "user-confirmation"
+                  }
+                ],
+                "earliest_start": "2026-09-21T09:40:00+08:00",
+                "schema_version": "1.0.0",
+                "estimated_minutes": 20,
+                "needs_confirmation": []
+              },
+              "status": "pending",
+              "scheduled_end": "2026-09-21T10:00:00+08:00",
+              "scheduled_start": "2026-09-21T09:40:00+08:00",
+              "reminder_minutes": 0,
+              "calendar_revision": 5,
+              "confirmed_at": "2026-10-06T15:39:22+08:00"
+            }
+          ],
+          "capabilities": {
+            "scheduling": true,
+            "status": true,
+            "reminders": true
+          }
+        },
+        "error": null,
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "d7ff79d3-b5b6-4a9b-9e3e-6ad6fd6c710a",
+          "data_version": "task-calendar-v1",
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    }
+  ]
+}

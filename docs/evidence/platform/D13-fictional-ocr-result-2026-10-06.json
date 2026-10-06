@@ -1,0 +1,20 @@
+{
+  "source_text": "虚构通知：请在2026年9月21日1 0 ： 1 0前提交实验报告。材料：报告PDFO预计20分钟。仅用于OC R测试。",
+  "raw_ocr_text": "虚 构 通 知 ： 请 在 2026 年 9 月 21 日 1 0 ： 1 0 前 提 交 实 验 报 告 。 材 料 ： 报 告 PDFO 预 计 20 分 钟 。 仅 用 于 OC R 测 试 。",
+  "document_sha256": "6d472d92a7dfeedaccd34107058859d534c0c265f1496d6a140b3dbf0dc505c8",
+  "source_kind": "ocr",
+  "width": 1600,
+  "height": 400,
+  "input_coverage": {
+    "total_pages": 1,
+    "processed_pages": [
+      1
+    ],
+    "unread_pages": [],
+    "ocr_accuracy": "unknown"
+  },
+  "limitations": [
+    "OCR可能错字或错数字；需核对截图及逐字段确认关键时间",
+    "仅单张截图；PDF未支持"
+  ]
+}
