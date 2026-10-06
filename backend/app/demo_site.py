@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from app.core.config import get_settings
 from app.main import app as api_app
 
-TOOLS = frozenset({"tasks", "import", "timetable", "map", "study", "affairs", "degree", "login"})
+TOOLS = frozenset({"tasks", "import", "timetable", "map", "study", "affairs", "degree", "login", "calendar"})
 
 
 def create_demo_site(frontend_root: Path | None = None) -> FastAPI:

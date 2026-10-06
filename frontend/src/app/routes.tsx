@@ -4,6 +4,7 @@ import { Layout } from "./Layout";
 import CloudbaseLoginPage from "../features/auth/CloudbaseLoginPage";
 import {
   AffairsPage,
+  CalendarPage,
   DegreePage,
   ImportPage,
   ScenicPage,
@@ -21,6 +22,7 @@ export function AppRoutes() {
         <Route path="/tools/import" element={<ImportPage />} />
         <Route path="/tools/timetable" element={<TimetablePage />} />
         <Route path="/tools/tasks" element={<TasksPage />} />
+        <Route path="/tools/calendar" element={<CalendarPage />} />
         <Route path="/tools/map" element={<ScenicPage />} />
         <Route path="/tools/study" element={<StudyPage />} />
         <Route path="/tools/affairs" element={<AffairsPage />} />

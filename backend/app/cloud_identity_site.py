@@ -390,7 +390,7 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     def home(): return RedirectResponse("/tools/login")
     @site.get("/tools/{tool}")
     def tool_page(tool:str):
-        if tool not in {"login","tasks","import","timetable","affairs","degree"}: raise AppError(404,"NOT_FOUND","Use the existing published public content service")
+        if tool not in {"login","tasks","import","timetable","affairs","degree","calendar"}: raise AppError(404,"NOT_FOUND","Use the existing published public content service")
         return FileResponse(root/"index.html",headers={"Cache-Control":"no-store"})
     install_health_diagnostics(site,runtime)
     return site

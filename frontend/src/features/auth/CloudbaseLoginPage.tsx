@@ -110,7 +110,7 @@ export default function CloudbaseLoginPage() {
     <h1>腾讯云账号登录 · 封闭联调</h1>
     <p>产品主入口仍是 NK-GeniOS；此页只负责可信登录测试，不是另一个聊天产品。</p>
     {consentReturn && <p>这是学校插件的授权登录步骤。登录后回到授权页；是否同意由你决定，不会自动授权。</p>}
-    {reviewReturn && <p>登录后返回原来的课表或待办复核页，仍须你核对并明确确认，不会自动保存。</p>}
+    {reviewReturn && <p>登录后返回原来的课表、待办复核页或日历，仍须你核对并明确确认，不会自动保存。</p>}
     <p role="note">仅 nku-demo-a / nku-demo-b，固定虚构数据。会话最长 15 分钟，测试空间保留 24 小时；没有公开注册、真实成绩上传或 Agent 配对。</p>
     {checking && <p role="status">正在核验当前浏览器会话。</p>}
     {!!recoveryError && !browserSession.needsLogin && <p role="alert">{recoveryError instanceof ApiError ? `${recoveryError.message}（${recoveryError.code} · ${recoveryError.requestId ?? "无请求编号"}）` : String(recoveryError)}</p>}
@@ -122,7 +122,7 @@ export default function CloudbaseLoginPage() {
       <button type="submit" disabled={busy || checking || (identityPilot && !!recoveryError && !browserSession.needsLogin)}>登录并验证身份</button>
     </form>}
     {session && <><p>当前浏览器已有后端测试会话；账号身份以服务端验证为准。</p>
-      {(consentReturn || reviewReturn) && <p><a href={consentReturn ?? reviewReturn!}>{consentReturn ? "返回授权页，由我决定是否同意" : "返回原草稿复核页"}</a></p>}
+      {(consentReturn || reviewReturn) && <p><a href={consentReturn ?? reviewReturn!}>{consentReturn ? "返回授权页，由我决定是否同意" : reviewReturn === "/tools/calendar" ? "返回待办日历" : "返回原草稿复核页"}</a></p>}
       <button disabled={busy} onClick={() => void perform(logout)}>退出当前测试会话</button>
       <p><a href="/tools/import">测试课表导入 →</a>　<a href="/tools/tasks">测试待办 →</a></p></>}
     {busy && <p role="status">正在处理，请勿重复点击。</p>}

@@ -7,6 +7,7 @@ export interface ToolNavItem {
 export const TOOL_NAV: ToolNavItem[] = [
   { path: "/tools/timetable", label: "课表" },
   { path: "/tools/map", label: "赏景地图" },
+  { path: "/tools/calendar", label: "待办日历" },
 ];
 
 export interface ToolNavOptions {
@@ -18,7 +19,7 @@ export interface ToolNavOptions {
 
 /** undefined 表示未配置跨服务地址，不能误导用户进入本服务不提供的页面。 */
 export function toolNavHref(path: string, options: ToolNavOptions): string | undefined {
-  const crossOrigin = path === "/tools/timetable" && options.publicContentOnly
+  const crossOrigin = ["/tools/timetable", "/tools/calendar"].includes(path) && options.publicContentOnly
     ? options.timetableOrigin
     : path === "/tools/map" && options.identityPilot
       ? options.publicContentOrigin
