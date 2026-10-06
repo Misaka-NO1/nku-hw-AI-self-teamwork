@@ -1,0 +1,114 @@
+{
+  "status": "fictional-contract-example-not-live-call",
+  "read_request": {
+    "source_text": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+    "source_ref": "self-authored",
+    "reference_at": null,
+    "fictional_data_confirmed": true
+  },
+  "check_request": {
+    "source_text": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+    "source_ref": "self-authored",
+    "reference_at": null,
+    "fictional_data_confirmed": true,
+    "item_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+    "window": {
+      "start": "2026-09-21T08:00:00+08:00",
+      "end": "2026-09-21T12:00:00+08:00"
+    },
+    "available_windows": [],
+    "user_confirmations": {
+      "source_review": true,
+      "estimated_minutes": 20,
+      "earliest_start": "2026-09-21T09:40:00+08:00"
+    }
+  },
+  "expected_candidate_slots": [
+    {
+      "start": "2026-09-21T09:40:00+08:00",
+      "end": "2026-09-21T10:00:00+08:00",
+      "duration_minutes": 20
+    }
+  ],
+  "draft_request": {
+    "plan": {
+      "plan_version": "notice-text-pilot-v1",
+      "source_text": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+      "source_ref": "self-authored",
+      "reference_at": null,
+      "window": {
+        "start": "2026-09-21T08:00:00+08:00",
+        "end": "2026-09-21T12:00:00+08:00"
+      },
+      "available_windows": [],
+      "user_confirmations": {
+        "source_review": true,
+        "estimated_minutes": 20,
+        "earliest_start": "2026-09-21T09:40:00+08:00"
+      },
+      "fictional_data_confirmed": true,
+      "kind": "deadline_feasibility",
+      "notice": {
+        "schema_version": "1.0.0",
+        "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+        "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+        "published_at": null,
+        "extracted_at": "2026-10-06T08:00:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "event": {
+          "start": null,
+          "end": null,
+          "date": null,
+          "precision": "unknown"
+        },
+        "due": {
+          "at": "2026-09-21T10:10:00+08:00",
+          "date": "2026-09-21",
+          "precision": "datetime"
+        },
+        "estimated_minutes": 20,
+        "earliest_start": "2026-09-21T09:40:00+08:00",
+        "materials": [
+          "实验PDF"
+        ],
+        "source_spans": [
+          {
+            "field": "title",
+            "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "source_ref": "self-authored#chars=0:37"
+          },
+          {
+            "field": "due",
+            "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "source_ref": "self-authored#chars=0:37"
+          },
+          {
+            "field": "materials",
+            "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+            "source_ref": "self-authored#chars=0:37"
+          },
+          {
+            "field": "estimated_minutes",
+            "quote": "20",
+            "source_ref": "user-confirmation"
+          },
+          {
+            "field": "earliest_start",
+            "quote": "2026-09-21T09:40:00+08:00",
+            "source_ref": "user-confirmation"
+          }
+        ],
+        "needs_confirmation": []
+      },
+      "selected_slot": {
+        "start": "2026-09-21T09:40:00+08:00",
+        "end": "2026-09-21T10:00:00+08:00",
+        "duration_minutes": 20
+      }
+    }
+  },
+  "notes": [
+    "workspace_ref只出现在后端算法映射里，不能作为notice-text调用参数",
+    "时间为历史算法回归，不是今天默认日期"
+  ]
+}

@@ -96,10 +96,12 @@ def install_health_diagnostics(site,runtime):
 
 def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     runtime=settings or get_settings()
+    if runtime.cloud_task_calendar_enabled and not runtime.cloud_notice_text_pilot_enabled:
+        raise ValueError("Calendar requires the explicitly enabled notice backend")
     if runtime.cloud_oauth_competition_compat_enabled and not runtime.cloud_oauth_pilot_enabled:
         raise ValueError("Competition compatibility requires explicit OAuth activation")
     if runtime.cloud_identity_bootstrap_enabled:
-        if (runtime.cloud_identity_pilot_enabled or runtime.cloud_oauth_pilot_enabled
+        if (runtime.cloud_identity_pilot_enabled or runtime.cloud_oauth_pilot_enabled or runtime.cloud_notice_text_pilot_enabled or runtime.cloud_task_calendar_enabled
             or runtime.app_env not in {"test","staging"} or runtime.auth_mode!="demo_fixture"
             or runtime.allow_personal_uploads):
             raise ValueError("Bootstrap must not enable identity, OAuth or personal business")
@@ -131,6 +133,12 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         if runtime.cloud_oauth_competition_compat_enabled:
             if database.competition_call("probe",{})!={"schema_version":"competition-oauth-v1"}:
                 raise ValueError("Competition OAuth migration required")
+        if runtime.cloud_notice_text_pilot_enabled:
+            if database.notice_call("probe", {}) != {"schema_version": "notice-text-v1"}:
+                raise ValueError("Notice text migration required")
+        if runtime.cloud_task_calendar_enabled:
+            if database.calendar_call("probe", {}) != {"schema_version": "task-calendar-v1"}:
+                raise ValueError("Calendar migration required")
         subjects=["cloudbase_pilot_"+secret_hash(runtime.cloudbase_auth_env_id+":"+uid)
                   for uid in runtime.cloudbase_auth_pilot_user_ids]
         database.call("configure_subjects",{"subjects":subjects})
@@ -138,7 +146,7 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         finally: database.close()
 
     site=FastAPI(lifespan=lifespan,docs_url=None,redoc_url=None,openapi_url=None)
-    site.add_middleware(RequestBodyLimit)
+    site.add_middleware(RequestBodyLimit, notice_text_enabled=runtime.cloud_notice_text_pilot_enabled)
     attempts=defaultdict(deque); lock=Lock()
 
     @site.middleware("http")
@@ -222,6 +230,12 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         if runtime.cloud_oauth_competition_compat_enabled:
             if database.competition_call("probe",{})!={"schema_version":"competition-oauth-v1"}:
                 raise AppError(503,"DEPENDENCY_UNAVAILABLE","Competition storage unavailable",True)
+        if runtime.cloud_notice_text_pilot_enabled:
+            if database.notice_call("probe", {}) != {"schema_version": "notice-text-v1"}:
+                raise AppError(503,"DEPENDENCY_UNAVAILABLE","Notice storage unavailable",True)
+        if runtime.cloud_task_calendar_enabled:
+            if database.calendar_call("probe", {}) != {"schema_version": "task-calendar-v1"}:
+                raise AppError(503,"DEPENDENCY_UNAVAILABLE","Calendar storage unavailable",True)
         return {"status":"ok","build_id":runtime.build_id,"dataset_kind":"demo","personal_uploads":False,
                 "persistent_store":"cloudbase_pg","oauth_enabled":runtime.cloud_oauth_pilot_enabled,
                 "oauth_competition_compat":runtime.cloud_oauth_competition_compat_enabled}
@@ -342,6 +356,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     def tasks(request:Request,workspace_ref:Annotated[str,Query(min_length=1,max_length=128)]):
         return reply(request,database.call("list_tasks",{**browser_args(request),"workspace_ref":workspace_ref}))
 
+    if runtime.cloud_task_calendar_enabled:
+        from app.api.task_calendar import install_calendar_routes
+        install_calendar_routes(site,runtime,database,browser_args,format_times)
+
     @site.get("/api/v1/tasks/{task_id}")
     def task(request:Request,task_id:str):
         return reply(request,database.call("get_task",{**browser_args(request),"task_id":task_id}))
@@ -366,8 +384,13 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
 
     def time_query(request,payload,operation):
         validate_boundary(payload,"FreeTimeQuery" if operation=="free" else "TimeCheckRequest")
-        records=database.call("records",{**browser_args(request),"workspace_ref":payload["workspace_ref"]})
-        result,warnings=calculate_owned_time(records,payload,operation)
+        if runtime.cloud_notice_text_pilot_enabled:
+            records=database.notice_call("records",{"principal_kind":"browser",**browser_args(request)})
+            if records["workspace_ref"] != payload["workspace_ref"]:
+                raise AppError(404,"NOT_FOUND","Workspace not found")
+        else:
+            records=database.call("records",{**browser_args(request),"workspace_ref":payload["workspace_ref"]})
+        result,warnings=calculate_owned_time(records,payload,operation,allow_notice_text=runtime.cloud_notice_text_pilot_enabled)
         return reply(request,result,calculation_version=schedule.CALCULATION_VERSION,warnings=[WarningItem(**warning) for warning in warnings])
 
     @site.post("/api/v1/time/free-slots")
@@ -375,6 +398,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
 
     @site.post("/api/v1/time/check")
     def check(request:Request,payload:Annotated[Any,Body()]): return time_query(request,payload,"check")
+
+    if runtime.cloud_notice_text_pilot_enabled:
+        from app.api.cloud_notice_text import install_notice_routes
+        install_notice_routes(site,runtime,database,browser_args,format_times)
 
     if runtime.cloud_oauth_pilot_enabled:
         from app.core.cloud_oauth_provider import CloudOAuthProvider

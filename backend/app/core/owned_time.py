@@ -24,14 +24,18 @@ def decode_owned_time(arguments, operation):
     return payload
 
 
-def calculate_owned_time(records, payload, operation):
+def calculate_owned_time(records, payload, operation, *, allow_notice_text=False):
     if records["schedule"] is None:
         raise AppError(404, "NOT_FOUND", "Save your fixture timetable first")
     timetable = records["schedule"]["timetable"]
-    notices = [item["notice"] for item in records["tasks"]]
-    enforce_demo_fixture(timetable, "schedule")
-    for notice in notices:
-        enforce_demo_fixture(notice, "task")
+    if allow_notice_text:
+        from app.core.notice_plan import resources
+        timetable, notices, _ = resources(records)
+    else:
+        notices = [item["notice"] for item in records["tasks"]]
+        enforce_demo_fixture(timetable, "schedule")
+        for notice in notices:
+            enforce_demo_fixture(notice, "task")
     events, warnings = schedule.expand_occurrences(timetable["term"], timetable["courses"], payload["window"])
     result = (timeplan.find_free_slots(events + _notice_events(notices), payload["window"],
                                       payload["min_minutes"], payload["buffers"])

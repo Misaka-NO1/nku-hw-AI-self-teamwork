@@ -1,0 +1,146 @@
+{
+  "task_id": "c2c_d17_notice",
+  "model": "doubao-seed-2-0-mini",
+  "runs": [
+    {
+      "sample": 1,
+      "attempt": 1,
+      "status": "validator_rejected",
+      "raw_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T12:47:48.196Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":null,\"date\":\"2026-10-08\",\"precision\":\"datetime\"},\"estimated_minutes\":45,\"earliest_start\":null,\"materials\":[\"读书报告PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"due\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计45分钟\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"materials\",\"quote\":\"材料为读书报告PDF\",\"source_ref\":\"self-authored-D17-1\"}],\"needs_confirmation\":[\"source_review\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+      "observed_issue": "due.precision=datetime but due.at=null",
+      "input": {
+        "source_text": "请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。本通知仅用于测试。",
+        "source_ref": "self-authored-D17-1",
+        "reference_at": null,
+        "extracted_at": "2026-10-06T12:47:48.196Z"
+      },
+      "local_guard": {
+        "status": "rejected",
+        "error": "INVALID_DUE"
+      }
+    },
+    {
+      "sample": 1,
+      "attempt": 2,
+      "status": "all_five_nodes_succeeded",
+      "raw_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T12:49:21.061Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-10-08T16:30:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":45,\"earliest_start\":null,\"materials\":[\"读书报告PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"due\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计45分钟\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"materials\",\"quote\":\"材料为读书报告PDF\",\"source_ref\":\"self-authored-D17-1\"}],\"needs_confirmation\":[\"source_review\",\"due_time\",\"estimated_minutes\",\"earliest_start\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+      "input": {
+        "source_text": "请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。本通知仅用于测试。",
+        "source_ref": "self-authored-D17-1",
+        "reference_at": null,
+        "extracted_at": "2026-10-06T12:49:21.061Z"
+      },
+      "local_guard": {
+        "status": "passed",
+        "result": {
+          "result": {
+            "ok": true,
+            "batch_version": "notice-model-candidate-v1",
+            "items": [
+              {
+                "kind": "deadline_feasibility",
+                "notice": {
+                  "schema_version": "1.0.0",
+                  "notice_id": "item-1",
+                  "title": "请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。",
+                  "published_at": null,
+                  "extracted_at": "2026-10-06T12:49:21.061Z",
+                  "timezone": "Asia/Shanghai",
+                  "event": {
+                    "start": null,
+                    "end": null,
+                    "date": null,
+                    "precision": "unknown"
+                  },
+                  "due": {
+                    "at": "2026-10-08T16:30:00+08:00",
+                    "date": null,
+                    "precision": "datetime"
+                  },
+                  "estimated_minutes": 45,
+                  "earliest_start": null,
+                  "materials": [
+                    "读书报告PDF"
+                  ],
+                  "source_spans": [
+                    {
+                      "field": "title",
+                      "quote": "请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。",
+                      "source_ref": "self-authored-D17-1"
+                    },
+                    {
+                      "field": "due",
+                      "quote": "请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。",
+                      "source_ref": "self-authored-D17-1"
+                    },
+                    {
+                      "field": "estimated_minutes",
+                      "quote": "预计45分钟",
+                      "source_ref": "self-authored-D17-1"
+                    },
+                    {
+                      "field": "materials",
+                      "quote": "材料为读书报告PDF",
+                      "source_ref": "self-authored-D17-1"
+                    }
+                  ],
+                  "needs_confirmation": [
+                    "source_review",
+                    "due_time",
+                    "estimated_minutes",
+                    "earliest_start"
+                  ]
+                },
+                "item_index": 0
+              }
+            ],
+            "unclassified": [
+              "本通知仅用于测试。"
+            ],
+            "coverage": {
+              "characters_total": 54,
+              "uncovered_character_indices": []
+            },
+            "needs_confirmation": [],
+            "status": "review_required",
+            "can_save": false
+          },
+          "validated_json": "{\"ok\":true,\"batch_version\":\"notice-model-candidate-v1\",\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T12:49:21.061Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-10-08T16:30:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":45,\"earliest_start\":null,\"materials\":[\"读书报告PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"due\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计45分钟\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"materials\",\"quote\":\"材料为读书报告PDF\",\"source_ref\":\"self-authored-D17-1\"}],\"needs_confirmation\":[\"source_review\",\"due_time\",\"estimated_minutes\",\"earliest_start\"]},\"item_index\":0}],\"unclassified\":[\"本通知仅用于测试。\"],\"coverage\":{\"characters_total\":54,\"uncovered_character_indices\":[]},\"needs_confirmation\":[],\"status\":\"review_required\",\"can_save\":false}",
+          "query_json": "{\"source_text\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。本通知仅用于测试。\",\"source_ref\":\"self-authored-D17-1\",\"reference_at\":null,\"model_output\":\"{\\\"items\\\":[{\\\"kind\\\":\\\"deadline_feasibility\\\",\\\"notice\\\":{\\\"schema_version\\\":\\\"1.0.0\\\",\\\"notice_id\\\":\\\"item-1\\\",\\\"title\\\":\\\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\\\",\\\"published_at\\\":null,\\\"extracted_at\\\":\\\"2026-10-06T12:49:21.061Z\\\",\\\"timezone\\\":\\\"Asia/Shanghai\\\",\\\"event\\\":{\\\"start\\\":null,\\\"end\\\":null,\\\"date\\\":null,\\\"precision\\\":\\\"unknown\\\"},\\\"due\\\":{\\\"at\\\":\\\"2026-10-08T16:30:00+08:00\\\",\\\"date\\\":null,\\\"precision\\\":\\\"datetime\\\"},\\\"estimated_minutes\\\":45,\\\"earliest_start\\\":null,\\\"materials\\\":[\\\"读书报告PDF\\\"],\\\"source_spans\\\":[{\\\"field\\\":\\\"title\\\",\\\"quote\\\":\\\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\\\",\\\"source_ref\\\":\\\"self-authored-D17-1\\\"},{\\\"field\\\":\\\"due\\\",\\\"quote\\\":\\\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\\\",\\\"source_ref\\\":\\\"self-authored-D17-1\\\"},{\\\"field\\\":\\\"estimated_minutes\\\",\\\"quote\\\":\\\"预计45分钟\\\",\\\"source_ref\\\":\\\"self-authored-D17-1\\\"},{\\\"field\\\":\\\"materials\\\",\\\"quote\\\":\\\"材料为读书报告PDF\\\",\\\"source_ref\\\":\\\"self-authored-D17-1\\\"}],\\\"needs_confirmation\\\":[\\\"source_review\\\",\\\"due_time\\\",\\\"estimated_minutes\\\",\\\"earliest_start\\\"]}}],\\\"unclassified\\\":[\\\"本通知仅用于测试。\\\"]}\",\"fictional_data_confirmed\":true}"
+        }
+      }
+    },
+    {
+      "sample": 1,
+      "attempt": 3,
+      "status": "validator_rejected",
+      "raw_output": "{\"items\":[{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T12:50:13.503Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":null,\"date\":\"2026-10-08\",\"precision\":\"datetime\"},\"estimated_minutes\":45,\"earliest_start\":null,\"materials\":[\"读书报告PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"due\",\"quote\":\"请于2026年10月8日16:30前提交虚构读书报告\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计45分钟\",\"source_ref\":\"self-authored-D17-1\"},{\"field\":\"materials\",\"quote\":\"材料为读书报告PDF\",\"source_ref\":\"self-authored-D17-1\"}],\"needs_confirmation\":[\"source_review\",\"due_time\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+      "input": {
+        "source_text": "请于2026年10月8日16:30前提交虚构读书报告，预计45分钟，材料为读书报告PDF。本通知仅用于测试。",
+        "source_ref": "self-authored-D17-1",
+        "reference_at": null,
+        "extracted_at": "2026-10-06T12:50:13.503Z"
+      },
+      "local_guard": {
+        "status": "rejected",
+        "error": "INVALID_DUE"
+      }
+    },
+    {
+      "sample": 5,
+      "attempt": 1,
+      "status": "validator_rejected",
+      "raw_output": "{\"items\":[{\"kind\":\"event_conflict\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-1\",\"title\":\"2026年10月12日09:00至10:00召开虚构小组会；\",\"published_at\":null,\"extracted_at\":\"2026-10-06T12:51:01.797Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":\"2026-10-12T09:00:00+08:00\",\"end\":\"2026-10-12T10:00:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"due\":{\"at\":null,\"date\":null,\"precision\":\"unknown\"},\"estimated_minutes\":null,\"earliest_start\":null,\"materials\":[],\"source_spans\":[{\"field\":\"title\",\"quote\":\"2026年10月12日09:00至10:00召开虚构小组会；\",\"source_ref\":\"self-authored-D17-5\"}],\"needs_confirmation\":[\"source_review\"]}},{\"kind\":\"deadline_feasibility\",\"notice\":{\"schema_version\":\"1.0.0\",\"notice_id\":\"item-2\",\"title\":\"2026年10月13日18:00前提交虚构计划书，预计30分钟，材料为计划书PDF。\",\"published_at\":null,\"extracted_at\":\"2026-10-06T12:51:01.797Z\",\"timezone\":\"Asia/Shanghai\",\"event\":{\"start\":null,\"end\":null,\"date\":null,\"precision\":\"unknown\"},\"due\":{\"at\":\"2026-10-13T18:00:00+08:00\",\"date\":null,\"precision\":\"datetime\"},\"estimated_minutes\":30,\"earliest_start\":null,\"materials\":[\"计划书PDF\"],\"source_spans\":[{\"field\":\"title\",\"quote\":\"2026年10月13日18:00前提交虚构计划书，预计30分钟，材料为计划书PDF。\",\"source_ref\":\"self-authored-D17-5\"},{\"field\":\"due\",\"quote\":\"2026年10月13日18:00前\",\"source_ref\":\"self-authored-D17-5\"},{\"field\":\"estimated_minutes\",\"quote\":\"预计30分钟\",\"source_ref\":\"self-authored-D17-5\"},{\"field\":\"materials\",\"quote\":\"材料为计划书PDF\",\"source_ref\":\"self-authored-D17-5\"}],\"needs_confirmation\":[\"source_review\"]}}],\"unclassified\":[\"本通知仅用于测试。\"]}",
+      "input": {
+        "source_text": "2026年10月12日09:00至10:00召开虚构小组会；2026年10月13日18:00前提交虚构计划书，预计30分钟，材料为计划书PDF。本通知仅用于测试。",
+        "source_ref": "self-authored-D17-5",
+        "reference_at": null,
+        "extracted_at": "2026-10-06T12:51:01.797Z"
+      },
+      "local_guard": {
+        "status": "rejected",
+        "error": "EVENT_WITHOUT_EVIDENCE"
+      }
+    }
+  ]
+}

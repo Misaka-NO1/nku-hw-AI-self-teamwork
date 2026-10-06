@@ -6,6 +6,7 @@ __pycache__/
 htmlcov/
 .env
 backend/data/
+.local-notice-pilot-data/
 node_modules/
 .pnpm-store/
 dist/

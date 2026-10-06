@@ -118,9 +118,11 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
 
     async def body(request):
         raw = bytearray()
+        notice_input = settings.cloud_notice_text_pilot_enabled and request.url.path in {"/oauth/notice/read", "/oauth/notice/check"}
+        limit = 262144 if notice_input else 8192
         async for chunk in request.stream():
             raw.extend(chunk)
-            if len(raw) > 8192:
+            if len(raw) > limit:
                 raise oauth.OAuthError()
         content_type = request.headers.get("Content-Type", "").split(";", 1)[0]
         try:
@@ -241,5 +243,24 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
         from app.core.demo import load_fixture
         result = provider.draft(request, load_fixture(params["fixture_id"]), params["idempotency_key"])
         return success(result, request_id=str(uuid4()), data_version="demo-v1")
+
+    if settings.cloud_notice_text_pilot_enabled and hasattr(provider,"notice_query"):
+        @site.post("/notice/read")
+        async def notice_read(request: Request):
+            result=provider.notice_query(request,await body(request),"read")
+            return success(result,request_id=str(uuid4()),data_version="notice-text-pilot-v1")
+
+        @site.post("/notice/check")
+        async def notice_check(request: Request):
+            from app.domains.schedule.service import CALCULATION_VERSION
+            result=provider.notice_query(request,await body(request),"check")
+            return success(result,request_id=str(uuid4()),data_version="notice-text-pilot-v1",calculation_version=CALCULATION_VERSION)
+
+    if settings.cloud_task_calendar_enabled and hasattr(provider,"calendar_summary"):
+        @site.get("/tasks/summary")
+        def task_summary(request: Request):
+            if request.url.query:
+                raise oauth.OAuthError()
+            return success(provider.calendar_summary(request),request_id=str(uuid4()),data_version="task-calendar-v1")
 
     return site

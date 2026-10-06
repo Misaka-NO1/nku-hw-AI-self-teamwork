@@ -66,6 +66,8 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
     def records(self,request):
         self.gate()
         from app.cloud_identity_site import format_times
+        if self.settings.cloud_notice_text_pilot_enabled:
+            return format_times(self.store.notice_call("records",self._notice_args(request)))
         return format_times(self.store.competition_call("records",{
             "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":self.settings.oauth_client_id}))
 

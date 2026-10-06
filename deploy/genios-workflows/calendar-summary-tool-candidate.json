@@ -1,0 +1,16 @@
+{
+  "candidate_version": "task-calendar-v1",
+  "status": "not_registered_not_deployed",
+  "existing_plugin": "campus-identity-pilot-read",
+  "tool_name": "read_my_demo_task_summary",
+  "description": "只读当前OAuth授权测试账号本人虚构待办摘要；不写入、不代确认、不后台推送。",
+  "method": "GET",
+  "path": "/oauth/tasks/summary",
+  "base_url_source": "existing approved identity service origin; verify deployed build first",
+  "input_schema": {"type": "object", "properties": {}, "required": [], "additionalProperties": false},
+  "response_contract": "ApiEnvelope with CalendarSummary data from contracts/api.schema.json",
+  "oauth_scope": "demo:read",
+  "trigger": "first user message after actual tool registration and deployment",
+  "open_chat_auto_trigger_verified": false,
+  "background_push": false
+}

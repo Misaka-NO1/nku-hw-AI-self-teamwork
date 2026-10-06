@@ -9,6 +9,8 @@ await pg.exec('CREATE ROLE anon; CREATE ROLE authenticated; CREATE ROLE service_
 await pg.exec(await readFile(new URL('../schema.sql',import.meta.url),'utf8'));
 // Additive compatibility is exercised only in this private test pipe.
 await pg.exec(await readFile(new URL('../competition-oauth-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../notice-text-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../task-calendar-migration.sql',import.meta.url),'utf8'));
 await pg.query("SELECT set_config('request.jwt.claims',$1,false)",[JSON.stringify({role:'service_role'})]);
 const canonical=value=>value && typeof value==='object' ? Array.isArray(value) ? value.map(canonical) :
   Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])) : value;
@@ -21,6 +23,19 @@ process.stdout.write('{"ready":true}\n');
 for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity})) {
   try {
     const {op,args}=JSON.parse(line);
+    if (op==='__test_calendar_clock__') {
+      if (!Number.isSafeInteger(args.epoch) || args.epoch<1700000000 || args.epoch>2100000000) throw new Error('invalid test clock');
+      await pg.exec(`CREATE OR REPLACE FUNCTION nku_task_calendar_v1.now_epoch() RETURNS bigint LANGUAGE sql VOLATILE SET search_path='' AS $$ SELECT ${args.epoch}::bigint $$`);
+      process.stdout.write('{"ok":true,"data":{}}\n'); continue;
+    }
+    if (op==='__test_expire_workspace__') {
+      // Private test pipe, never part of deployment: exercise owner workspace
+      // renewal without waiting 24 hours. No arbitrary SQL input is accepted.
+      if (!/^pilot_workspace_[A-Za-z0-9_-]{24}$/.test(args.workspace_ref ?? '')) throw new Error('invalid test ref');
+      await pg.query('UPDATE nku_identity_pilot_v1.workspaces SET expires_at=0 WHERE workspace_ref=$1',[args.workspace_ref]);
+      process.stdout.write('{"ok":true,"data":{}}\n');
+      continue;
+    }
     if (op==='__test_expire_browser_session__') {
       // Test pipe only (excluded from deployment): bounded fixed SQL, never a
       // caller-supplied query. Expire the synthetic session to exercise PG.
@@ -30,8 +45,10 @@ for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity}
       continue;
     }
     const compatibility=op.startsWith('__competition__:');
-    const sql=compatibility ? 'SELECT public.nku_competition_oauth_v1_rpc($1,$2::jsonb) result' : 'SELECT public.nku_identity_pilot_v1_rpc($1,$2::jsonb) result';
-    const result=await pg.query(sql,[compatibility ? op.slice('__competition__:'.length) : op,JSON.stringify(args)]);
+    const notice=op.startsWith('__notice__:');
+    const calendar=op.startsWith('__calendar__:');
+    const sql=calendar ? 'SELECT public.nku_task_calendar_v1_rpc($1,$2::jsonb) result' : notice ? 'SELECT public.nku_notice_text_v1_rpc($1,$2::jsonb) result' : compatibility ? 'SELECT public.nku_competition_oauth_v1_rpc($1,$2::jsonb) result' : 'SELECT public.nku_identity_pilot_v1_rpc($1,$2::jsonb) result';
+    const result=await pg.query(sql,[calendar ? op.slice('__calendar__:'.length) : notice ? op.slice('__notice__:'.length) : compatibility ? op.slice('__competition__:'.length) : op,JSON.stringify(args)]);
     process.stdout.write(JSON.stringify(result.rows[0].result)+'\n');
   } catch {
     // Do not print submitted params/SQL/credential hashes even on test failures.

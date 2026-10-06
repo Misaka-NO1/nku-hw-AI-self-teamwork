@@ -46,6 +46,8 @@ class RealPostgresPipeStore:
         return storage_result(result)
     def close(self): pass  # HTTP transport restarts do not destroy the database.
     def competition_call(self,op,args): return self.call('__competition__:'+op,args)
+    def notice_call(self,op,args): return self.call('__notice__:'+op,args)
+    def calendar_call(self,op,args): return self.call('__calendar__:'+op,args)
     def shutdown(self):
         self.process.stdin.close(); self.process.wait(timeout=20)
 
