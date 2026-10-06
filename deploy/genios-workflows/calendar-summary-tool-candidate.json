@@ -1,6 +1,9 @@
 {
   "candidate_version": "task-calendar-v1",
-  "status": "not_registered_not_deployed",
+  "status": "registered_draft_debug_auth_required_not_published",
+  "tool_id": "db2e4ml4shhbpg8ve08g",
+  "last_checked_at": "2026-10-06",
+  "last_debug_result": "School platform requested user OAuth authorization; no summary response received.",
   "existing_plugin": "campus-identity-pilot-read",
   "tool_name": "read_my_demo_task_summary",
   "description": "只读当前OAuth授权测试账号本人虚构待办摘要；不写入、不代确认、不后台推送。",
