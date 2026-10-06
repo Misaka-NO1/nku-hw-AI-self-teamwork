@@ -1,9 +1,9 @@
 {
   "candidate_version": "task-calendar-v1",
-  "status": "registered_draft_debug_auth_required_not_published",
+  "status": "registered_draft_debug_passed_not_published",
   "tool_id": "db2e4ml4shhbpg8ve08g",
   "last_checked_at": "2026-10-06",
-  "last_debug_result": "School platform requested user OAuth authorization; no summary response received.",
+  "last_debug_result": "2026-10-06 22:15 +08:00: authorized ordinary demo account; school Debug returned ok=true, all summary counts=0, next_task=null, background_push=false. Draft saved with Debug passed; not published or Agent-bound.",
   "existing_plugin": "campus-identity-pilot-read",
   "tool_name": "read_my_demo_task_summary",
   "description": "只读当前OAuth授权测试账号本人虚构待办摘要；不写入、不代确认、不后台推送。",
