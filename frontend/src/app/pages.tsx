@@ -8,6 +8,7 @@ export { DegreePage } from "../features/degree/DegreePage";
 export { default as ImportPage } from "../features/import/ConnectedImportPage";
 export { default as TimetablePage } from "../features/timetable/ConnectedTimetablePage";
 export { default as TasksPage } from "../features/tasks/TasksPage";
+export { default as CalendarPage } from "../features/calendar/CalendarPage";
 
 export function ScenicPage() {
   const params = new URLSearchParams(window.location.search);

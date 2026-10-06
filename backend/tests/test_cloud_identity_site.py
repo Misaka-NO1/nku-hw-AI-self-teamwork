@@ -80,7 +80,7 @@ def login(client,name='fictional-a'):
 
 def test_competition_c_pages_and_real_degree_algorithm(environment):
     _,_,_,client=environment
-    for path in ('/tools/affairs','/tools/degree'):
+    for path in ('/tools/affairs','/tools/degree','/tools/calendar'):
         assert client.get(path).status_code==200
     request={'workspace_ref':'demo-workspace-01','plan_id':'demo-cs-plan-v1','transcript_ref':'demo-transcript-01'}
     response=client.post('/api/v1/degree/audit',json=request)

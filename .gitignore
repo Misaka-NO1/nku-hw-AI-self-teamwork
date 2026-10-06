@@ -11,4 +11,5 @@ node_modules/
 dist/
 frontend/dist-demo/
 frontend/dist-identity/
+frontend/dist-calendar-preview/
 *.tsbuildinfo

@@ -17,6 +17,7 @@ def test_same_origin_site_and_api_errors_are_not_spa_html(tmp_path: Path, monkey
     try:
         with TestClient(create_demo_site(web)) as client:
             assert "local-demo" in client.get("/tools/tasks?draft_id=example").text
+            assert "local-demo" in client.get("/tools/calendar").text
             assert client.get("/tools/unknown").status_code == 404
             assert client.get("/api/v1/unknown").status_code == 404
             assert client.get("/api/v1/unknown").json()["ok"] is False
