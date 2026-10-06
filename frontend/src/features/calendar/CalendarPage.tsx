@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { ApiError } from "../../shared/api/client";
 import { useBrowserSession } from "../auth/useBrowserSession";
 import { loadCalendar, loadCandidates, updateCalendar, type CalendarUpdate } from "./api";
+import { calendarErrorText as errorText, confirmationText } from "./messages";
 import { calendarIcs, dueDay, exactCandidates, formatTime, isOverdue, monthDays, occursOn,
   plannedRange, previewTasks, READ_ONLY, reminderKey, remindersDue, shanghaiDay, shiftMonth, summary,
   type CalendarData, type Candidate, type TaskStatus } from "./model";
 import "./calendar.css";
 
 const empty:CalendarData={items:[],capabilities:READ_ONLY};
-const errorText=(error:unknown)=>error instanceof Error ? error.message+(error instanceof ApiError && error.requestId?`（${error.requestId}）`:"") : "请求失败，请重试";
 export default function CalendarPage() {
   const identity=import.meta.env.VITE_IDENTITY_PILOT==="true";
   const auth=useBrowserSession(identity);
@@ -109,7 +109,7 @@ export default function CalendarPage() {
       if(!auth.session)return;
       const result=await loadCandidates(auth.session,id);
       if(scope.current!==currentScope || selectedRef.current!==id)return;
-      if(result.needsConfirmation.length) {setMessage("还需要确认："+result.needsConfirmation.join("、"));return;}
+      if(result.needsConfirmation.length) {setMessage("还需要确认："+result.needsConfirmation.map(confirmationText).join("、"));return;}
       const values=exactCandidates(result.candidateSlots,task.notice.estimatedMinutes);
       setCandidates(values);setMessage(values.length?`在已知课表范围内找到 ${values.length} 个候选；覆盖：${result.coverage.completeness??"未知"}`:"本次未取得足够的连续空档；请核对耗时、截止和课表覆盖。");
     });
@@ -214,7 +214,7 @@ export default function CalendarPage() {
             <dt>截止要求</dt><dd>{task.notice.due.at?formatTime(task.notice.due.at):task.notice.due.date??"未确定"}</dd><dt>预计耗时</dt><dd>{task.notice.estimatedMinutes?`${task.notice.estimatedMinutes} 分钟`:"需要补充"}</dd>
             <dt>准备材料</dt><dd>{task.notice.materials.join("、")||"未提供"}</dd></dl>
           {task.notice.sourceSpans.length>0 && <details><summary>查看提取来源</summary>{task.notice.sourceSpans.map((span,i)=><blockquote key={i}>{span.quote}<small>{span.sourceRef}</small></blockquote>)}</details>}
-          {task.notice.needsConfirmation.length>0&&<p>待确认：{task.notice.needsConfirmation.join("、")}</p>}
+          {task.notice.needsConfirmation.length>0&&<p>待确认：{task.notice.needsConfirmation.map(confirmationText).join("、")}</p>}
           <div className="calendar-actions"><button disabled={!editable||!data.capabilities.scheduling||task.status!=="pending"||!!task.notice.event.start} onClick={queryCandidates}>{preview?"体验演示候选":"根据课表重新查候选"}</button>
             <button disabled={!editable||!data.capabilities.status} onClick={()=>save(task.status==="pending"?"completed":"pending")}>{task.status==="pending"?"标记完成":"恢复未完成"}</button>
             <button disabled={!editable||!data.capabilities.status||task.status==="cancelled"} onClick={()=>save("cancelled")}>取消事项</button></div>
