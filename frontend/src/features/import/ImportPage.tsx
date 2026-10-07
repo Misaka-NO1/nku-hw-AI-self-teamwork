@@ -34,6 +34,19 @@ const FORMAT_BY_EXT: Record<string, ImportFormat> = {
 export const EAMIS_TIMETABLE_URL =
   "https://eamis.nankai.edu.cn/eams/courseTableForStd!courseTable.action";
 
+/**
+ * 「课表下载」书签小程序：拖到浏览器书签栏后，在教务「我的课表」页点击，
+ * 自动把当前页面 HTML 下载为文件（纯前端无法跨域抓取已登录页面，书签是当前标签页内
+ * 用户主动触发的本地下载，不上传任何内容）。找不到课表网格时给出明确提示。
+ */
+export const EAMIS_DOWNLOAD_BOOKMARKLET =
+  "javascript:(()=>{var t=document.querySelector('#manualArrangeCourseTable');" +
+  "if(!t){alert('未找到课表表格：请确认已登录教务系统，并打开「我的课表」页面、看到课表后再点我。');return;}" +
+  "var h='<!DOCTYPE html>\\n'+document.documentElement.outerHTML;" +
+  "var b=new Blob([h],{type:'text/html'});var a=document.createElement('a');" +
+  "a.href=URL.createObjectURL(b);a.download='eamis-courseTable-'+new Date().toISOString().slice(0,10)+'.html';" +
+  "document.body.appendChild(a);a.click();a.remove();})()";
+
 const WEEKDAY_NAMES = "一二三四五六日";
 
 export interface ImportPageProps {
@@ -123,8 +136,7 @@ export default function ImportPage({
     }
   }
 
-  async function onFileChange(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
+  async function handleFile(file: File | undefined) {
     setResult(null);
     setRemoteCheck(null);
     setError(null);
@@ -151,6 +163,16 @@ export default function ImportPage({
       // 双保险：解析器本身已兜底，这里确保任何异常都变成可恢复的错误提示
       setError(`解析过程出现异常，已阻止导入：${parseError instanceof Error ? parseError.message : String(parseError)}`);
     }
+  }
+
+  async function onFileChange(event: ChangeEvent<HTMLInputElement>) {
+    await handleFile(event.target.files?.[0]);
+  }
+
+  /** 拖放导入：下载的 HTML 直接拖回本页即解析 */
+  async function onDropFile(event: React.DragEvent<HTMLElement>) {
+    event.preventDefault();
+    await handleFile(event.dataTransfer.files?.[0]);
   }
 
   async function onValidateRemote() {
@@ -284,17 +306,35 @@ export default function ImportPage({
 
       <section>
         <h2>第零步：从教务系统获取课表</h2>
-        <p>
-          打开教务系统课表页（需先登录统一身份认证），在课表页面按 Ctrl+S 将网页
-          “另存为” HTML 文件，然后回到本页上传该文件。
-        </p>
-        <p>
-          <a href={EAMIS_TIMETABLE_URL} target="_blank" rel="noreferrer">
-            打开教务系统课表页 ↗
-          </a>{" "}
-          <button type="button" onClick={() => void navigator.clipboard?.writeText(EAMIS_TIMETABLE_URL)}>
-            复制链接
-          </button>
+        <ol>
+          <li>
+            把下面这个按钮<strong>拖到浏览器书签栏</strong>（只需一次）：{" "}
+            <a
+              href={EAMIS_DOWNLOAD_BOOKMARKLET}
+              onClick={(e) => e.preventDefault()}
+              title="拖到书签栏使用"
+            >
+              📥 课表下载
+            </a>
+          </li>
+          <li>
+            <a href={EAMIS_TIMETABLE_URL} target="_blank" rel="noreferrer">
+              打开教务系统课表页 ↗
+            </a>{" "}
+            <button type="button" onClick={() => void navigator.clipboard?.writeText(EAMIS_TIMETABLE_URL)}>
+              复制链接
+            </button>
+            ，登录统一身份认证，确认页面上<strong>已经看到课表网格</strong>。
+          </li>
+          <li>
+            点击书签栏里的「📥 课表下载」，页面 HTML 会自动下载；把下载的文件
+            <strong>拖回本页第二步</strong>（或点选择文件）即自动解析导入。
+          </li>
+        </ol>
+        <p role="note">
+          说明：课表页需要你的登录态，网页无法替你自动抓取；书签只在你主动点击时
+          把当前页面保存为本地文件，不上传任何内容。也可以仍用 Ctrl+S “另存为”。
+          如果解析提示“统一身份认证登录页”，说明保存时登录已失效，请登录后重试。
         </p>
       </section>
 
@@ -316,9 +356,13 @@ export default function ImportPage({
         )}
       </section>
 
-      <section>
+      <section
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => void onDropFile(e)}
+      >
         <h2>第二步：选择课表文件</h2>
         <input type="file" accept=".json,.csv,.html,.htm" onChange={onFileChange} />
+        <p role="note">也可以把下载好的 HTML / JSON / CSV 文件直接拖到这个区域。</p>
       </section>
       {fileName && <p>已选择文件：{fileName}</p>}
       {error && <p role="alert">{error}</p>}

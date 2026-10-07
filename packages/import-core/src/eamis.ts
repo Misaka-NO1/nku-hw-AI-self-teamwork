@@ -6,6 +6,16 @@ import type { PageObservation, ParseIssue } from "./types";
 export const EAMIS_GRID_SELECTOR = "#manualArrangeCourseTable";
 export const EAMIS_GRID_PAGE_HEADERS = ["节次/周次", "星期一", "星期日"];
 
+/** 统一身份认证（SSO）登录页特征：另存到登录页时给出可操作提示而非笼统的 UNSUPPORTED_PAGE。 */
+const SSO_PAGE_MARKERS = ["统一身份认证", "authserver", "sso"];
+
+export function looksLikeSsoLoginPage(doc: Document): boolean {
+  const title = doc.title ?? "";
+  if (SSO_PAGE_MARKERS.some((marker) => title.includes(marker))) return true;
+  const bodyText = (doc.body?.textContent ?? "").slice(0, 2000);
+  return bodyText.includes("统一身份认证") && !doc.querySelector(EAMIS_GRID_SELECTOR);
+}
+
 /**
  * 从 DOM（真实页面或另存的 HTML 文件）提取 eamis 网格。
  * rowSpan 展开为「p-q」节次范围；行头格（真实页面是 td）跳过；

@@ -1,6 +1,6 @@
 import { recognizePage, unsupportedIssue } from "./adapters";
 import { shanghaiIsoNow } from "./calendar";
-import { eamisObservationToRawRows, extractEamisGridFromDoc } from "./eamis";
+import { eamisObservationToRawRows, extractEamisGridFromDoc, looksLikeSsoLoginPage } from "./eamis";
 import { normalizeCourses, parsePeriodRange, parseWeekday } from "./normalize";
 import type { NormalizeOptions, RawMeetingRow } from "./normalize";
 import { validateTimetableStructure } from "./schema";
@@ -302,6 +302,19 @@ function parseImportFileInner(
       });
       eamisResult.issues.unshift(...converted.issues);
       return eamisResult;
+    }
+    // 另存到的是统一身份认证登录页（未登录/会话过期）：给出可操作提示
+    if (looksLikeSsoLoginPage(doc)) {
+      return blockingParseResult(
+        [
+          unsupportedIssue(
+            "检测到这是统一身份认证登录页而非课表页：请先在教务系统完成登录，" +
+              "进入「我的课表」确认看到课表网格后，再保存/下载该页面",
+          ),
+        ],
+        adapterId,
+        adapterVersion,
+      );
     }
   }
 

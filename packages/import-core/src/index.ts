@@ -1,6 +1,6 @@
 export { ADAPTERS, getAdapter, recognizePage } from "./adapters";
 export type { AdapterDescriptor, AdapterStatus, Recognition } from "./adapters";
-export { EAMIS_OBSERVATION_HEADERS, EAMIS_GRID_SELECTOR, eamisObservationToRawRows, extractEamisGridFromDoc, parseEamisCellEntries } from "./eamis";
+export { EAMIS_OBSERVATION_HEADERS, EAMIS_GRID_SELECTOR, eamisObservationToRawRows, extractEamisGridFromDoc, looksLikeSsoLoginPage, parseEamisCellEntries } from "./eamis";
 export type { EamisCellEntry, EamisConvertResult } from "./eamis";
 export { actualDateFor, getEffectiveTemplate, shanghaiIsoNow, validateTermCalendarStructure } from "./calendar";
 export type { EffectiveTemplate } from "./calendar";

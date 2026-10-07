@@ -208,4 +208,18 @@ describe("B08 另存 HTML 文件导入（教务页离线闭环）", () => {
     expect(result.payload).not.toBeNull();
     expect(result.payload!.courses[0].title).toBe("示例课程戊");
   });
+
+  it("另存到统一身份认证登录页时给出可操作提示而非笼统 UNSUPPORTED_PAGE", () => {
+    const sso = `<html><head><title>南开大学｜统一身份认证平台</title></head>
+      <body><form id="pwdFromId"><input name="username"/></form></body></html>`;
+    const result = parseImportFile({ name: "1.action.html", content: sso }, "html", term, {
+      capturedAt: "2026-10-07T19:00:00+08:00",
+    });
+    expect(result.payload).toBeNull();
+    const blocking = result.issues.filter((issue) => issue.blocking);
+    expect(blocking).toHaveLength(1);
+    expect(blocking[0].code).toBe("UNSUPPORTED_PAGE");
+    expect(blocking[0].message).toContain("统一身份认证登录页");
+    expect(blocking[0].message).toContain("我的课表");
+  });
 });
