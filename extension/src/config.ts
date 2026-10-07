@@ -13,8 +13,11 @@ export interface ExtractionWhitelist {
   paths: string[];
 }
 
-/** 生产白名单：故意为空（WAITING_HUMAN，见 docs/evidence/B/adapter-observation.md）。 */
-export const PRODUCTION_WHITELIST: ExtractionWhitelist = { origins: [], paths: [] };
+/** 生产白名单：2026-10-07 本人只读核查后启用（docs/evidence/B/adapter-observation.md）。 */
+export const PRODUCTION_WHITELIST: ExtractionWhitelist = {
+  origins: ["https://eamis.nankai.edu.cn"],
+  paths: ["/eams/courseTableForStd"],
+};
 
 /** 开发/虚构测试白名单：仅用于 fixtures 页面，不得带入生产构建。 */
 export const DEV_FIXTURE_WHITELIST: ExtractionWhitelist = {

@@ -1,6 +1,6 @@
 # B07 真实教务页面只读核查记录
 
-**状态：OBSERVED（2026-10-07 本人完成只读核查），适配器仍 disabled，待 B08 实现后启用**
+**状态：DONE（2026-10-07）——B07 核查 + B08 适配器均已落地并在真实页面验证**
 
 ## 访问尝试记录
 
@@ -28,9 +28,9 @@
 - 只读核查，不自动登录、不抓取受保护数据、不留个人信息。
 - 核查完成后才允许把 `nku-adapter-v1` 标记为 enabled 并填写精确白名单（B08）。
 
-## B08 待办（启用适配器前必须完成）
+## B08 落地记录（2026-10-07 完成）
 
-1. content script 提取器支持 `manualArrangeCourseTable` 结构：按 rowSpan 展开合并单元格，输出「节次 × 星期」网格观察值。
-2. 解析器支持单元格文本格式（含 `双/单` 周次、多周段、`停课` 条目、多地点、`组N`）。
-3. `nku-adapter-v1` 白名单填 `https://eamis.nankai.edu.cn` + 上述 path，requiredHeaders 用 `节次/周次, 星期一, 星期日`。
-4. 全部用**匿名化样例**做单测，真实课程名/教师名不进仓库。
+1. ✅ content script 提取器支持 `manualArrangeCourseTable`：rowSpan 展开、行头格跳过（真实页面行头是 td），输出「课程条目/星期/节次」观察值。
+2. ✅ 解析器 `eamis.ts`：单元格条目切分（含全角括号课程名、多教师、多地点、`组N`）、`双/单` 前缀周次、多周段、停课条目（忽略并记录非阻塞 issue）、残留文本 blocking。
+3. ✅ `nku-adapter-v1` 已 enabled：`https://eamis.nankai.edu.cn` + `/eams/courseTableForStd`，扩展 PRODUCTION_WHITELIST 同步启用。
+4. ✅ 匿名化样例单测（import-core 13 项 + extension 4 项）；真实页面端到端验证：19 个课程格子 → 13 门课、4 条停课提示、coverage term/complete，与页面显示逐格一致。真实课程数据仅存在于本人浏览器会话，未写入仓库。

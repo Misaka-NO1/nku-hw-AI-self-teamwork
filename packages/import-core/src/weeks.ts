@@ -26,6 +26,14 @@ export function parseWeeks(raw: string, teachingWeeks?: number): WeeksParseResul
 
   let parity: "odd" | "even" | null = null;
   let body = text;
+  // 支持前缀（eamis 风格："双2-16"）与后缀（"1-16双"/"单周"）两种写法
+  if (/^单周?/.test(body)) {
+    parity = "odd";
+    body = body.replace(/^单周?/, "");
+  } else if (/^双周?/.test(body)) {
+    parity = "even";
+    body = body.replace(/^双周?/, "");
+  }
   if (/单周?$/.test(body)) {
     parity = "odd";
     body = body.replace(/单周?$/, "");

@@ -1,5 +1,6 @@
 import { recognizePage, unsupportedIssue } from "./adapters";
 import { shanghaiIsoNow } from "./calendar";
+import { eamisObservationToRawRows } from "./eamis";
 import { normalizeCourses, parsePeriodRange, parseWeekday } from "./normalize";
 import type { NormalizeOptions, RawMeetingRow } from "./normalize";
 import { validateTimetableStructure } from "./schema";
@@ -372,8 +373,19 @@ export function parseObservation(
       "0.0.0",
     );
   }
-  const rows = tableToRawRows(observation.tableHeaders, observation.rows);
-  if (rows === null) {
+  let rawRows: RawMeetingRow[] | null;
+  const extraIssues: ParseIssue[] = [];
+  if (recognition.adapterId === "nku-adapter-v1") {
+    const converted = eamisObservationToRawRows(observation);
+    if (converted.issues.some((issue) => issue.blocking)) {
+      return blockingParseResult(converted.issues, recognition.adapterId, "1.0.0");
+    }
+    extraIssues.push(...converted.issues);
+    rawRows = converted.rows;
+  } else {
+    rawRows = tableToRawRows(observation.tableHeaders, observation.rows);
+  }
+  if (rawRows === null) {
     return blockingParseResult(
       [unsupportedIssue("课程表结构不符合适配器预期（可能页面已改版），请改用文件导入")],
       recognition.adapterId,
@@ -387,7 +399,7 @@ export function parseObservation(
       : observation.selectedWeeks.length > 0
         ? "unknown"
         : "complete";
-  const result = normalizeCourses(rows, {
+  const result = normalizeCourses(rawRows, {
     calendar,
     kind: "visible_dom",
     adapterId: recognition.adapterId,
@@ -396,6 +408,7 @@ export function parseObservation(
     datasetKind: options?.datasetKind ?? "personal",
     completenessHint: completeness,
   });
+  result.issues.unshift(...extraIssues);
   if (result.payload && observation.selectedWeeks.length > 0) {
     result.payload.source.coverage = {
       scope: "selected_weeks",
