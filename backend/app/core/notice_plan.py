@@ -24,6 +24,16 @@ def resources(records):
         state = task.get("calendar_state")
         if state and state["status"] != "pending":
             continue
+        if task.get("source_kind") == "personal_task_v1":
+            # A deadline/reminder point is NOT a busy interval. Each explicitly
+            # selected interval blocks time; all slots of a split task count.
+            for i, slot in enumerate(task["scheduled_slots"]):
+                n = deepcopy(task["notice"])
+                n["notice_id"] = task["task_id"] + ":" + str(i)
+                n["event"] = {"start": slot["start"], "end": slot["end"], "date": None, "precision": "datetime"}
+                notices.append(n)
+                labels["task:" + n["notice_id"]] = n["title"]
+            continue
         stored = task["notice"]
         if stored.get("plan_version") == VERSION:
             notice = deepcopy(stored["notice"])

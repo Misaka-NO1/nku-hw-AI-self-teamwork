@@ -12,6 +12,7 @@ import re
 import time
 
 from app.core.errors import AppError
+from app.core.persistent_auth import UNTIL_REVOKED_EPOCH
 
 CONTEXT_COOKIE = "campus_browser_context"
 _SAFE = re.compile(r"^[A-Za-z0-9_-]{1,128}$")
@@ -30,7 +31,7 @@ def encode_context(token: str, workspace_ref: str, csrf_token: str, expires_epoc
     return encoded + "." + _mac(token, encoded)
 
 
-def decode_context(token: str, value: str, now: int | None = None) -> dict:
+def decode_context(token: str, value: str, now: int | None = None, *, persistent: bool = False) -> dict:
     """Reject malformed/old/different-session context before returning any data."""
     try:
         if not token or len(token) > 128 or not value or len(value) > 2048:
@@ -50,7 +51,8 @@ def decode_context(token: str, value: str, now: int | None = None) -> dict:
         current = int(time.time()) if now is None else now
         # PG issues the original 900-second expiry. Allow small clock skew at
         # issuance, not a refreshed expiry; the PG session gate remains exact.
-        if not current < body["expires_epoch"] <= current + 930:
+        durable = persistent and body["expires_epoch"] == UNTIL_REVOKED_EPOCH
+        if not current < body["expires_epoch"] or (not durable and body["expires_epoch"] > current + 930):
             raise ValueError
         return body
     except (ValueError, TypeError, UnicodeError, json.JSONDecodeError):

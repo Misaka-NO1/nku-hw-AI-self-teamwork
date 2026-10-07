@@ -111,7 +111,7 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
     def pairs(items):
         result = {}
         for key, value in items:
-            if key in result or not isinstance(value, str) or len(value) > 2048:
+            if key in result or not isinstance(value, str) or len(value) > (16384 if settings.cloud_personal_tasks_enabled and key == "query_json" else 2048):
                 raise oauth.OAuthError()
             result[key] = value
         return result
@@ -119,7 +119,9 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
     async def body(request):
         raw = bytearray()
         notice_input = settings.cloud_notice_text_pilot_enabled and request.url.path in {"/oauth/notice/read", "/oauth/notice/check"}
-        limit = 262144 if notice_input else 8192
+        own_task_input = settings.cloud_personal_tasks_enabled and request.url.path in {
+            "/oauth/tasks/entries/drafts", "/oauth/tasks/entries/commit"}
+        limit = 262144 if notice_input else 32768 if own_task_input else 8192
         async for chunk in request.stream():
             raw.extend(chunk)
             if len(raw) > limit:
@@ -171,14 +173,21 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
                 '<h1>请先登录校园助手测试账号</h1><p>仅联调虚构数据，不接真实成绩。</p>'
                 '<a href="/tools/login">前往登录</a><p>登录完成后回到本页并刷新，才能继续授权。</p></html>', status_code=401)
         label = "读取自己的虚构课表与待办" + ("；创建待办草稿" if "demo:draft" in scopes else "")
-        mode_note = ('<p>参赛演示兼容模式：普通 OAuth 授权码，无 PKCE；仅两个测试账号和虚构数据，不是正式个人数据服务。</p>'
+        personal = "tasks:read" in scopes
+        if personal:
+            label += "；读取自己已记录的事项、截止、备注和选定时段"
+        if "tasks:write" in scopes:
+            label += "；仅在你核对草稿并明确确认后记录本人待办"
+        mode_note = ('<p>参赛联调兼容模式：普通 OAuth 授权码，无 PKCE；仅两个已批准测试账号。真实教务课表和成绩上传仍未开放。</p>'
                      if settings.cloud_oauth_competition_compat_enabled else '')
         return HTMLResponse('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>授权校园助手</title>'
             '<style>body{max-width:640px;margin:8vh auto;padding:24px;font:20px/1.8 sans-serif;color:#274535;background:#fffdf6}'
             'button{padding:14px 24px;margin:16px 12px 0 0;font:inherit}</style>'
             '<h1>授权校园助手测试插件</h1><p>' + html.escape(label) + '</p>'
             + mode_note +
-            '<p>不能查看其他账号、不能替你确认或保存、不能接入真实个人数据。授权最多 10 分钟，退出登录即失效。</p>'
+            ('<p>不能查看其他账号，不自行确认或自动保存，不接入真实教务与成绩。本人长期授权；退出、撤销或移出名单即失效。</p>' if personal and settings.cloud_persistent_auth_enabled else
+             '<p>不能查看其他账号，不自行确认或自动保存，不接入真实教务与成绩。授权最多 10 分钟，退出登录即失效。</p>' if personal else
+             '<p>不能查看其他账号、不能替你确认或保存、不能接入真实个人数据。授权最多 10 分钟，退出登录即失效。</p>') +
             '<form method="post" action="/oauth/approve"><input type="hidden" name="transaction" value="' +
             html.escape(transaction, quote=True) + '"><button name="decision" value="allow">允许本次授权</button>'
             '<button name="decision" value="deny">拒绝</button></form></html>')
@@ -262,5 +271,23 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
             if request.url.query:
                 raise oauth.OAuthError()
             return success(provider.calendar_summary(request),request_id=str(uuid4()),data_version="task-calendar-v1")
+
+    if settings.cloud_personal_tasks_enabled and hasattr(provider,"personal_query"):
+        @site.get("/tasks/entries")
+        def personal_records(request: Request):
+            if request.url.query:
+                raise oauth.OAuthError()
+            from app.cloud_identity_site import format_times
+            return success(format_times(provider.personal_query(request,None,"records")),request_id=str(uuid4()),data_version="personal-tasks-v1")
+
+        @site.post("/tasks/entries/drafts")
+        async def personal_draft(request: Request):
+            from app.cloud_identity_site import format_times
+            return success(format_times(provider.personal_query(request,await body(request),"draft")),request_id=str(uuid4()),data_version="personal-tasks-v1")
+
+        @site.post("/tasks/entries/commit")
+        async def personal_commit(request: Request):
+            from app.cloud_identity_site import format_times
+            return success(format_times(provider.personal_query(request,await body(request),"commit")),request_id=str(uuid4()),data_version="personal-tasks-v1")
 
     return site

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { TimetableImport } from "@campus/import-core";
 import fixture from "../../../../fixtures/timetable.demo.json";
+import octoberFixture from "../../../../fixtures/timetable-october-2026.simulation.json";
 import ImportPage from "./ImportPage";
 import TimetablePage from "../timetable/TimetablePage";
 import { scheduleApi, saveConfirmedSchedule, type ScheduleDraft } from "./connectedApi";
@@ -11,7 +12,6 @@ import { useBrowserSession } from "../auth/useBrowserSession";
 import { toolReviewLoginUrl } from "../auth/toolReviewReturn";
 
 const CACHE = "campus-demo-schedule-v1";
-const timetableFixture = fixture as TimetableImport;
 const newKey = () => `schedule-${crypto.randomUUID()}`;
 interface Progress { workspaceRef: string; draftKey?: string; draftId?: string; attempt?: SaveAttempt }
 function readProgress(): Progress | null {
@@ -19,6 +19,7 @@ function readProgress(): Progress | null {
 }
 export default function ConnectedImportPage() {
   const identityPilot = import.meta.env.VITE_IDENTITY_PILOT === "true";
+  const timetableFixture = (identityPilot ? octoberFixture : fixture) as TimetableImport;
   const browserSession = useBrowserSession(identityPilot);
   const { session, setSession, checking, needsLogin, recoveryError } = browserSession;
   const [draft, setDraft] = useState<ScheduleDraft | null>(null);
@@ -96,7 +97,10 @@ export default function ConnectedImportPage() {
     {identityPilot && needsLogin && <p>当前浏览器会话已失效。<a href={loginUrl}>登录测试账号后返回此页核对</a>，不会自动保存。</p>}
     {identityPilot && !!recoveryError && !needsLogin && <button disabled={checking || busy} onClick={browserSession.retryRecovery}>重新核验浏览器会话</button>}
     {!session ? !identityPilot && <button disabled={busy} onClick={createSession}>创建虚构测试工作区</button> : <p>已连接当前浏览器的演示工作区；与“待办”共用，服务令牌不会进入浏览器。</p>}
-    <button disabled={busy} onClick={() => { setCandidate(timetableFixture); setDraft(null); }}>预览固定虚构课表</button>
+    <button disabled={busy} onClick={() => {
+      progress.current = session ? { workspaceRef: session.workspaceRef } : null;
+      persist(); setCandidate(timetableFixture); setDraft(null);
+    }}>预览固定虚构课表</button>
     <button disabled={busy || !session || !candidate || !!draft} onClick={createDraft}>校验并生成草稿（不保存）</button>
     {draft && <p>草稿版本 {draft.revision} · 状态 {draft.status === "committed" ? "已保存" : "未保存"} · 有效期 {draft.expiresAt}</p>}
     {draft && <button disabled={busy || checking || !session || draft.status === "committed"} onClick={confirm}>我已核对，确认保存课表</button>}

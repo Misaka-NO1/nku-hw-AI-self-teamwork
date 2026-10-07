@@ -1,6 +1,27 @@
 import { describe, expect, it } from "vitest";
 import { calendarIcs, exactCandidates, isOverdue, monthDays, occursOn, plannedRange, previewTasks, reminderKey, remindersDue, shanghaiDay, shiftDay, shiftMonth, summary } from "./model";
 
+describe("confirmed own task records",()=>{
+  it("shows all selected days and exports every actual interval",()=>{
+    const task={...previewTasks("2026-10-07")[1],sourceKind:"personal_task_v1" as const,
+      scheduledSlots:[{start:"2026-10-07T18:00:00+08:00",end:"2026-10-07T19:00:00+08:00"},
+        {start:"2026-10-08T18:00:00+08:00",end:"2026-10-08T19:00:00+08:00"}],reminderMinutes:0};
+    expect(occursOn(task,"2026-10-07")).toBe(true);expect(occursOn(task,"2026-10-08")).toBe(true);
+    const now=new Date("2026-10-08T18:05:00+08:00");
+    expect(remindersDue([task],now)).toHaveLength(1);
+    expect(reminderKey(task,now)).toContain("2026-10-08T18:00");
+    expect(calendarIcs([task],now).match(/BEGIN:VEVENT/g)).toHaveLength(2);
+  });
+  it("shows a reminder point without inventing a busy interval or end",()=>{
+    const task={...previewTasks("2026-10-07")[1],sourceKind:"personal_task_v1" as const,
+      scheduledSlots:[],reminderAt:"2026-10-07T17:30:00+08:00",reminderMinutes:null};
+    expect(plannedRange(task)).toBeNull();expect(occursOn(task,"2026-10-07")).toBe(true);
+    expect(remindersDue([task],new Date("2026-10-07T17:30:00+08:00"))).toHaveLength(1);
+    expect(remindersDue([task],new Date("2026-10-07T19:30:00+08:00"))).toHaveLength(0);
+    expect(calendarIcs([task],new Date())).not.toContain("BEGIN:VEVENT");
+  });
+});
+
 describe("calendar dates and semantics",()=>{
   it("uses Shanghai dates across UTC midnight",()=>{
     expect(shanghaiDay("2026-10-05T16:30:00Z")).toBe("2026-10-06");

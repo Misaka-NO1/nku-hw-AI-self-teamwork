@@ -1,5 +1,13 @@
 # 云端身份与业务持久库封闭试点
 
+## 当前状态：2026-10-07
+
+身份工具站已部署 r23/023，主 Agent v0.2.11 原两人渠道已审批通过；本人通知待办草稿、明确确认保存、日历读回和长期授权已接通。
+当前状态、团队接入、构建与迁移注意以 [N26 当前交接](../../docs/handoffs/N26-current-release-and-team-use-2026-10-07.md) 为准。
+下文保留各轮历史证据，其“未部署/仅只读/短期到期”描述不再代表最新配置。
+课表与学分仍使用标注的虚构数据；没有后台推送，也没有平台打开自动提醒。B 的首次长期授权需本人执行。
+既有环境不要重跑旧建表或替换 RPC 迁移；不把当前源码提交等同于新增发布或权限扩大。
+
 ## 2026-10-06 后端文本通知候选（未部署）
 
 按负责人要求只交付逻辑，前端由别人接入。新增默认关闭CLOUD_NOTICE_TEXT_PILOT_ENABLED，复用已有本人身份/24小时工作区；独立notice-text-migration.sql只建四表和后台RPC，不替换旧schema/fixture/授权。打包脚本已包含独立迁移文件，**不要重跑旧database-migration.sql，也未在线执行新迁移**。新服务启动/健康须核对notice-text-v1。
@@ -80,6 +88,13 @@ r6 本机前端 107 项、类型检查、生产构建通过；164 个 manifest h
 - 地图/复习资料导航指向原有公开服务，不覆盖 34 景点、91 张照片、33 份 PDF 或其服务。共享前端构建会包含已授权的共用派生资产，但不打包原照片目录。
 
 ## 生成部署包（不含任何凭证）
+
+2026-10-07 导航修复：身份工具站统一使用 `frontend/.env.identity` 的公开构建配置，
+在 frontend 运行 `npm run build:identity`。它包含已验证的赏景地图 origin 与正式 Agent
+聊天地址（不是编排页），不含密钥；课表和待办日历仍在身份服务本域，不改变本人数据隔离。
+这些 `VITE_*` 值在构建时写入产物，只改云端运行时变量不会修复现有页面。
+导航配置回归：`node --test src/app/identityBuild.test.mjs`；路由回归：
+`npm test -- src/app/routes.test.ts`。随后按下方打包步骤生成新的不覆盖包。
 
 前端构建环境：`VITE_API_BASE_URL=/`，`VITE_PUBLIC_CONTENT_ONLY=false`，`VITE_IDENTITY_PILOT=true`。
 `VITE_PUBLIC_CONTENT_ORIGIN` 设为已验收的公开资料服务 HTTPS origin；不要把后台 key/token 放进 VITE 变量。

@@ -12,7 +12,7 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES = ("timetable.demo.json", "notice-event.demo.json", "notice-deadline.demo.json", "notice-ambiguous.demo.json")
+FIXTURES = ("timetable.demo.json", "timetable-october-2026.simulation.json", "notice-event.demo.json", "notice-deadline.demo.json", "notice-ambiguous.demo.json")
 READ_ONLY_FIXTURES = ("degree-plan.demo.json", "transcript.demo.json")
 
 
@@ -38,9 +38,11 @@ def build(name: str, *, backend_only: bool = False) -> dict:
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", output / "competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", output / "notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", output / "task-calendar-migration.sql")
+    for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql"):
+        shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / name, output / name)
     (output / "fixtures").mkdir()
     for filename in READ_ONLY_FIXTURES:
-        # These do not seed owner data or alter the existing four-fixture DB.
+        # These do not seed owner data or alter the fixture DB.
         shutil.copy2(ROOT / "fixtures" / filename, output / "fixtures" / filename)
     seeds = []
     for filename in FIXTURES:

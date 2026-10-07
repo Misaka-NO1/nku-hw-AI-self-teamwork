@@ -4,7 +4,7 @@ import { useBrowserSession } from "../auth/useBrowserSession";
 import { loadCalendar, loadCandidates, updateCalendar, type CalendarUpdate } from "./api";
 import { calendarErrorText as errorText, confirmationText } from "./messages";
 import { calendarIcs, dueDay, exactCandidates, formatTime, isOverdue, monthDays, occursOn,
-  plannedRange, previewTasks, READ_ONLY, reminderKey, remindersDue, shanghaiDay, shiftMonth, summary,
+  plannedRange, plannedRanges, READ_ONLY, reminderKey, reminderTarget, remindersDue, shanghaiDay, shiftMonth, summary,
   type CalendarData, type Candidate, type TaskStatus } from "./model";
 import "./calendar.css";
 
@@ -16,7 +16,6 @@ export default function CalendarPage() {
   const [month,setMonth]=useState(today.slice(0,7));
   const [day,setDay]=useState(today);
   const [data,setData]=useState<CalendarData>(empty);
-  const [preview,setPreview]=useState(false);
   const [loading,setLoading]=useState(false);
   const [busy,setBusy]=useState(false);
   const busyRef=useRef(false);
@@ -38,14 +37,13 @@ export default function CalendarPage() {
   const scope=useRef("");
   const selectedRef=useRef(selected);
   selectedRef.current=selected;
-  scope.current=preview?"preview":auth.session?.workspaceRef??"";
+  scope.current=auth.session?.workspaceRef??"";
   const task=data.items.find(t=>t.taskId===selected);
   const counts=summary(data.items,clock);
-  const canWrite=preview||!!auth.session;
+  const canWrite=!!auth.session;
   const editable=!data.legacy && canWrite && !busy;
 
   useEffect(()=>{
-    if(preview) return;
     setData(empty);setSelected(null);setCandidates([]);setChoice(null);setConfirmed(false);setMessage("");
     if(!auth.session) {setLoading(false);return;}
     let active=true;
@@ -55,11 +53,11 @@ export default function CalendarPage() {
       .catch(reason=>{if(active){setData(empty);setError(errorText(reason));auth.rejectExpiredSession(reason);}})
       .finally(()=>{if(active)setLoading(false);});
     return ()=>{active=false;controller.abort();};
-  },[auth.session?.workspaceRef,preview,reload]);
+  },[auth.session?.workspaceRef,reload]);
   useEffect(()=>{
     setCandidates([]);setChoice(null);setConfirmed(false);setReminder(task?.reminderMinutes??null);
   },[selected,task?.calendarRevision]);
-  useEffect(()=>{setNotifications(false);delivered.current.clear();},[auth.session?.workspaceRef,preview]);
+  useEffect(()=>{setNotifications(false);delivered.current.clear();},[auth.session?.workspaceRef]);
   useEffect(()=>{
     const tick=()=>setClock(new Date());
     const timer=window.setInterval(tick,30000);
@@ -67,26 +65,26 @@ export default function CalendarPage() {
     return ()=>{window.clearInterval(timer);window.removeEventListener("focus",tick);};
   },[]);
   useEffect(()=>{
-    if(!notifications || error || loading || (!preview && (!auth.session || Date.parse(auth.session.expiresAt)<=clock.getTime()))
+    if(!notifications || error || loading || auth.checking || !auth.session || Date.parse(auth.session.expiresAt)<=clock.getTime()
       || typeof Notification==="undefined" || Notification.permission!=="granted") return;
     for(const item of remindersDue(data.items,clock)) {
-      const key=scope.current+":"+reminderKey(item);
+      const key=scope.current+":"+reminderKey(item,clock);
       if(delivered.current.has(key)) continue;
       try {
-        const notification=new Notification(preview?"前端演示提醒":"南开校园助手 · 待办提醒",{
-          body:`${item.notice.title} · ${formatTime(plannedRange(item)!.start)}`,tag:key});
+        const notification=new Notification("南开校园助手 · 待办提醒",{
+          body:`${item.notice.title} · ${formatTime(reminderTarget(item,clock))}`,tag:key});
         delivered.current.add(key);
-        notification.onclick=()=>{window.focus();setSelected(item.taskId);setDay(shanghaiDay(plannedRange(item)!.start));setMonth(shanghaiDay(plannedRange(item)!.start).slice(0,7));notification.close();};
+        notification.onclick=()=>{window.focus();setSelected(item.taskId);const at=reminderTarget(item,clock)!;setDay(shanghaiDay(at));setMonth(shanghaiDay(at).slice(0,7));notification.close();};
       } catch {setNotificationText("此浏览器无法显示桌面通知；请使用页内提醒或导出日历。");}
     }
-  },[clock,notifications,data,preview,auth.session,error,loading]);
+  },[clock,notifications,data,auth.session,auth.checking,error,loading]);
 
   async function perform(action:()=>Promise<void>) {
     if(busyRef.current)return;
     busyRef.current=true;setBusy(true);setError("");setMessage("");
     try {await action();} catch(reason) {
       setError(errorText(reason));
-      if(!preview) auth.rejectExpiredSession(reason);
+      auth.rejectExpiredSession(reason);
       // Keep a lost-response write's exact selection for an idempotent retry.
       // Identity/version failures invalidate candidates instead of replaying them.
       if(reason instanceof ApiError && [401,403,409,410].includes(reason.status??0)) {
@@ -100,12 +98,6 @@ export default function CalendarPage() {
     const currentScope=scope.current, id=task.taskId;
     setChoice(null);setConfirmed(false);setCandidates([]);
     await perform(async()=>{
-      if(preview) {
-        const future=day<today?today:day;
-        setCandidates([{start:future+"T18:00:00+08:00",end:future+"T18:30:00+08:00",durationMinutes:30},
-          {start:future+"T19:00:00+08:00",end:future+"T19:30:00+08:00",durationMinutes:30}]);
-        setMessage("前端演示候选：未查询课表、未验证截止时间，不是真实推荐。");return;
-      }
       if(!auth.session)return;
       const result=await loadCandidates(auth.session,id);
       if(scope.current!==currentScope || selectedRef.current!==id)return;
@@ -122,11 +114,6 @@ export default function CalendarPage() {
       scheduled_start:choice?.start??task.scheduledStart,scheduled_end:choice?.end??task.scheduledEnd,
       reminder_minutes:reminder};
     await perform(async()=>{
-      if(preview) {
-        setData(current=>({...current,items:current.items.map(t=>t.taskId===task.taskId?{...t,status:nextStatus,
-          scheduledStart:update.scheduled_start,scheduledEnd:update.scheduled_end,reminderMinutes:reminder,calendarRevision:t.calendarRevision+1}:t)}));
-        setChoice(null);setConfirmed(false);setMessage("已更新前端演示；没有写入数据库，刷新会清空。");return;
-      }
       if(!auth.session)return;
       if(Date.parse(auth.session.expiresAt)<=Date.now())throw new Error("会话已过期，请重新登录后保存。");
       const signature=JSON.stringify([currentScope,task.taskId,update]);
@@ -145,10 +132,6 @@ export default function CalendarPage() {
       setMessage("安排已保存并从后端读回。");
     });
   }
-  function openPreview() {
-    setPreview(true);setData({items:previewTasks(today),capabilities:{scheduling:true,status:true,reminders:true}});
-    setError("");setMessage("");setLoading(false);setSelected(null);setDay(today);setMonth(today.slice(0,7));setAllDays(false);
-  }
   async function enableNotifications() {
     if(notifications) {setNotifications(false);setNotificationText("桌面提醒已关闭。");return;}
     if(typeof Notification==="undefined" || !window.isSecureContext) {setNotificationText("此环境不支持桌面通知，请使用页内提醒或导出日历。");return;}
@@ -161,25 +144,23 @@ export default function CalendarPage() {
   function downloadIcs() {
     const blob=new Blob([calendarIcs(data.items,clock)],{type:"text/calendar;charset=utf-8"});
     const url=URL.createObjectURL(blob),link=document.createElement("a");
-    link.href=url;link.download=preview?"南开-前端演示日历.ics":"南开-待办安排.ics";
+    link.href=url;link.download="南开-待办安排.ics";
     document.body.append(link);link.click();link.remove();window.setTimeout(()=>URL.revokeObjectURL(url),1000);
     setMessage("已交给浏览器下载。导入系统日历后由日历应用提醒；是否提醒取决于应用设置，导出后不会自动同步。");
   }
   const visible=data.items.filter(t=>(statusFilter==="all"||t.status===statusFilter)&&(allDays||occursOn(t,day)));
-  const currentExpired=!preview && auth.session && Date.parse(auth.session.expiresAt)<=clock.getTime();
-  const showData=preview || (!!auth.session && !currentExpired && !auth.checking);
+  const currentExpired=auth.session && Date.parse(auth.session.expiresAt)<=clock.getTime();
+  const showData=!!auth.session && !currentExpired && !auth.checking;
   return <section className="task-calendar">
     <header className="calendar-heading"><div><p className="calendar-eyebrow">把建议变成看得见的安排</p><h1>我的待办日历</h1><p>先核对，再选择；每一件事，都有自己的时间。</p></div>
       <div className="calendar-actions"><button onClick={()=>{setDay(today);setMonth(today.slice(0,7));setAllDays(false);}}>回到今天</button>
-        {!preview && <button onClick={()=>setReload(n=>n+1)} disabled={loading||!auth.session}>刷新记录</button>}
-        <button onClick={openPreview} disabled={busy}>{preview?"重置演示":"查看前端演示"}</button>
-        {preview && <button onClick={()=>{setPreview(false);setData(empty);setSelected(null);setMessage("");}}>退出演示</button>}</div></header>
-    {preview ? <p className="calendar-warning" role="status">前端交互演示 · 虚构数据，仅本页内存保存。候选未经过课表计算，不写云端，不影响你的真实记录。</p> : <>
+        <button onClick={()=>setReload(n=>n+1)} disabled={loading||!auth.session}>刷新记录</button></div></header>
+    <>
       {auth.checking && <p role="status">正在核验当前浏览器会话…</p>}
       {(!auth.session && !auth.checking || currentExpired) && <p className="calendar-warning">请先<a href="/tools/login?return_to=%2Ftools%2Fcalendar">登录后返回日历</a>。不会自动新建工作区、保存或排期。</p>}
       {auth.recoveryError!=null && <p role="alert">{errorText(auth.recoveryError)} <button onClick={auth.retryRecovery}>重新核验浏览器会话</button></p>}
       {data.legacy && <p className="calendar-warning">已读取现有待办。D 的日历扩展接口尚未接通：当前只读，不支持完成、改期或保存提醒；截止时间不是已安排时间。</p>}
-    </>}
+    </>
     {error && <p className="calendar-error" role="alert">{error}</p>}
     {message && <p className="calendar-message" role="status">{message}</p>}
     {showData && <>
@@ -205,24 +186,26 @@ export default function CalendarPage() {
           {visible.length===0&&<p className="calendar-empty">{allDays?"没有此状态的事项。":"这一天没有此状态的事项。可查看全部，找到尚未安排的待办。"}</p>}
           <div className="calendar-task-list">{visible.map(t=><button className={`calendar-task-card ${t.taskId===selected?"selected":""}`} key={t.taskId} onClick={()=>{setSelected(t.taskId);setMessage("");}}>
             <span className="calendar-task-status">{t.status==="completed"?"已完成":t.status==="cancelled"?"已取消":isOverdue(t,clock)?"已逾期":"未完成"}</span><strong>{t.notice.title}</strong>
-            <span>{plannedRange(t)?`安排：${formatTime(plannedRange(t)!.start)}`:"尚未安排时间"}</span><span>截止：{t.notice.due.at?formatTime(t.notice.due.at):t.notice.due.date??"无明确截止"}</span>
+            <span>{plannedRange(t)?`安排：${formatTime(plannedRange(t)!.start)}${plannedRanges(t).length>1?`，共 ${plannedRanges(t).length} 段`:""}`:t.reminderAt?`提醒：${formatTime(t.reminderAt)}`:"尚未安排时间"}</span><span>截止：{t.notice.due.at?formatTime(t.notice.due.at):t.notice.due.date??"无明确截止"}</span>
           </button>)}</div>
         </aside></div>
         {task && <article className="calendar-detail" key={task.taskId}>
           <div className="calendar-agenda-title"><h2>{task.notice.title}</h2><button onClick={()=>setSelected(null)}>收起详情</button></div>
-          <dl><dt>实际安排</dt><dd>{plannedRange(task)?`${formatTime(plannedRange(task)!.start)} — ${formatTime(plannedRange(task)!.end)}`:"未安排；截止日期不代表工作时间"}</dd>
-            <dt>截止要求</dt><dd>{task.notice.due.at?formatTime(task.notice.due.at):task.notice.due.date??"未确定"}</dd><dt>预计耗时</dt><dd>{task.notice.estimatedMinutes?`${task.notice.estimatedMinutes} 分钟`:"需要补充"}</dd>
+          <dl><dt>实际安排</dt><dd>{plannedRanges(task).length?plannedRanges(task).map(r=><div key={r.start}>{formatTime(r.start)} — {formatTime(r.end)}</div>):"未安排；截止日期不代表工作时间"}</dd>
+            {task.reminderAt&&<><dt>提醒点</dt><dd>{formatTime(task.reminderAt)}（不占用时间，无须结束时间）</dd></>}
+            {task.notes&&<><dt>备注</dt><dd>{task.notes}</dd></>}
+            <dt>截止要求</dt><dd>{task.notice.due.at?formatTime(task.notice.due.at):task.notice.due.date??"未确定"}</dd>{task.sourceKind!=="personal_task_v1"&&<><dt>预计耗时</dt><dd>{task.notice.estimatedMinutes?`${task.notice.estimatedMinutes} 分钟`:"需要补充"}</dd></>}
             <dt>准备材料</dt><dd>{task.notice.materials.join("、")||"未提供"}</dd></dl>
           {task.notice.sourceSpans.length>0 && <details><summary>查看提取来源</summary>{task.notice.sourceSpans.map((span,i)=><blockquote key={i}>{span.quote}<small>{span.sourceRef}</small></blockquote>)}</details>}
           {task.notice.needsConfirmation.length>0&&<p>待确认：{task.notice.needsConfirmation.map(confirmationText).join("、")}</p>}
-          <div className="calendar-actions"><button disabled={!editable||!data.capabilities.scheduling||task.status!=="pending"||!!task.notice.event.start} onClick={queryCandidates}>{preview?"体验演示候选":"根据课表重新查候选"}</button>
+          <div className="calendar-actions"><button disabled={!editable||!data.capabilities.scheduling||task.status!=="pending"||!!task.notice.event.start||task.sourceKind==="personal_task_v1"} onClick={queryCandidates}>根据课表重新查候选</button>
             <button disabled={!editable||!data.capabilities.status} onClick={()=>save(task.status==="pending"?"completed":"pending")}>{task.status==="pending"?"标记完成":"恢复未完成"}</button>
             <button disabled={!editable||!data.capabilities.status||task.status==="cancelled"} onClick={()=>save("cancelled")}>取消事项</button></div>
-          {candidates.length>0&&<fieldset className="calendar-candidates"><legend>{preview?"演示候选（未计算课表）":"选择一个参考时间"}</legend>{candidates.map((c,i)=><label key={c.start}><input type="radio" name="calendar-slot" checked={choice?.start===c.start} onChange={()=>{setChoice(c);setConfirmed(false);}}/>方案 {i+1} · {formatTime(c.start)} — {formatTime(c.end)}（{c.durationMinutes} 分钟）</label>)}</fieldset>}
+          {candidates.length>0&&<fieldset className="calendar-candidates"><legend>选择一个参考时间</legend>{candidates.map((c,i)=><label key={c.start}><input type="radio" name="calendar-slot" checked={choice?.start===c.start} onChange={()=>{setChoice(c);setConfirmed(false);}}/>方案 {i+1} · {formatTime(c.start)} — {formatTime(c.end)}（{c.durationMinutes} 分钟）</label>)}</fieldset>}
           <label className="calendar-filter">提前提醒 <select disabled={!editable||!data.capabilities.reminders} value={reminder??"none"} onChange={e=>setReminder(e.target.value==="none"?null:Number(e.target.value))}>
             <option value="none">不提醒</option>{[0,5,15,30,60].map(n=><option key={n} value={n}>{n===0?"开始时":`${n} 分钟`}</option>)}</select></label>
           {choice&&<label className="calendar-confirm"><input type="checkbox" checked={confirmed} onChange={e=>setConfirmed(e.target.checked)}/>我已核对并确认选定的时间；截止要求保持不变。</label>}
-          <button className="calendar-primary" disabled={!editable||(!choice&&!data.capabilities.reminders)||(!!choice&&!confirmed)} onClick={()=>save()}>{preview?"仅保存到本页演示":busy?"保存中…":"确认保存安排 / 提醒"}</button>
+          <button className="calendar-primary" disabled={!editable||(!choice&&!data.capabilities.reminders)||(!!choice&&!confirmed)} onClick={()=>save()}>{busy?"保存中…":"确认保存安排 / 提醒"}</button>
         </article>}
         <footer className="calendar-reminders"><h2>记下来，也别忘了</h2><p>打开日历可看到待办摘要。桌面通知需要你主动授权，且只在本页面运行、登录有效时工作。</p>
           <div className="calendar-actions"><button onClick={enableNotifications}>{notifications?"关闭桌面提醒":"开启桌面提醒"}</button><button disabled={!data.items.some(t=>t.status==="pending"&&plannedRange(t))||!!error} onClick={downloadIcs}>导出已安排事项（.ics）</button></div>

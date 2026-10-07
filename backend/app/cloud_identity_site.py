@@ -10,7 +10,7 @@ import re
 import time
 from collections import defaultdict,deque
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from secrets import token_urlsafe
 from threading import Lock
@@ -31,6 +31,7 @@ from app.cloud_tasks_site import ENV_ID,RequestBodyLimit
 from app.core.cloudbase_auth import require_pilot,verify_cloudbase_user
 from app.core.cloud_identity_store import CloudIdentityStore
 from app.core.browser_session_context import CONTEXT_COOKIE,decode_context,encode_context
+from app.core.persistent_auth import COOKIE_MAX_AGE, UNTIL_REVOKED_EPOCH
 from app.core.config import get_settings
 from app.core.contracts import validate_boundary
 from app.core.demo import FIXTURE_SET_ID,enforce_demo_fixture
@@ -63,7 +64,9 @@ def format_times(value):
     result={key:format_times(item) for key,item in value.items()}
     for source,dest in (("expires_epoch","expires_at"),("confirmed_epoch","confirmed_at")):
         if source in result:
-            result[dest]=datetime.fromtimestamp(result.pop(source),ZoneInfo("Asia/Shanghai")).isoformat(timespec="seconds")
+            epoch=result.pop(source)
+            # Windows CRT cannot fromtimestamp() year 9999; use UTC arithmetic.
+            result[dest]=(datetime(1970,1,1,tzinfo=timezone.utc)+timedelta(seconds=epoch)).astimezone(ZoneInfo("Asia/Shanghai")).isoformat(timespec="seconds")
     return result
 
 
@@ -96,12 +99,16 @@ def install_health_diagnostics(site,runtime):
 
 def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     runtime=settings or get_settings()
+    if runtime.cloud_persistent_auth_enabled and not (runtime.cloud_personal_tasks_enabled and runtime.cloud_oauth_competition_compat_enabled):
+        raise ValueError("Persistent access requires the explicitly scoped own-calendar configuration")
+    if runtime.cloud_personal_tasks_enabled and not (runtime.cloud_task_calendar_enabled and runtime.cloud_oauth_competition_compat_enabled):
+        raise ValueError("Own task recording requires calendar and explicitly scoped competition OAuth")
     if runtime.cloud_task_calendar_enabled and not runtime.cloud_notice_text_pilot_enabled:
         raise ValueError("Calendar requires the explicitly enabled notice backend")
     if runtime.cloud_oauth_competition_compat_enabled and not runtime.cloud_oauth_pilot_enabled:
         raise ValueError("Competition compatibility requires explicit OAuth activation")
     if runtime.cloud_identity_bootstrap_enabled:
-        if (runtime.cloud_identity_pilot_enabled or runtime.cloud_oauth_pilot_enabled or runtime.cloud_notice_text_pilot_enabled or runtime.cloud_task_calendar_enabled
+        if (runtime.cloud_identity_pilot_enabled or runtime.cloud_oauth_pilot_enabled or runtime.cloud_notice_text_pilot_enabled or runtime.cloud_task_calendar_enabled or runtime.cloud_personal_tasks_enabled
             or runtime.app_env not in {"test","staging"} or runtime.auth_mode!="demo_fixture"
             or runtime.allow_personal_uploads):
             raise ValueError("Bootstrap must not enable identity, OAuth or personal business")
@@ -130,6 +137,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         result=database.call("probe",{})
         if result!={"schema_version":"identity-pilot-v1"}:
             raise ValueError("Unexpected database schema version")
+        if runtime.cloud_persistent_auth_enabled and database.call("persistent_probe",{})!={"schema_version":"persistent-auth-v1"}:
+            raise ValueError("Persistent authorization migration required")
         if runtime.cloud_oauth_competition_compat_enabled:
             if database.competition_call("probe",{})!={"schema_version":"competition-oauth-v1"}:
                 raise ValueError("Competition OAuth migration required")
@@ -139,6 +148,9 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         if runtime.cloud_task_calendar_enabled:
             if database.calendar_call("probe", {}) != {"schema_version": "task-calendar-v1"}:
                 raise ValueError("Calendar migration required")
+        if runtime.cloud_personal_tasks_enabled:
+            if database.personal_call("probe", {}) != {"schema_version": "personal-tasks-v1"}:
+                raise ValueError("Own task recording migration required")
         subjects=["cloudbase_pilot_"+secret_hash(runtime.cloudbase_auth_env_id+":"+uid)
                   for uid in runtime.cloudbase_auth_pilot_user_ids]
         database.call("configure_subjects",{"subjects":subjects})
@@ -236,14 +248,19 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         if runtime.cloud_task_calendar_enabled:
             if database.calendar_call("probe", {}) != {"schema_version": "task-calendar-v1"}:
                 raise AppError(503,"DEPENDENCY_UNAVAILABLE","Calendar storage unavailable",True)
+        if runtime.cloud_personal_tasks_enabled:
+            if database.personal_call("probe", {}) != {"schema_version": "personal-tasks-v1"}:
+                raise AppError(503,"DEPENDENCY_UNAVAILABLE","Own task storage unavailable",True)
         return {"status":"ok","build_id":runtime.build_id,"dataset_kind":"demo","personal_uploads":False,
                 "persistent_store":"cloudbase_pg","oauth_enabled":runtime.cloud_oauth_pilot_enabled,
-                "oauth_competition_compat":runtime.cloud_oauth_competition_compat_enabled}
+                "oauth_competition_compat":runtime.cloud_oauth_competition_compat_enabled,
+                "own_task_recording":runtime.cloud_personal_tasks_enabled,
+                "persistent_authorization":runtime.cloud_persistent_auth_enabled}
 
     @site.get("/api/v1/auth/cloudbase/config")
     def config(request:Request):
         return reply(request,{"env_id":runtime.cloudbase_auth_env_id,"region":"ap-shanghai","dataset_kind":"demo",
-            "personal_uploads":False,"agent_paired":False})
+            "personal_uploads":False,"agent_paired":False,"persistent_authorization":runtime.cloud_persistent_auth_enabled})
 
     @site.post("/api/v1/auth/cloudbase/session")
     async def login(request:Request,response:Response):
@@ -258,15 +275,19 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         subject=await verify_cloudbase_user(runtime,request.headers.get("Authorization",""))
         token,csrf=token_urlsafe(32),token_urlsafe(32)
         result=database.call("login",{"subject_id":subject,"token_hash":secret_hash(token),"csrf_hash":secret_hash(csrf),
-            "workspace_ref":"pilot_workspace_"+token_urlsafe(18),"previous_session_hash":secret_hash(request.cookies.get(SESSION_COOKIE,""))})
-        response.set_cookie(SESSION_COOKIE,token,max_age=900,httponly=True,secure=True,samesite="strict",path="/")
+            "workspace_ref":"pilot_workspace_"+token_urlsafe(18),"previous_session_hash":secret_hash(request.cookies.get(SESSION_COOKIE,"")),
+            **({"persistent":True} if runtime.cloud_persistent_auth_enabled else {})})
+        if runtime.cloud_persistent_auth_enabled and result["expires_epoch"] != UNTIL_REVOKED_EPOCH:
+            raise AppError(503,"DEPENDENCY_UNAVAILABLE","Persistent authorization migration required",True)
+        cookie_age=COOKIE_MAX_AGE if runtime.cloud_persistent_auth_enabled else 900
+        response.set_cookie(SESSION_COOKIE,token,max_age=cookie_age,httponly=True,secure=True,samesite="strict",path="/")
         response.set_cookie(CONTEXT_COOKIE,encode_context(token,result["workspace_ref"],csrf,result["expires_epoch"]),
-            max_age=900,httponly=True,secure=True,samesite="strict",path="/")
+            max_age=cookie_age,httponly=True,secure=True,samesite="strict",path="/")
         return reply(request,{**result,"csrf_token":csrf,"dataset_kind":"demo","identity_verified_by":"cloudbase_user_me",
                               "personal_uploads":False,"agent_paired":False})
 
     @site.get("/api/v1/auth/cloudbase/browser-session")
-    async def browser_session(request:Request):
+    async def browser_session(request:Request,response:Response):
         # Browser same-origin fetch may omit Origin (and Referrer-Policy is
         # no-referrer). Require a non-simple custom header and reject explicit
         # foreign Origin/Fetch Metadata; no CORS is enabled on this service.
@@ -281,12 +302,18 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             if chunk:
                 raise AppError(422,"VALIDATION_ERROR","Session read accepts no request body")
         args=browser_args(request)
-        context=decode_context(request.cookies.get(SESSION_COOKIE,""),request.cookies.get(CONTEXT_COOKIE,""))
+        context=decode_context(request.cookies.get(SESSION_COOKIE,""),request.cookies.get(CONTEXT_COOKIE,""),
+                               persistent=runtime.cloud_persistent_auth_enabled)
         workspace=database.call("get_workspace",args)
         if workspace.get("workspace_ref")!=context["workspace_ref"]:
             raise AppError(401,"AUTH_REQUIRED","Browser session context does not match the verified owner")
         result={**context,"dataset_kind":"demo","personal_uploads":False,"agent_paired":False}
         validate_boundary(format_times(result),"CloudBrowserSession")
+        if runtime.cloud_persistent_auth_enabled and context["expires_epoch"] == UNTIL_REVOKED_EPOCH:
+            # Reissue only after the DB validates the original session/owner.
+            for name in (SESSION_COOKIE, CONTEXT_COOKIE):
+                response.set_cookie(name,request.cookies[name],max_age=COOKIE_MAX_AGE,
+                                    httponly=True,secure=True,samesite="strict",path="/")
         return reply(request,result)
 
     @site.post("/api/v1/auth/cloudbase/logout")
@@ -359,6 +386,9 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     if runtime.cloud_task_calendar_enabled:
         from app.api.task_calendar import install_calendar_routes
         install_calendar_routes(site,runtime,database,browser_args,format_times)
+    if runtime.cloud_personal_tasks_enabled:
+        from app.api.personal_tasks import install_personal_routes
+        install_personal_routes(site,runtime,database,browser_args,format_times)
 
     @site.get("/api/v1/tasks/{task_id}")
     def task(request:Request,task_id:str):
@@ -390,6 +420,9 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
                 raise AppError(404,"NOT_FOUND","Workspace not found")
         else:
             records=database.call("records",{**browser_args(request),"workspace_ref":payload["workspace_ref"]})
+        if runtime.cloud_personal_tasks_enabled:
+            from app.core.personal_tasks import PersonalTaskService
+            records={**records,"tasks":records["tasks"]+PersonalTaskService(runtime,database).records({"principal_kind":"browser",**browser_args(request)})}
         result,warnings=calculate_owned_time(records,payload,operation,allow_notice_text=runtime.cloud_notice_text_pilot_enabled)
         return reply(request,result,calculation_version=schedule.CALCULATION_VERSION,warnings=[WarningItem(**warning) for warning in warnings])
 

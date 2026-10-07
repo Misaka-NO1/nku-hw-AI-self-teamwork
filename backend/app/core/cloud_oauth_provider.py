@@ -130,6 +130,21 @@ class CloudOAuthProvider:
         from app.core.task_calendar import TaskCalendarService
         return TaskCalendarService(self.settings,self.store).summary(self._notice_args(request))
 
+    def personal_query(self,request,arguments,operation):
+        from app.core.personal_tasks import PersonalTaskService
+        from app.core.platform_query import decode_platform_query
+        service=PersonalTaskService(self.settings,self.store)
+        args=self._notice_args(request)
+        access=self.store.personal_call("access",args)
+        if not access["can_read"] or (operation!="records" and not access["can_write"]):
+            raise AppError(403,"FORBIDDEN","需要重新授权本人待办读写；旧只读授权不能保存")
+        if operation=="records":
+            from app.core.task_calendar import calendar_task
+            return {"items":[calendar_task(t) for t in service.records(args)],"background_push":False,
+                    "calendar_url":self.settings.app_origin+"/tools/calendar"}
+        payload=decode_platform_query(arguments)
+        return service.draft(args,payload) if operation=="draft" else service.commit(args,payload)
+
     def time_query(self,request,arguments,operation):
         from app.core.owned_time import calculate_owned_time,decode_owned_time
         # Authenticate and require demo:read before processing query content.

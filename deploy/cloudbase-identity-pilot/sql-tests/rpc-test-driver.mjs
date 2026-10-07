@@ -11,6 +11,9 @@ await pg.exec(await readFile(new URL('../schema.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../competition-oauth-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../notice-text-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../task-calendar-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../task-oauth-scopes-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../personal-tasks-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../persistent-auth-migration.sql',import.meta.url),'utf8'));
 await pg.query("SELECT set_config('request.jwt.claims',$1,false)",[JSON.stringify({role:'service_role'})]);
 const canonical=value=>value && typeof value==='object' ? Array.isArray(value) ? value.map(canonical) :
   Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])) : value;
@@ -47,8 +50,9 @@ for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity}
     const compatibility=op.startsWith('__competition__:');
     const notice=op.startsWith('__notice__:');
     const calendar=op.startsWith('__calendar__:');
-    const sql=calendar ? 'SELECT public.nku_task_calendar_v1_rpc($1,$2::jsonb) result' : notice ? 'SELECT public.nku_notice_text_v1_rpc($1,$2::jsonb) result' : compatibility ? 'SELECT public.nku_competition_oauth_v1_rpc($1,$2::jsonb) result' : 'SELECT public.nku_identity_pilot_v1_rpc($1,$2::jsonb) result';
-    const result=await pg.query(sql,[calendar ? op.slice('__calendar__:'.length) : notice ? op.slice('__notice__:'.length) : compatibility ? op.slice('__competition__:'.length) : op,JSON.stringify(args)]);
+    const personal=op.startsWith('__personal__:');
+    const sql=personal ? 'SELECT public.nku_personal_tasks_v1_rpc($1,$2::jsonb) result' : calendar ? 'SELECT public.nku_task_calendar_v1_rpc($1,$2::jsonb) result' : notice ? 'SELECT public.nku_notice_text_v1_rpc($1,$2::jsonb) result' : compatibility ? 'SELECT public.nku_competition_oauth_v1_rpc($1,$2::jsonb) result' : 'SELECT public.nku_identity_pilot_v1_rpc($1,$2::jsonb) result';
+    const result=await pg.query(sql,[personal ? op.slice('__personal__:'.length) : calendar ? op.slice('__calendar__:'.length) : notice ? op.slice('__notice__:'.length) : compatibility ? op.slice('__competition__:'.length) : op,JSON.stringify(args)]);
     process.stdout.write(JSON.stringify(result.rows[0].result)+'\n');
   } catch {
     // Do not print submitted params/SQL/credential hashes even on test failures.

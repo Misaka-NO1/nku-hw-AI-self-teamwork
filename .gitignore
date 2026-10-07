@@ -6,6 +6,7 @@ __pycache__/
 htmlcov/
 .env
 backend/data/
+backend/.test-tmp-*/
 .local-notice-pilot-data/
 node_modules/
 .pnpm-store/

@@ -80,6 +80,12 @@ function validateReadOnlyNotice(params) {
     if (!found) throw new Error('FABRICATED_EVIDENCE');
   };
   const ids = new Set();
+  const time_assumptions = [];
+  // School reader convenience only: a month/day in an ordinary notice defaults
+  // to the Shanghai year of the trusted read timestamp, never an invented year.
+  const contextTime = source.reference_at || source.extracted_at;
+  const contextYear = Number.isFinite(Date.parse(contextTime))
+    ? new Date(Date.parse(contextTime) + 8 * 3600000).getUTCFullYear() : null;
   const items = batch.items.map((item, index) => {
     if (!exact(item, ['kind','notice']) || !['event_conflict','deadline_feasibility'].includes(item.kind)) throw new Error('INVALID_ITEM');
     const n = item.notice;
@@ -90,6 +96,35 @@ function validateReadOnlyNotice(params) {
     if (!exact(n.event, ['start','end','date','precision']) || !exact(n.due, ['at','date','precision'])
         || !['datetime','date_only','unknown'].includes(n.event.precision)
         || !['datetime','date_only','unknown'].includes(n.due.precision)) throw new Error('INVALID_TIME_SHAPE');
+    if (item.kind === 'deadline_feasibility' && contextYear && Array.isArray(n.source_spans)) {
+      const quotes = n.source_spans.filter(s => s && s.field === 'due'
+        && s.source_ref === source.source_ref && typeof s.quote === 'string'
+        && source.source_text.includes(s.quote)).map(s => s.quote);
+      // Explicit years, relative dates and contradictory dates require their
+      // own interpretation; this rule only fills the omitted year of MM-DD.
+      if (quotes.length && !quotes.some(q => /\d{4}\s*(?:年|[-/.])/.test(q))) {
+        const found = new Set();
+        for (const q of quotes) {
+          const pattern = /(?:^|[^\d])(?:([1-9]|1[0-2]|0[1-9])\s*月\s*(0?[1-9]|[12]\d|3[01])\s*(?:日|号)|([1-9]|1[0-2]|0[1-9])\s*[-/.]\s*(0?[1-9]|[12]\d|3[01]))\s*(?:晚|晚上|上午|下午)?\s*(\d{1,2})[:：](\d{2})(?:[:：](\d{2}))?(?![\d:：])/g;
+          for (const match of q.matchAll(pattern)) {
+            const month = match[1] || match[3], date = match[2] || match[4];
+            const hour = match[5], minute = match[6], second = match[7] || '00';
+            // Don't infer AM/PM from a 12-hour expression in this narrow parser.
+            if (/(?:下午|晚上|晚)\s*\d{1,2}[:：]/.test(match[0]) && Number(hour) < 12) continue;
+            found.add(`${contextYear}-${month.padStart(2,'0')}-${date.padStart(2,'0')}T${hour.padStart(2,'0')}:${minute}:${second}+08:00`);
+          }
+        }
+        if (found.size === 1) {
+          const at = [...found][0];
+          if (dt(at)) {
+            n.due = {at, date:null, precision:'datetime'};
+            time_assumptions.push({item_index:index, field:'due', assumption:'omitted_year',
+              year:contextYear, basis:source.reference_at ? 'provided_reference' : 'current_shanghai_year',
+              value:at, is_past:Date.parse(at) < Date.parse(contextTime)});
+          }
+        }
+      }
+    }
     for (const value of [n.event.start,n.event.end,n.due.at,n.earliest_start,n.published_at]) {
       if (value !== null && !dt(value)) throw new Error('INVALID_TIME');
     }
@@ -136,7 +171,7 @@ function validateReadOnlyNotice(params) {
   for (let i=0; i<covered.length; i++) {
     if (!covered[i] && !/\s/.test(source.source_text[i])) unread.push(i);
   }
-  const result = {ok:unread.length === 0, batch_version:'notice-model-candidate-v1', items,
+  const result = {ok:unread.length === 0, batch_version:'notice-model-candidate-v1', items, time_assumptions,
     unclassified:batch.unclassified, coverage:{characters_total:covered.length,
       uncovered_character_indices:unread}, needs_confirmation:unread.length ? ['incomplete_reading'] : [],
     status:'review_required', can_save:false};
@@ -147,7 +182,16 @@ function validateReadOnlyNotice(params) {
 
 // School-only result. Never emit a fictional cloud request for real source text.
 function handler(params) {
-  const validated = validateReadOnlyNotice(params);
+  let validated;
+  try { validated = validateReadOnlyNotice(params); }
+  catch (error) {
+    const code = typeof error.message === 'string' && /^[A-Z_]+$/.test(error.message)
+      ? error.message : 'INVALID_EXTRACTION';
+    return {result:{ok:false, status:'invalid_extraction', error_code:code,
+      message:'本次通知提取的结构或时间不一致，尚未取得可验证结果；请重试或确认原通知中的有歧义时间。',
+      items:[], scheduling_clarifications:[], time_assumptions:[], can_save:false,
+      source_scope:'user_provided_read_only', saved:false, time_check_performed:false}, query_json:''};
+  }
   // Free-form model flags must not manufacture registration or ID requirements.
   const scheduling_clarifications = validated.result.items.map(item => {
     const n = item.notice, fields = [];

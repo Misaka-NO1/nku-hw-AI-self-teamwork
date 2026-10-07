@@ -12,6 +12,7 @@ from app.core.cloud_oauth_provider import CloudOAuthProvider, SCHOOL_CALLBACK
 from app.core.errors import AppError
 from app.core.oauth_local import OAuthError, resource_token
 from app.core.security import secret_hash
+from app.core.persistent_auth import UNTIL_REVOKED_EPOCH, OAUTH_MAX_AGE
 
 
 class CompetitionOAuthProvider(CloudOAuthProvider):
@@ -27,13 +28,17 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
             or params["redirect_uri"]!=SCHOOL_CALLBACK):
             raise OAuthError()
         if params["response_type"]!="code": raise OAuthError("unsupported_response_type")
-        if params["scope"]!="demo:read": raise OAuthError("invalid_scope")
+        allowed = {"demo:read"}
+        if self.settings.cloud_personal_tasks_enabled:
+            allowed |= {"demo:read tasks:read", "demo:read tasks:read tasks:write"}
+        if params["scope"] not in allowed: raise OAuthError("invalid_scope")
         if not re.fullmatch(r"[A-Za-z0-9._~-]{8,256}",params["state"]): raise OAuthError()
         raw=secrets.token_urlsafe(32)
         self.store.competition_call("authorize_start",{**self._browser(request),
             "transaction_hash":secret_hash(raw),"audience":self.settings.oauth_client_id,
-            "redirect_uri":SCHOOL_CALLBACK,"state":params["state"]})
-        return raw,frozenset({"demo:read"})
+            "redirect_uri":SCHOOL_CALLBACK,"state":params["state"],
+            **({"scopes":params["scope"]} if params["scope"] != "demo:read" else {})})
+        return raw,frozenset(params["scope"].split())
 
     def approve(self,request,transaction,decision):
         if decision not in {"allow","deny"}: raise OAuthError()
@@ -56,8 +61,12 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
         except AppError as exc:
             raise OAuthError("temporarily_unavailable",503) if exc.status_code>=500 else OAuthError("invalid_grant") from None
         expiry=result["expires_epoch"]-int(time.time())
-        if not 0<expiry<=600 or result["scopes"]!=["demo:read"]: raise OAuthError("invalid_grant")
-        return {"access_token":raw,"token_type":"Bearer","expires_in":expiry,"scope":"demo:read"}
+        permitted = [["demo:read"]]
+        if self.settings.cloud_personal_tasks_enabled:
+            permitted += [["demo:read","tasks:read"],["demo:read","tasks:read","tasks:write"]]
+        durable = self.settings.cloud_persistent_auth_enabled and result["expires_epoch"] == UNTIL_REVOKED_EPOCH
+        if (not 0<expiry or (not durable and expiry>600) or result["scopes"] not in permitted): raise OAuthError("invalid_grant")
+        return {"access_token":raw,"token_type":"Bearer","expires_in":OAUTH_MAX_AGE if durable else expiry,"scope":" ".join(result["scopes"])}
 
     def revoke(self,token):
         self.gate()
@@ -67,7 +76,11 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
         self.gate()
         from app.cloud_identity_site import format_times
         if self.settings.cloud_notice_text_pilot_enabled:
-            return format_times(self.store.notice_call("records",self._notice_args(request)))
+            data = self.store.notice_call("records",self._notice_args(request))
+            if self.settings.cloud_personal_tasks_enabled:
+                from app.core.personal_tasks import PersonalTaskService
+                data = {**data, "tasks": data["tasks"] + PersonalTaskService(self.settings,self.store).records(self._notice_args(request), optional=True)}
+            return format_times(data)
         return format_times(self.store.competition_call("records",{
             "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":self.settings.oauth_client_id}))
 

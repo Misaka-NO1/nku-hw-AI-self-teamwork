@@ -2113,6 +2113,21 @@
           ],
           "additionalProperties": false
         },
+        "source_kind": {"const": "personal_task_v1"},
+        "entry_kind": {"enum": ["reminder", "deadline", "event"]},
+        "notes": {"type": "string", "maxLength": 2000},
+        "reminder_at": {"type": ["string", "null"], "format": "date-time"},
+        "scheduled_slots": {
+          "type": "array", "maxItems": 8,
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": {"type": "string", "format": "date-time"},
+              "end": {"type": "string", "format": "date-time"}
+            },
+            "required": ["start", "end"], "additionalProperties": false
+          }
+        },
         "calendar_revision": {
           "type": "integer",
           "minimum": 0

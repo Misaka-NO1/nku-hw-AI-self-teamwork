@@ -28,7 +28,8 @@ def calendar_task(task):
     state = task.get("calendar_state") or {"calendar_revision": 0, "status": "pending",
         "scheduled_start": start, "scheduled_end": end, "reminder_minutes": None}
     return {k: task[k] for k in ("task_id", "revision", "confirmed_epoch")} | {
-        "notice": deepcopy(notice), **state}
+        "notice": deepcopy(notice), **state,
+        **{k: deepcopy(task[k]) for k in ("source_kind", "entry_kind", "notes", "reminder_at", "scheduled_slots") if k in task}}
 
 
 class TaskCalendarService:
@@ -46,6 +47,9 @@ class TaskCalendarService:
         records = self.store.calendar_call("records", args)
         if workspace_ref is not None and workspace_ref != records["workspace_ref"]:
             raise AppError(404, "NOT_FOUND", "本人工作区不存在")
+        if self.settings.cloud_personal_tasks_enabled:
+            from app.core.personal_tasks import PersonalTaskService
+            records = {**records, "tasks": records["tasks"] + PersonalTaskService(self.settings, self.store).records(args, optional=True)}
         return records
 
     @staticmethod
@@ -133,6 +137,9 @@ class TaskCalendarService:
         # Authenticate and constrain cached retries to the same active workspace.
         records = self.records(args, payload["workspace_ref"])
         task = self.find(records, task_id)
+        if task.get("source_kind") == "personal_task_v1":
+            from app.core.personal_tasks import PersonalTaskService
+            return PersonalTaskService(self.settings, self.store).update(args, task, payload, key)
         cached = self.store.calendar_call("lookup", {**args, "task_id": task_id, "key": key, "request_hash": digest})
         if cached is not None:
             return cached
@@ -188,7 +195,9 @@ class TaskCalendarService:
         now = calendar_now()
         tasks = [calendar_task(t) for t in records["tasks"]]
         pending = [t for t in tasks if t["status"] == "pending"]
-        timed = [(t, t["scheduled_start"] or t["notice"]["event"]["start"] or t["notice"]["due"]["at"]) for t in pending]
+        timed = [(t, at) for t in pending for at in (
+            [r["start"] for r in t.get("scheduled_slots", [])] +
+            [t.get("reminder_at"), t["scheduled_start"], t["notice"]["event"]["start"], t["notice"]["due"]["at"]])]
         future = [(t, parse_datetime(at, field="time")) for t, at in timed if at and parse_datetime(at, field="time") >= now]
         next_item = min(future, key=lambda x: (x[1], x[0]["task_id"]))[0] if future else None
         today = now.date()
@@ -197,7 +206,11 @@ class TaskCalendarService:
             end = t["scheduled_end"] or t["notice"]["event"]["end"]
             due = t["notice"]["due"]
             due_day = parse_datetime(due["at"], field="due.at").astimezone(TZ).date().isoformat() if due["at"] else due["date"]
-            return due_day == today.isoformat() or bool(start and end and
+            ranges = t.get("scheduled_slots", [])
+            reminder = t.get("reminder_at")
+            return due_day == today.isoformat() or bool(reminder and parse_datetime(reminder, field="reminder").astimezone(TZ).date() == today) or any(
+                parse_datetime(r["start"], field="start").astimezone(TZ).date() <= today <=
+                (parse_datetime(r["end"], field="end") - timedelta(microseconds=1)).astimezone(TZ).date() for r in ranges) or bool(start and end and
                 parse_datetime(start, field="start").astimezone(TZ).date() <= today <=
                 (parse_datetime(end, field="end") - timedelta(microseconds=1)).astimezone(TZ).date())
         def overdue(t):

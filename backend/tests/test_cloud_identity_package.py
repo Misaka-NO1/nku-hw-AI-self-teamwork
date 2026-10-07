@@ -33,6 +33,8 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql")
+    for migration in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql"):
+        shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / migration, tmp_path / "deploy/cloudbase-identity-pilot" / migration)
     for filename in builder.FIXTURES + builder.READ_ONLY_FIXTURES:
         shutil.copy2(ROOT / "fixtures" / filename, tmp_path / "fixtures" / filename)
     monkeypatch.setattr(builder, "ROOT", tmp_path)
@@ -50,7 +52,7 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         for name, digest in manifest.items():
             assert hashlib.sha256(archive.read(name)).hexdigest() == digest
         migration = archive.read("database-migration.sql").decode()
-        assert migration.count("INSERT INTO nku_identity_pilot_v1.fixtures VALUES") == 4
+        assert migration.count("INSERT INTO nku_identity_pilot_v1.fixtures VALUES") == len(builder.FIXTURES)
         assert migration.index("INSERT INTO nku_identity_pilot_v1.fixtures VALUES") < migration.index("COMMIT;")
         assert "CREATE OR REPLACE" not in migration and "DROP TABLE" not in migration
         compatibility=archive.read("competition-oauth-migration.sql").decode()
@@ -66,6 +68,8 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         assert "CREATE OR REPLACE FUNCTION nku_notice_text_v1.snapshot" in calendar
         assert "DROP TABLE" not in calendar and "ALTER TABLE nku_identity_pilot_v1" not in calendar
         assert report["calendar_migration_included"] is True
+        assert "personal-tasks-migration.sql" in names and "task-oauth-scopes-migration.sql" in names
+        assert "persistent-auth-migration.sql" in names
         assert report["calendar_frontend_source_present"] is False
     with pytest.raises(ValueError, match="overwritten"):
         builder.build("test-identity-r1", backend_only=backend_only)
