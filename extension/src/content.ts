@@ -131,55 +131,106 @@ if (typeof chrome !== "undefined" && chrome.runtime?.onMessage) {
 }
 
 /**
- * 自动提取（EXT-B11）：由 manifest content_scripts 在教务课表页 document_idle 自动注入时，
- * 等课表网格出现（SSO 登录跳转/异步渲染会晚到），提取成功即回传 schedule-auto-observation，
- * 由 service worker 打开 App 导入页完成零操作回传。登录页/无网格时静默退出，不做任何事。
+ * 页内「读取并导入」按钮（EXT-B12）：content script 在教务课表页自动注入后，
+ * 等课表网格出现，在页面右下角注入一个 Shadow DOM 悬浮按钮。
+ * 只在用户点击时读取课程表格文本（不读密码 / Cookie / SSO 字段），
+ * 提取成功后回传 schedule-auto-observation，由 service worker 打开核对页。
+ * 登录页（有密码框且无表格）不注入按钮，用户登录跳转后页面重载会重新注入。
  */
-const AUTO_EXTRACT_RETRY_MS = 1000;
-const AUTO_EXTRACT_MAX_ATTEMPTS = 30;
+const BUTTON_RETRY_MS = 1000;
+const BUTTON_MAX_ATTEMPTS = 30;
 
-export function autoExtractWhenReady(
+const BUTTON_STYLES = `
+  :host { all: initial; }
+  #wrap { position: fixed; right: 24px; bottom: 24px; z-index: 2147483647;
+    font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  button { display: block; padding: 12px 20px; border: none; border-radius: 999px;
+    background: #1d4ed8; color: #fff; font-size: 15px; font-weight: 600;
+    cursor: pointer; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+  button:hover { background: #1e40af; }
+  button:disabled { background: #94a3b8; cursor: default; }
+  #tip { margin-top: 8px; padding: 6px 10px; border-radius: 8px; background: rgba(15,23,42,.85);
+    color: #fff; font-size: 12px; max-width: 260px; display: none; }
+`;
+
+export function mountImportButton(
   chromeApi: typeof chrome,
   doc: Document,
   pageUrl: string,
   options: { maxAttempts?: number; retryMs?: number } = {},
 ): void {
-  const maxAttempts = options.maxAttempts ?? AUTO_EXTRACT_MAX_ATTEMPTS;
-  const retryMs = options.retryMs ?? AUTO_EXTRACT_RETRY_MS;
+  const maxAttempts = options.maxAttempts ?? BUTTON_MAX_ATTEMPTS;
+  const retryMs = options.retryMs ?? BUTTON_RETRY_MS;
   let attempts = 0;
-  const tryExtract = () => {
+  const tryMount = () => {
     attempts += 1;
-    // 登录页（有密码框且无表格）说明尚未登录：等用户登录后页面跳转/重载会重新注入
+    // 登录页：不注入，等用户登录后页面跳转/重载重新注入
     if (doc.querySelector("input[type=password]") && !doc.querySelector("table")) return;
     if (!doc.querySelector(EAMIS_GRID_SELECTOR)) {
-      if (attempts < maxAttempts) setTimeout(tryExtract, retryMs);
+      if (attempts < maxAttempts) setTimeout(tryMount, retryMs);
       return;
     }
-    try {
-      const observation = extractCourseObservation(doc, { pageUrl });
-      void chromeApi.runtime.sendMessage({ type: "schedule-auto-observation", payload: observation });
-    } catch {
-      // 结构不符保持静默：用户仍可使用手动提取或文件导入
-    }
+    if (doc.getElementById("campus-schedule-import-host")) return;
+
+    const host = doc.createElement("div");
+    host.id = "campus-schedule-import-host";
+    const shadow = host.attachShadow({ mode: "closed" });
+    const style = doc.createElement("style");
+    style.textContent = BUTTON_STYLES;
+    const wrap = doc.createElement("div");
+    wrap.id = "wrap";
+    const button = doc.createElement("button");
+    button.type = "button";
+    button.textContent = "📥 读取并导入课表";
+    const tip = doc.createElement("div");
+    tip.id = "tip";
+    wrap.append(button, tip);
+    shadow.append(style, wrap);
+    doc.body.appendChild(host);
+
+    const showTip = (text: string, ms = 6000) => {
+      tip.textContent = text;
+      tip.style.display = "block";
+      setTimeout(() => { tip.style.display = "none"; }, ms);
+    };
+
+    button.addEventListener("click", () => {
+      button.disabled = true;
+      button.textContent = "读取中…";
+      try {
+        // 只读取课程表格文本：不碰 cookie、密码框、SSO 字段、整页 HTML
+        const observation = extractCourseObservation(doc, { pageUrl });
+        button.textContent = "✓ 已读取，正在打开核对页…";
+        void chromeApi.runtime.sendMessage({ type: "schedule-auto-observation", payload: observation });
+        showTip("已读取课表（不含任何登录信息），即将打开核对页面。");
+        setTimeout(() => {
+          button.disabled = false;
+          button.textContent = "📥 读取并导入课表";
+        }, 4000);
+      } catch (error) {
+        button.disabled = false;
+        button.textContent = "📥 读取并导入课表";
+        const reason = error instanceof Error ? error.message : String(error);
+        showTip(`读取失败：${reason}。可改用核对页里的文件导入。`, 9000);
+      }
+    });
   };
-  tryExtract();
+  tryMount();
 }
 
-// 仅当由 manifest 自动注入（而非用户点击图标手动注入）时启用自动提取：
-// 手动注入场景 background 会先注入再发 extract-visible-schedule，两者只差毫秒级；
-// 用全局标记避免同一页面重复自动发送。
+// 仅在教务域名由 manifest 自动注入时挂载按钮；window 标记避免重复注入重复挂载
 declare global {
   interface Window {
-    __campusAutoExtractDone?: boolean;
+    __campusImportButtonMounted?: boolean;
   }
 }
 if (
   typeof chrome !== "undefined" &&
   chrome.runtime?.id &&
   typeof window !== "undefined" &&
-  !window.__campusAutoExtractDone &&
+  !window.__campusImportButtonMounted &&
   location.hostname === "eamis.nankai.edu.cn"
 ) {
-  window.__campusAutoExtractDone = true;
-  autoExtractWhenReady(chrome, document, location.href);
+  window.__campusImportButtonMounted = true;
+  mountImportButton(chrome, document, location.href);
 }
