@@ -10,6 +10,8 @@
 export const MESSAGE_TYPES = [
   "extract-visible-schedule",
   "schedule-observation",
+  "schedule-auto-observation",
+  "app-bridge-ready",
   "open-import-preview",
   "submit-confirmed-draft",
 ] as const;
@@ -58,6 +60,7 @@ export function isSenderAllowed(
   sender: SenderInfo,
   extensionId: string,
   isUrlWhitelisted: (url: string) => boolean,
+  isAppUrlCheck: (url: string) => boolean = () => false,
 ): boolean {
   if (sender.id !== undefined && sender.id !== extensionId) {
     return false;
@@ -66,9 +69,13 @@ export function isSenderAllowed(
     const url = sender.url ?? "";
     return url.startsWith(`chrome-extension://${extensionId}/`);
   }
-  if (message.type === "schedule-observation") {
+  if (message.type === "schedule-observation" || message.type === "schedule-auto-observation") {
     const pageUrl = sender.tabUrl ?? sender.url ?? "";
     return isUrlWhitelisted(pageUrl);
+  }
+  if (message.type === "app-bridge-ready") {
+    const pageUrl = sender.tabUrl ?? sender.url ?? "";
+    return isAppUrlCheck(pageUrl);
   }
   return sender.id === extensionId || sender.id === undefined;
 }

@@ -129,3 +129,57 @@ export function registerContentListener(
 if (typeof chrome !== "undefined" && chrome.runtime?.onMessage) {
   registerContentListener(chrome, document, location.href);
 }
+
+/**
+ * 自动提取（EXT-B11）：由 manifest content_scripts 在教务课表页 document_idle 自动注入时，
+ * 等课表网格出现（SSO 登录跳转/异步渲染会晚到），提取成功即回传 schedule-auto-observation，
+ * 由 service worker 打开 App 导入页完成零操作回传。登录页/无网格时静默退出，不做任何事。
+ */
+const AUTO_EXTRACT_RETRY_MS = 1000;
+const AUTO_EXTRACT_MAX_ATTEMPTS = 30;
+
+export function autoExtractWhenReady(
+  chromeApi: typeof chrome,
+  doc: Document,
+  pageUrl: string,
+  options: { maxAttempts?: number; retryMs?: number } = {},
+): void {
+  const maxAttempts = options.maxAttempts ?? AUTO_EXTRACT_MAX_ATTEMPTS;
+  const retryMs = options.retryMs ?? AUTO_EXTRACT_RETRY_MS;
+  let attempts = 0;
+  const tryExtract = () => {
+    attempts += 1;
+    // 登录页（有密码框且无表格）说明尚未登录：等用户登录后页面跳转/重载会重新注入
+    if (doc.querySelector("input[type=password]") && !doc.querySelector("table")) return;
+    if (!doc.querySelector(EAMIS_GRID_SELECTOR)) {
+      if (attempts < maxAttempts) setTimeout(tryExtract, retryMs);
+      return;
+    }
+    try {
+      const observation = extractCourseObservation(doc, { pageUrl });
+      void chromeApi.runtime.sendMessage({ type: "schedule-auto-observation", payload: observation });
+    } catch {
+      // 结构不符保持静默：用户仍可使用手动提取或文件导入
+    }
+  };
+  tryExtract();
+}
+
+// 仅当由 manifest 自动注入（而非用户点击图标手动注入）时启用自动提取：
+// 手动注入场景 background 会先注入再发 extract-visible-schedule，两者只差毫秒级；
+// 用全局标记避免同一页面重复自动发送。
+declare global {
+  interface Window {
+    __campusAutoExtractDone?: boolean;
+  }
+}
+if (
+  typeof chrome !== "undefined" &&
+  chrome.runtime?.id &&
+  typeof window !== "undefined" &&
+  !window.__campusAutoExtractDone &&
+  location.hostname === "eamis.nankai.edu.cn"
+) {
+  window.__campusAutoExtractDone = true;
+  autoExtractWhenReady(chrome, document, location.href);
+}

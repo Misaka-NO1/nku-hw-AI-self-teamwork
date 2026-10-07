@@ -39,3 +39,18 @@ export function isExtractionAllowed(url: string, whitelist: ExtractionWhitelist)
   const pathOk = whitelist.paths.some((path) => parsed.pathname.startsWith(path));
   return originOk && pathOk;
 }
+
+/**
+ * 课表板块 App 的 origin（自动回传目标，EXT-B11）。
+ * 自动提取的观察值只回传到这些本地预览地址；不发给任何远程 origin。
+ */
+export const APP_ORIGINS = ["http://localhost:7100", "http://localhost:5173", "http://127.0.0.1:7100"];
+export const APP_IMPORT_PATH = "/#/import";
+
+export function isAppUrl(url: string): boolean {
+  try {
+    return APP_ORIGINS.includes(new URL(url).origin);
+  } catch {
+    return false;
+  }
+}

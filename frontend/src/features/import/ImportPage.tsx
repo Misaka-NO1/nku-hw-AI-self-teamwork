@@ -3,10 +3,12 @@ import type { ChangeEvent } from "react";
 
 import {
   parseImportFile,
+  parseObservation,
   parseWeeks,
   validateTermCalendarStructure,
   validateTimetableStructure,
   type ImportFormat,
+  type PageObservation,
   type ParseResult,
   type TermCalendar,
   type TimetableImport,
@@ -84,6 +86,42 @@ export default function ImportPage({
   const [weeksDraft, setWeeksDraft] = useState<Record<string, string>>({});
   const [editError, setEditError] = useState<string | null>(null);
   const [confirmed, setConfirmed] = useState(false);
+  // 扩展自动回传的教务页观察值（EXT-B11）：收到后本地解析，不联网
+  const [autoObservation, setAutoObservation] = useState<PageObservation | null>(null);
+  const [autoNotice, setAutoNotice] = useState<string | null>(null);
+
+  // 监听扩展桥接脚本派发的观察值事件（"📥 一键导入"零操作链路）
+  useEffect(() => {
+    const listener = (event: Event) => {
+      const detail = (event as CustomEvent<PageObservation>).detail;
+      if (detail && Array.isArray(detail.tableHeaders) && Array.isArray(detail.rows)) {
+        setAutoObservation(detail);
+      }
+    };
+    window.addEventListener("campus:schedule-observation", listener);
+    return () => window.removeEventListener("campus:schedule-observation", listener);
+  }, []);
+
+  // 观察值到达且学期日历就绪后自动解析（与文件导入同一套本地解析器）
+  useEffect(() => {
+    if (!autoObservation) return;
+    if (!calendar) {
+      setAutoNotice("已收到教务系统课表数据，请先关联学期日历后自动解析。");
+      return;
+    }
+    try {
+      setResult(parseObservation(autoObservation, calendar, { datasetKind }));
+      setFileName("教务系统 · 自动读取");
+      setError(null);
+      setAutoNotice("已从教务系统自动读取课表，请在下方核对（可修改）后确认。");
+    } catch (parseError) {
+      setError(
+        `自动读取的数据解析失败：${parseError instanceof Error ? parseError.message : String(parseError)}；可改用文件导入`,
+      );
+      setAutoNotice(null);
+    }
+    setAutoObservation(null);
+  }, [autoObservation, calendar, datasetKind]);
 
   useEffect(() => {
     if (result?.payload) {
@@ -306,36 +344,45 @@ export default function ImportPage({
 
       <section>
         <h2>第零步：从教务系统获取课表</h2>
-        <ol>
-          <li>
-            把下面这个按钮<strong>拖到浏览器书签栏</strong>（只需一次）：{" "}
-            <a
-              href={EAMIS_DOWNLOAD_BOOKMARKLET}
-              onClick={(e) => e.preventDefault()}
-              title="拖到书签栏使用"
-            >
-              📥 课表下载
-            </a>
-          </li>
-          <li>
-            <a href={EAMIS_TIMETABLE_URL} target="_blank" rel="noreferrer">
-              打开教务系统课表页 ↗
-            </a>{" "}
-            <button type="button" onClick={() => void navigator.clipboard?.writeText(EAMIS_TIMETABLE_URL)}>
-              复制链接
-            </button>
-            ，登录统一身份认证，确认页面上<strong>已经看到课表网格</strong>。
-          </li>
-          <li>
-            点击书签栏里的「📥 课表下载」，页面 HTML 会自动下载；把下载的文件
-            <strong>拖回本页第二步</strong>（或点选择文件）即自动解析导入。
-          </li>
-        </ol>
-        <p role="note">
-          说明：课表页需要你的登录态，网页无法替你自动抓取；书签只在你主动点击时
-          把当前页面保存为本地文件，不上传任何内容。也可以仍用 Ctrl+S “另存为”。
-          如果解析提示“统一身份认证登录页”，说明保存时登录已失效，请登录后重试。
+        <p>
+          <strong>推荐（零操作链路）</strong>：安装本团队「课表导入」浏览器扩展后——
+          点击下方按钮打开教务课表页，<strong>你只需登录统一身份认证</strong>；
+          课表加载出来时扩展会自动读取课程区域并送回本页自动解析，
+          你在下方核对（可修改）后点“确认导入”即完成。
         </p>
+        <p>
+          <a href={EAMIS_TIMETABLE_URL} target="_blank" rel="noreferrer">
+            <strong>📥 打开教务系统并自动导入课表 ↗</strong>
+          </a>{" "}
+          <button type="button" onClick={() => void navigator.clipboard?.writeText(EAMIS_TIMETABLE_URL)}>
+            复制链接
+          </button>
+        </p>
+        <p role="note">
+          为什么需要扩展：课表页在你的登录态里，浏览器安全规则不允许任何网页
+          跨站读取它；扩展只在你打开的白名单课表页读取课程表格文本，
+          不读密码 / Cookie / SSO 字段，数据只回本机不上传。
+        </p>
+        <details>
+          <summary>没装扩展？用书签下着导（一次性设置）</summary>
+          <ol>
+            <li>
+              把这个按钮<strong>拖到浏览器书签栏</strong>：{" "}
+              <a
+                href={EAMIS_DOWNLOAD_BOOKMARKLET}
+                onClick={(e) => e.preventDefault()}
+                title="拖到书签栏使用"
+              >
+                📥 课表下载
+              </a>
+            </li>
+            <li>打开教务课表页并登录，确认已看到课表网格。</li>
+            <li>
+              点书签栏的「📥 课表下载」，HTML 自动下载；把文件<strong>拖回本页第二步</strong>即自动解析。
+              也可以 Ctrl+S “另存为”。若提示“统一身份认证登录页”，说明保存时未登录，登录后重试。
+            </li>
+          </ol>
+        </details>
       </section>
 
       <section>
@@ -365,6 +412,7 @@ export default function ImportPage({
         <p role="note">也可以把下载好的 HTML / JSON / CSV 文件直接拖到这个区域。</p>
       </section>
       {fileName && <p>已选择文件：{fileName}</p>}
+      {autoNotice && <p role="status">{autoNotice}</p>}
       {error && <p role="alert">{error}</p>}
 
       {blockingIssues.length > 0 && (
