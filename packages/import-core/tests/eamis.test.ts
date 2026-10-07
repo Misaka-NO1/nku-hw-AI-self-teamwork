@@ -1,8 +1,9 @@
+// @vitest-environment jsdom
 import { describe, expect, it } from "vitest";
 
 import { recognizePage } from "../src/adapters";
 import { eamisObservationToRawRows, parseEamisCellEntries } from "../src/eamis";
-import { parseObservation } from "../src/parse";
+import { parseImportFile, parseObservation } from "../src/parse";
 import { parseWeeks } from "../src/weeks";
 import type { PageObservation, TermCalendar } from "../src/types";
 
@@ -165,5 +166,46 @@ describe("B08 观察值转换与整链路", () => {
       week_numbers: Array.from({ length: 17 }, (_, i) => i + 1),
       completeness: "complete",
     });
+  });
+});
+
+
+describe("B08 另存 HTML 文件导入（教务页离线闭环）", () => {
+  const ANON_HTML = `<html><body>
+    <table id="manualArrangeCourseTable">
+      <tr><th>节次/周次</th><th>星期一</th><th>星期二</th><th>星期三</th><th>星期四</th><th>星期五</th><th>星期六</th><th>星期日</th></tr>
+      <tr><th>第一节</th><td rowspan="2">示例课程甲(0001) (某甲)(1-17,示例楼A区101)</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>第二节</th><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><th>第六节</th><td></td><td>示例课程乙(0003) (某丙)(5,停课)示例课程乙(0003) (某丙)(1-4 6-17,示例楼C区530)</td><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+  </body></html>`;
+
+  it("eamis 另存 HTML 直接解析为标准课表", () => {
+    const result = parseImportFile(
+      { name: "我的课表.html", content: ANON_HTML },
+      "html",
+      term,
+      { datasetKind: "personal", capturedAt: "2026-10-07T19:00:00+08:00" },
+    );
+    expect(result.payload).not.toBeNull();
+    expect(result.payload!.courses.length).toBe(2);
+    const first = result.payload!.courses[0];
+    expect(first.title).toBe("示例课程甲");
+    expect(first.meetings[0].start_period).toBe(1);
+    expect(first.meetings[0].end_period).toBe(2); // rowSpan=2 展开
+    expect(result.issues.some((issue) => issue.code === "cancelled_meeting")).toBe(true);
+    expect(result.payload!.source.kind).toBe("file");
+  });
+
+  it("非 eamis 的普通 HTML 仍走通用表头路径", () => {
+    const generic = `<html><body><table>
+      <tr><th>课程</th><th>星期</th><th>节次</th><th>周次</th></tr>
+      <tr><td>示例课程戊</td><td>周一</td><td>1-2</td><td>1-4</td></tr>
+    </table></body></html>`;
+    const result = parseImportFile({ name: "t.html", content: generic }, "html", term, {
+      capturedAt: "2026-10-07T19:00:00+08:00",
+    });
+    expect(result.payload).not.toBeNull();
+    expect(result.payload!.courses[0].title).toBe("示例课程戊");
   });
 });

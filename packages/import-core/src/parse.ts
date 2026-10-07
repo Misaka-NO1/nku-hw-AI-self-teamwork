@@ -1,6 +1,6 @@
 import { recognizePage, unsupportedIssue } from "./adapters";
 import { shanghaiIsoNow } from "./calendar";
-import { eamisObservationToRawRows } from "./eamis";
+import { eamisObservationToRawRows, extractEamisGridFromDoc } from "./eamis";
 import { normalizeCourses, parsePeriodRange, parseWeekday } from "./normalize";
 import type { NormalizeOptions, RawMeetingRow } from "./normalize";
 import { validateTimetableStructure } from "./schema";
@@ -274,6 +274,35 @@ function parseImportFileInner(
       );
     }
     return normalizeJsonPayload(parsed, normalizeOptions);
+  }
+
+  // eamis「我的课表」另存 HTML：走 eamis 网格解析（B08），与扩展提取共用实现
+  if (format === "html") {
+    const doc = new DOMParser().parseFromString(input.content, "text/html");
+    const grid = extractEamisGridFromDoc(doc);
+    if (grid !== null) {
+      const converted = eamisObservationToRawRows({
+        origin: "https://eamis.nankai.edu.cn",
+        pathname: "/eams/courseTableForStd!courseTable.action",
+        frameOrigin: null,
+        tableHeaders: grid.headers,
+        rows: grid.rows,
+        selectedTerm: null,
+        selectedWeeks: [],
+        hasPagination: false,
+        hasVirtualRows: false,
+      });
+      if (converted.issues.some((issue) => issue.blocking)) {
+        return blockingParseResult(converted.issues, adapterId, adapterVersion);
+      }
+      const eamisResult = normalizeCourses(converted.rows, {
+        ...normalizeOptions,
+        kind: "file",
+        completenessHint: "complete",
+      });
+      eamisResult.issues.unshift(...converted.issues);
+      return eamisResult;
+    }
   }
 
   const table = format === "csv" ? parseCsv(input.content) : extractHtmlTable(input.content);

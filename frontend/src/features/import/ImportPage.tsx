@@ -7,6 +7,7 @@ import {
   type ImportFormat,
   type ParseResult,
   type TermCalendar,
+  type TimetableImport,
 } from "@campus/import-core";
 
 import { validateTimetableRemote } from "./api";
@@ -35,12 +36,15 @@ export interface ImportPageProps {
    * 默认 false：按钮禁用并说明原因，绝不表现为已可用（PR #2 审核意见 4）。
    */
   serverValidateAvailable?: boolean;
+  /** 可选：用户在预览后点击「确认导入」时回调（本地流程，不涉及服务端保存） */
+  onConfirmed?: (payload: TimetableImport) => void;
 }
 
 export default function ImportPage({
   calendar: initialCalendar = null,
   datasetKind = "demo",
   serverValidateAvailable = false,
+  onConfirmed,
 }: ImportPageProps) {
   const [calendar, setCalendar] = useState<TermCalendar | null>(initialCalendar);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -210,6 +214,14 @@ export default function ImportPage({
           <button type="button" onClick={onValidateRemote} disabled={!serverValidateAvailable}>
             发送到服务端校验（不保存）
           </button>
+          {onConfirmed && (
+            <button
+              type="button"
+              onClick={() => result.payload && onConfirmed(result.payload)}
+            >
+              确认导入并查看周课表
+            </button>
+          )}
           {!serverValidateAvailable && (
             <p role="note">
               服务端校验接口（POST /api/v1/schedules/validate）尚未由后端接入，暂不可用；

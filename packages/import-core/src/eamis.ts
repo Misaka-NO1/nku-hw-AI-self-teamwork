@@ -2,6 +2,67 @@ import type { RawMeetingRow } from "./normalize";
 import { parseWeekday } from "./normalize";
 import type { PageObservation, ParseIssue } from "./types";
 
+/** eamis 课表网格选择器与页面原始表头特征（2026-10-07 核查）。 */
+export const EAMIS_GRID_SELECTOR = "#manualArrangeCourseTable";
+export const EAMIS_GRID_PAGE_HEADERS = ["节次/周次", "星期一", "星期日"];
+
+/**
+ * 从 DOM（真实页面或另存的 HTML 文件）提取 eamis 网格。
+ * rowSpan 展开为「p-q」节次范围；行头格（真实页面是 td）跳过；
+ * 合并格只输出一次。表头特征不符返回 null（页面改版）。
+ */
+export function extractEamisGridFromDoc(
+  doc: Document,
+): { headers: string[]; rows: string[][] } | null {
+  const table = doc.querySelector<HTMLTableElement>(EAMIS_GRID_SELECTOR);
+  if (!table) return null;
+  const headerRow = table.querySelector("tr");
+  const headerTexts = [...(headerRow?.querySelectorAll("th,td") ?? [])].map((cell) =>
+    (cell.textContent ?? "").trim(),
+  );
+  if (!EAMIS_GRID_PAGE_HEADERS.every((header) => headerTexts.includes(header))) {
+    return null;
+  }
+  const weekdayLabels = headerTexts.slice(1); // 星期一..星期日
+  const rows: string[][] = [];
+  const emitted = new Set<string>();
+  // carry[column] = 上一行 rowSpan 合并下来的格子（含节次范围）
+  const carry: (string | null)[] = new Array(weekdayLabels.length).fill(null);
+
+  const periodRows = [...table.querySelectorAll("tr")].slice(1);
+  periodRows.forEach((row, rowIndex) => {
+    const period = rowIndex + 1;
+    const spans: (string | null)[] = [...carry];
+    carry.fill(null);
+    // row.children[0] 是节次行头（th 或 td），必须跳过——真实页面该格是 td。
+    let column = 0;
+    const dataCells = Array.from(row.children).slice(1) as HTMLTableCellElement[];
+    for (const cell of dataCells) {
+      while (column < spans.length && spans[column] !== null) {
+        column += 1;
+      }
+      if (column >= spans.length) break;
+      const text = (cell.textContent ?? "").trim();
+      const span = cell.rowSpan > 1 ? cell.rowSpan : 1;
+      spans[column] = text === "" ? null : `${text}@@${period}-${period + span - 1}`;
+      for (let offset = 1; offset < span; offset += 1) {
+        carry[column] = spans[column];
+      }
+      column += 1;
+    }
+    spans.forEach((entry, weekdayIndex) => {
+      if (entry === null) return;
+      const key = `${weekdayIndex}|${entry}`;
+      if (emitted.has(key)) return; // rowSpan 合并格只输出一次
+      emitted.add(key);
+      const [text, spanRange] = entry.split("@@");
+      rows.push([text, weekdayLabels[weekdayIndex] ?? String(weekdayIndex + 1), spanRange]);
+    });
+  });
+  return { headers: [...EAMIS_OBSERVATION_HEADERS], rows };
+}
+
+
 /**
  * nku-adapter-v1：eamis「我的课表」网格观察值解析（B08）。
  *
