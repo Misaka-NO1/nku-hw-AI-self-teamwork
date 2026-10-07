@@ -1,0 +1,22 @@
+{
+  "candidate_version": "task-calendar-v1",
+  "status": "plugin_published_agent_bound_web_approval_pending",
+  "tool_id": "db2e4ml4shhbpg8ve08g",
+  "last_checked_at": "2026-10-06",
+  "last_debug_result": "2026-10-06 22:15 +08:00: school Debug ok=true with empty-workspace summary; 22:38 Agent preview invoked the summary tool and returned pending/today/overdue counts=0. Plugin published, tool bound, Agent config v0.2.8 released. Existing restricted Web channel update awaiting approval db2gh5tr805t2j8cgq30; online version remains v0.2.7 at last check.",
+  "agent_id": "datqi1l4shh989l30fp0",
+  "agent_config_version": "v0.2.8",
+  "web_approval_id": "db2gh5tr805t2j8cgq30",
+  "existing_plugin": "campus-identity-pilot-read",
+  "tool_name": "read_my_demo_task_summary",
+  "description": "只读当前OAuth授权测试账号本人虚构待办摘要；不写入、不代确认、不后台推送。",
+  "method": "GET",
+  "path": "/oauth/tasks/summary",
+  "base_url_source": "existing approved identity service origin; verify deployed build first",
+  "input_schema": {"type": "object", "properties": {}, "required": [], "additionalProperties": false},
+  "response_contract": "ApiEnvelope with CalendarSummary data from contracts/api.schema.json",
+  "oauth_scope": "demo:read",
+  "trigger": "first user message after actual tool registration and deployment",
+  "open_chat_auto_trigger_verified": false,
+  "background_push": false
+}

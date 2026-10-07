@@ -5,27 +5,46 @@
   "x-oauth-competition-demo-candidate": {
     "status": "explicit-opt-in-fictional-read-only-not-live-accepted",
     "activation": "CLOUD_OAUTH_PILOT_ENABLED=true and CLOUD_OAUTH_COMPETITION_COMPAT_ENABLED=true; separate additive nku_competition_oauth_v1 RPC; original strict provider unchanged.",
-    "authorize_fields": ["response_type", "client_id", "redirect_uri", "scope", "state"],
+    "authorize_fields": [
+      "response_type",
+      "client_id",
+      "redirect_uri",
+      "scope",
+      "state"
+    ],
     "protocol": "Confidential authorization-code flow without PKCE or refresh. Exact registered school callback, explicit verified owner consent, state 8-256 chars echoed unchanged, 120s one-time code, <=600s Bearer. Token endpoint accepts grant_type/code/redirect_uri plus Basic or body client authentication, not both.",
     "scope": "demo:read only; two approved fictional owners. Existing ApiEnvelope records/time results, B algorithms and browser confirmations unchanged. No owner arguments or model writes.",
     "limitation": "Competition interoperability choice, NOT PKCE-equivalent or production personal-data acceptance. Enabling live compatibility needs concrete action-time confirmation."
   },
   "x-oauth-local-pilot": {
     "status": "experimental-local-only-default-disabled",
-    "paths": ["/oauth/authorize", "/oauth/approve", "/oauth/token", "/oauth/revoke", "/oauth/records", "/oauth/task-drafts"],
+    "paths": [
+      "/oauth/authorize",
+      "/oauth/approve",
+      "/oauth/token",
+      "/oauth/revoke",
+      "/oauth/records",
+      "/oauth/task-drafts"
+    ],
     "protocol_exception": "OAuth control endpoints use RFC 6749 responses/redirects instead of ApiEnvelope. Business records/drafts keep ApiEnvelope. No MCP tool or public deployment registers these paths.",
     "security": "Exact registered redirect, confidential client authentication, S256 PKCE, explicit owner consent, 120-second one-time code, <=600-second access token, read/optional draft only. No refresh or commit. Platform interoperability is not yet accepted."
   },
   "x-oauth-cloud-pilot-candidate": {
     "status": "closed-fictional-pg-candidate-default-disabled-not-live-accepted",
-    "time_paths": ["/oauth/time/free-slots", "/oauth/time/check"],
+    "time_paths": [
+      "/oauth/time/free-slots",
+      "/oauth/time/check"
+    ],
     "time_transport": "POST OAuthPilotTimeQueryRequest. query_json is FreeTimeQuery or TimeCheckRequest with workspace_ref omitted. Ownership/saved records come only from demo:read grant; no user/workspace/schedule override. TimeResult uses existing B algorithms with calculation_version, coverage and needs_confirmation. Cloud candidate only; not public MCP or local OAuth paths.",
     "uses": "Same OAuthPilot schemas, exact registered callback and OAuth protocol exceptions as the local candidate; no changes to public MCP or A/B/C algorithms.",
     "storage": "Isolated nku_identity_pilot_v1 PostgreSQL RPC with online-approved CloudBase owner sessions, persistent consent/code/grant hashes, atomic confirmation/idempotency and shared rate limits.",
     "activation": "Requires action-time authorization for new server-side RPC/service access, explicit server-only configuration and live cloud/platform two-user acceptance. Personal uploads remain disabled; no Agent confirm/commit or refresh token."
   },
   "x-rest-query-encoding": {
-    "paths": ["/api/v1/scenic/spots", "/api/v1/study/materials"],
+    "paths": [
+      "/api/v1/scenic/spots",
+      "/api/v1/study/materials"
+    ],
     "parameter": "query",
     "encoding": "URL-encoded UTF-8 JSON object",
     "notes": "Exactly one query parameter. Use the same object as MCP arguments; all required nullable fields remain explicit null. No dispersed parameters or silent defaults."
@@ -36,108 +55,1221 @@
     "transport": "No query/body/owner/bearer inputs. Same-origin credentials=include and X-Campus-Session-Read: 1; reject explicit foreign Origin or Sec-Fetch-Site. ApiEnvelope data is CloudBrowserSession.",
     "security": "Original HttpOnly session plus MAC-bound Secure/HttpOnly/SameSite=Strict 15-minute resume context and PG owner validation. Read only; no token/CSRF rotation, expiry extension, OAuth consent or business commit. Pre-candidate sessions lacking context require one fresh login. No CORS, no-store, no raw CloudBase UID or primary session token in JSON."
   },
+  "x-notice-text-cloud-candidate": {
+    "status": "default-disabled-backend-candidate-not-deployed",
+    "activation": "CLOUD_NOTICE_TEXT_PILOT_ENABLED and existing closed two-owner identity configuration; separate additive notice-text migration",
+    "storage": "Existing verified identity and workspaces; new isolated drafts/confirmations/tasks/idempotency only. No Agent confirm/commit. New input is explicitly fictional."
+  },
   "$defs": {
+    "CalendarUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "workspace_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483646
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "scheduled_start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "scheduled_end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "reminder_minutes": {
+          "enum": [
+            null,
+            0,
+            5,
+            15,
+            30,
+            60
+          ],
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "workspace_ref",
+        "expected_revision",
+        "status",
+        "scheduled_start",
+        "scheduled_end",
+        "reminder_minutes"
+      ],
+      "additionalProperties": false
+    },
+    "NoticeTextWorkflowRequest": {
+      "type": "object",
+      "properties": {
+        "read": {
+          "$ref": "#/$defs/NoticePilotReadRequest"
+        },
+        "analysis": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "item_index": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 49
+            },
+            "user_confirmations": {
+              "$ref": "#/$defs/NoticePilotConfirmations"
+            },
+            "window": {
+              "$ref": "#/$defs/TimeWindow"
+            },
+            "available_windows": {
+              "type": "array",
+              "maxItems": 20,
+              "items": {
+                "$ref": "#/$defs/TimeWindow"
+              }
+            },
+            "buffers": {
+              "type": "object",
+              "properties": {
+                "before_minutes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1440
+                },
+                "after_minutes": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1440
+                }
+              },
+              "required": [
+                "before_minutes",
+                "after_minutes"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "item_index",
+            "user_confirmations",
+            "window",
+            "available_windows"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "read",
+        "analysis"
+      ],
+      "additionalProperties": false
+    },
+    "NoticePilotReadRequest": {
+      "type": "object",
+      "properties": {
+        "source_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "reference_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "model_output": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 120000
+        },
+        "fictional_data_confirmed": {
+          "const": true
+        },
+        "source_kind": {
+          "enum": [
+            "text",
+            "ocr"
+          ]
+        },
+        "document_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "source_text",
+        "source_ref",
+        "reference_at"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "source_kind"
+            ],
+            "properties": {
+              "source_kind": {
+                "const": "ocr"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "document_sha256"
+            ]
+          }
+        }
+      ]
+    },
+    "NoticePilotConfirmations": {
+      "type": "object",
+      "properties": {
+        "source_review": {
+          "type": "boolean"
+        },
+        "accept_conflicts": {
+          "type": "boolean"
+        },
+        "estimated_minutes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 10080
+        },
+        "earliest_start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "due_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "event_start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "event_end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "ocr_review": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "NoticePilotCheckRequest": {
+      "type": "object",
+      "properties": {
+        "source_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "reference_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "item_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "user_confirmations": {
+          "$ref": "#/$defs/NoticePilotConfirmations"
+        },
+        "window": {
+          "$ref": "#/$defs/TimeWindow"
+        },
+        "available_windows": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/$defs/TimeWindow"
+          }
+        },
+        "model_output": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 120000
+        },
+        "buffers": {
+          "type": "object",
+          "properties": {
+            "before_minutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1440
+            },
+            "after_minutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1440
+            }
+          },
+          "required": [
+            "before_minutes",
+            "after_minutes"
+          ],
+          "additionalProperties": false
+        },
+        "fictional_data_confirmed": {
+          "const": true
+        },
+        "source_kind": {
+          "enum": [
+            "text",
+            "ocr"
+          ]
+        },
+        "document_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "source_text",
+        "source_ref",
+        "reference_at",
+        "item_id",
+        "user_confirmations",
+        "window",
+        "available_windows"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "source_kind"
+            ],
+            "properties": {
+              "source_kind": {
+                "const": "ocr"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "document_sha256"
+            ]
+          }
+        }
+      ]
+    },
+    "NoticePilotPlan": {
+      "type": "object",
+      "properties": {
+        "source_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "reference_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "user_confirmations": {
+          "$ref": "#/$defs/NoticePilotConfirmations"
+        },
+        "window": {
+          "$ref": "#/$defs/TimeWindow"
+        },
+        "available_windows": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "$ref": "#/$defs/TimeWindow"
+          }
+        },
+        "plan_version": {
+          "const": "notice-text-pilot-v1"
+        },
+        "notice": {
+          "type": "object",
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "notice_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "title": {
+              "type": "string"
+            },
+            "published_at": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "extracted_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "timezone": {
+              "const": "Asia/Shanghai"
+            },
+            "event": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "end": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "date": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "precision": {
+                  "enum": [
+                    "datetime",
+                    "date_only",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "start",
+                "end",
+                "date",
+                "precision"
+              ],
+              "additionalProperties": false
+            },
+            "due": {
+              "type": "object",
+              "properties": {
+                "at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "date": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "precision": {
+                  "enum": [
+                    "datetime",
+                    "date_only",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "at",
+                "date",
+                "precision"
+              ],
+              "additionalProperties": false
+            },
+            "estimated_minutes": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10080
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "earliest_start": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "materials": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "source_spans": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  },
+                  "source_ref": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "field",
+                  "quote",
+                  "source_ref"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "needs_confirmation": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "schema_version",
+            "notice_id",
+            "title",
+            "published_at",
+            "extracted_at",
+            "timezone",
+            "event",
+            "due",
+            "estimated_minutes",
+            "earliest_start",
+            "materials",
+            "source_spans",
+            "needs_confirmation"
+          ],
+          "additionalProperties": false
+        },
+        "kind": {
+          "enum": [
+            "event_conflict",
+            "deadline_feasibility"
+          ]
+        },
+        "selected_slot": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TimeSlot"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "model_output": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 120000
+        },
+        "buffers": {
+          "type": "object",
+          "properties": {
+            "before_minutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1440
+            },
+            "after_minutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1440
+            }
+          },
+          "required": [
+            "before_minutes",
+            "after_minutes"
+          ],
+          "additionalProperties": false
+        },
+        "fictional_data_confirmed": {
+          "const": true
+        },
+        "source_kind": {
+          "enum": [
+            "text",
+            "ocr"
+          ]
+        },
+        "document_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "source_text",
+        "source_ref",
+        "reference_at",
+        "user_confirmations",
+        "window",
+        "available_windows",
+        "plan_version",
+        "notice",
+        "kind",
+        "selected_slot"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "source_kind"
+            ],
+            "properties": {
+              "source_kind": {
+                "const": "ocr"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "document_sha256"
+            ]
+          }
+        }
+      ]
+    },
+    "NoticePilotDraftRequest": {
+      "type": "object",
+      "properties": {
+        "plan": {
+          "$ref": "#/$defs/NoticePilotPlan"
+        }
+      },
+      "required": [
+        "plan"
+      ],
+      "additionalProperties": false
+    },
+    "NoticePilotUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan": {
+          "$ref": "#/$defs/NoticePilotPlan"
+        }
+      },
+      "required": [
+        "revision",
+        "plan"
+      ],
+      "additionalProperties": false
+    },
+    "NoticeTextProposal": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "notice_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string"
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "extracted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "timezone": {
+          "const": "Asia/Shanghai"
+        },
+        "event": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "end": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "date": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "precision": {
+              "enum": [
+                "datetime",
+                "date_only",
+                "unknown"
+              ]
+            }
+          },
+          "required": [
+            "start",
+            "end",
+            "date",
+            "precision"
+          ],
+          "additionalProperties": false
+        },
+        "due": {
+          "type": "object",
+          "properties": {
+            "at": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "date": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "precision": {
+              "enum": [
+                "datetime",
+                "date_only",
+                "unknown"
+              ]
+            }
+          },
+          "required": [
+            "at",
+            "date",
+            "precision"
+          ],
+          "additionalProperties": false
+        },
+        "estimated_minutes": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10080
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "earliest_start": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "source_spans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "quote": {
+                "type": "string"
+              },
+              "source_ref": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "field",
+              "quote",
+              "source_ref"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "needs_confirmation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "notice_id",
+        "title",
+        "published_at",
+        "extracted_at",
+        "timezone",
+        "event",
+        "due",
+        "estimated_minutes",
+        "earliest_start",
+        "materials",
+        "source_spans",
+        "needs_confirmation"
+      ],
+      "additionalProperties": false
+    },
+    "NoticeTextUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "plan": {
+          "$ref": "#/$defs/NoticePilotPlan"
+        }
+      },
+      "required": [
+        "revision",
+        "plan"
+      ],
+      "additionalProperties": false
+    },
+    "NoticeTextPlatformRequest": {
+      "type": "object",
+      "properties": {
+        "query_json": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 131072
+        }
+      },
+      "required": [
+        "query_json"
+      ],
+      "additionalProperties": false
+    },
     "CloudBrowserSession": {
       "type": "object",
       "properties": {
-        "workspace_ref": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$"},
-        "csrf_token": {"type": "string", "pattern": "^[A-Za-z0-9_-]{32,128}$"},
-        "expires_at": {"type": "string", "format": "date-time"},
-        "dataset_kind": {"const": "demo"},
-        "personal_uploads": {"const": false},
-        "agent_paired": {"const": false}
+        "workspace_ref": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,128}$"
+        },
+        "csrf_token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{32,128}$"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dataset_kind": {
+          "const": "demo"
+        },
+        "personal_uploads": {
+          "const": false
+        },
+        "agent_paired": {
+          "const": false
+        }
       },
-      "required": ["workspace_ref", "csrf_token", "expires_at", "dataset_kind", "personal_uploads", "agent_paired"],
+      "required": [
+        "workspace_ref",
+        "csrf_token",
+        "expires_at",
+        "dataset_kind",
+        "personal_uploads",
+        "agent_paired"
+      ],
       "additionalProperties": false
     },
     "OAuthPilotTimeQueryRequest": {
       "type": "object",
       "properties": {
-        "query_json": {"type": "string", "minLength": 1, "maxLength": 2048, "description": "FreeTimeQuery (free-slots) or TimeCheckRequest (check) JSON object text, omitting workspace_ref. Preserve all other required fields including explicit null. Reject duplicate keys, non-finite values and owner/schedule overrides. Bearer demo:read grants select saved records; missing timetable is NOT_FOUND, not public-fixture fallback."}
+        "query_json": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "description": "FreeTimeQuery (free-slots) or TimeCheckRequest (check) JSON object text, omitting workspace_ref. Preserve all other required fields including explicit null. Reject duplicate keys, non-finite values and owner/schedule overrides. Bearer demo:read grants select saved records; missing timetable is NOT_FOUND, not public-fixture fallback."
+        }
       },
-      "required": ["query_json"],
+      "required": [
+        "query_json"
+      ],
       "additionalProperties": false
     },
     "OAuthPilotAuthorizationRequest": {
       "type": "object",
       "properties": {
-        "response_type": {"const": "code"},
-        "client_id": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{8,128}$"},
-        "redirect_uri": {"type": "string", "format": "uri"},
-        "scope": {"enum": ["demo:read", "demo:read demo:draft", "demo:draft demo:read"]},
-        "state": {"type": "string", "pattern": "^[A-Za-z0-9._~-]{16,256}$"},
-        "code_challenge": {"type": "string", "pattern": "^[A-Za-z0-9_-]{43}$"},
-        "code_challenge_method": {"const": "S256"}
+        "response_type": {
+          "const": "code"
+        },
+        "client_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{8,128}$"
+        },
+        "redirect_uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "scope": {
+          "enum": [
+            "demo:read",
+            "demo:read demo:draft",
+            "demo:draft demo:read"
+          ]
+        },
+        "state": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._~-]{16,256}$"
+        },
+        "code_challenge": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        },
+        "code_challenge_method": {
+          "const": "S256"
+        }
       },
-      "required": ["response_type", "client_id", "redirect_uri", "scope", "state", "code_challenge", "code_challenge_method"],
+      "required": [
+        "response_type",
+        "client_id",
+        "redirect_uri",
+        "scope",
+        "state",
+        "code_challenge",
+        "code_challenge_method"
+      ],
       "additionalProperties": false
     },
     "OAuthPilotTokenResponse": {
       "type": "object",
       "properties": {
-        "access_token": {"type": "string", "pattern": "^[A-Za-z0-9_-]{43}$"},
-        "token_type": {"const": "Bearer"},
-        "expires_in": {"type": "integer", "minimum": 1, "maximum": 600},
-        "scope": {"enum": ["demo:read", "demo:draft demo:read"]}
+        "access_token": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{43}$"
+        },
+        "token_type": {
+          "const": "Bearer"
+        },
+        "expires_in": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 600
+        },
+        "scope": {
+          "enum": [
+            "demo:read",
+            "demo:draft demo:read"
+          ]
+        }
       },
-      "required": ["access_token", "token_type", "expires_in", "scope"],
+      "required": [
+        "access_token",
+        "token_type",
+        "expires_in",
+        "scope"
+      ],
       "additionalProperties": false
     },
     "OAuthPilotError": {
       "type": "object",
-      "properties": {"error": {"enum": ["invalid_request", "invalid_client", "invalid_grant", "invalid_scope", "unsupported_response_type", "unsupported_grant_type", "access_denied", "temporarily_unavailable", "server_error"]}},
-      "required": ["error"],
+      "properties": {
+        "error": {
+          "enum": [
+            "invalid_request",
+            "invalid_client",
+            "invalid_grant",
+            "invalid_scope",
+            "unsupported_response_type",
+            "unsupported_grant_type",
+            "access_denied",
+            "temporarily_unavailable",
+            "server_error"
+          ]
+        }
+      },
+      "required": [
+        "error"
+      ],
       "additionalProperties": false
     },
     "OAuthPilotTaskDraftRequest": {
       "type": "object",
       "properties": {
-        "fixture_id": {"enum": ["notice-event.demo.json", "notice-deadline.demo.json", "notice-ambiguous.demo.json"]},
-        "idempotency_key": {"type": "string", "pattern": "^[A-Za-z0-9._:-]{8,128}$"}
+        "fixture_id": {
+          "enum": [
+            "notice-event.demo.json",
+            "notice-deadline.demo.json",
+            "notice-ambiguous.demo.json"
+          ]
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{8,128}$"
+        }
       },
-      "required": ["fixture_id", "idempotency_key"],
+      "required": [
+        "fixture_id",
+        "idempotency_key"
+      ],
       "additionalProperties": false
     },
     "FieldError": {
       "type": "object",
       "properties": {
-        "field": { "type": "string" },
-        "code": { "type": "string" },
-        "message": { "type": "string" }
+        "field": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
       },
-      "required": ["field", "code", "message"],
+      "required": [
+        "field",
+        "code",
+        "message"
+      ],
       "additionalProperties": false
     },
     "Warning": {
       "type": "object",
       "properties": {
-        "code": { "type": "string" },
-        "message": { "type": "string" }
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
       },
-      "required": ["code", "message"],
+      "required": [
+        "code",
+        "message"
+      ],
       "additionalProperties": false
     },
     "EvidenceRef": {
       "type": "object",
       "properties": {
-        "label": { "type": "string" },
-        "source_ref": { "type": "string" },
-        "locator": { "type": "string" }
+        "label": {
+          "type": "string"
+        },
+        "source_ref": {
+          "type": "string"
+        },
+        "locator": {
+          "type": "string"
+        }
       },
-      "required": ["label", "source_ref", "locator"],
+      "required": [
+        "label",
+        "source_ref",
+        "locator"
+      ],
       "additionalProperties": false
     },
     "Meta": {
       "type": "object",
       "properties": {
-        "schema_version": { "const": "1.0.0" },
-        "request_id": { "type": "string", "minLength": 1 },
-        "data_version": { "type": ["string", "null"] },
-        "calculation_version": { "type": ["string", "null"] },
-        "warnings": { "type": "array", "items": { "$ref": "#/$defs/Warning" } },
-        "evidence_refs": { "type": "array", "items": { "$ref": "#/$defs/EvidenceRef" } }
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "data_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "calculation_version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Warning"
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          }
+        }
       },
-      "required": ["schema_version", "request_id", "data_version", "calculation_version", "warnings", "evidence_refs"],
+      "required": [
+        "schema_version",
+        "request_id",
+        "data_version",
+        "calculation_version",
+        "warnings",
+        "evidence_refs"
+      ],
       "additionalProperties": false
     },
     "ApiError": {
@@ -145,37 +1277,95 @@
       "properties": {
         "code": {
           "enum": [
-            "VALIDATION_ERROR", "AUTH_REQUIRED", "FORBIDDEN", "IDENTITY_NOT_VERIFIED",
-            "DEMO_ONLY", "NOT_FOUND", "STALE_REVISION", "CONFIRMATION_REQUIRED",
-            "TOKEN_EXPIRED", "UNSUPPORTED_PAGE", "NEEDS_POLICY", "RATE_LIMITED",
-            "DEPENDENCY_UNAVAILABLE", "INTERNAL_ERROR"
+            "VALIDATION_ERROR",
+            "AUTH_REQUIRED",
+            "FORBIDDEN",
+            "IDENTITY_NOT_VERIFIED",
+            "DEMO_ONLY",
+            "NOT_FOUND",
+            "STALE_REVISION",
+            "CONFIRMATION_REQUIRED",
+            "TOKEN_EXPIRED",
+            "UNSUPPORTED_PAGE",
+            "NEEDS_POLICY",
+            "RATE_LIMITED",
+            "DEPENDENCY_UNAVAILABLE",
+            "INTERNAL_ERROR"
           ]
         },
-        "message": { "type": "string" },
-        "field_errors": { "type": "array", "items": { "$ref": "#/$defs/FieldError" } },
-        "retryable": { "type": "boolean" }
+        "message": {
+          "type": "string"
+        },
+        "field_errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldError"
+          }
+        },
+        "retryable": {
+          "type": "boolean"
+        }
       },
-      "required": ["code", "message", "field_errors", "retryable"],
+      "required": [
+        "code",
+        "message",
+        "field_errors",
+        "retryable"
+      ],
       "additionalProperties": false
     },
     "ApiEnvelope": {
       "type": "object",
       "properties": {
-        "ok": { "type": "boolean" },
+        "ok": {
+          "type": "boolean"
+        },
         "data": {},
-        "error": { "anyOf": [{ "$ref": "#/$defs/ApiError" }, { "type": "null" }] },
-        "meta": { "$ref": "#/$defs/Meta" }
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ApiError"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        }
       },
-      "required": ["ok", "data", "error", "meta"],
+      "required": [
+        "ok",
+        "data",
+        "error",
+        "meta"
+      ],
       "additionalProperties": false,
       "allOf": [
         {
-          "if": { "properties": { "ok": { "const": true } } },
-          "then": { "properties": { "error": { "type": "null" } } },
+          "if": {
+            "properties": {
+              "ok": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "error": {
+                "type": "null"
+              }
+            }
+          },
           "else": {
             "properties": {
-              "data": { "type": "null" },
-              "error": { "$ref": "#/$defs/ApiError" }
+              "data": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/ApiError"
+              }
             }
           }
         }
@@ -184,180 +1374,1190 @@
     "TimeWindow": {
       "type": "object",
       "properties": {
-        "start": { "type": "string", "format": "date-time" },
-        "end": { "type": "string", "format": "date-time" }
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        }
       },
-      "required": ["start", "end"],
+      "required": [
+        "start",
+        "end"
+      ],
       "additionalProperties": false
     },
     "Buffers": {
       "type": "object",
       "properties": {
-        "before_minutes": { "type": "integer", "minimum": 0, "maximum": 120 },
-        "after_minutes": { "type": "integer", "minimum": 0, "maximum": 120 }
+        "before_minutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 120
+        },
+        "after_minutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 120
+        }
       },
-      "required": ["before_minutes", "after_minutes"],
+      "required": [
+        "before_minutes",
+        "after_minutes"
+      ],
       "additionalProperties": false
     },
     "ScenicQuery": {
       "type": "object",
       "properties": {
-        "campus_id": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
-        "tags": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-        "month": { "anyOf": [{ "type": "integer", "minimum": 1, "maximum": 12 }, { "type": "null" }] },
-        "limit": { "type": "integer", "minimum": 1, "maximum": 20 }
+        "campus_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "month": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        }
       },
-      "required": ["campus_id", "tags", "month", "limit"],
+      "required": [
+        "campus_id",
+        "tags",
+        "month",
+        "limit"
+      ],
       "additionalProperties": false
     },
     "StudyQuery": {
       "type": "object",
       "properties": {
-        "course_id": { "type": "string", "minLength": 1, "maxLength": 128 },
-        "topic": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
-        "limit": { "type": "integer", "minimum": 1, "maximum": 20 }
+        "course_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "topic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        }
       },
-      "required": ["course_id", "topic", "limit"],
+      "required": [
+        "course_id",
+        "topic",
+        "limit"
+      ],
       "additionalProperties": false
     },
     "TimeSlot": {
       "type": "object",
       "properties": {
-        "start": { "type": "string", "format": "date-time" },
-        "end": { "type": "string", "format": "date-time" },
-        "duration_minutes": { "type": "integer", "minimum": 0 }
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "minimum": 0
+        }
       },
-      "required": ["start", "end", "duration_minutes"],
+      "required": [
+        "start",
+        "end",
+        "duration_minutes"
+      ],
       "additionalProperties": false
     },
     "TimeConflict": {
       "type": "object",
       "properties": {
-        "source_event_id": { "type": "string" },
-        "intersection_start": { "type": "string", "format": "date-time" },
-        "intersection_end": { "type": "string", "format": "date-time" }
+        "source_event_id": {
+          "type": "string"
+        },
+        "intersection_start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "intersection_end": {
+          "type": "string",
+          "format": "date-time"
+        }
       },
-      "required": ["source_event_id", "intersection_start", "intersection_end"],
+      "required": [
+        "source_event_id",
+        "intersection_start",
+        "intersection_end"
+      ],
       "additionalProperties": false
     },
     "TimeResult": {
       "type": "object",
       "properties": {
-        "kind": { "enum": ["free_time", "event_conflict", "deadline_feasibility"] },
-        "slots": { "type": "array", "items": { "$ref": "#/$defs/TimeSlot" } },
-        "candidate_slots": { "type": "array", "items": { "$ref": "#/$defs/TimeSlot" } },
-        "conflicts": { "type": "array", "items": { "$ref": "#/$defs/TimeConflict" } },
-        "coverage": { "type": "object" },
-        "needs_confirmation": { "type": "array", "items": { "type": "string" } }
+        "kind": {
+          "enum": [
+            "free_time",
+            "event_conflict",
+            "deadline_feasibility"
+          ]
+        },
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TimeSlot"
+          }
+        },
+        "candidate_slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TimeSlot"
+          }
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TimeConflict"
+          }
+        },
+        "coverage": {
+          "type": "object"
+        },
+        "needs_confirmation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
-      "required": ["kind", "coverage", "needs_confirmation"],
+      "required": [
+        "kind",
+        "coverage",
+        "needs_confirmation"
+      ],
       "additionalProperties": false
     },
     "DegreeModuleResult": {
       "type": "object",
       "properties": {
-        "module_id": { "type": "string" },
-        "earned_credits": { "type": "string", "pattern": "^\\d+(\\.\\d{1,2})?$" },
-        "required_credits": { "type": "string", "pattern": "^\\d+(\\.\\d{1,2})?$" },
-        "remaining_credits": { "type": "string", "pattern": "^\\d+(\\.\\d{1,2})?$" },
-        "missing_required_courses": { "type": "array", "items": { "type": "string" } },
-        "counted_attempts": { "type": "array", "items": { "type": "string" } },
-        "excluded_attempts": { "type": "array", "items": { "type": "string" } }
+        "module_id": {
+          "type": "string"
+        },
+        "earned_credits": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d{1,2})?$"
+        },
+        "required_credits": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d{1,2})?$"
+        },
+        "remaining_credits": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d{1,2})?$"
+        },
+        "missing_required_courses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "counted_attempts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "excluded_attempts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       },
-      "required": ["module_id", "earned_credits", "required_credits", "remaining_credits", "missing_required_courses", "counted_attempts", "excluded_attempts"],
+      "required": [
+        "module_id",
+        "earned_credits",
+        "required_credits",
+        "remaining_credits",
+        "missing_required_courses",
+        "counted_attempts",
+        "excluded_attempts"
+      ],
       "additionalProperties": false
     },
     "DegreeAuditResult": {
       "type": "object",
       "properties": {
-        "plan_id": { "type": "string" },
-        "plan_version": { "type": "string" },
-        "source_ref": { "type": "string" },
-        "modules": { "type": "array", "items": { "$ref": "#/$defs/DegreeModuleResult" } },
-        "unallocated_courses": { "type": "array", "items": { "type": "string" } },
-        "unresolved_rules": { "type": "array", "items": { "type": "string" } },
-        "data_coverage": { "type": "object" },
-        "status": { "enum": ["complete_under_supported_rules", "incomplete", "needs_policy"] }
+        "plan_id": {
+          "type": "string"
+        },
+        "plan_version": {
+          "type": "string"
+        },
+        "source_ref": {
+          "type": "string"
+        },
+        "modules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DegreeModuleResult"
+          }
+        },
+        "unallocated_courses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unresolved_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "data_coverage": {
+          "type": "object"
+        },
+        "status": {
+          "enum": [
+            "complete_under_supported_rules",
+            "incomplete",
+            "needs_policy"
+          ]
+        }
       },
-      "required": ["plan_id", "plan_version", "source_ref", "modules", "unallocated_courses", "unresolved_rules", "data_coverage", "status"],
+      "required": [
+        "plan_id",
+        "plan_version",
+        "source_ref",
+        "modules",
+        "unallocated_courses",
+        "unresolved_rules",
+        "data_coverage",
+        "status"
+      ],
       "additionalProperties": false
     },
     "DegreeAuditRequest": {
       "type": "object",
       "properties": {
-        "workspace_ref": { "type": "string", "minLength": 1, "maxLength": 128 },
-        "plan_id": { "type": "string", "minLength": 1, "maxLength": 128 },
-        "transcript_ref": { "type": "string", "minLength": 1, "maxLength": 128 }
+        "workspace_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "plan_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "transcript_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        }
       },
-      "required": ["workspace_ref", "plan_id", "transcript_ref"],
+      "required": [
+        "workspace_ref",
+        "plan_id",
+        "transcript_ref"
+      ],
       "additionalProperties": false
     },
     "TaskStatusQuery": {
       "type": "object",
       "properties": {
-        "workspace_ref": { "type": "string", "minLength": 1, "maxLength": 128 },
-        "task_id": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
-        "draft_id": { "anyOf": [{ "type": "string" }, { "type": "null" }] }
+        "workspace_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "task_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "draft_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
       },
-      "required": ["workspace_ref", "task_id", "draft_id"],
+      "required": [
+        "workspace_ref",
+        "task_id",
+        "draft_id"
+      ],
       "additionalProperties": false,
-      "allOf": [{
-        "oneOf": [
-          { "required": ["task_id"], "properties": { "task_id": { "type": "string" }, "draft_id": { "type": "null" } } },
-          { "required": ["draft_id"], "properties": { "task_id": { "type": "null" }, "draft_id": { "type": "string" } } }
-        ]
-      }]
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "task_id"
+              ],
+              "properties": {
+                "task_id": {
+                  "type": "string"
+                },
+                "draft_id": {
+                  "type": "null"
+                }
+              }
+            },
+            {
+              "required": [
+                "draft_id"
+              ],
+              "properties": {
+                "task_id": {
+                  "type": "null"
+                },
+                "draft_id": {
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        }
+      ]
     },
     "DemoWorkspaceRequest": {
       "type": "object",
       "properties": {
-        "fixture_set_id": { "const": "demo-v1" }
+        "fixture_set_id": {
+          "const": "demo-v1"
+        }
       },
-      "required": ["fixture_set_id"],
+      "required": [
+        "fixture_set_id"
+      ],
       "additionalProperties": false
     },
     "ImportTicketRequest": {
       "type": "object",
       "properties": {
-        "workspace_ref": { "type": "string", "minLength": 1, "maxLength": 128 },
-        "purpose": { "const": "schedule_import" }
+        "workspace_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "purpose": {
+          "const": "schedule_import"
+        }
       },
-      "required": ["workspace_ref", "purpose"],
+      "required": [
+        "workspace_ref",
+        "purpose"
+      ],
       "additionalProperties": false
     },
     "ConfirmationRequest": {
       "type": "object",
       "properties": {
-        "draft_id": { "type": "string", "minLength": 1, "maxLength": 128 },
-        "revision": { "type": "integer", "minimum": 1 },
-        "payload_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        "draft_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "payload_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
       },
-      "required": ["draft_id", "revision", "payload_hash"],
+      "required": [
+        "draft_id",
+        "revision",
+        "payload_hash"
+      ],
       "additionalProperties": false
     },
     "CommitRequest": {
       "type": "object",
       "properties": {
-        "confirmation_id": { "type": "string", "minLength": 1, "maxLength": 256 },
-        "idempotency_key": { "type": "string", "pattern": "^[A-Za-z0-9._:-]{8,128}$" }
+        "confirmation_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "idempotency_key": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._:-]{8,128}$"
+        }
       },
-      "required": ["confirmation_id", "idempotency_key"],
+      "required": [
+        "confirmation_id",
+        "idempotency_key"
+      ],
       "additionalProperties": false
     },
     "DraftRecord": {
       "type": "object",
       "properties": {
-        "draft_id": { "type": "string" },
-        "kind": { "enum": ["schedule", "task"] },
-        "workspace_ref": { "type": "string" },
-        "revision": { "type": "integer", "minimum": 1 },
-        "payload_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-        "status": { "enum": ["draft", "committed"] },
-        "review_url": { "type": ["string", "null"] },
-        "expires_at": { "type": "string", "format": "date-time" }
+        "draft_id": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "schedule",
+            "task"
+          ]
+        },
+        "workspace_ref": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "payload_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "committed"
+          ]
+        },
+        "review_url": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        }
       },
-      "required": ["draft_id", "kind", "workspace_ref", "revision", "payload_hash", "status", "review_url", "expires_at"],
+      "required": [
+        "draft_id",
+        "kind",
+        "workspace_ref",
+        "revision",
+        "payload_hash",
+        "status",
+        "review_url",
+        "expires_at"
+      ],
+      "additionalProperties": false
+    },
+    "CalendarTask": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "confirmed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notice": {
+          "type": "object",
+          "properties": {
+            "schema_version": {
+              "const": "1.0.0"
+            },
+            "notice_id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "title": {
+              "type": "string"
+            },
+            "published_at": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "extracted_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "timezone": {
+              "const": "Asia/Shanghai"
+            },
+            "event": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "end": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "date": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "precision": {
+                  "enum": [
+                    "datetime",
+                    "date_only",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "start",
+                "end",
+                "date",
+                "precision"
+              ],
+              "additionalProperties": false
+            },
+            "due": {
+              "type": "object",
+              "properties": {
+                "at": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "date": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "precision": {
+                  "enum": [
+                    "datetime",
+                    "date_only",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "at",
+                "date",
+                "precision"
+              ],
+              "additionalProperties": false
+            },
+            "estimated_minutes": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10080
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "earliest_start": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "materials": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "source_spans": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string"
+                  },
+                  "quote": {
+                    "type": "string"
+                  },
+                  "source_ref": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "field",
+                  "quote",
+                  "source_ref"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "needs_confirmation": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "schema_version",
+            "notice_id",
+            "title",
+            "published_at",
+            "extracted_at",
+            "timezone",
+            "event",
+            "due",
+            "estimated_minutes",
+            "earliest_start",
+            "materials",
+            "source_spans",
+            "needs_confirmation"
+          ],
+          "additionalProperties": false
+        },
+        "source_kind": {"const": "personal_task_v1"},
+        "entry_kind": {"enum": ["reminder", "deadline", "event"]},
+        "notes": {"type": "string", "maxLength": 2000},
+        "reminder_at": {"type": ["string", "null"], "format": "date-time"},
+        "scheduled_slots": {
+          "type": "array", "maxItems": 8,
+          "items": {
+            "type": "object",
+            "properties": {
+              "start": {"type": "string", "format": "date-time"},
+              "end": {"type": "string", "format": "date-time"}
+            },
+            "required": ["start", "end"], "additionalProperties": false
+          }
+        },
+        "calendar_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "completed",
+            "cancelled"
+          ]
+        },
+        "scheduled_start": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "scheduled_end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "reminder_minutes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "enum": [
+            null,
+            0,
+            5,
+            15,
+            30,
+            60
+          ]
+        }
+      },
+      "required": [
+        "task_id",
+        "revision",
+        "confirmed_at",
+        "notice",
+        "calendar_revision",
+        "status",
+        "scheduled_start",
+        "scheduled_end",
+        "reminder_minutes"
+      ],
+      "additionalProperties": false
+    },
+    "CalendarTaskList": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CalendarTask"
+          }
+        },
+        "capabilities": {
+          "type": "object",
+          "properties": {
+            "scheduling": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "boolean"
+            },
+            "reminders": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "scheduling",
+            "status",
+            "reminders"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "items",
+        "capabilities"
+      ],
+      "additionalProperties": false
+    },
+    "CalendarCandidates": {
+      "type": "object",
+      "properties": {
+        "candidate_slots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TimeSlot"
+          }
+        },
+        "needs_confirmation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "coverage": {
+          "type": "object",
+          "properties": {
+            "completeness": {
+              "enum": [
+                "complete",
+                "partial",
+                "unknown"
+              ]
+            }
+          },
+          "required": [
+            "completeness"
+          ],
+          "additionalProperties": true
+        },
+        "fixed_event": {
+          "type": "boolean"
+        },
+        "reason": {
+          "enum": [
+            "deadline_passed_or_no_remaining_time"
+          ]
+        }
+      },
+      "required": [
+        "candidate_slots",
+        "needs_confirmation",
+        "coverage"
+      ],
+      "additionalProperties": false
+    },
+    "CalendarSummary": {
+      "type": "object",
+      "properties": {
+        "pending_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "today_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "overdue_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unscheduled_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "next_task": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "task_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "notice": {
+                  "type": "object",
+                  "properties": {
+                    "schema_version": {
+                      "const": "1.0.0"
+                    },
+                    "notice_id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "published_at": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "extracted_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "timezone": {
+                      "const": "Asia/Shanghai"
+                    },
+                    "event": {
+                      "type": "object",
+                      "properties": {
+                        "start": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "end": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "date": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "precision": {
+                          "enum": [
+                            "datetime",
+                            "date_only",
+                            "unknown"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "start",
+                        "end",
+                        "date",
+                        "precision"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "due": {
+                      "type": "object",
+                      "properties": {
+                        "at": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "date": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "date"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "precision": {
+                          "enum": [
+                            "datetime",
+                            "date_only",
+                            "unknown"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "at",
+                        "date",
+                        "precision"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "estimated_minutes": {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 10080
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "earliest_start": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "materials": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "source_spans": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "quote": {
+                            "type": "string"
+                          },
+                          "source_ref": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "field",
+                          "quote",
+                          "source_ref"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "needs_confirmation": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "schema_version",
+                    "notice_id",
+                    "title",
+                    "published_at",
+                    "extracted_at",
+                    "timezone",
+                    "event",
+                    "due",
+                    "estimated_minutes",
+                    "earliest_start",
+                    "materials",
+                    "source_spans",
+                    "needs_confirmation"
+                  ],
+                  "additionalProperties": false
+                },
+                "scheduled_start": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                },
+                "scheduled_end": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                },
+                "calendar_revision": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "task_id",
+                "notice",
+                "scheduled_start",
+                "scheduled_end",
+                "calendar_revision"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "as_of": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "background_push": {
+          "const": false
+        }
+      },
+      "required": [
+        "pending_count",
+        "today_count",
+        "overdue_count",
+        "unscheduled_count",
+        "total_count",
+        "next_task",
+        "as_of",
+        "background_push"
+      ],
       "additionalProperties": false
     }
+  },
+  "x-task-calendar-candidate": {
+    "status": "default-disabled-not-deployed",
+    "data_version": "task-calendar-v1",
+    "activation": "CLOUD_TASK_CALENDAR_ENABLED plus CLOUD_NOTICE_TEXT_PILOT_ENABLED; apply reviewed calendar migration after notice-text",
+    "ownership": "Cookie/CSRF for browser writes; OAuth demo:read summary only; caller workspace is an ownership check",
+    "storage": "Two RLS tables, independent CAS and owner-scoped idempotency; original notice remains immutable; replaces notice snapshot to share busy state"
   }
 }

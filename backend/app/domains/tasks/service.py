@@ -250,6 +250,14 @@ def _create_draft_row(
     }
 
 
+def _validate_draft_payload(settings, principal, workspace_ref, kind, payload) -> str:
+    if kind == "task" and payload.get("plan_version") == "notice-text-pilot-v1":
+        from app.core.notice_pilot import validate_plan
+        return validate_plan(settings, principal, workspace_ref, payload)
+    validate_contract(payload, "TimetableImport" if kind == "schedule" else "NoticeDraft")
+    return enforce_demo_fixture(payload, kind)
+
+
 def create_browser_draft(
     settings: Settings,
     principal: Principal,
@@ -259,8 +267,7 @@ def create_browser_draft(
     idempotency_key: str,
 ) -> dict[str, Any]:
     resolve_workspace(principal, workspace_ref, "demo:draft", settings=settings)
-    validate_contract(payload, "TimetableImport" if kind == "schedule" else "NoticeDraft")
-    digest = enforce_demo_fixture(payload, kind)
+    digest = _validate_draft_payload(settings, principal, workspace_ref, kind, payload)
     request_digest = payload_hash({"workspace_ref": workspace_ref, "kind": kind, "payload": payload})
     operation = f"create_{kind}_draft"
     now = int(time.time())
@@ -385,6 +392,7 @@ def update_draft(
     principal: Principal,
     draft_id: str,
     payload: dict[str, Any],
+    expected_revision: int | None = None,
 ) -> dict[str, Any]:
     now = int(time.time())
     with database_connection(settings) as connection:
@@ -397,9 +405,12 @@ def update_draft(
             raise AppError(status_code=404, code="NOT_FOUND", message="Draft not found")
         if row["status"] != "draft":
             raise AppError(status_code=409, code="STALE_REVISION", message="Draft is already committed")
+        if row["expires_at"] <= now:
+            raise AppError(410, "TOKEN_EXPIRED", "Draft expired")
+        if expected_revision is not None and expected_revision != row["revision"]:
+            raise AppError(409, "STALE_REVISION", "Draft revision changed")
         kind = row["kind"]
-        validate_contract(payload, "TimetableImport" if kind == "schedule" else "NoticeDraft")
-        digest = enforce_demo_fixture(payload, kind)
+        digest = _validate_draft_payload(settings, principal, row["workspace_ref"], kind, payload)
         revision = row["revision"] + 1
         connection.execute(
             """
@@ -434,7 +445,9 @@ def _require_active_draft(
 
 
 def _require_resolved_notice(draft: sqlite3.Row) -> None:
-    if draft["kind"] == "task" and json.loads(draft["payload_json"])["needs_confirmation"]:
+    payload = json.loads(draft["payload_json"])
+    notice = payload["notice"] if payload.get("plan_version") == "notice-text-pilot-v1" else payload
+    if draft["kind"] == "task" and notice["needs_confirmation"]:
         raise AppError(
             status_code=409, code="CONFIRMATION_REQUIRED",
             message="Notice fields must be resolved before confirming or saving a task",
@@ -579,6 +592,13 @@ def commit_draft(
         ):
             raise AppError(status_code=409, code="STALE_REVISION", message="Draft revision changed")
         _require_resolved_notice(draft)
+
+        if draft["expires_at"] <= now:
+            raise AppError(410, "TOKEN_EXPIRED", "Draft expired")
+        stored_payload = json.loads(draft["payload_json"])
+        if stored_payload.get("plan_version") == "notice-text-pilot-v1":
+            # Recheck against records confirmed since the user last selected a slot.
+            _validate_draft_payload(settings, principal, draft["workspace_ref"], kind, stored_payload)
 
         if kind == "task":
             resource_id = _identifier("task")

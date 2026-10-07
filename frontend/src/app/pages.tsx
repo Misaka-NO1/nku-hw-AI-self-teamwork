@@ -7,8 +7,14 @@ export { AffairsPage } from "../features/affairs/AffairsPage";
 export { DegreePage } from "../features/degree/DegreePage";
 export { default as ImportPage } from "../features/import/ConnectedImportPage";
 export { default as TimetablePage } from "../features/timetable/ConnectedTimetablePage";
-export { default as TasksPage } from "../features/tasks/TasksPage";
 export { default as CalendarPage } from "../features/calendar/CalendarPage";
+import FixtureTasksPage from "../features/tasks/TasksPage";
+import NoticePilotPage from "../features/notice-pilot/TasksPage";
+export function TasksPage() {
+  const pilot = import.meta.env.VITE_NOTICE_TEXT_PILOT === "true"
+    && new URLSearchParams(window.location.search).get("notice_pilot") === "1";
+  return pilot ? <NoticePilotPage /> : <FixtureTasksPage />;
+}
 
 export function ScenicPage() {
   const params = new URLSearchParams(window.location.search);

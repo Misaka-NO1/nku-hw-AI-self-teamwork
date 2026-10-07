@@ -7,6 +7,11 @@ export interface CalendarTask extends TaskRecord {
   scheduledStart: string | null;
   scheduledEnd: string | null;
   reminderMinutes: number | null;
+  sourceKind?: "personal_task_v1";
+  entryKind?: "reminder" | "deadline" | "event";
+  notes?: string;
+  reminderAt?: string | null;
+  scheduledSlots?: {start:string;end:string}[];
 }
 export interface Candidate { start: string; end: string; durationMinutes: number }
 export interface CalendarData {
@@ -40,16 +45,21 @@ export function shiftMonth(month:string,delta:number):string {
   return shanghaiDay(date).slice(0,7);
 }
 export function plannedRange(task:CalendarTask):{start:string;end:string}|null {
+  if(task.sourceKind==="personal_task_v1") return task.scheduledSlots?.[0]??null;
   const start = task.scheduledStart ?? task.notice.event.start;
   const end = task.scheduledEnd ?? task.notice.event.end;
   return start && end && Date.parse(end)>Date.parse(start) ? {start,end} : null;
+}
+export function plannedRanges(task:CalendarTask):{start:string;end:string}[] {
+  if(task.sourceKind==="personal_task_v1") return task.scheduledSlots??[];
+  const range=plannedRange(task); return range?[range]:[];
 }
 export function dueDay(task:CalendarTask):string {
   return task.notice.due.at ? shanghaiDay(task.notice.due.at) : task.notice.due.date ?? "";
 }
 export function occursOn(task:CalendarTask,day:string):boolean {
-  const range = plannedRange(task);
-  return !!range && shanghaiDay(range.start)<=day && shanghaiDay(new Date(Date.parse(range.end)-1))>=day || dueDay(task)===day;
+  return plannedRanges(task).some(range=>shanghaiDay(range.start)<=day && shanghaiDay(new Date(Date.parse(range.end)-1))>=day)
+    || !!task.reminderAt && shanghaiDay(task.reminderAt)===day || dueDay(task)===day;
 }
 export function isOverdue(task:CalendarTask,now:Date):boolean {
   if(task.status!=="pending") return false;
@@ -71,17 +81,21 @@ export function exactCandidates(windows:Candidate[],minutes:number|null):Candida
     start:w.start,end:new Date(Date.parse(w.start)+minutes*60000).toISOString(),durationMinutes:minutes,
   })).filter((w,i,all)=>all.findIndex(x=>Date.parse(x.start)===Date.parse(w.start))===i);
 }
-export function reminderKey(task:CalendarTask):string|null {
-  const start=plannedRange(task)?.start;
+export function reminderTarget(task:CalendarTask,now:Date):string|null {
+  if(task.status!=="pending")return null;
+  if(task.reminderAt && now.getTime()>=Date.parse(task.reminderAt)-(task.reminderMinutes??0)*60000
+    && now.getTime()<Date.parse(task.reminderAt)+15*60000) return task.reminderAt;
+  return task.reminderMinutes===null?null:plannedRanges(task).find(range=>now.getTime()>=Date.parse(range.start)-task.reminderMinutes!*60000
+    && now.getTime()<Date.parse(range.end))?.start??null;
+}
+export function reminderKey(task:CalendarTask,now?:Date):string|null {
+  const start=now?reminderTarget(task,now):task.reminderAt??plannedRange(task)?.start;
+  if(task.status==="pending" && task.reminderAt && start)return `${task.taskId}:${task.calendarRevision}:${start}:${task.reminderMinutes??0}`;
   return task.status==="pending" && start && task.reminderMinutes!==null
     ? `${task.taskId}:${task.calendarRevision}:${start}:${task.reminderMinutes}` : null;
 }
 export function remindersDue(tasks:CalendarTask[],now:Date):CalendarTask[] {
-  return tasks.filter(t=>{
-    const range=plannedRange(t);
-    return reminderKey(t)!==null && !!range && now.getTime()>=Date.parse(range.start)-t.reminderMinutes!*60000
-      && now.getTime()<Date.parse(range.end);
-  });
+  return tasks.filter(t=>reminderTarget(t,now)!==null);
 }
 const escapeIcs=(text:string)=>text.replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n").replace(/;/g,"\\;").replace(/,/g,"\\,");
 const utc=(value:string)=>new Date(value).toISOString().replace(/[-:]/g,"").replace(/\.\d{3}Z$/,"Z");
@@ -98,12 +112,14 @@ function fold(line:string):string {
 export function calendarIcs(tasks:CalendarTask[],now:Date):string {
   const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//NKU Campus Assistant//Calendar//ZH","CALSCALE:GREGORIAN"];
   for(const task of tasks.filter(t=>t.status==="pending" && plannedRange(t))) {
-    const range=plannedRange(task)!;
-    lines.push("BEGIN:VEVENT",`UID:${escapeIcs(task.taskId)}@nku-campus-assistant`, `DTSTAMP:${utc(now.toISOString())}`,
+    const ranges=plannedRanges(task);
+    for(const [index,range] of ranges.entries()) {
+    lines.push("BEGIN:VEVENT",`UID:${escapeIcs(task.taskId)}${ranges.length>1?`-${index}`:""}@nku-campus-assistant`, `DTSTAMP:${utc(now.toISOString())}`,
       `SEQUENCE:${task.calendarRevision}`,`DTSTART:${utc(range.start)}`,`DTEND:${utc(range.end)}`,
       `SUMMARY:${escapeIcs(task.notice.title)}`,`DESCRIPTION:${escapeIcs("截止："+(task.notice.due.at??task.notice.due.date??"无")+"；以平台最新记录为准，导入后不会自动同步。")}`);
     if(task.reminderMinutes!==null) lines.push("BEGIN:VALARM","ACTION:DISPLAY",`TRIGGER:-PT${task.reminderMinutes}M`,`DESCRIPTION:${escapeIcs(task.notice.title)}`,"END:VALARM");
     lines.push("END:VEVENT");
+    }
   }
   lines.push("END:VCALENDAR");
   return lines.map(fold).join("\r\n")+"\r\n";

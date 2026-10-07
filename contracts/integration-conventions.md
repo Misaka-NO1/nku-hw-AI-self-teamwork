@@ -7,7 +7,7 @@
 - 所有 REST、MCP、JSON 文件和数据库边界使用 `snake_case`。
 - TypeScript 内部可以使用 `camelCase`，但只能在 API client/adapter 内转换。
 - 所有业务 JSON 的 `schema_version` 固定为 `1.0.0`。
-- 时间统一 `Asia/Shanghai`，ISO 时间必须带 `+08:00`，区间采用半开区间 `[start, end)`。
+- 时间默认 `Asia/Shanghai`，ISO 时间必须带时区，区间采用半开区间 `[start, end)`；日历数据库读回允许等价 UTC，按时间戳比较。
 - `course_id` 是稳定课程标识；`offering_id` 是具体开课实例；`term_id` 是教学日历标识。
 
 ## 2. 页面和配置
@@ -214,3 +214,31 @@ Tasks/Import 身份模式初始化不相信旧 sessionStorage；先恢复当前�
 登录返回仅允许既有严格 OAuth 授权路径，或 `/tools/tasks`、`/tools/import` 的
 唯一安全 `draft_id`；拒绝外站/重复额外参数/hash/令牌/owner/嵌套返回，不自动提交。
 本节 schema、夹具、HTTP 正反例与 ABC handoff 按 §7 同步；云与学校链路仍须实测。
+
+## 10. 新通知本地文本试点（2026-10-05，默认关闭）
+
+新增`NoticePilotReadRequest/Confirmations/CheckRequest/Plan/DraftRequest/UpdateRequest`；统一业务信封与核心schema_version保持1.0.0。Plan的notice内嵌现有13字段NoticeDraft，不给event/due新增字段；包装另存source_text/source_ref/reference_at、user_confirmations、window/available_windows、kind、selected_slot与plan_version=`notice-text-pilot-v1`。原始提炼证据与用户补充分别保存。
+
+仅`app.main`新增`/api/v1/notice-pilot/workspaces|read|check|drafts|drafts/{id}/update`。Cookie/CSRF/owner来自服务器独立虚构工作区，不接受caller owner/workspace、课表或任务覆盖。后端`NOTICE_TEXT_PILOT_ENABLED`只允许loopback development/test/demo_fixture；云身份入口未注册。原demo-v1接口仍严格校验固定夹具。前端VITE_NOTICE_TEXT_PILOT和notice_pilot=1同时开启才显示该页。
+
+TimeCheckRequest逐字段从本次已复核事项构造，B算法不修改：活动起止送event，截止送due，预计分钟/最早开始独立字段，allow_split=false和零buffer；window及最多20个contained/nonoverlapping available_windows由用户给出。建议仅取实际candidate_slots并保留索引；selected_slot必须与当前算法返回的候选完整相等。事件不能另选工作时段，有冲突须明确accept_conflicts。
+
+草稿复用revision/payload_hash/confirmation/idempotency，更新需expected revision；提交前重读本人记录再计算。SQLite tasks的payload_json存Plan包装，截止不占时间、只有已确认selected_slot在试点适配器中映射为忙碌事件。原云PG RPC、OAuth owned_time和其他领域适配器尚不接受此包装；禁止将它直接传入原云保存/查询。相同工作区notice_id增加局部唯一索引，不改原task实体或PG表。
+
+本轮HTTP正反例与5份新通知在backend/tests/test_notice_pilot.py；工作流输入/模型校验候选在deploy/genios-workflows/notice-text*。学校候选始终需source_review，不直接映射unchecked模型值或保存。B/C交接同步该局部边界，云存储/普通账号/主Agent及文件输入验收仍未完成。操作与证据见[D13](../docs/evidence/platform/D13-notice-schedule-acceptance.md)。
+
+### 10.1 2026-10-06 后端候选扩展（默认关闭、未部署）
+
+负责人本轮只要求逻辑，前端接入另行完成。新增CLOUD_NOTICE_TEXT_PILOT_ENABLED，使用原已验证身份和工作区；新四表nku_notice_text_v1 + RPC独立迁移，不替换旧身份/fixture/授权。纯notice_plan接同一次已确认本人记录，PG与旧保存/退出共享owner锁，records_revision在事务内验证，防止计算后数据变更。新接口/模型/OCR/字段限额与错误详见[D后端接口](../docs/handoffs/D-notice-backend-interface-2026-10-06.md)。
+
+NoticePilotRead/Check/Plan增加可选model_output、source_kind/document_sha256与fictional_data_confirmed；Check/Plan增加可选buffers，Confirmations增加ocr_review。核心NoticeDraft仍13字段、B算法和既有API定义不变。模型输出仅建议，时间/估时须显式字段确认；OCR保留原始识别与hash，禁止自动修复数字。包装原文/补充分别存储；新文本列表分页，原固定tasks路径不混入Plan。新草稿review_url=null，不能发不存在的复核入口。
+
+云OAuth仅新增只读notice read/check，query_json保持原始nullable/array/object，最大131072 UTF-8字节。严格/参赛demo:read归属均由原grant确定，不增加Agent写scope/确认/提交。开关开启时现有本人records/time纳入已确认文本工作区间；关闭时保持原固定行为。PNG/JPEG本机OCR实际测试已完成，PDF不支持；云OCR/学校文件链路仍须独立验收。正反例见text-notice-pilot.example.json、test_cloud_notice_text.py、test_notice_image_reader.py及notice-text-rpc.test.mjs，B/C同步本节；没有实际迁移/发布。
+
+### 10.2 待办日历候选（2026-10-06，默认关闭、未部署）
+
+新增 CalendarUpdateRequest/CalendarTask/CalendarTaskList/CalendarCandidates/CalendarSummary，data_version=task-calendar-v1，完整 NoticeDraft 不改。GET /api/v1/tasks/calendar 与 /summary 静态路由先注册；GET /api/v1/tasks/{task_id}/calendar/candidates 由服务器当前时间、本课表、其他pending安排与B算法生成；POST /api/v1/tasks/{task_id}/calendar 使用原Cookie/Origin/CSRF和幂等键，独立calendar_revision CAS，保留原due，完成/取消释放占用，恢复重算。
+
+新开关 CLOUD_TASK_CALENDAR_ENABLED 要求 notice-text 开关及原批准身份。新两表RLS迁移单独执行，并替换 notice-text snapshot 使本人REST/OAuth时间和通知提交共享日历状态；原owner锁内检查records_revision，旧草稿需刷新。完整返回本人事项，不静默截断。候选只在教学范围内推荐，过期固定课表返回timetable_outside_term，不平移历史夹具。SQL可标准化为UTC，前端比较等价时刻。
+
+GET /oauth/tasks/summary 无query/body，demo:read原grant归属，严格与参赛模式均只读，无Agent状态写入。学校本轮只读核查开场白/触发器：静态欢迎、定时及Webhook事件，没有打开会话执行工具实证；按首次消息查询候选，不宣称定时推送。接口及正反例见[D日历交接](../docs/handoffs/D-task-calendar-backend-2026-10-06.md)、test_task_calendar.py、task-calendar-rpc.test.mjs，B/C同步。PR #9前端已整合至main=3a31ebd，隔离PG页面联调通过；线上与页面通知/ICS验收仍待完成。

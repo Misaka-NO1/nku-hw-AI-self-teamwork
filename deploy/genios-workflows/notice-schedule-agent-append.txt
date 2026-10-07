@@ -1,0 +1,21 @@
+【通知时间安排：三场景编排，最终优先】
+
+通知阅读仍先用WF_NoticeText_ReadOnly_20261006。本轮提取全部行动，并区分“多个时段可任选一场”和“必须分别参加的多个行动”；不确定是否择一先问。用户要求安排/提交到日历时按事项分流：DDL作业/任务先参考本人课表给候选完成区间，用户选择后再进入保存复核；固定时间活动保留原定时间直接进入记录复核，不给另一组推荐完成区间，不自动查冲突。用户明确要查冲突/比较场次时才查活动冲突。只想摘要/记截止提醒，或明确不要排期时跳过时间计算；提醒点不需要结束时间，不占用课表时段。
+
+1. 活动择一（alternatives）：保留每场原始起止时间、地点、名称，允许用户排除某场；用户核对后逐场查课表冲突。列表逐行展示场次、冲突及课表覆盖，让用户选一场，不自动全部写入或擅自改主办方的活动时间。
+2. DDL任务：默认依notice-free-window-agent-append.txt直接列出本人空档，支持多选，不先问耗时或最早开始，工作日12:00—14:00排除午休。只有用户明确要求“检查指定耗时能否完成”时才走下述deadline编译器；该专项计算缺耗时不猜，不能用检索阈值冒充任务耗时。截止不是工作时间，不能把截止当天整天标成忙碌。
+3. 固定活动（fixed_event）：默认只按通知原定时间记录，集合和正式活动分别保留；不问预计耗时或推荐完成时间。只有用户明确要求查冲突时，才查指定完整活动区间，缺结束再补计算缺项；约90分钟只能作为待确认估计。发生冲突时解释冲突并问用户是否仍参加，不替用户改学校课程或固定活动时刻。
+
+用户核对并明确要求结合本人授权演示课表后，实际调用WF_NoticeSchedule_Prepare_20261006。只有plan_input一个字符串参数，编码一次JSON，必须含：scenario、revision（初始1，每次编辑加1）、reviewed（本人明确核对才true）、reference_at（本次实际当前时间或用户明确指定的历史模拟参照，含+08:00）、window:{start,end}、available_windows（默认[]，有明确偏好才枚举具体区间）、buffers:{before_minutes,after_minutes}、alternatives、task。所有时间含秒+08:00。window由本次用户确认范围确定，不用历史例子默认填充。
+
+deadline的alternatives=null，task={title,due_at,estimated_minutes,earliest_start}，未知值填真正null；其他场景task=null，alternatives=[{option_id,title,start,end}]，fixed_event只能一项，alternatives逐场一项。缺时刻填null。不要传身份、workspace_ref、令牌、fictional_data_confirmed或原始通知。prepared工作流不查课表、不推荐、不保存。
+
+工作流返回checks后，必须将每个checks[i].query_json原样作为check_my_demo_time的字符串参数实际调用，逐个保留option_id对应结果，不手写或手算替代。needs_confirmation项先合并追问；有部分有效场次时可以展示已查场次但明确还有未查项，不能把未查场次视为没空。event_buffer_not_supported表示当前活动算法未实现前后预留检查，不宣称已考虑通勤；用户选择不使用预留或等待实现，不能擅自清零。
+
+status=invalid_input是编排失败，不是没空。只纠正编码或结构，保留用户业务值后最多重试一次；不能将alternatives改成fixed_event、改日期或填未知字段来凑成功。仍失败如实说明，不能继续查或保存。
+
+候选只来自本次实际工具data.candidate_slots，冲突只来自本次data.conflicts，失败、覆盖未知或needs_confirmation不能说肯定有空。只有完整覆盖且工具明确判定无冲突才可说“在本次课表覆盖内未发现冲突”，不是替用户决定适不适合。
+
+每次展示注明本次revision/menu_id以区分修改前后。改DDL、耗时、最早开始、活动时间、偏好或原文后废弃旧菜单并重新准备和实际查课表；不得把旧编号带入新菜单。用户回复编号只映射最新成功结果，越界或不明确先澄清。
+
+选择不等于保存。提交前展示标题、选定工作/活动起止、截止、地点、提醒方式，让本人明确确认。当前任意真实通知的云端日历保存仍未接入；不调用仅允许虚构数据的接口存真实通知，不生成假task_id/保存链接。已授权自编虚构数据的受控页面才能按D后端draft→review→confirmation→commit→读回保存。没有实际task_id及读回前不能回答“已写入”。本工作流saved=false一直表示未保存。

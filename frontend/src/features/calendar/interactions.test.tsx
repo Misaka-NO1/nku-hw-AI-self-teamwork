@@ -67,4 +67,23 @@ describe("calendar real-mode interactions with mocked D transport",()=>{
     expect(button("标记完成").disabled).toBe(true);expect(button("根据课表重新查候选").disabled).toBe(true);
     expect(button("确认保存安排 / 提醒").disabled).toBe(true);expect(updateCalendar).not.toHaveBeenCalled();
   });
+  it("expired timetable candidate rejection explains coverage without deleting tasks or writing",async()=>{
+    await click(container.querySelector(".calendar-task-card") as HTMLElement);
+    vi.mocked(loadCandidates).mockRejectedValueOnce(new ApiError({status:422,code:"VALIDATION_ERROR",message:"timetable_outside_term",requestId:"expired-term"}));
+    await click(button("根据课表重新查候选"));
+    expect(container.textContent).toContain("课表有效期已结束");
+    expect(container.textContent).toContain("expired-term");
+    expect(container.querySelectorAll(".calendar-task-card").length).toBeGreaterThan(0);
+    expect(container.querySelector("input[type=radio]")).toBeNull();
+    expect(updateCalendar).not.toHaveBeenCalled();
+  });
+  it("confirmation reason expiry cannot become an empty-slots success or enable selection",async()=>{
+    await click(container.querySelector(".calendar-task-card") as HTMLElement);
+    vi.mocked(loadCandidates).mockResolvedValueOnce({candidateSlots:[],needsConfirmation:["timetable_outside_term"],coverage:{completeness:"unknown"}});
+    await click(button("根据课表重新查候选"));
+    expect(container.textContent).toContain("课表有效期已结束");
+    expect(container.textContent).not.toContain("本次未取得足够的连续空档");
+    expect(container.querySelector("input[type=radio]")).toBeNull();
+    expect(updateCalendar).not.toHaveBeenCalled();
+  });
 });

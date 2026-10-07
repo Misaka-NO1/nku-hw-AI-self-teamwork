@@ -18,4 +18,17 @@ describe("OAuth login return target", () => {
       expect(oauthReturnPath(outer("/oauth/authorize?"+bad),origin)).toBeNull();
     }
   });
+  it.each(["demo:read tasks:read", "demo:read tasks:read tasks:write"])("resumes explicit personal-task consent %s without auto-approving", scope => {
+    const five = new URLSearchParams(query);
+    five.delete("code_challenge"); five.delete("code_challenge_method");
+    five.set("scope", scope);
+    const path = "/oauth/authorize?" + five;
+    expect(oauthReturnPath(outer(path), origin)).toBe(path);
+  });
+  it.each(["tasks:write", "demo:read tasks:write", "demo:read tasks:read tasks:write admin", "demo:read  tasks:read"])("rejects unrecognized scope expansion %s", scope => {
+    const five = new URLSearchParams(query);
+    five.delete("code_challenge"); five.delete("code_challenge_method");
+    five.set("scope", scope);
+    expect(oauthReturnPath(outer("/oauth/authorize?" + five), origin)).toBeNull();
+  });
 });

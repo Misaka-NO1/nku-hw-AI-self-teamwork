@@ -1,5 +1,19 @@
 # 云端身份与业务持久库封闭试点
 
+## 当前状态：2026-10-07
+
+身份工具站已部署 r23/023，主 Agent v0.2.11 原两人渠道已审批通过；本人通知待办草稿、明确确认保存、日历读回和长期授权已接通。
+当前状态、团队接入、构建与迁移注意以 [N26 当前交接](../../docs/handoffs/N26-current-release-and-team-use-2026-10-07.md) 为准。
+下文保留各轮历史证据，其“未部署/仅只读/短期到期”描述不再代表最新配置。
+课表与学分仍使用标注的虚构数据；没有后台推送，也没有平台打开自动提醒。B 的首次长期授权需本人执行。
+既有环境不要重跑旧建表或替换 RPC 迁移；不把当前源码提交等同于新增发布或权限扩大。
+
+## 2026-10-06 后端文本通知候选（未部署）
+
+按负责人要求只交付逻辑，前端由别人接入。新增默认关闭CLOUD_NOTICE_TEXT_PILOT_ENABLED，复用已有本人身份/24小时工作区；独立notice-text-migration.sql只建四表和后台RPC，不替换旧schema/fixture/授权。打包脚本已包含独立迁移文件，**不要重跑旧database-migration.sql，也未在线执行新迁移**。新服务启动/健康须核对notice-text-v1。
+
+本人文本读/查、PG草稿/修改/确认/幂等提交/分页读回和工作区间计忙碌已有候选；两种OAuth仍只读，未增加Agent确认/保存。新草稿review_url=null，待前端正确呈现Plan后接本人确认。PNG/JPEG OCR本机系统识别已测，云Linux需单独配置tesseract/中文语言包，本轮未安装；PDF不支持。接口、限额、错误及配置见[D后端交接](../../docs/handoffs/D-notice-backend-interface-2026-10-06.md)，实测与失败见D13。下方为既有线上/历史说明，不表示本轮代码已上线。
+
 ## 2026-10-04 13:47 更新：截止字段已修复并实际验收
 
 主Agent本人截止检查20分钟/最早09:40实际Input与Output一致，真实candidate_slots为09:40–10:00，request_id=692e167f-79e8-42b4-a671-b9e18afd57f4。学校输出定义补齐candidate_slots并保留conflicts；修改后活动回归真实两交集，request_id=684b0723-a81b-43fe-b7b9-9c850c7a0b86。日期仅精确到天且耗时未知时返回空列表与due_time/estimated_minutes待确认，request_id=a61c5fd0-7187-464e-99a0-5f0a4c75624a；不补23:59或借历史耗时。此前输出字段遗漏导致的猜测回复不计入通过，失败记录保留在D11。
@@ -74,6 +88,13 @@ r6 本机前端 107 项、类型检查、生产构建通过；164 个 manifest h
 - 地图/复习资料导航指向原有公开服务，不覆盖 34 景点、91 张照片、33 份 PDF 或其服务。共享前端构建会包含已授权的共用派生资产，但不打包原照片目录。
 
 ## 生成部署包（不含任何凭证）
+
+2026-10-07 导航修复：身份工具站统一使用 `frontend/.env.identity` 的公开构建配置，
+在 frontend 运行 `npm run build:identity`。它包含已验证的赏景地图 origin 与正式 Agent
+聊天地址（不是编排页），不含密钥；课表和待办日历仍在身份服务本域，不改变本人数据隔离。
+这些 `VITE_*` 值在构建时写入产物，只改云端运行时变量不会修复现有页面。
+导航配置回归：`node --test src/app/identityBuild.test.mjs`；路由回归：
+`npm test -- src/app/routes.test.ts`。随后按下方打包步骤生成新的不覆盖包。
 
 前端构建环境：`VITE_API_BASE_URL=/`，`VITE_PUBLIC_CONTENT_ONLY=false`，`VITE_IDENTITY_PILOT=true`。
 `VITE_PUBLIC_CONTENT_ORIGIN` 设为已验收的公开资料服务 HTTPS origin；不要把后台 key/token 放进 VITE 变量。
@@ -179,3 +200,16 @@ needs_confirmation，不把“基于已保存安排”的空档说成确定有�
 最后还需主 Agent 全功能正反例测试、正式域名/平台发布确认、交接文档与发布版本，主 Agent 当前不公开发布。
 
 测试运行：`npm test`（sql-tests）以及后端 pytest。SQL 测试是官方 PGlite 的实际 PostgreSQL，HTTP 集成用独立数据库进程验证应用重启读回；CloudBase 身份在线接口在这些自动测试中被 mock，不能作为腾讯云身份/平台实证。
+
+
+## 2026-10-06 新通知与日历扩展候选（未部署）
+
+上文“仅固定通知”是已部署版本的边界。新源码增加默认关闭 CLOUD_NOTICE_TEXT_PILOT_ENABLED 和 CLOUD_TASK_CALENDAR_ENABLED。新通知必须显式确认虚构输入、核对关键字段后才可创建/确认/提交，复用批准本人Cookie/CSRF/OAuth工作区。Agent通知提取/分析和日历摘要均只读。
+
+已存在身份/参赛OAuth迁移的环境只审阅后续扩展，不重跑 database-migration.sql。依次执行 notice-text-migration.sql（四张新RLS表）、task-calendar-migration.sql（两张新RLS表；同时替换 nku_notice_text_v1.snapshot）。新RPC仅授予后台service_role，浏览器/Agent/anon/authenticated不取得直接执行权。日历迁移会使旧草稿快照版本失效，应重算；保存原通知表和原due不改。云执行前核对环境与后台权限，候选代码和本地测试不是线上回执。
+
+先保留两开关false部署合包候选，核对build/probe和每项迁移版本，再按批准范围启用。日历开启必须notice-text开启；缺迁移启动/健康失败。不配置系统时钟替换函数；calendar now_epoch在真实运行只读服务器时钟，SQL测试driver不在包内。
+
+后端集成包：python backend/scripts/build_cloud_identity_package.py --backend-only --name cloudbase-calendar-backend-20261006-r1。此包含后端/契约/六份原夹具/迁移，不含凭证、用户数据、SQL测试依赖、前端或Dockerfile；不能直接切网页服务，取得calendar前端后再按原完整合包流程构建。实际接口/边界与剩余验收见 docs/handoffs/D-task-calendar-backend-2026-10-06.md。
+
+当前固定虚构课表只覆盖到2026-10-04；今天新排期需经批准提供覆盖当前日期的本人课表，不取消原fixture门禁或篡改原日期。reminder状态可存储，不等于页面外推送。学校只读摘要工具候选 GET /oauth/tasks/summary、demo:read，无额外参数；实际部署绑定和两账号验收完成前不宣称上线。

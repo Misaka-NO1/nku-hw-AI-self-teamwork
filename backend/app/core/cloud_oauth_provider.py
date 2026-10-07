@@ -105,7 +105,45 @@ class CloudOAuthProvider:
 
     def records(self,request):
         from app.cloud_identity_site import format_times
+        if self.settings.cloud_notice_text_pilot_enabled:
+            return format_times(self.store.notice_call("records",self._notice_args(request)))
         return format_times(self.store.call("records",self._agent(request)))
+
+    def _notice_args(self,request):
+        self.gate()
+        return {"principal_kind":"agent","grant_mode":"competition" if self.settings.cloud_oauth_competition_compat_enabled else "strict",
+                "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":self.settings.oauth_client_id}
+
+    def notice_query(self,request,arguments,operation):
+        from app.core.cloud_notice_text import CloudNoticeService
+        from app.core.contracts import validate_boundary
+        from app.core.platform_query import decode_platform_query
+        service=CloudNoticeService(self.settings,self.store)
+        # OAuth can read/compute. It has no draft, confirmation or save route.
+        args=self._notice_args(request)
+        service.records(args)
+        validate_boundary(arguments,"NoticeTextPlatformRequest")
+        payload=decode_platform_query(arguments)
+        return service.read(args,payload) if operation=="read" else service.check(args,payload)
+
+    def calendar_summary(self,request):
+        from app.core.task_calendar import TaskCalendarService
+        return TaskCalendarService(self.settings,self.store).summary(self._notice_args(request))
+
+    def personal_query(self,request,arguments,operation):
+        from app.core.personal_tasks import PersonalTaskService
+        from app.core.platform_query import decode_platform_query
+        service=PersonalTaskService(self.settings,self.store)
+        args=self._notice_args(request)
+        access=self.store.personal_call("access",args)
+        if not access["can_read"] or (operation!="records" and not access["can_write"]):
+            raise AppError(403,"FORBIDDEN","需要重新授权本人待办读写；旧只读授权不能保存")
+        if operation=="records":
+            from app.core.task_calendar import calendar_task
+            return {"items":[calendar_task(t) for t in service.records(args)],"background_push":False,
+                    "calendar_url":self.settings.app_origin+"/tools/calendar"}
+        payload=decode_platform_query(arguments)
+        return service.draft(args,payload) if operation=="draft" else service.commit(args,payload)
 
     def time_query(self,request,arguments,operation):
         from app.core.owned_time import calculate_owned_time,decode_owned_time
@@ -113,7 +151,7 @@ class CloudOAuthProvider:
         # Browser cookies cannot switch the owner of this bearer grant.
         records=self.records(request)
         payload=decode_owned_time(arguments,operation)
-        return calculate_owned_time(records,payload,operation)
+        return calculate_owned_time(records,payload,operation,allow_notice_text=self.settings.cloud_notice_text_pilot_enabled)
 
     def draft(self,request,notice,key):
         require_idempotency_key(key)

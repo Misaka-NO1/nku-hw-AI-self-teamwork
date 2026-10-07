@@ -18,6 +18,13 @@ class Settings(BaseSettings):
     app_env: Literal["development", "test", "staging", "production"] = "development"
     auth_mode: Literal["demo_fixture", "trusted_binding"] = "demo_fixture"
     allow_personal_uploads: bool = False
+    notice_text_pilot_enabled: bool = False
+    cloud_notice_text_pilot_enabled: bool = False
+    cloud_task_calendar_enabled: bool = False
+    # Two existing verified pilot accounts; NOT a switch for academic uploads.
+    cloud_personal_tasks_enabled: bool = False
+    notice_ocr_backend: Literal["disabled", "windows", "tesseract"] = "disabled"
+    notice_ocr_command: str = ""
     app_origin: str = ""
     genios_agent_url: str = ""
     mcp_public_url: str = ""
@@ -35,6 +42,7 @@ class Settings(BaseSettings):
     cloudbase_auth_profile: Literal["legacy", "pg_registered"] = "legacy"
     cloudbase_auth_pilot_user_ids: list[str] = Field(default_factory=list, repr=False)
     cloudbase_auth_session_seconds: int = Field(default=900, ge=60, le=900)
+    cloud_persistent_auth_enabled: bool = False
     # Internal local prototype only: no REST route or MCP tool is registered.
     agent_pairing_local_enabled: bool = False
     agent_pairing_audience: str = ""
@@ -82,6 +90,12 @@ class Settings(BaseSettings):
         return Path(raw_path)
 
     def validate_deployment(self) -> None:
+        if self.notice_text_pilot_enabled and (
+            self.app_env not in {"development", "test"}
+            or self.api_host not in {"127.0.0.1", "localhost", "::1"}
+            or self.auth_mode != "demo_fixture"
+        ):
+            raise ValueError("NOTICE_TEXT_PILOT_ENABLED is restricted to local fictional testing")
         if self.mcp_enable_platform_compat_tools and not self.mcp_enable_domain_tools:
             raise ValueError("MCP_ENABLE_PLATFORM_COMPAT_TOOLS requires MCP_ENABLE_DOMAIN_TOOLS")
         exposed_listener = self.mcp_host not in {"127.0.0.1", "localhost", "::1"}

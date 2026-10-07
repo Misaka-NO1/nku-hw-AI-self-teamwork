@@ -17,7 +17,7 @@ interface CloudAuth {
 }
 interface CloudSdk { init(input: { env: string; region: string; persistence: "none"; debug: false;
   auth: { detectSessionInUrl: false } }): { auth: CloudAuth | (() => CloudAuth) } }
-interface PilotConfig { envId: string; region: string }
+interface PilotConfig { envId: string; region: string; persistentAuthorization?: boolean }
 interface PilotSession extends DemoSession { datasetKind: "demo"; personalUploads: false; agentPaired: false }
 async function loadSdk(): Promise<CloudSdk> {
   const sdk = await import("@cloudbase/js-sdk");
@@ -86,9 +86,9 @@ export default function CloudbaseLoginPage() {
       // Clear only our own old account's draft pointers, not other app storage.
       sessionStorage.removeItem("campus-demo-schedule-v1");
       writeDemoSession(verified); setSession(verified);
-      setMessage(`${loginName} 已经腾讯云在线核验。现在可用固定虚构课表和待办测试；尚未与 Agent 配对。`);
+      setMessage(`${loginName} 已经腾讯云在线核验。课表使用虚拟演示数据；本人待办的授权与保存以接下来的页面和工具结果为准。`);
     } finally {
-      // We keep only the 15-minute HttpOnly backend session. Revoke/clear SDK
+      // Keep only the server-issued HttpOnly session. Revoke/clear SDK
       // tokens immediately; never copy them into our own storage or logs.
       try {
         const signedOut = await auth.current.signOut();
@@ -111,7 +111,7 @@ export default function CloudbaseLoginPage() {
     <p>产品主入口仍是 NK-GeniOS；此页只负责可信登录测试，不是另一个聊天产品。</p>
     {consentReturn && <p>这是学校插件的授权登录步骤。登录后回到授权页；是否同意由你决定，不会自动授权。</p>}
     {reviewReturn && <p>登录后返回原来的课表、待办复核页或日历，仍须你核对并明确确认，不会自动保存。</p>}
-    <p role="note">仅 nku-demo-a / nku-demo-b，固定虚构数据。会话最长 15 分钟，测试空间保留 24 小时；没有公开注册、真实成绩上传或 Agent 配对。</p>
+    <p role="note">仅 nku-demo-a / nku-demo-b，分别登录各自账号。课表使用虚拟演示数据；本人待办须核对后明确确认保存。{config?.persistentAuthorization ? "保持登录与本人长期授权，退出、撤销或移出名单后失效；已导入的虚拟课表持续保留。清除浏览器数据或更换设备仍需登录。" : "会话最长 15 分钟，课表测试空间保留 24 小时。"}没有公开注册或真实成绩上传。</p>
     {checking && <p role="status">正在核验当前浏览器会话。</p>}
     {!!recoveryError && !browserSession.needsLogin && <p role="alert">{recoveryError instanceof ApiError ? `${recoveryError.message}（${recoveryError.code} · ${recoveryError.requestId ?? "无请求编号"}）` : String(recoveryError)}</p>}
     {!!recoveryError && !browserSession.needsLogin && <button disabled={checking || busy} onClick={browserSession.retryRecovery}>重新核验浏览器会话</button>}
