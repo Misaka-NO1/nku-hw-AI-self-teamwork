@@ -107,6 +107,13 @@ def initialize_database(settings: Settings) -> None:
             CREATE INDEX IF NOT EXISTS idx_workspaces_owner ON workspaces(owner_subject_id);
             CREATE INDEX IF NOT EXISTS idx_drafts_owner ON drafts(owner_subject_id, workspace_ref);
             CREATE INDEX IF NOT EXISTS idx_tasks_owner ON tasks(owner_subject_id, workspace_ref);
+            CREATE TABLE IF NOT EXISTS cloudbase_pilot_workspaces (
+                subject_id TEXT PRIMARY KEY,
+                workspace_ref TEXT NOT NULL UNIQUE REFERENCES workspaces(workspace_ref) ON DELETE CASCADE
+            );
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_notice_pilot_task
+            ON tasks(workspace_ref, json_extract(payload_json, '$.notice.notice_id'))
+            WHERE json_extract(payload_json, '$.plan_version') = 'notice-text-pilot-v1';
             PRAGMA user_version = 2;
             """
         )

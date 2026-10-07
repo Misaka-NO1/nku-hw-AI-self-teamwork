@@ -1,0 +1,42 @@
+{
+  "competition_authorize": {
+    "response_type": "code", "client_id": "test-school-agent",
+    "redirect_uri": "https://coze.nankai.edu.cn/product/llm/info/oauth",
+    "scope": "demo:read", "state": "a123456789"
+  },
+  "authorize": {
+    "response_type": "code",
+    "client_id": "test-school-agent",
+    "redirect_uri": "https://school.example.invalid/oauth/callback",
+    "scope": "demo:read demo:draft",
+    "state": "fictional-state-20261002",
+    "code_challenge": "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM",
+    "code_challenge_method": "S256"
+  },
+  "public_pkce_example_verifier": "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
+  "draft": {"fixture_id": "notice-event.demo.json", "idempotency_key": "oauth-draft-001"},
+  "owned_free_time": {
+    "window": {"start": "2026-09-21T08:00:00+08:00", "end": "2026-09-21T18:00:00+08:00"},
+    "min_minutes": 20,
+    "buffers": {"before_minutes": 0, "after_minutes": 0}
+  },
+  "owned_time_check": {
+    "kind": "event_conflict",
+    "window": {"start": "2026-09-21T08:00:00+08:00", "end": "2026-09-21T18:00:00+08:00"},
+    "event": {"start": "2026-09-21T09:45:00+08:00", "end": "2026-09-21T10:00:00+08:00", "date": null, "precision": "datetime"},
+    "due": null, "estimated_minutes": null, "earliest_start": null, "allow_split": false,
+    "buffers": {"before_minutes": 0, "after_minutes": 0}
+  },
+  "invalid_owned_time": [
+    {"workspace_ref": "foreign-workspace"}, {"user_id": "foreign-user"},
+    {"schedule": {}}, {"tasks": []}, {"min_minutes": "20"},
+    {"buffers": {"before_minutes": -1, "after_minutes": 0}}
+  ],
+  "invalid_authorize": [
+    {"code_challenge_method": "plain"},
+    {"redirect_uri": "https://attacker.example.invalid/callback"},
+    {"scope": "demo:read demo:commit"},
+    {"state": "short"},
+    {"client_id": "unregistered-client"}
+  ]
+}

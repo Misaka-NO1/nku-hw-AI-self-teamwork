@@ -69,6 +69,14 @@ def resolve_browser_principal(
     now = int(time.time())
     if row["expires_at"] <= now:
         raise AppError(status_code=401, code="AUTH_REQUIRED", message="Browser session expired")
+    if row["subject_id"].startswith("cloudbase_pilot_"):
+        allowed_subjects = {
+            "cloudbase_pilot_" + secret_hash(runtime.cloudbase_auth_env_id + ":" + uid)
+            for uid in runtime.cloudbase_auth_pilot_user_ids
+        }
+        if (not runtime.cloudbase_auth_pilot_enabled or runtime.allow_personal_uploads
+                or runtime.auth_mode != "demo_fixture" or row["subject_id"] not in allowed_subjects):
+            raise AppError(status_code=401, code="AUTH_REQUIRED", message="CloudBase login pilot is disabled")
 
     if require_csrf:
         csrf = request.headers.get("X-CSRF-Token", "")

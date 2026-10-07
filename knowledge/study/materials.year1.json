@@ -1,0 +1,4298 @@
+{
+  "schema_version": "1.0.0",
+  "data_version": "y1-070600fb47f92e70",
+  "materials": [
+    {
+      "material_id": "study-s1-programming-7267a3cd0b2e11aa",
+      "version": "sha256:7267a3cd0b2e11aaa5bd35391a0a2f40f1d929dd8cb49378e48645c18a8dfd9d",
+      "course_id": "y1-s1-programming",
+      "title": "20-21C--上册",
+      "material_type": "note",
+      "topics": [],
+      "file_ref": null,
+      "content_available": false,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "private",
+      "reviewed_at": null,
+      "chunks": []
+    },
+    {
+      "material_id": "study-s1-programming-b8a8c17240ffa3e4",
+      "version": "sha256:b8a8c17240ffa3e480bb97cdaabd683e5e9ea21451976f5f3fdbe8a089fb4363",
+      "course_id": "y1-s1-programming",
+      "title": "期末复习",
+      "material_type": "note",
+      "topics": [
+        "数组",
+        "引用",
+        "函数",
+        "运算符",
+        "字符串",
+        "类"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s1-programming-b8a8c17240ffa3e4.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0014-c01",
+          "heading": "PDF 第 14 页 · 片段 1",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0015-c01",
+          "heading": "PDF 第 15 页 · 片段 1",
+          "page_label": "PDF 第 15 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=15"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0016-c01",
+          "heading": "PDF 第 16 页 · 片段 1",
+          "page_label": "PDF 第 16 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=16"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0017-c01",
+          "heading": "PDF 第 17 页 · 片段 1",
+          "page_label": "PDF 第 17 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=17"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0018-c01",
+          "heading": "PDF 第 18 页 · 片段 1",
+          "page_label": "PDF 第 18 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=18"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0019-c01",
+          "heading": "PDF 第 19 页 · 片段 1",
+          "page_label": "PDF 第 19 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=19"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0020-c01",
+          "heading": "PDF 第 20 页 · 片段 1",
+          "page_label": "PDF 第 20 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=20"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0021-c01",
+          "heading": "PDF 第 21 页 · 片段 1",
+          "page_label": "PDF 第 21 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=21"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0022-c01",
+          "heading": "PDF 第 22 页 · 片段 1",
+          "page_label": "PDF 第 22 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=22"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0023-c01",
+          "heading": "PDF 第 23 页 · 片段 1",
+          "page_label": "PDF 第 23 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=23"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0024-c01",
+          "heading": "PDF 第 24 页 · 片段 1",
+          "page_label": "PDF 第 24 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=24"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0025-c01",
+          "heading": "PDF 第 25 页 · 片段 1",
+          "page_label": "PDF 第 25 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=25"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0026-c01",
+          "heading": "PDF 第 26 页 · 片段 1",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0027-c01",
+          "heading": "PDF 第 27 页 · 片段 1",
+          "page_label": "PDF 第 27 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=27"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0028-c01",
+          "heading": "PDF 第 28 页 · 片段 1",
+          "page_label": "PDF 第 28 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=28"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0029-c01",
+          "heading": "PDF 第 29 页 · 片段 1",
+          "page_label": "PDF 第 29 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=29"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0030-c01",
+          "heading": "PDF 第 30 页 · 片段 1",
+          "page_label": "PDF 第 30 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=30"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0031-c01",
+          "heading": "PDF 第 31 页 · 片段 1",
+          "page_label": "PDF 第 31 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=31"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0032-c01",
+          "heading": "PDF 第 32 页 · 片段 1",
+          "page_label": "PDF 第 32 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=32"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0033-c01",
+          "heading": "PDF 第 33 页 · 片段 1",
+          "page_label": "PDF 第 33 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=33"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0034-c01",
+          "heading": "PDF 第 34 页 · 片段 1",
+          "page_label": "PDF 第 34 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=34"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0035-c01",
+          "heading": "PDF 第 35 页 · 片段 1",
+          "page_label": "PDF 第 35 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=35"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0036-c01",
+          "heading": "PDF 第 36 页 · 片段 1",
+          "page_label": "PDF 第 36 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=36"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0037-c01",
+          "heading": "PDF 第 37 页 · 片段 1",
+          "page_label": "PDF 第 37 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=37"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0038-c01",
+          "heading": "PDF 第 38 页 · 片段 1",
+          "page_label": "PDF 第 38 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=38"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0039-c01",
+          "heading": "PDF 第 39 页 · 片段 1",
+          "page_label": "PDF 第 39 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=39"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0040-c01",
+          "heading": "PDF 第 40 页 · 片段 1",
+          "page_label": "PDF 第 40 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=40"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0041-c01",
+          "heading": "PDF 第 41 页 · 片段 1",
+          "page_label": "PDF 第 41 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=41"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0042-c01",
+          "heading": "PDF 第 42 页 · 片段 1",
+          "page_label": "PDF 第 42 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=42"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0043-c01",
+          "heading": "PDF 第 43 页 · 片段 1",
+          "page_label": "PDF 第 43 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=43"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0044-c01",
+          "heading": "PDF 第 44 页 · 片段 1",
+          "page_label": "PDF 第 44 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=44"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0045-c01",
+          "heading": "PDF 第 45 页 · 片段 1",
+          "page_label": "PDF 第 45 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=45"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0046-c01",
+          "heading": "PDF 第 46 页 · 片段 1",
+          "page_label": "PDF 第 46 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=46"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0047-c01",
+          "heading": "PDF 第 47 页 · 片段 1",
+          "page_label": "PDF 第 47 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=47"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0048-c01",
+          "heading": "PDF 第 48 页 · 片段 1",
+          "page_label": "PDF 第 48 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=48"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0049-c01",
+          "heading": "PDF 第 49 页 · 片段 1",
+          "page_label": "PDF 第 49 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=49"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0050-c01",
+          "heading": "PDF 第 50 页 · 片段 1",
+          "page_label": "PDF 第 50 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=50"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0051-c01",
+          "heading": "PDF 第 51 页 · 片段 1",
+          "page_label": "PDF 第 51 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=51"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0052-c01",
+          "heading": "PDF 第 52 页 · 片段 1",
+          "page_label": "PDF 第 52 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=52"
+        },
+        {
+          "chunk_id": "study-s1-programming-b8a8c17240ffa3e4-p0053-c01",
+          "heading": "PDF 第 53 页 · 片段 1",
+          "page_label": "PDF 第 53 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-b8a8c17240ffa3e4.pdf#page=53"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s1-programming-26355822c1f8144c",
+      "version": "sha256:26355822c1f8144c44853b5794e683535ccf851459c1d41bb4191ce2c317b39b",
+      "course_id": "y1-s1-programming",
+      "title": "去除手写 20-21C  上册",
+      "material_type": "note",
+      "topics": [
+        "数组",
+        "指针",
+        "函数",
+        "文件",
+        "字符串",
+        "类"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s1-programming-26355822c1f8144c.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-programming-26355822c1f8144c-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-programming-26355822c1f8144c.pdf#page=10"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s1-ideology-e834581c52ce1f41",
+      "version": "sha256:e834581c52ce1f41575d911c0b2105b1ee2a710ee700723e2020ec26050535af",
+      "course_id": "y1-s1-ideology",
+      "title": "1_思修大题11",
+      "material_type": "exercise",
+      "topics": [
+        "理想",
+        "信念",
+        "道德",
+        "法治",
+        "价值观",
+        "人生",
+        "爱国",
+        "宪法"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s1-ideology-e834581c52ce1f41.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s1-ideology-e834581c52ce1f41-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-e834581c52ce1f41.pdf#page=13"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s1-ideology-8a05a12b1b8a7e09",
+      "version": "sha256:8a05a12b1b8a7e09fdc98e10a94b62ef9d844624bb12c1b901907540c2d7e57c",
+      "course_id": "y1-s1-ideology",
+      "title": "1_思政复习",
+      "material_type": "note",
+      "topics": [
+        "理想",
+        "信念",
+        "道德",
+        "法治",
+        "价值观",
+        "人生",
+        "爱国",
+        "宪法"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s1-ideology-8a05a12b1b8a7e09.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s1-ideology-8a05a12b1b8a7e09-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-8a05a12b1b8a7e09.pdf#page=13"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s1-ideology-2146cd59f5c57d41",
+      "version": "sha256:2146cd59f5c57d412a536bf723ac152e60d9a0f9493a116fcbbc38d5caed1e19",
+      "course_id": "y1-s1-ideology",
+      "title": "思修考前背诵版(1)",
+      "material_type": "note",
+      "topics": [
+        "理想",
+        "信念",
+        "道德",
+        "法治",
+        "价值观",
+        "人生",
+        "爱国"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s1-ideology-2146cd59f5c57d41.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0003-c02",
+          "heading": "PDF 第 3 页 · 片段 2",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0005-c02",
+          "heading": "PDF 第 5 页 · 片段 2",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0007-c02",
+          "heading": "PDF 第 7 页 · 片段 2",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0009-c02",
+          "heading": "PDF 第 9 页 · 片段 2",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0010-c02",
+          "heading": "PDF 第 10 页 · 片段 2",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0012-c02",
+          "heading": "PDF 第 12 页 · 片段 2",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0013-c02",
+          "heading": "PDF 第 13 页 · 片段 2",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0014-c01",
+          "heading": "PDF 第 14 页 · 片段 1",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0014-c02",
+          "heading": "PDF 第 14 页 · 片段 2",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s1-ideology-2146cd59f5c57d41-p0015-c01",
+          "heading": "PDF 第 15 页 · 片段 1",
+          "page_label": "PDF 第 15 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-ideology-2146cd59f5c57d41.pdf#page=15"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s1-linear-algebra-f79a31b39bd88215",
+      "version": "sha256:f79a31b39bd88215e5c15e8928f1b3a14c77e123dc8783344cb8a38f88b78bbe",
+      "course_id": "y1-s1-linear-algebra",
+      "title": "线性代数期末复习题",
+      "material_type": "exercise",
+      "topics": [
+        "矩阵",
+        "行列式",
+        "向量",
+        "秩",
+        "特征值",
+        "特征向量",
+        "线性方程组",
+        "二次型",
+        "正交"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s1-linear-algebra-f79a31b39bd88215.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0014-c01",
+          "heading": "PDF 第 14 页 · 片段 1",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0015-c01",
+          "heading": "PDF 第 15 页 · 片段 1",
+          "page_label": "PDF 第 15 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=15"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0016-c01",
+          "heading": "PDF 第 16 页 · 片段 1",
+          "page_label": "PDF 第 16 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=16"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0017-c01",
+          "heading": "PDF 第 17 页 · 片段 1",
+          "page_label": "PDF 第 17 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=17"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0018-c01",
+          "heading": "PDF 第 18 页 · 片段 1",
+          "page_label": "PDF 第 18 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=18"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0019-c01",
+          "heading": "PDF 第 19 页 · 片段 1",
+          "page_label": "PDF 第 19 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=19"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0020-c01",
+          "heading": "PDF 第 20 页 · 片段 1",
+          "page_label": "PDF 第 20 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=20"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0021-c01",
+          "heading": "PDF 第 21 页 · 片段 1",
+          "page_label": "PDF 第 21 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=21"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0022-c01",
+          "heading": "PDF 第 22 页 · 片段 1",
+          "page_label": "PDF 第 22 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=22"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0023-c01",
+          "heading": "PDF 第 23 页 · 片段 1",
+          "page_label": "PDF 第 23 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=23"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0024-c01",
+          "heading": "PDF 第 24 页 · 片段 1",
+          "page_label": "PDF 第 24 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=24"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0025-c01",
+          "heading": "PDF 第 25 页 · 片段 1",
+          "page_label": "PDF 第 25 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=25"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0026-c01",
+          "heading": "PDF 第 26 页 · 片段 1",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0026-c02",
+          "heading": "PDF 第 26 页 · 片段 2",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0027-c01",
+          "heading": "PDF 第 27 页 · 片段 1",
+          "page_label": "PDF 第 27 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=27"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0028-c01",
+          "heading": "PDF 第 28 页 · 片段 1",
+          "page_label": "PDF 第 28 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=28"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0029-c01",
+          "heading": "PDF 第 29 页 · 片段 1",
+          "page_label": "PDF 第 29 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=29"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0030-c01",
+          "heading": "PDF 第 30 页 · 片段 1",
+          "page_label": "PDF 第 30 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=30"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0030-c02",
+          "heading": "PDF 第 30 页 · 片段 2",
+          "page_label": "PDF 第 30 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=30"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0031-c01",
+          "heading": "PDF 第 31 页 · 片段 1",
+          "page_label": "PDF 第 31 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=31"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0032-c01",
+          "heading": "PDF 第 32 页 · 片段 1",
+          "page_label": "PDF 第 32 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=32"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0033-c01",
+          "heading": "PDF 第 33 页 · 片段 1",
+          "page_label": "PDF 第 33 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=33"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0034-c01",
+          "heading": "PDF 第 34 页 · 片段 1",
+          "page_label": "PDF 第 34 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=34"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0035-c01",
+          "heading": "PDF 第 35 页 · 片段 1",
+          "page_label": "PDF 第 35 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=35"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0036-c01",
+          "heading": "PDF 第 36 页 · 片段 1",
+          "page_label": "PDF 第 36 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=36"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0037-c01",
+          "heading": "PDF 第 37 页 · 片段 1",
+          "page_label": "PDF 第 37 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=37"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0038-c01",
+          "heading": "PDF 第 38 页 · 片段 1",
+          "page_label": "PDF 第 38 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=38"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0039-c01",
+          "heading": "PDF 第 39 页 · 片段 1",
+          "page_label": "PDF 第 39 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=39"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0040-c01",
+          "heading": "PDF 第 40 页 · 片段 1",
+          "page_label": "PDF 第 40 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=40"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0041-c01",
+          "heading": "PDF 第 41 页 · 片段 1",
+          "page_label": "PDF 第 41 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=41"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0042-c01",
+          "heading": "PDF 第 42 页 · 片段 1",
+          "page_label": "PDF 第 42 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=42"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0043-c01",
+          "heading": "PDF 第 43 页 · 片段 1",
+          "page_label": "PDF 第 43 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=43"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0044-c01",
+          "heading": "PDF 第 44 页 · 片段 1",
+          "page_label": "PDF 第 44 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=44"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0045-c01",
+          "heading": "PDF 第 45 页 · 片段 1",
+          "page_label": "PDF 第 45 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=45"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0046-c01",
+          "heading": "PDF 第 46 页 · 片段 1",
+          "page_label": "PDF 第 46 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=46"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0047-c01",
+          "heading": "PDF 第 47 页 · 片段 1",
+          "page_label": "PDF 第 47 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=47"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0048-c01",
+          "heading": "PDF 第 48 页 · 片段 1",
+          "page_label": "PDF 第 48 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=48"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0048-c02",
+          "heading": "PDF 第 48 页 · 片段 2",
+          "page_label": "PDF 第 48 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=48"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0049-c01",
+          "heading": "PDF 第 49 页 · 片段 1",
+          "page_label": "PDF 第 49 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=49"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0050-c01",
+          "heading": "PDF 第 50 页 · 片段 1",
+          "page_label": "PDF 第 50 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=50"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0051-c01",
+          "heading": "PDF 第 51 页 · 片段 1",
+          "page_label": "PDF 第 51 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=51"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0052-c01",
+          "heading": "PDF 第 52 页 · 片段 1",
+          "page_label": "PDF 第 52 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=52"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0053-c01",
+          "heading": "PDF 第 53 页 · 片段 1",
+          "page_label": "PDF 第 53 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=53"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0054-c01",
+          "heading": "PDF 第 54 页 · 片段 1",
+          "page_label": "PDF 第 54 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=54"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0055-c01",
+          "heading": "PDF 第 55 页 · 片段 1",
+          "page_label": "PDF 第 55 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=55"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0056-c01",
+          "heading": "PDF 第 56 页 · 片段 1",
+          "page_label": "PDF 第 56 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=56"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0057-c01",
+          "heading": "PDF 第 57 页 · 片段 1",
+          "page_label": "PDF 第 57 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=57"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0057-c02",
+          "heading": "PDF 第 57 页 · 片段 2",
+          "page_label": "PDF 第 57 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=57"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0058-c01",
+          "heading": "PDF 第 58 页 · 片段 1",
+          "page_label": "PDF 第 58 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=58"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0059-c01",
+          "heading": "PDF 第 59 页 · 片段 1",
+          "page_label": "PDF 第 59 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=59"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0060-c01",
+          "heading": "PDF 第 60 页 · 片段 1",
+          "page_label": "PDF 第 60 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=60"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0061-c01",
+          "heading": "PDF 第 61 页 · 片段 1",
+          "page_label": "PDF 第 61 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=61"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0062-c01",
+          "heading": "PDF 第 62 页 · 片段 1",
+          "page_label": "PDF 第 62 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=62"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0063-c01",
+          "heading": "PDF 第 63 页 · 片段 1",
+          "page_label": "PDF 第 63 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=63"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0064-c01",
+          "heading": "PDF 第 64 页 · 片段 1",
+          "page_label": "PDF 第 64 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=64"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0065-c01",
+          "heading": "PDF 第 65 页 · 片段 1",
+          "page_label": "PDF 第 65 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=65"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0066-c01",
+          "heading": "PDF 第 66 页 · 片段 1",
+          "page_label": "PDF 第 66 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=66"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0067-c01",
+          "heading": "PDF 第 67 页 · 片段 1",
+          "page_label": "PDF 第 67 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=67"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0068-c01",
+          "heading": "PDF 第 68 页 · 片段 1",
+          "page_label": "PDF 第 68 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=68"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0069-c01",
+          "heading": "PDF 第 69 页 · 片段 1",
+          "page_label": "PDF 第 69 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=69"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0070-c01",
+          "heading": "PDF 第 70 页 · 片段 1",
+          "page_label": "PDF 第 70 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=70"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0071-c01",
+          "heading": "PDF 第 71 页 · 片段 1",
+          "page_label": "PDF 第 71 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=71"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0072-c01",
+          "heading": "PDF 第 72 页 · 片段 1",
+          "page_label": "PDF 第 72 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=72"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0073-c01",
+          "heading": "PDF 第 73 页 · 片段 1",
+          "page_label": "PDF 第 73 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=73"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0074-c01",
+          "heading": "PDF 第 74 页 · 片段 1",
+          "page_label": "PDF 第 74 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=74"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0075-c01",
+          "heading": "PDF 第 75 页 · 片段 1",
+          "page_label": "PDF 第 75 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=75"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0076-c01",
+          "heading": "PDF 第 76 页 · 片段 1",
+          "page_label": "PDF 第 76 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=76"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0077-c01",
+          "heading": "PDF 第 77 页 · 片段 1",
+          "page_label": "PDF 第 77 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=77"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0078-c01",
+          "heading": "PDF 第 78 页 · 片段 1",
+          "page_label": "PDF 第 78 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=78"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0079-c01",
+          "heading": "PDF 第 79 页 · 片段 1",
+          "page_label": "PDF 第 79 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=79"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0080-c01",
+          "heading": "PDF 第 80 页 · 片段 1",
+          "page_label": "PDF 第 80 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=80"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0081-c01",
+          "heading": "PDF 第 81 页 · 片段 1",
+          "page_label": "PDF 第 81 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=81"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0082-c01",
+          "heading": "PDF 第 82 页 · 片段 1",
+          "page_label": "PDF 第 82 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=82"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0083-c01",
+          "heading": "PDF 第 83 页 · 片段 1",
+          "page_label": "PDF 第 83 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=83"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0084-c01",
+          "heading": "PDF 第 84 页 · 片段 1",
+          "page_label": "PDF 第 84 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=84"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0084-c02",
+          "heading": "PDF 第 84 页 · 片段 2",
+          "page_label": "PDF 第 84 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=84"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0085-c01",
+          "heading": "PDF 第 85 页 · 片段 1",
+          "page_label": "PDF 第 85 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=85"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0086-c01",
+          "heading": "PDF 第 86 页 · 片段 1",
+          "page_label": "PDF 第 86 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=86"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0087-c01",
+          "heading": "PDF 第 87 页 · 片段 1",
+          "page_label": "PDF 第 87 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=87"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0088-c01",
+          "heading": "PDF 第 88 页 · 片段 1",
+          "page_label": "PDF 第 88 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=88"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0089-c01",
+          "heading": "PDF 第 89 页 · 片段 1",
+          "page_label": "PDF 第 89 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=89"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0090-c01",
+          "heading": "PDF 第 90 页 · 片段 1",
+          "page_label": "PDF 第 90 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=90"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0091-c01",
+          "heading": "PDF 第 91 页 · 片段 1",
+          "page_label": "PDF 第 91 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=91"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0092-c01",
+          "heading": "PDF 第 92 页 · 片段 1",
+          "page_label": "PDF 第 92 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=92"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0093-c01",
+          "heading": "PDF 第 93 页 · 片段 1",
+          "page_label": "PDF 第 93 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=93"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0093-c02",
+          "heading": "PDF 第 93 页 · 片段 2",
+          "page_label": "PDF 第 93 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=93"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0094-c01",
+          "heading": "PDF 第 94 页 · 片段 1",
+          "page_label": "PDF 第 94 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=94"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0094-c02",
+          "heading": "PDF 第 94 页 · 片段 2",
+          "page_label": "PDF 第 94 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=94"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0095-c01",
+          "heading": "PDF 第 95 页 · 片段 1",
+          "page_label": "PDF 第 95 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=95"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0096-c01",
+          "heading": "PDF 第 96 页 · 片段 1",
+          "page_label": "PDF 第 96 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=96"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0097-c01",
+          "heading": "PDF 第 97 页 · 片段 1",
+          "page_label": "PDF 第 97 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=97"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0098-c01",
+          "heading": "PDF 第 98 页 · 片段 1",
+          "page_label": "PDF 第 98 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=98"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0099-c01",
+          "heading": "PDF 第 99 页 · 片段 1",
+          "page_label": "PDF 第 99 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=99"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0100-c01",
+          "heading": "PDF 第 100 页 · 片段 1",
+          "page_label": "PDF 第 100 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=100"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0100-c02",
+          "heading": "PDF 第 100 页 · 片段 2",
+          "page_label": "PDF 第 100 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=100"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0101-c01",
+          "heading": "PDF 第 101 页 · 片段 1",
+          "page_label": "PDF 第 101 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=101"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0102-c01",
+          "heading": "PDF 第 102 页 · 片段 1",
+          "page_label": "PDF 第 102 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=102"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0103-c01",
+          "heading": "PDF 第 103 页 · 片段 1",
+          "page_label": "PDF 第 103 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=103"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0104-c01",
+          "heading": "PDF 第 104 页 · 片段 1",
+          "page_label": "PDF 第 104 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=104"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0105-c01",
+          "heading": "PDF 第 105 页 · 片段 1",
+          "page_label": "PDF 第 105 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=105"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0106-c01",
+          "heading": "PDF 第 106 页 · 片段 1",
+          "page_label": "PDF 第 106 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=106"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0107-c01",
+          "heading": "PDF 第 107 页 · 片段 1",
+          "page_label": "PDF 第 107 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=107"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0108-c01",
+          "heading": "PDF 第 108 页 · 片段 1",
+          "page_label": "PDF 第 108 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=108"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0109-c01",
+          "heading": "PDF 第 109 页 · 片段 1",
+          "page_label": "PDF 第 109 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=109"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0109-c02",
+          "heading": "PDF 第 109 页 · 片段 2",
+          "page_label": "PDF 第 109 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=109"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0110-c01",
+          "heading": "PDF 第 110 页 · 片段 1",
+          "page_label": "PDF 第 110 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=110"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0111-c01",
+          "heading": "PDF 第 111 页 · 片段 1",
+          "page_label": "PDF 第 111 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=111"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0111-c02",
+          "heading": "PDF 第 111 页 · 片段 2",
+          "page_label": "PDF 第 111 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=111"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0112-c01",
+          "heading": "PDF 第 112 页 · 片段 1",
+          "page_label": "PDF 第 112 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=112"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0113-c01",
+          "heading": "PDF 第 113 页 · 片段 1",
+          "page_label": "PDF 第 113 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=113"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0114-c01",
+          "heading": "PDF 第 114 页 · 片段 1",
+          "page_label": "PDF 第 114 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=114"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0115-c01",
+          "heading": "PDF 第 115 页 · 片段 1",
+          "page_label": "PDF 第 115 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=115"
+        },
+        {
+          "chunk_id": "study-s1-linear-algebra-f79a31b39bd88215-p0116-c01",
+          "heading": "PDF 第 116 页 · 片段 1",
+          "page_label": "PDF 第 116 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-linear-algebra-f79a31b39bd88215.pdf#page=116"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s1-calculus-6e53f8532c216ccc",
+      "version": "sha256:6e53f8532c216ccc6874fc9a3248c796665f8ba34c16242929591963e2fb6cdd",
+      "course_id": "y1-s1-calculus",
+      "title": "高数期末复习",
+      "material_type": "note",
+      "topics": [
+        "极限",
+        "连续",
+        "导数",
+        "微分",
+        "积分",
+        "微分方程",
+        "偏导",
+        "曲线"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s1-calculus-6e53f8532c216ccc.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0007-c02",
+          "heading": "PDF 第 7 页 · 片段 2",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s1-calculus-6e53f8532c216ccc-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s1-calculus-6e53f8532c216ccc.pdf#page=13"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-programming-ecb1b840316f954b",
+      "version": "sha256:ecb1b840316f954b8d9a997430192621ee40901136caea95714050b86957e8ca",
+      "course_id": "y1-s2-programming",
+      "title": "22笔试",
+      "material_type": "exercise",
+      "topics": [
+        "数组",
+        "指针",
+        "函数",
+        "继承",
+        "构造函数",
+        "析构函数",
+        "运算符",
+        "模板",
+        "文件",
+        "类",
+        "对象"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-programming-ecb1b840316f954b.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0012-c02",
+          "heading": "PDF 第 12 页 · 片段 2",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s2-programming-ecb1b840316f954b-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-ecb1b840316f954b.pdf#page=13"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-programming-69542effd80181aa",
+      "version": "sha256:69542effd80181aaad6fb69c491380107655b11c28e7e2a01f54cbbfe83f39b7",
+      "course_id": "y1-s2-programming",
+      "title": "C  期中试题",
+      "material_type": "exercise",
+      "topics": [
+        "数组",
+        "指针",
+        "函数",
+        "继承",
+        "构造函数",
+        "运算符",
+        "异常",
+        "类",
+        "对象"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-programming-69542effd80181aa.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0003-c02",
+          "heading": "PDF 第 3 页 · 片段 2",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0004-c02",
+          "heading": "PDF 第 4 页 · 片段 2",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0005-c02",
+          "heading": "PDF 第 5 页 · 片段 2",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-programming-69542effd80181aa-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-69542effd80181aa.pdf#page=6"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-programming-f076c553a310a022",
+      "version": "sha256:f076c553a310a02215ab24cc3cbaae9e6bbc764cf9b2bba07326450d9e4c8316",
+      "course_id": "y1-s2-programming",
+      "title": "cpp_review_notes_with_code",
+      "material_type": "note",
+      "topics": [
+        "数组",
+        "指针",
+        "引用",
+        "函数",
+        "继承",
+        "多态",
+        "构造函数",
+        "析构函数",
+        "运算符",
+        "模板",
+        "文件",
+        "类",
+        "对象"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-programming-f076c553a310a022.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0003-c02",
+          "heading": "PDF 第 3 页 · 片段 2",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0004-c02",
+          "heading": "PDF 第 4 页 · 片段 2",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0005-c02",
+          "heading": "PDF 第 5 页 · 片段 2",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0007-c02",
+          "heading": "PDF 第 7 页 · 片段 2",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0008-c02",
+          "heading": "PDF 第 8 页 · 片段 2",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0009-c02",
+          "heading": "PDF 第 9 页 · 片段 2",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0010-c02",
+          "heading": "PDF 第 10 页 · 片段 2",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0011-c02",
+          "heading": "PDF 第 11 页 · 片段 2",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0012-c02",
+          "heading": "PDF 第 12 页 · 片段 2",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0013-c02",
+          "heading": "PDF 第 13 页 · 片段 2",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0014-c01",
+          "heading": "PDF 第 14 页 · 片段 1",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0014-c02",
+          "heading": "PDF 第 14 页 · 片段 2",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0015-c01",
+          "heading": "PDF 第 15 页 · 片段 1",
+          "page_label": "PDF 第 15 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=15"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0015-c02",
+          "heading": "PDF 第 15 页 · 片段 2",
+          "page_label": "PDF 第 15 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=15"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0016-c01",
+          "heading": "PDF 第 16 页 · 片段 1",
+          "page_label": "PDF 第 16 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=16"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0016-c02",
+          "heading": "PDF 第 16 页 · 片段 2",
+          "page_label": "PDF 第 16 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=16"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0017-c01",
+          "heading": "PDF 第 17 页 · 片段 1",
+          "page_label": "PDF 第 17 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=17"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0017-c02",
+          "heading": "PDF 第 17 页 · 片段 2",
+          "page_label": "PDF 第 17 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=17"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0018-c01",
+          "heading": "PDF 第 18 页 · 片段 1",
+          "page_label": "PDF 第 18 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=18"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0018-c02",
+          "heading": "PDF 第 18 页 · 片段 2",
+          "page_label": "PDF 第 18 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=18"
+        },
+        {
+          "chunk_id": "study-s2-programming-f076c553a310a022-p0019-c01",
+          "heading": "PDF 第 19 页 · 片段 1",
+          "page_label": "PDF 第 19 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-f076c553a310a022.pdf#page=19"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-programming-efb6bb2d624c4062",
+      "version": "sha256:efb6bb2d624c4062d4e00c6267b2ad7e9c414926222cad1589270f36f9cef5a4",
+      "course_id": "y1-s2-programming",
+      "title": "c艹上机",
+      "material_type": "exercise",
+      "topics": [
+        "数组",
+        "指针",
+        "函数",
+        "继承",
+        "多态",
+        "构造函数",
+        "析构函数",
+        "运算符",
+        "模板",
+        "文件",
+        "字符串",
+        "类",
+        "对象"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-programming-efb6bb2d624c4062.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0003-c02",
+          "heading": "PDF 第 3 页 · 片段 2",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0004-c02",
+          "heading": "PDF 第 4 页 · 片段 2",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0005-c02",
+          "heading": "PDF 第 5 页 · 片段 2",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0007-c02",
+          "heading": "PDF 第 7 页 · 片段 2",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0014-c01",
+          "heading": "PDF 第 14 页 · 片段 1",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0015-c01",
+          "heading": "PDF 第 15 页 · 片段 1",
+          "page_label": "PDF 第 15 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=15"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0016-c01",
+          "heading": "PDF 第 16 页 · 片段 1",
+          "page_label": "PDF 第 16 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=16"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0017-c01",
+          "heading": "PDF 第 17 页 · 片段 1",
+          "page_label": "PDF 第 17 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=17"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0018-c01",
+          "heading": "PDF 第 18 页 · 片段 1",
+          "page_label": "PDF 第 18 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=18"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0019-c01",
+          "heading": "PDF 第 19 页 · 片段 1",
+          "page_label": "PDF 第 19 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=19"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0020-c01",
+          "heading": "PDF 第 20 页 · 片段 1",
+          "page_label": "PDF 第 20 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=20"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0021-c01",
+          "heading": "PDF 第 21 页 · 片段 1",
+          "page_label": "PDF 第 21 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=21"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0022-c01",
+          "heading": "PDF 第 22 页 · 片段 1",
+          "page_label": "PDF 第 22 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=22"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0023-c01",
+          "heading": "PDF 第 23 页 · 片段 1",
+          "page_label": "PDF 第 23 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=23"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0024-c01",
+          "heading": "PDF 第 24 页 · 片段 1",
+          "page_label": "PDF 第 24 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=24"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0024-c02",
+          "heading": "PDF 第 24 页 · 片段 2",
+          "page_label": "PDF 第 24 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=24"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0025-c01",
+          "heading": "PDF 第 25 页 · 片段 1",
+          "page_label": "PDF 第 25 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=25"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0025-c02",
+          "heading": "PDF 第 25 页 · 片段 2",
+          "page_label": "PDF 第 25 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=25"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0026-c01",
+          "heading": "PDF 第 26 页 · 片段 1",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0026-c02",
+          "heading": "PDF 第 26 页 · 片段 2",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0026-c03",
+          "heading": "PDF 第 26 页 · 片段 3",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0026-c04",
+          "heading": "PDF 第 26 页 · 片段 4",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0027-c01",
+          "heading": "PDF 第 27 页 · 片段 1",
+          "page_label": "PDF 第 27 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=27"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0027-c02",
+          "heading": "PDF 第 27 页 · 片段 2",
+          "page_label": "PDF 第 27 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=27"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0027-c03",
+          "heading": "PDF 第 27 页 · 片段 3",
+          "page_label": "PDF 第 27 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=27"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0027-c04",
+          "heading": "PDF 第 27 页 · 片段 4",
+          "page_label": "PDF 第 27 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=27"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0028-c01",
+          "heading": "PDF 第 28 页 · 片段 1",
+          "page_label": "PDF 第 28 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=28"
+        },
+        {
+          "chunk_id": "study-s2-programming-efb6bb2d624c4062-p0028-c02",
+          "heading": "PDF 第 28 页 · 片段 2",
+          "page_label": "PDF 第 28 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-efb6bb2d624c4062.pdf#page=28"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-programming-cd29346f86e832fa",
+      "version": "sha256:cd29346f86e832fa017f1d395328aedcbbdbccb5a706c69e63b54508d7a0155e",
+      "course_id": "y1-s2-programming",
+      "title": "期末复习2-2 1",
+      "material_type": "note",
+      "topics": [
+        "数组",
+        "指针",
+        "函数",
+        "继承",
+        "多态",
+        "构造函数",
+        "析构函数",
+        "运算符",
+        "模板",
+        "文件",
+        "类",
+        "对象"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-programming-cd29346f86e832fa.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0011-c01",
+          "heading": "PDF 第 11 页 · 片段 1",
+          "page_label": "PDF 第 11 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=11"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0012-c01",
+          "heading": "PDF 第 12 页 · 片段 1",
+          "page_label": "PDF 第 12 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=12"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0013-c01",
+          "heading": "PDF 第 13 页 · 片段 1",
+          "page_label": "PDF 第 13 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=13"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0014-c01",
+          "heading": "PDF 第 14 页 · 片段 1",
+          "page_label": "PDF 第 14 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=14"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0015-c01",
+          "heading": "PDF 第 15 页 · 片段 1",
+          "page_label": "PDF 第 15 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=15"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0016-c01",
+          "heading": "PDF 第 16 页 · 片段 1",
+          "page_label": "PDF 第 16 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=16"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0017-c01",
+          "heading": "PDF 第 17 页 · 片段 1",
+          "page_label": "PDF 第 17 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=17"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0018-c01",
+          "heading": "PDF 第 18 页 · 片段 1",
+          "page_label": "PDF 第 18 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=18"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0019-c01",
+          "heading": "PDF 第 19 页 · 片段 1",
+          "page_label": "PDF 第 19 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=19"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0020-c01",
+          "heading": "PDF 第 20 页 · 片段 1",
+          "page_label": "PDF 第 20 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=20"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0021-c01",
+          "heading": "PDF 第 21 页 · 片段 1",
+          "page_label": "PDF 第 21 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=21"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0022-c01",
+          "heading": "PDF 第 22 页 · 片段 1",
+          "page_label": "PDF 第 22 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=22"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0023-c01",
+          "heading": "PDF 第 23 页 · 片段 1",
+          "page_label": "PDF 第 23 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=23"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0024-c01",
+          "heading": "PDF 第 24 页 · 片段 1",
+          "page_label": "PDF 第 24 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=24"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0025-c01",
+          "heading": "PDF 第 25 页 · 片段 1",
+          "page_label": "PDF 第 25 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=25"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0026-c01",
+          "heading": "PDF 第 26 页 · 片段 1",
+          "page_label": "PDF 第 26 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=26"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0027-c01",
+          "heading": "PDF 第 27 页 · 片段 1",
+          "page_label": "PDF 第 27 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=27"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0028-c01",
+          "heading": "PDF 第 28 页 · 片段 1",
+          "page_label": "PDF 第 28 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=28"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0030-c01",
+          "heading": "PDF 第 30 页 · 片段 1",
+          "page_label": "PDF 第 30 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=30"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0031-c01",
+          "heading": "PDF 第 31 页 · 片段 1",
+          "page_label": "PDF 第 31 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=31"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0032-c01",
+          "heading": "PDF 第 32 页 · 片段 1",
+          "page_label": "PDF 第 32 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=32"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0033-c01",
+          "heading": "PDF 第 33 页 · 片段 1",
+          "page_label": "PDF 第 33 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=33"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0034-c01",
+          "heading": "PDF 第 34 页 · 片段 1",
+          "page_label": "PDF 第 34 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=34"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0035-c01",
+          "heading": "PDF 第 35 页 · 片段 1",
+          "page_label": "PDF 第 35 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=35"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0036-c01",
+          "heading": "PDF 第 36 页 · 片段 1",
+          "page_label": "PDF 第 36 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=36"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0037-c01",
+          "heading": "PDF 第 37 页 · 片段 1",
+          "page_label": "PDF 第 37 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=37"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0038-c01",
+          "heading": "PDF 第 38 页 · 片段 1",
+          "page_label": "PDF 第 38 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=38"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0039-c01",
+          "heading": "PDF 第 39 页 · 片段 1",
+          "page_label": "PDF 第 39 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=39"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0040-c01",
+          "heading": "PDF 第 40 页 · 片段 1",
+          "page_label": "PDF 第 40 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=40"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0041-c01",
+          "heading": "PDF 第 41 页 · 片段 1",
+          "page_label": "PDF 第 41 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=41"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0042-c01",
+          "heading": "PDF 第 42 页 · 片段 1",
+          "page_label": "PDF 第 42 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=42"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0043-c01",
+          "heading": "PDF 第 43 页 · 片段 1",
+          "page_label": "PDF 第 43 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=43"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0044-c01",
+          "heading": "PDF 第 44 页 · 片段 1",
+          "page_label": "PDF 第 44 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=44"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0045-c01",
+          "heading": "PDF 第 45 页 · 片段 1",
+          "page_label": "PDF 第 45 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=45"
+        },
+        {
+          "chunk_id": "study-s2-programming-cd29346f86e832fa-p0046-c01",
+          "heading": "PDF 第 46 页 · 片段 1",
+          "page_label": "PDF 第 46 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-programming-cd29346f86e832fa.pdf#page=46"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-physics-c6b936374c8ae864",
+      "version": "sha256:c6b936374c8ae8643d6f217888b673eaca884fac3a5980dc7145c74a746a5fa6",
+      "course_id": "y1-s2-physics",
+      "title": "2020",
+      "material_type": "note",
+      "topics": [
+        "电场",
+        "磁场",
+        "电磁",
+        "能量",
+        "振动",
+        "波",
+        "光学"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-physics-c6b936374c8ae864.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-physics-c6b936374c8ae864-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-c6b936374c8ae864.pdf#page=10"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-physics-cb6c50ee1df79476",
+      "version": "sha256:cb6c50ee1df79476f9d6d24f7301600cd351d99927dcc9997ec21fef7da27902",
+      "course_id": "y1-s2-physics",
+      "title": "2023A电磁(1)",
+      "material_type": "note",
+      "topics": [
+        "电场",
+        "磁场",
+        "电磁"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-physics-cb6c50ee1df79476.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-physics-cb6c50ee1df79476-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-cb6c50ee1df79476.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-cb6c50ee1df79476-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-cb6c50ee1df79476.pdf#page=2"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-physics-0a46c38726e23c48",
+      "version": "sha256:0a46c38726e23c48cc58f4b2ebc93b0c121cb63a40c62d9b6c1b4585955fc2dd",
+      "course_id": "y1-s2-physics",
+      "title": "大学物理期中测试",
+      "material_type": "note",
+      "topics": [
+        "电场",
+        "振动",
+        "波"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-physics-0a46c38726e23c48.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-physics-0a46c38726e23c48-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-0a46c38726e23c48.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-0a46c38726e23c48-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-0a46c38726e23c48.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-physics-0a46c38726e23c48-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-0a46c38726e23c48.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-physics-0a46c38726e23c48-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-0a46c38726e23c48.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-physics-0a46c38726e23c48-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-0a46c38726e23c48.pdf#page=5"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-physics-b91d080a8c79df85",
+      "version": "sha256:b91d080a8c79df85a2be05f2eee8cdee0f24841c64f072c7d573030b504fdf92",
+      "course_id": "y1-s2-physics",
+      "title": "大物2018 1答案",
+      "material_type": "exercise",
+      "topics": [
+        "电场",
+        "磁场",
+        "动量",
+        "能量",
+        "振动",
+        "波"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-physics-b91d080a8c79df85.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-physics-b91d080a8c79df85-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-b91d080a8c79df85.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-b91d080a8c79df85-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-b91d080a8c79df85.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-physics-b91d080a8c79df85-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-b91d080a8c79df85.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-physics-b91d080a8c79df85-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-b91d080a8c79df85.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-physics-b91d080a8c79df85-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-b91d080a8c79df85.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-physics-b91d080a8c79df85-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-b91d080a8c79df85.pdf#page=6"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-physics-efbde7e09544ed14",
+      "version": "sha256:efbde7e09544ed1453cb4810091d879cd516e5480ff80867a890c5235900b5bc",
+      "course_id": "y1-s2-physics",
+      "title": "大物2018 2",
+      "material_type": "note",
+      "topics": [
+        "电场",
+        "磁场",
+        "动量",
+        "能量",
+        "振动",
+        "波"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-physics-efbde7e09544ed14.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-physics-efbde7e09544ed14-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-efbde7e09544ed14.pdf#page=8"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-physics-46bbcebfd699f638",
+      "version": "sha256:46bbcebfd699f638b035811f084fa541118b059bd4d9548bac67d82e3d9a883c",
+      "course_id": "y1-s2-physics",
+      "title": "大物2019",
+      "material_type": "note",
+      "topics": [
+        "电场",
+        "磁场",
+        "电磁",
+        "能量",
+        "振动",
+        "波",
+        "光学"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-physics-46bbcebfd699f638.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-physics-46bbcebfd699f638-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-46bbcebfd699f638.pdf#page=10"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-physics-2329b12e32d546f8",
+      "version": "sha256:2329b12e32d546f8876e82f465c3937a29ff474328c806c6e3db61fc2d677768",
+      "course_id": "y1-s2-physics",
+      "title": "大物试卷整理",
+      "material_type": "exercise",
+      "topics": [
+        "电场",
+        "磁场",
+        "电磁",
+        "能量"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-physics-2329b12e32d546f8.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-physics-2329b12e32d546f8-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-physics-2329b12e32d546f8.pdf#page=8"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-probability-5f5e607db31aada8",
+      "version": "sha256:5f5e607db31aada887e24361ddbfe184ed15fba55fb2736d4d4510b539a52583",
+      "course_id": "y1-s2-probability",
+      "title": "2020—2021学年《概率论与数理统计》A卷(1)",
+      "material_type": "exercise",
+      "topics": [
+        "概率",
+        "随机变量",
+        "分布",
+        "期望",
+        "方差",
+        "估计"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-probability-5f5e607db31aada8.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-probability-5f5e607db31aada8-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-5f5e607db31aada8.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-5f5e607db31aada8-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-5f5e607db31aada8.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-5f5e607db31aada8-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-5f5e607db31aada8.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-probability-5f5e607db31aada8-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-5f5e607db31aada8.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-probability-5f5e607db31aada8-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-5f5e607db31aada8.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-probability-5f5e607db31aada8-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-5f5e607db31aada8.pdf#page=6"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-probability-d5f582f9efde68b4",
+      "version": "sha256:d5f582f9efde68b49c60a0f5da0a0fcafd6d14137f4052155f2134451de152e7",
+      "course_id": "y1-s2-probability",
+      "title": "2020—2021学年《概率论与数理统计》B卷",
+      "material_type": "exercise",
+      "topics": [],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-probability-d5f582f9efde68b4.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0001-c03",
+          "heading": "PDF 第 1 页 · 片段 3",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0001-c04",
+          "heading": "PDF 第 1 页 · 片段 4",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0001-c05",
+          "heading": "PDF 第 1 页 · 片段 5",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0001-c06",
+          "heading": "PDF 第 1 页 · 片段 6",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0002-c03",
+          "heading": "PDF 第 2 页 · 片段 3",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0002-c04",
+          "heading": "PDF 第 2 页 · 片段 4",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0004-c02",
+          "heading": "PDF 第 4 页 · 片段 2",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-probability-d5f582f9efde68b4-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-d5f582f9efde68b4.pdf#page=6"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-probability-451d99011df209b5",
+      "version": "sha256:451d99011df209b5a08cdafd05cbd4f94a43af021f33a631788a3408d8e1f2e7",
+      "course_id": "y1-s2-probability",
+      "title": "2023-2024 学年春季《概率论与数理统计》期末试卷A",
+      "material_type": "exercise",
+      "topics": [
+        "概率",
+        "随机变量",
+        "分布",
+        "方差",
+        "估计"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-probability-451d99011df209b5.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-probability-451d99011df209b5-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-451d99011df209b5-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-451d99011df209b5-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-451d99011df209b5-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-451d99011df209b5-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-probability-451d99011df209b5-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-451d99011df209b5.pdf#page=4"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-probability-101feb5a6eaba5dd",
+      "version": "sha256:101feb5a6eaba5ddae0108f30346630bdd5a6f82dbff78f6af1064d1c97915be",
+      "course_id": "y1-s2-probability",
+      "title": "2024-2025学年春季《概率论与数理统计》期末试卷V1.1（A）【考试版】",
+      "material_type": "exercise",
+      "topics": [
+        "概率",
+        "随机变量",
+        "分布",
+        "方差",
+        "估计",
+        "假设检验"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-probability-101feb5a6eaba5dd.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-probability-101feb5a6eaba5dd-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-101feb5a6eaba5dd.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-101feb5a6eaba5dd-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-101feb5a6eaba5dd.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-101feb5a6eaba5dd-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-101feb5a6eaba5dd.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-probability-101feb5a6eaba5dd-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-101feb5a6eaba5dd.pdf#page=4"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-probability-a7dfaf2beb4f155f",
+      "version": "sha256:a7dfaf2beb4f155f2c5c292a4b09e5eb5cd46c3a171e4902f660d5df747d62ca",
+      "course_id": "y1-s2-probability",
+      "title": "2025-2026学年春季概率论与数理统计期中试卷A",
+      "material_type": "exercise",
+      "topics": [
+        "概率",
+        "随机变量",
+        "分布",
+        "期望",
+        "方差"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-probability-a7dfaf2beb4f155f.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-probability-a7dfaf2beb4f155f-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-a7dfaf2beb4f155f-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-a7dfaf2beb4f155f-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-a7dfaf2beb4f155f-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-a7dfaf2beb4f155f-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-probability-a7dfaf2beb4f155f-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-a7dfaf2beb4f155f.pdf#page=4"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-probability-1334b535ee83c23e",
+      "version": "sha256:1334b535ee83c23eafa93a9fb984744d6bb201c804fa5dad5a332cc04e2b3ba2",
+      "course_id": "y1-s2-probability",
+      "title": "《概率论与数理统计》期末测验试题2答案 - 更新",
+      "material_type": "exercise",
+      "topics": [
+        "概率",
+        "随机变量",
+        "分布",
+        "期望",
+        "方差",
+        "估计",
+        "中心极限定理"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-probability-1334b535ee83c23e.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-probability-1334b535ee83c23e-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-probability-1334b535ee83c23e.pdf#page=10"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-marxism-0a0bec651848beaf",
+      "version": "sha256:0a0bec651848beafc42a415b224c43e1dbd5d9d1ff26e249bd7db804eaa2f86d",
+      "course_id": "y1-s2-marxism",
+      "title": "7_马原总结2023(1)",
+      "material_type": "note",
+      "topics": [
+        "矛盾",
+        "辩证",
+        "实践",
+        "认识",
+        "真理",
+        "唯物",
+        "剩余价值",
+        "资本",
+        "生产力",
+        "生产关系",
+        "社会主义"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-marxism-0a0bec651848beaf.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0003-c02",
+          "heading": "PDF 第 3 页 · 片段 2",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0004-c02",
+          "heading": "PDF 第 4 页 · 片段 2",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0005-c02",
+          "heading": "PDF 第 5 页 · 片段 2",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0007-c02",
+          "heading": "PDF 第 7 页 · 片段 2",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0008-c02",
+          "heading": "PDF 第 8 页 · 片段 2",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0009-c02",
+          "heading": "PDF 第 9 页 · 片段 2",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s2-marxism-0a0bec651848beaf-p0010-c02",
+          "heading": "PDF 第 10 页 · 片段 2",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-0a0bec651848beaf.pdf#page=10"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-marxism-28315c18c093abf3",
+      "version": "sha256:28315c18c093abf30cfb57975d81364179d137a301954d8dfc62f900cf62f201",
+      "course_id": "y1-s2-marxism",
+      "title": "马原 (1)(1)",
+      "material_type": "note",
+      "topics": [
+        "矛盾",
+        "辩证",
+        "实践",
+        "认识",
+        "真理",
+        "唯物",
+        "剩余价值",
+        "资本",
+        "生产力",
+        "生产关系",
+        "社会主义"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-marxism-28315c18c093abf3.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-marxism-28315c18c093abf3-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-28315c18c093abf3.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-28315c18c093abf3-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-28315c18c093abf3.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-28315c18c093abf3-p0001-c03",
+          "heading": "PDF 第 1 页 · 片段 3",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-28315c18c093abf3.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-28315c18c093abf3-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-28315c18c093abf3.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-28315c18c093abf3-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-28315c18c093abf3.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-28315c18c093abf3-p0002-c03",
+          "heading": "PDF 第 2 页 · 片段 3",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-28315c18c093abf3.pdf#page=2"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-marxism-9ecf25ff0629bcad",
+      "version": "sha256:9ecf25ff0629bcad1c2af58c7820d3da7fd1abf466676296c0e675bb50b59ffe",
+      "course_id": "y1-s2-marxism",
+      "title": "马原总结(1)(2)",
+      "material_type": "note",
+      "topics": [
+        "矛盾",
+        "辩证",
+        "实践",
+        "认识",
+        "真理",
+        "唯物",
+        "剩余价值",
+        "资本",
+        "生产力",
+        "生产关系",
+        "社会主义"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-marxism-9ecf25ff0629bcad.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0003-c02",
+          "heading": "PDF 第 3 页 · 片段 2",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0004-c02",
+          "heading": "PDF 第 4 页 · 片段 2",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0005-c02",
+          "heading": "PDF 第 5 页 · 片段 2",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0007-c02",
+          "heading": "PDF 第 7 页 · 片段 2",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0008-c02",
+          "heading": "PDF 第 8 页 · 片段 2",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0009-c02",
+          "heading": "PDF 第 9 页 · 片段 2",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-marxism-9ecf25ff0629bcad-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-9ecf25ff0629bcad.pdf#page=10"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-marxism-19de0432715b4aa5",
+      "version": "sha256:19de0432715b4aa5054d864ebdb7575acb17cc131b2132e4224da7f363ce78b2",
+      "course_id": "y1-s2-marxism",
+      "title": "马原框架梳理-qm整理版",
+      "material_type": "note",
+      "topics": [
+        "矛盾",
+        "辩证",
+        "实践",
+        "认识",
+        "真理",
+        "唯物",
+        "剩余价值",
+        "资本",
+        "生产力",
+        "生产关系",
+        "社会主义"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-marxism-19de0432715b4aa5.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-marxism-19de0432715b4aa5-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-19de0432715b4aa5.pdf#page=9"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-marxism-88a5a68d925b7f84",
+      "version": "sha256:88a5a68d925b7f84527d474b0fa3e913ec49af739be8e188d81162fe731801f3",
+      "course_id": "y1-s2-marxism",
+      "title": "马原知识点(1)",
+      "material_type": "note",
+      "topics": [
+        "矛盾",
+        "辩证",
+        "实践",
+        "认识",
+        "剩余价值",
+        "资本",
+        "社会主义"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-marxism-88a5a68d925b7f84.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-marxism-88a5a68d925b7f84-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-88a5a68d925b7f84.pdf#page=1"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-marxism-80159e7fae0c909f",
+      "version": "sha256:80159e7fae0c909ffbc56f7caa11a48362967abddd1cbe65ae7de6d6c4b163f7",
+      "course_id": "y1-s2-marxism",
+      "title": "马原考点总结",
+      "material_type": "note",
+      "topics": [
+        "矛盾",
+        "辩证",
+        "实践",
+        "认识",
+        "真理",
+        "唯物",
+        "剩余价值",
+        "资本",
+        "生产力",
+        "生产关系",
+        "社会主义"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-marxism-80159e7fae0c909f.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0001-c02",
+          "heading": "PDF 第 1 页 · 片段 2",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0002-c02",
+          "heading": "PDF 第 2 页 · 片段 2",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0003-c02",
+          "heading": "PDF 第 3 页 · 片段 2",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0004-c02",
+          "heading": "PDF 第 4 页 · 片段 2",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=4"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0005-c01",
+          "heading": "PDF 第 5 页 · 片段 1",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0005-c02",
+          "heading": "PDF 第 5 页 · 片段 2",
+          "page_label": "PDF 第 5 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=5"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0006-c01",
+          "heading": "PDF 第 6 页 · 片段 1",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0006-c02",
+          "heading": "PDF 第 6 页 · 片段 2",
+          "page_label": "PDF 第 6 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=6"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0007-c01",
+          "heading": "PDF 第 7 页 · 片段 1",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0007-c02",
+          "heading": "PDF 第 7 页 · 片段 2",
+          "page_label": "PDF 第 7 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=7"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0008-c01",
+          "heading": "PDF 第 8 页 · 片段 1",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0008-c02",
+          "heading": "PDF 第 8 页 · 片段 2",
+          "page_label": "PDF 第 8 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=8"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0009-c01",
+          "heading": "PDF 第 9 页 · 片段 1",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0009-c02",
+          "heading": "PDF 第 9 页 · 片段 2",
+          "page_label": "PDF 第 9 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=9"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0010-c01",
+          "heading": "PDF 第 10 页 · 片段 1",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=10"
+        },
+        {
+          "chunk_id": "study-s2-marxism-80159e7fae0c909f-p0010-c02",
+          "heading": "PDF 第 10 页 · 片段 2",
+          "page_label": "PDF 第 10 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-marxism-80159e7fae0c909f.pdf#page=10"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-calculus-90f6102c4992a3c7",
+      "version": "sha256:90f6102c4992a3c7b131bd362fa755016a29f554a09b3075b926562109c91ec2",
+      "course_id": "y1-s2-calculus",
+      "title": "高数真题",
+      "material_type": "exercise",
+      "topics": [
+        "连续",
+        "导数",
+        "微分",
+        "积分",
+        "级数",
+        "微分方程",
+        "偏导",
+        "曲线",
+        "曲面"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-calculus-90f6102c4992a3c7.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-calculus-90f6102c4992a3c7-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-90f6102c4992a3c7.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-calculus-90f6102c4992a3c7-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-90f6102c4992a3c7.pdf#page=2"
+        },
+        {
+          "chunk_id": "study-s2-calculus-90f6102c4992a3c7-p0003-c01",
+          "heading": "PDF 第 3 页 · 片段 1",
+          "page_label": "PDF 第 3 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-90f6102c4992a3c7.pdf#page=3"
+        },
+        {
+          "chunk_id": "study-s2-calculus-90f6102c4992a3c7-p0004-c01",
+          "heading": "PDF 第 4 页 · 片段 1",
+          "page_label": "PDF 第 4 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-90f6102c4992a3c7.pdf#page=4"
+        }
+      ]
+    },
+    {
+      "material_id": "study-s2-calculus-0b11b3601df78a74",
+      "version": "sha256:0b11b3601df78a74eb154ca53a7238dd50f465e7623ddf12d16a9d5a333e8cef",
+      "course_id": "y1-s2-calculus",
+      "title": "高等数学",
+      "material_type": "note",
+      "topics": [
+        "积分",
+        "曲线",
+        "曲面"
+      ],
+      "file_ref": "knowledge/study/sources/year1/text/study-s2-calculus-0b11b3601df78a74.md",
+      "content_available": true,
+      "source_label": "用户提供的大一期末复习资料；第三方来源/年份按原文件名保留，未核验官方真题身份",
+      "rights_status": "authorized",
+      "access_scope": "public",
+      "reviewed_at": null,
+      "chunks": [
+        {
+          "chunk_id": "study-s2-calculus-0b11b3601df78a74-p0001-c01",
+          "heading": "PDF 第 1 页 · 片段 1",
+          "page_label": "PDF 第 1 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-0b11b3601df78a74.pdf#page=1"
+        },
+        {
+          "chunk_id": "study-s2-calculus-0b11b3601df78a74-p0002-c01",
+          "heading": "PDF 第 2 页 · 片段 1",
+          "page_label": "PDF 第 2 页",
+          "source_excerpt_ref": "knowledge/study/sources/year1/pdf/study-s2-calculus-0b11b3601df78a74.pdf#page=2"
+        }
+      ]
+    }
+  ]
+}

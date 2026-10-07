@@ -250,6 +250,14 @@ def _create_draft_row(
     }
 
 
+def _validate_draft_payload(settings, principal, workspace_ref, kind, payload) -> str:
+    if kind == "task" and payload.get("plan_version") == "notice-text-pilot-v1":
+        from app.core.notice_pilot import validate_plan
+        return validate_plan(settings, principal, workspace_ref, payload)
+    validate_contract(payload, "TimetableImport" if kind == "schedule" else "NoticeDraft")
+    return enforce_demo_fixture(payload, kind)
+
+
 def create_browser_draft(
     settings: Settings,
     principal: Principal,
@@ -259,8 +267,7 @@ def create_browser_draft(
     idempotency_key: str,
 ) -> dict[str, Any]:
     resolve_workspace(principal, workspace_ref, "demo:draft", settings=settings)
-    validate_contract(payload, "TimetableImport" if kind == "schedule" else "NoticeDraft")
-    digest = enforce_demo_fixture(payload, kind)
+    digest = _validate_draft_payload(settings, principal, workspace_ref, kind, payload)
     request_digest = payload_hash({"workspace_ref": workspace_ref, "kind": kind, "payload": payload})
     operation = f"create_{kind}_draft"
     now = int(time.time())
@@ -364,6 +371,9 @@ def get_draft(settings: Settings, principal: Principal, draft_id: str) -> dict[s
         ).fetchone()
     if row is None:
         raise AppError(status_code=404, code="NOT_FOUND", message="Draft not found")
+    resolve_workspace(principal, row["workspace_ref"], "demo:read", settings=settings)
+    if row["expires_at"] <= int(time.time()):
+        raise AppError(status_code=410, code="TOKEN_EXPIRED", message="Draft expired")
     return {
         "draft_id": row["draft_id"],
         "kind": row["kind"],
@@ -382,6 +392,7 @@ def update_draft(
     principal: Principal,
     draft_id: str,
     payload: dict[str, Any],
+    expected_revision: int | None = None,
 ) -> dict[str, Any]:
     now = int(time.time())
     with database_connection(settings) as connection:
@@ -394,9 +405,12 @@ def update_draft(
             raise AppError(status_code=404, code="NOT_FOUND", message="Draft not found")
         if row["status"] != "draft":
             raise AppError(status_code=409, code="STALE_REVISION", message="Draft is already committed")
+        if row["expires_at"] <= now:
+            raise AppError(410, "TOKEN_EXPIRED", "Draft expired")
+        if expected_revision is not None and expected_revision != row["revision"]:
+            raise AppError(409, "STALE_REVISION", "Draft revision changed")
         kind = row["kind"]
-        validate_contract(payload, "TimetableImport" if kind == "schedule" else "NoticeDraft")
-        digest = enforce_demo_fixture(payload, kind)
+        digest = _validate_draft_payload(settings, principal, row["workspace_ref"], kind, payload)
         revision = row["revision"] + 1
         connection.execute(
             """
@@ -417,6 +431,29 @@ def update_draft(
     return get_draft(settings, principal, draft_id)
 
 
+def _require_active_draft(
+    connection: sqlite3.Connection, principal: Principal, draft: sqlite3.Row, now: int,
+) -> None:
+    workspace = connection.execute(
+        "SELECT expires_at FROM workspaces WHERE workspace_ref = ? AND owner_subject_id = ?",
+        (draft["workspace_ref"], principal.subject_id),
+    ).fetchone()
+    if workspace is None or workspace["expires_at"] <= now:
+        raise AppError(status_code=404, code="NOT_FOUND", message="Workspace not found")
+    if draft["expires_at"] <= now:
+        raise AppError(status_code=410, code="TOKEN_EXPIRED", message="Draft expired")
+
+
+def _require_resolved_notice(draft: sqlite3.Row) -> None:
+    payload = json.loads(draft["payload_json"])
+    notice = payload["notice"] if payload.get("plan_version") == "notice-text-pilot-v1" else payload
+    if draft["kind"] == "task" and notice["needs_confirmation"]:
+        raise AppError(
+            status_code=409, code="CONFIRMATION_REQUIRED",
+            message="Notice fields must be resolved before confirming or saving a task",
+        )
+
+
 def create_confirmation(
     settings: Settings,
     principal: Principal,
@@ -425,32 +462,34 @@ def create_confirmation(
     expected_payload_hash: str,
     idempotency_key: str,
 ) -> dict[str, Any]:
+    if principal.kind != "browser_user" or "demo:commit" not in principal.scopes:
+        raise AppError(403, "FORBIDDEN", "Only the browser owner may confirm a draft")
     now = int(time.time())
     request_digest = payload_hash(
         {"draft_id": draft_id, "revision": revision, "payload_hash": expected_payload_hash}
     )
     with database_connection(settings) as connection:
         connection.execute("BEGIN IMMEDIATE")
-        existing = _idempotent_result(
-            connection, principal, "create_confirmation", idempotency_key, request_digest
-        )
-        if existing is not None:
-            connection.rollback()
-            return existing
         draft = connection.execute(
             "SELECT * FROM drafts WHERE draft_id = ? AND owner_subject_id = ?",
             (draft_id, principal.subject_id),
         ).fetchone()
         if draft is None:
             raise AppError(status_code=404, code="NOT_FOUND", message="Draft not found")
-        if draft["expires_at"] <= now:
-            raise AppError(status_code=410, code="TOKEN_EXPIRED", message="Draft expired")
+        _require_active_draft(connection, principal, draft, now)
+        existing = _idempotent_result(
+            connection, principal, "create_confirmation", idempotency_key, request_digest
+        )
+        if existing is not None:
+            connection.rollback()
+            return existing
         if (
             draft["status"] != "draft"
             or draft["revision"] != revision
             or draft["payload_hash"] != expected_payload_hash
         ):
             raise AppError(status_code=409, code="STALE_REVISION", message="Draft revision changed")
+        _require_resolved_notice(draft)
 
         confirmation_id = _identifier("confirmation")
         expires_at = now + settings.confirmation_ttl_seconds
@@ -499,11 +538,23 @@ def commit_draft(
     confirmation_id: str,
     idempotency_key: str,
 ) -> dict[str, Any]:
+    if principal.kind != "browser_user" or "demo:commit" not in principal.scopes:
+        raise AppError(403, "FORBIDDEN", "Only the browser owner may save a confirmed draft")
     now = int(time.time())
     request_digest = payload_hash({"kind": kind, "confirmation_id": confirmation_id})
     operation = f"commit_{kind}"
     with database_connection(settings) as connection:
         connection.execute("BEGIN IMMEDIATE")
+        # Enforce resource expiry even on an idempotent retry. A shared bearer or
+        # an expired workspace must never become an alternate write/read identity.
+        linked_draft = connection.execute(
+            """SELECT drafts.* FROM drafts JOIN confirmations
+               ON confirmations.draft_id = drafts.draft_id
+               WHERE confirmations.confirmation_hash = ? AND drafts.owner_subject_id = ?""",
+            (secret_hash(confirmation_id), principal.subject_id),
+        ).fetchone()
+        if linked_draft is not None:
+            _require_active_draft(connection, principal, linked_draft, now)
         existing = _idempotent_result(
             connection, principal, operation, idempotency_key, request_digest
         )
@@ -540,6 +591,14 @@ def commit_draft(
             or draft["payload_hash"] != confirmation["payload_hash"]
         ):
             raise AppError(status_code=409, code="STALE_REVISION", message="Draft revision changed")
+        _require_resolved_notice(draft)
+
+        if draft["expires_at"] <= now:
+            raise AppError(410, "TOKEN_EXPIRED", "Draft expired")
+        stored_payload = json.loads(draft["payload_json"])
+        if stored_payload.get("plan_version") == "notice-text-pilot-v1":
+            # Recheck against records confirmed since the user last selected a slot.
+            _validate_draft_payload(settings, principal, draft["workspace_ref"], kind, stored_payload)
 
         if kind == "task":
             resource_id = _identifier("task")
@@ -640,6 +699,7 @@ def get_task(settings: Settings, principal: Principal, task_id: str) -> dict[str
         ).fetchone()
     if row is None:
         raise AppError(status_code=404, code="NOT_FOUND", message="Task not found")
+    resolve_workspace(principal, row["workspace_ref"], "demo:read", settings=settings)
     return {
         "task_id": row["task_id"],
         "workspace_ref": row["workspace_ref"],

@@ -1,0 +1,176 @@
+[
+  {
+    "task_id": "task_CkLNrf89-uWAO-176MzE9MFE",
+    "revision": 1,
+    "notice": {
+      "available_windows": [],
+      "kind": "deadline_feasibility",
+      "notice": {
+        "due": {
+          "at": "2026-09-21T12:20:00+08:00",
+          "date": "2026-09-21",
+          "precision": "datetime"
+        },
+        "earliest_start": "2026-09-21T09:40:00+08:00",
+        "estimated_minutes": 20,
+        "event": {
+          "date": null,
+          "end": null,
+          "precision": "unknown",
+          "start": null
+        },
+        "extracted_at": "2026-10-05T23:12:27+08:00",
+        "materials": [
+          "登记单"
+        ],
+        "needs_confirmation": [],
+        "notice_id": "text-bb44a4d4e34f16adb54badb044af4d5c",
+        "published_at": null,
+        "schema_version": "1.0.0",
+        "source_spans": [
+          {
+            "field": "title",
+            "quote": "请在2026年9月21日12:20前完成虚构图书登记，材料：登记单。",
+            "source_ref": "用户粘贴的虚构通知#chars=0:34"
+          },
+          {
+            "field": "due",
+            "quote": "请在2026年9月21日12:20前完成虚构图书登记，材料：登记单。",
+            "source_ref": "用户粘贴的虚构通知#chars=0:34"
+          },
+          {
+            "field": "materials",
+            "quote": "请在2026年9月21日12:20前完成虚构图书登记，材料：登记单。",
+            "source_ref": "用户粘贴的虚构通知#chars=0:34"
+          },
+          {
+            "field": "estimated_minutes",
+            "quote": "20",
+            "source_ref": "user-confirmation"
+          },
+          {
+            "field": "earliest_start",
+            "quote": "2026-09-21T09:40:00+08:00",
+            "source_ref": "user-confirmation"
+          },
+          {
+            "field": "due",
+            "quote": "2026-09-21T12:20:00+08:00",
+            "source_ref": "user-confirmation"
+          }
+        ],
+        "timezone": "Asia/Shanghai",
+        "title": "请在2026年9月21日12:20前完成虚构图书登记，材料：登记单。"
+      },
+      "plan_version": "notice-text-pilot-v1",
+      "reference_at": null,
+      "selected_slot": {
+        "duration_minutes": 20,
+        "end": "2026-09-21T12:10:00+08:00",
+        "start": "2026-09-21T11:50:00+08:00"
+      },
+      "source_ref": "用户粘贴的虚构通知",
+      "source_text": "请在2026年9月21日12:20前完成虚构图书登记，材料：登记单。",
+      "user_confirmations": {
+        "accept_conflicts": false,
+        "due_at": "2026-09-21T12:20:00+08:00",
+        "earliest_start": "2026-09-21T09:40:00+08:00",
+        "estimated_minutes": 20,
+        "event_end": null,
+        "event_start": null,
+        "source_review": true
+      },
+      "window": {
+        "end": "2026-09-21T12:30:00+08:00",
+        "start": "2026-09-21T08:00:00+08:00"
+      }
+    }
+  },
+  {
+    "task_id": "task_RELNB8GX60qDDjL0hMdltJRZ",
+    "revision": 1,
+    "notice": {
+      "available_windows": [],
+      "kind": "deadline_feasibility",
+      "notice": {
+        "due": {
+          "at": "2026-09-21T10:10:00+08:00",
+          "date": "2026-09-21",
+          "precision": "datetime"
+        },
+        "earliest_start": "2026-09-21T09:40:00+08:00",
+        "estimated_minutes": 20,
+        "event": {
+          "date": null,
+          "end": null,
+          "precision": "unknown",
+          "start": null
+        },
+        "extracted_at": "2026-10-05T22:43:54+08:00",
+        "materials": [
+          "总结PDF"
+        ],
+        "needs_confirmation": [],
+        "notice_id": "text-b426781d849c4f73bc011011b145ad02",
+        "published_at": null,
+        "schema_version": "1.0.0",
+        "source_spans": [
+          {
+            "field": "title",
+            "quote": "请在2026年9月21日10:10前提交虚构实验总结，材料：总结PDF。",
+            "source_ref": "用户粘贴的虚构通知#chars=0:36"
+          },
+          {
+            "field": "due",
+            "quote": "请在2026年9月21日10:10前提交虚构实验总结，材料：总结PDF。",
+            "source_ref": "用户粘贴的虚构通知#chars=0:36"
+          },
+          {
+            "field": "materials",
+            "quote": "请在2026年9月21日10:10前提交虚构实验总结，材料：总结PDF。",
+            "source_ref": "用户粘贴的虚构通知#chars=0:36"
+          },
+          {
+            "field": "estimated_minutes",
+            "quote": "20",
+            "source_ref": "user-confirmation"
+          },
+          {
+            "field": "earliest_start",
+            "quote": "2026-09-21T09:40:00+08:00",
+            "source_ref": "user-confirmation"
+          },
+          {
+            "field": "due",
+            "quote": "2026-09-21T10:10:00+08:00",
+            "source_ref": "user-confirmation"
+          }
+        ],
+        "timezone": "Asia/Shanghai",
+        "title": "请在2026年9月21日10:10前提交虚构实验总结，材料：总结PDF。"
+      },
+      "plan_version": "notice-text-pilot-v1",
+      "reference_at": null,
+      "selected_slot": {
+        "duration_minutes": 20,
+        "end": "2026-09-21T10:00:00+08:00",
+        "start": "2026-09-21T09:40:00+08:00"
+      },
+      "source_ref": "用户粘贴的虚构通知",
+      "source_text": "请在2026年9月21日10:10前提交虚构实验总结，材料：总结PDF。",
+      "user_confirmations": {
+        "accept_conflicts": false,
+        "due_at": "2026-09-21T10:10:00+08:00",
+        "earliest_start": "2026-09-21T09:40:00+08:00",
+        "estimated_minutes": 20,
+        "event_end": null,
+        "event_start": null,
+        "source_review": true
+      },
+      "window": {
+        "end": "2026-09-21T12:00:00+08:00",
+        "start": "2026-09-21T08:00:00+08:00"
+      }
+    }
+  }
+]

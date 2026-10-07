@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "review_scope": "已做正文规则筛查及抽样原页核对，不代表全量人工隐私审查",
+  "holds": [
+    {
+      "material_id": "study-s1-programming-7267a3cd0b2e11aa",
+      "title": "20-21C--上册",
+      "reason": "PDF第1页含已填写的姓名、学号和成绩；整份文件暂不公开，待脱敏版本替换。",
+      "access_scope": "private",
+      "public_content_available": false
+    }
+  ]
+}

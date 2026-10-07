@@ -1,3 +1,4 @@
 node_modules/
 .npm-cache/
-data/
+data/scenic-photos/
+data/*.tmp

@@ -13,6 +13,9 @@ from app.api.demo import router as demo_router
 from app.api.drafts import router as drafts_router
 from app.api.schedules import router as schedules_router
 from app.api.tasks import router as tasks_router
+from app.api.domains import router as domains_router
+from app.api.cloudbase_auth import router as cloudbase_auth_router
+from app.api.notice_pilot import router as notice_pilot_router
 from app.core.config import get_settings
 from app.core.envelope import FieldError, failure
 from app.core.errors import AppError
@@ -28,7 +31,9 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    initialize_database(get_settings())
+    runtime = get_settings()
+    runtime.validate_deployment()
+    initialize_database(runtime)
     yield
 
 
@@ -103,6 +108,9 @@ app.include_router(demo_router)
 app.include_router(drafts_router)
 app.include_router(schedules_router)
 app.include_router(tasks_router)
+app.include_router(domains_router)
+app.include_router(cloudbase_auth_router)
+app.include_router(notice_pilot_router)
 
 
 if __name__ == "__main__":

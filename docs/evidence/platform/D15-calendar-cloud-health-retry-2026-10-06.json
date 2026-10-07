@@ -1,0 +1,27 @@
+{
+  "checked_at": "2026-10-06T11:51:47.305405+00:00",
+  "results": {
+    "identity": {
+      "status": 200,
+      "data": {
+        "status": "ok",
+        "build_id": "cloudbase-identity-calendar-20261006-r1",
+        "dataset_kind": "demo",
+        "personal_uploads": false,
+        "persistent_store": "cloudbase_pg",
+        "oauth_enabled": true,
+        "oauth_competition_compat": true
+      }
+    },
+    "public": {
+      "status": 200,
+      "data": {
+        "status": "ok",
+        "build_id": "cloudbase-public-content-calendar-20261006-r1",
+        "personal_uploads": false,
+        "scenic_data_version": "jinnan-2026-10-04-intents-v1",
+        "study_data_version": "y1-070600fb47f92e70"
+      }
+    }
+  }
+}

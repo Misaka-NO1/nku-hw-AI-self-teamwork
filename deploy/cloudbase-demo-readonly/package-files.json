@@ -1,0 +1,10 @@
+[
+  "contracts/core.schema.json", "contracts/api.schema.json",
+  "fixtures/timetable.demo.json", "fixtures/term.demo.json",
+  "fixtures/degree-plan.demo.json", "fixtures/transcript.demo.json",
+  "fixtures/notice-event.demo.json", "fixtures/notice-deadline.demo.json", "fixtures/notice-ambiguous.demo.json",
+  "fixtures/time-free-query.demo.json", "fixtures/time-event-query.demo.json", "fixtures/time-deadline-query.demo.json",
+  "fixtures/scenic-query.demo.json", "fixtures/study-query.demo.json", "fixtures/degree-query.demo.json",
+  "knowledge/scenic/catalog.demo.json", "knowledge/study/materials.json",
+  "knowledge/study/sources/demo-note-01.md"
+]

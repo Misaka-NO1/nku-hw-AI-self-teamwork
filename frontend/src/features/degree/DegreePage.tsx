@@ -3,6 +3,7 @@ import { ErrorState, StatusBanner } from "../../shared/components";
 import { auditDegree } from "./api";
 import { DEMO_PLAN_ID, DEMO_PLAN_VERSION, demoAuditResult } from "./demoData";
 import { STATUS_LABELS, type DegreeAuditResult } from "./types";
+import { CourseCatalog } from "./CourseCatalog";
 
 function ModuleTable({ result }: { result: DegreeAuditResult }) {
   return (
@@ -134,6 +135,7 @@ export function DegreePage() {
           </p>
         </div>
       ) : null}
+      <CourseCatalog />
     </section>
   );
 }

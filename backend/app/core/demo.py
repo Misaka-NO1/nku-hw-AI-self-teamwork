@@ -20,7 +20,7 @@ def load_fixture(name: str) -> dict[str, Any]:
 @lru_cache
 def allowed_hashes(kind: Literal["schedule", "task"]) -> frozenset[str]:
     if kind == "schedule":
-        names = ["timetable.demo.json"]
+        names = ["timetable.demo.json", "timetable-october-2026.simulation.json"]
     else:
         names = [
             "notice-ambiguous.demo.json",

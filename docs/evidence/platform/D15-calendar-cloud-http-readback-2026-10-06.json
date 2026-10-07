@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-06T11:49:25.339359+00:00",
+  "requests": "anonymous ordinary HTTPS; no cookies, credentials or custom headers",
+  "results": {
+    "identity/healthz": {
+      "error": "ReadTimeout"
+    },
+    "identity/api/v1/tasks/calendar?workspace_ref=unauthenticated-probe": {
+      "error": "ReadTimeout"
+    },
+    "identity/oauth/tasks/summary": {
+      "status": 401,
+      "data": {
+        "ok": false,
+        "data": null,
+        "error": {
+          "code": "AUTH_REQUIRED",
+          "message": "Bearer access token required",
+          "field_errors": [],
+          "retryable": false
+        },
+        "meta": {
+          "schema_version": "1.0.0",
+          "request_id": "317e5496-63e0-4ff7-bc36-7ebc3d528c83",
+          "data_version": null,
+          "calculation_version": null,
+          "warnings": [],
+          "evidence_refs": []
+        }
+      }
+    },
+    "public/healthz": {
+      "error": "ReadTimeout"
+    }
+  }
+}

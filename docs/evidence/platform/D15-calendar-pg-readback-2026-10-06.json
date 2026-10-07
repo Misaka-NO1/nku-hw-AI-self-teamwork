@@ -1,0 +1,138 @@
+{
+  "mode": "isolated_fictional_pg_clock_2026_09_21",
+  "cloud_deployed": false,
+  "original": {
+    "task_id": "notice_task_6AdIE1IKYTIvMD8Gi9KEtODA",
+    "revision": 1,
+    "notice": {
+      "due": {
+        "at": "2026-09-21T10:10:00+08:00",
+        "date": "2026-09-21",
+        "precision": "datetime"
+      },
+      "event": {
+        "end": null,
+        "date": null,
+        "start": null,
+        "precision": "unknown"
+      },
+      "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+      "timezone": "Asia/Shanghai",
+      "materials": [
+        "实验PDF"
+      ],
+      "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+      "extracted_at": "2026-10-06T15:18:18+08:00",
+      "published_at": null,
+      "source_spans": [
+        {
+          "field": "title",
+          "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+          "source_ref": "self-authored#chars=0:37"
+        },
+        {
+          "field": "due",
+          "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+          "source_ref": "self-authored#chars=0:37"
+        },
+        {
+          "field": "materials",
+          "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+          "source_ref": "self-authored#chars=0:37"
+        },
+        {
+          "field": "estimated_minutes",
+          "quote": "20",
+          "source_ref": "user-confirmation"
+        },
+        {
+          "field": "earliest_start",
+          "quote": "2026-09-21T09:40:00+08:00",
+          "source_ref": "user-confirmation"
+        }
+      ],
+      "earliest_start": "2026-09-21T09:40:00+08:00",
+      "schema_version": "1.0.0",
+      "estimated_minutes": 20,
+      "needs_confirmation": []
+    },
+    "status": "pending",
+    "scheduled_end": "2026-09-21T10:00:00+08:00",
+    "scheduled_start": "2026-09-21T09:40:00+08:00",
+    "reminder_minutes": null,
+    "calendar_revision": 0,
+    "confirmed_at": "2026-10-06T15:18:18+08:00"
+  },
+  "request": {
+    "workspace_ref": "pilot_workspace_fz-hFyxbYMEQmp-MvB0xaxmV",
+    "expected_revision": 0,
+    "status": "pending",
+    "scheduled_start": "2026-09-21T09:45:00+08:00",
+    "scheduled_end": "2026-09-21T10:05:00+08:00",
+    "reminder_minutes": 0
+  },
+  "saved": {
+    "task_id": "notice_task_6AdIE1IKYTIvMD8Gi9KEtODA",
+    "revision": 1,
+    "notice": {
+      "due": {
+        "at": "2026-09-21T10:10:00+08:00",
+        "date": "2026-09-21",
+        "precision": "datetime"
+      },
+      "event": {
+        "end": null,
+        "date": null,
+        "start": null,
+        "precision": "unknown"
+      },
+      "title": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+      "timezone": "Asia/Shanghai",
+      "materials": [
+        "实验PDF"
+      ],
+      "notice_id": "text-9565a431f48f6ecefb8cafe04fed2a02",
+      "extracted_at": "2026-10-06T15:18:18+08:00",
+      "published_at": null,
+      "source_spans": [
+        {
+          "field": "title",
+          "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+          "source_ref": "self-authored#chars=0:37"
+        },
+        {
+          "field": "due",
+          "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+          "source_ref": "self-authored#chars=0:37"
+        },
+        {
+          "field": "materials",
+          "quote": "请在2026年9月21日10:10前提交虚构新实验记录，材料：实验PDF。",
+          "source_ref": "self-authored#chars=0:37"
+        },
+        {
+          "field": "estimated_minutes",
+          "quote": "20",
+          "source_ref": "user-confirmation"
+        },
+        {
+          "field": "earliest_start",
+          "quote": "2026-09-21T09:40:00+08:00",
+          "source_ref": "user-confirmation"
+        }
+      ],
+      "earliest_start": "2026-09-21T09:40:00+08:00",
+      "schema_version": "1.0.0",
+      "estimated_minutes": 20,
+      "needs_confirmation": []
+    },
+    "status": "pending",
+    "scheduled_end": "2026-09-21T10:05:00+08:00",
+    "scheduled_start": "2026-09-21T09:45:00+08:00",
+    "reminder_minutes": 0,
+    "calendar_revision": 1,
+    "confirmed_at": "2026-10-06T15:18:18+08:00"
+  },
+  "application_instance_recreated": true,
+  "database_process_restarted": false
+}

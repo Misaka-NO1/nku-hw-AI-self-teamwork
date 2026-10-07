@@ -1,0 +1,26 @@
+{
+  "description": "Contract examples only, not credentials; no account login or cloud acceptance evidence.",
+  "valid": {
+    "workspace_ref": "pilot_workspace_fictional",
+    "csrf_token": "fictional-csrf-example-not-an-auth-credential",
+    "expires_at": "2026-10-03T09:15:00+08:00",
+    "dataset_kind": "demo",
+    "personal_uploads": false,
+    "agent_paired": false
+  },
+  "invalid_overrides": [
+    {"personal_uploads": true},
+    {"dataset_kind": "personal"},
+    {"agent_paired": true},
+    {"owner_id": "fictional-other"},
+    {"access_token": "never-return-a-bearer"},
+    {"csrf_token": "short"},
+    {"expires_at": "not-a-date"}
+  ],
+  "rejected_requests": [
+    "missing X-Campus-Session-Read header",
+    "foreign Origin or Sec-Fetch-Site",
+    "any query parameter or request body",
+    "missing, expired, changed, revoked or cross-user cookies"
+  ]
+}

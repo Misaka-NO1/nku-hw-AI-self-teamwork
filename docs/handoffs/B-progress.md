@@ -1,5 +1,25 @@
 # B 进度 handoff：扩展、课表导入与时间引擎
 
+## PR #9整合与日历联调补充（2026-10-06）
+
+已收到新合并，HEAD/main=3a31ebd，calendar前端源码到位。前端150项、完整后端650项通过；真实隔离PG页面确认保存、0分钟提醒、完成/取消/恢复、刷新及虚构A/B切换均通过。只合入既有前端并处理导出冲突，未继续开发前端功能。服务合包准备，腾讯云控制台等待正常登录；线上未迁移或切流。见D15最新节。
+
+## D日历后端同步（2026-10-06）
+
+日历候选复用B原算法和服务器当前时间，排除本事项旧占用；完成/取消释放busy，恢复检查冲突。原通知due不变。新两表RLS+owner锁/CAS/快照版本使REST/OAuth与通知提交共享状态；固定课表教学范围已过，范围外返回timetable_outside_term，未改变夹具门禁。默认关闭、未云迁移。 见[D日历交接](D-task-calendar-backend-2026-10-06.md)及契约§10.2。下文为历史记录。
+
+## D后端逻辑扩展（2026-10-06）
+
+按用户新要求不继续做前端。notice_plan纯映射/计算复用B，增加用户buffers和可用区间限制；本人云REST与两种OAuth在默认关闭文本开关下纳入已确认selected_slot。原核心/B算法不改、原demo门禁保留。新四表PG候选与旧owner锁共用，计算之后发生保存/课表改变则事务版本拒绝；本地真实PG测试覆盖该竞争。模型/OCR关键字段须用户明确确认，不接受不完整候选或自动拼接OCR数字。见契约§10.1及D后端接口；线上/学校新输入仍未验收。
+
+## D通知文字试点同步（2026-10-05）
+
+基于PR #8/main b4dbaec，新增默认关闭的本地虚构文字入口；13字段NoticeDraft与B算法不改。本次复核event/due、耗时、最早开始和查询范围直接映射TimeCheckRequest；推荐仅用真实candidate_slots。保存Plan包装中的selected_slot作为后续**试点**忙碌，due不占时间，未确认不占时间；提交重读本人记录再算。原云owned_time/PG及旧公共适配器尚不接此包装。契约§10、backend/tests/test_notice_pilot.py与D13已同步；真实学校两账号/主Agent新通知和截图尚未通过。
+
+## D 接口补充（2026-09-30，本地联调，不修改 B 算法）
+
+D 已注册既定 schedules/validate、time/free-slots、time/check REST 与对应 MCP，只用固定 demo；D06 本机对照通过，尚未云端发布。POST/MCP 直接同一契约 JSON，无 payload 嵌套。公共 demo-workspace-01 只读固定课表；浏览器随机工作区需会话 owner 校验且读取已确认课表/任务，MCP 服务令牌不能访问。课表非固定内容即使标 demo 也拒绝；通知草稿未确认不占时间，due 非忙碌，缺时刻/耗时需确认。时间 calculation_version 放外层 meta；下方早期 handoff 中的 data 内版本描述已不代表契约。详见 D06 证据。
+
 日期：2026-09-22｜分支：`feat/agent-b-schedule-time`
 
 ```text

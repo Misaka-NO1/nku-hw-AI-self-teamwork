@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:identity": "tsc --noEmit && vite build --mode identity --outDir dist-identity",
     "preview": "vite preview",
     "test": "vitest run"
   },
   "dependencies": {
     "@campus/import-core": "workspace:*",
+    "@cloudbase/js-sdk": "3.10.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.30.0"

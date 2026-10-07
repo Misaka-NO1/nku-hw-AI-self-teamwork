@@ -1,9 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ChangeEvent } from "react";
 
 import {
   parseImportFile,
+  parseWeeks,
   validateTermCalendarStructure,
+  validateTimetableStructure,
   type ImportFormat,
   type ParseResult,
   type TermCalendar,
@@ -15,8 +17,9 @@ import { validateTimetableRemote } from "./api";
 /**
  * ImportPage（/tools/import，owner: B；路由接入由 C 负责）。
  *
- * 流程：选择 JSON/规范 CSV/HTML 导出文件 → 本地解析（不执行脚本、不联网）
- * → 编辑前预览 → 显示 issues / 缺失字段 / 覆盖范围 → 用户确认后才允许下一步。
+ * 流程：选择 JSON/规范 CSV/教务导出 HTML → 本地解析（不执行脚本、不联网）
+ * → 可编辑预览（修正课程名/星期/节次/周次/地点，删除误识别条目）
+ * → 显示 issues / 缺失字段 / 覆盖范围 → 用户确认后才允许下一步。
  * 不支持的格式或结构给出明确错误，绝不展示空课表。
  */
 
@@ -27,7 +30,19 @@ const FORMAT_BY_EXT: Record<string, ImportFormat> = {
   ".htm": "html",
 };
 
+/** 教务系统课表页（学生需先登录统一身份认证） */
+export const EAMIS_TIMETABLE_URL =
+  "https://eamis.nankai.edu.cn/eams/courseTableForStd!courseTable.action";
+
+const WEEKDAY_NAMES = "一二三四五六日";
+
 export interface ImportPageProps {
+  /** D's connection shell receives local previews; this callback never uploads. */
+  onPreview?: (payload: TimetableImport | null) => void;
+  /** 用户核对/修正完毕并点击“确认”后回调（payload 为编辑后的最终版本）。
+   *  注意：payload 经编辑后，原 draft_hash 已失效；确认凭据/hash 的重生成
+   *  属于 D 侧保存链路的职责（见 contracts 交接约定）。 */
+  onConfirmed?: (payload: TimetableImport) => void;
   /** 可选：外部传入的学期日历；也可在页面内上传 TermCalendar JSON */
   calendar?: TermCalendar | null;
   datasetKind?: "demo" | "personal";
@@ -36,14 +51,13 @@ export interface ImportPageProps {
    * 默认 false：按钮禁用并说明原因，绝不表现为已可用（PR #2 审核意见 4）。
    */
   serverValidateAvailable?: boolean;
-  /** 可选：用户在预览后点击「确认导入」时回调（本地流程，不涉及服务端保存） */
-  onConfirmed?: (payload: TimetableImport) => void;
 }
 
 export default function ImportPage({
   calendar: initialCalendar = null,
   datasetKind = "demo",
   serverValidateAvailable = false,
+  onPreview,
   onConfirmed,
 }: ImportPageProps) {
   const [calendar, setCalendar] = useState<TermCalendar | null>(initialCalendar);
@@ -51,6 +65,34 @@ export default function ImportPage({
   const [result, setResult] = useState<ParseResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [remoteCheck, setRemoteCheck] = useState<string | null>(null);
+  // 可编辑草稿：解析结果的深拷贝，所有预览修改都作用在 draft 上
+  const [draft, setDraft] = useState<TimetableImport | null>(null);
+  // 周次文本草稿（meeting_id → 文本），确认时统一按 parseWeeks 校验
+  const [weeksDraft, setWeeksDraft] = useState<Record<string, string>>({});
+  const [editError, setEditError] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
+
+  useEffect(() => {
+    if (result?.payload) {
+      const copy = JSON.parse(JSON.stringify(result.payload)) as TimetableImport;
+      setDraft(copy);
+      const texts: Record<string, string> = {};
+      for (const course of copy.courses) {
+        for (const meeting of course.meetings) {
+          texts[meeting.meeting_id] = meeting.weeks.join(",");
+        }
+      }
+      setWeeksDraft(texts);
+    } else {
+      setDraft(null);
+      setWeeksDraft({});
+    }
+    setEditError(null);
+    setConfirmed(false);
+  }, [result]);
+
+  // 壳层（D）收到的是编辑后的草稿，而不是原始解析结果
+  useEffect(() => { onPreview?.(draft); }, [draft, onPreview]);
 
   const blockingIssues = useMemo(
     () => result?.issues.filter((issue) => issue.blocking) ?? [],
@@ -112,20 +154,149 @@ export default function ImportPage({
   }
 
   async function onValidateRemote() {
-    if (!result?.payload) return;
-    const envelope = await validateTimetableRemote(result.payload);
+    if (!draft) return;
+    const envelope = await validateTimetableRemote(draft);
     setRemoteCheck(
       envelope.ok ? "服务端校验通过（尚未保存）" : `服务端校验失败：${envelope.error?.message}`,
     );
   }
 
+  // ---- 预览编辑操作 ----
+
+  function updateMeeting(courseId: string, meetingId: string, patch: Partial<TimetableImport["courses"][number]["meetings"][number]>) {
+    setDraft((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        courses: prev.courses.map((course) =>
+          course.course_id !== courseId
+            ? course
+            : {
+                ...course,
+                meetings: course.meetings.map((meeting) =>
+                  meeting.meeting_id !== meetingId ? meeting : { ...meeting, ...patch },
+                ),
+              },
+        ),
+      };
+    });
+    setConfirmed(false);
+  }
+
+  function updateCourseTitle(courseId: string, title: string) {
+    setDraft((prev) =>
+      prev
+        ? {
+            ...prev,
+            courses: prev.courses.map((course) =>
+              course.course_id === courseId ? { ...course, title } : course,
+            ),
+          }
+        : prev,
+    );
+    setConfirmed(false);
+  }
+
+  function removeMeeting(courseId: string, meetingId: string) {
+    setDraft((prev) => {
+      if (!prev) return prev;
+      // 课程最后一条 meeting 被删除时，整门课一并移除
+      const courses = prev.courses
+        .map((course) =>
+          course.course_id !== courseId
+            ? course
+            : { ...course, meetings: course.meetings.filter((m) => m.meeting_id !== meetingId) },
+        )
+        .filter((course) => course.meetings.length > 0);
+      return { ...prev, courses };
+    });
+    setConfirmed(false);
+  }
+
+  function addMeeting(courseId: string) {
+    setDraft((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        courses: prev.courses.map((course) =>
+          course.course_id !== courseId
+            ? course
+            : {
+                ...course,
+                meetings: [
+                  ...course.meetings,
+                  {
+                    meeting_id: `${courseId}-m${Date.now()}`,
+                    weekday: 1,
+                    start_period: 1,
+                    end_period: 1,
+                    weeks: [1],
+                    location: null,
+                    campus_id: null,
+                  },
+                ],
+              },
+        ),
+      };
+    });
+    setConfirmed(false);
+  }
+
+  function onConfirm() {
+    if (!draft) return;
+    setEditError(null);
+    // 1) 周次文本统一校验并写回
+    const next: TimetableImport = JSON.parse(JSON.stringify(draft));
+    for (const course of next.courses) {
+      for (const meeting of course.meetings) {
+        const text = weeksDraft[meeting.meeting_id] ?? "";
+        const parsed = parseWeeks(text, calendar?.teaching_weeks);
+        if (!parsed.weeks) {
+          setEditError(
+            `「${course.title}」周 ${WEEKDAY_NAMES[meeting.weekday - 1]} 第${meeting.start_period}节的周次无效：${parsed.issues[0]?.message ?? "无法解析"}`,
+          );
+          return;
+        }
+        meeting.weeks = parsed.weeks;
+      }
+    }
+    // 2) 整体结构校验（契约兜底）
+    const violations = validateTimetableStructure(next);
+    if (violations.length > 0) {
+      setEditError(
+        `修正后的课表仍不符合契约：${violations.map((v) => `${v.field || "$"}: ${v.message}`).join("；")}`,
+      );
+      return;
+    }
+    setDraft(next);
+    setConfirmed(true);
+    onConfirmed?.(next);
+  }
+
+  // ---- 渲染 ----
+
   return (
     <main>
       <h1>导入课表</h1>
       <p>
-        数据默认只在本地解析与预览（demo 模式）；上传前会再次核对内容。也可以从教务系统导出文件后在此导入，
-        或使用浏览器扩展读取当前页面。
+        数据默认只在本地解析与预览（demo 模式）；确认前可在下方直接修正识别结果。
       </p>
+
+      <section>
+        <h2>第零步：从教务系统获取课表</h2>
+        <p>
+          打开教务系统课表页（需先登录统一身份认证），在课表页面按 Ctrl+S 将网页
+          “另存为” HTML 文件，然后回到本页上传该文件。
+        </p>
+        <p>
+          <a href={EAMIS_TIMETABLE_URL} target="_blank" rel="noreferrer">
+            打开教务系统课表页 ↗
+          </a>{" "}
+          <button type="button" onClick={() => void navigator.clipboard?.writeText(EAMIS_TIMETABLE_URL)}>
+            复制链接
+          </button>
+        </p>
+      </section>
 
       <section>
         <h2>第一步：关联学期日历</h2>
@@ -165,15 +336,15 @@ export default function ImportPage({
         </section>
       )}
 
-      {result?.payload && (
+      {draft && (
         <section>
-          <h2>预览（尚未保存）</h2>
+          <h2>预览与核对（尚未保存，可直接修改）</h2>
           <p>
-            覆盖范围：{result.payload.source.coverage.scope} ·{" "}
-            {result.payload.source.coverage.completeness} · 周次：
-            {result.payload.source.coverage.week_numbers.join(",")}
+            覆盖范围：{draft.source.coverage.scope} ·{" "}
+            {draft.source.coverage.completeness} · 周次：
+            {draft.source.coverage.week_numbers.join(",")}
           </p>
-          {result.payload.source.coverage.completeness !== "complete" && (
+          {draft.source.coverage.completeness !== "complete" && (
             <p role="note">课表可能不完整：空闲时间结果只基于已导入内容，不代表全学期都有空。</p>
           )}
           {warnings.length > 0 && (
@@ -190,38 +361,102 @@ export default function ImportPage({
               <tr>
                 <th>课程</th>
                 <th>星期</th>
-                <th>节次</th>
-                <th>周次</th>
+                <th>起始节</th>
+                <th>结束节</th>
+                <th>周次（如 1-16、单2-16、1,3,5）</th>
                 <th>地点</th>
+                <th>操作</th>
               </tr>
             </thead>
             <tbody>
-              {result.payload.courses.flatMap((course) =>
+              {draft.courses.flatMap((course) =>
                 course.meetings.map((meeting) => (
                   <tr key={meeting.meeting_id}>
-                    <td>{course.title}</td>
-                    <td>周{"一二三四五六日"[meeting.weekday - 1]}</td>
                     <td>
-                      第{meeting.start_period}-{meeting.end_period}节
+                      <input
+                        value={course.title}
+                        onChange={(e) => updateCourseTitle(course.course_id, e.target.value)}
+                      />
                     </td>
-                    <td>{meeting.weeks.join(",")}</td>
-                    <td>{meeting.location ?? "待确认"}</td>
+                    <td>
+                      <select
+                        value={meeting.weekday}
+                        onChange={(e) =>
+                          updateMeeting(course.course_id, meeting.meeting_id, { weekday: Number(e.target.value) })
+                        }
+                      >
+                        {[1, 2, 3, 4, 5, 6, 7].map((d) => (
+                          <option key={d} value={d}>
+                            周{WEEKDAY_NAMES[d - 1]}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        min={1}
+                        value={meeting.start_period}
+                        onChange={(e) =>
+                          updateMeeting(course.course_id, meeting.meeting_id, {
+                            start_period: Number(e.target.value),
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        min={1}
+                        value={meeting.end_period}
+                        onChange={(e) =>
+                          updateMeeting(course.course_id, meeting.meeting_id, {
+                            end_period: Number(e.target.value),
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={weeksDraft[meeting.meeting_id] ?? ""}
+                        onChange={(e) => {
+                          setWeeksDraft((prev) => ({ ...prev, [meeting.meeting_id]: e.target.value }));
+                          setConfirmed(false);
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        value={meeting.location ?? ""}
+                        placeholder="待确认"
+                        onChange={(e) =>
+                          updateMeeting(course.course_id, meeting.meeting_id, {
+                            location: e.target.value || null,
+                          })
+                        }
+                      />
+                    </td>
+                    <td>
+                      <button type="button" onClick={() => removeMeeting(course.course_id, meeting.meeting_id)}>
+                        删除
+                      </button>
+                      <button type="button" onClick={() => addMeeting(course.course_id)}>
+                        添加安排
+                      </button>
+                    </td>
                   </tr>
                 )),
               )}
             </tbody>
           </table>
+          {editError && <p role="alert">{editError}</p>}
+          <button type="button" onClick={onConfirm}>
+            核对无误，确认导入
+          </button>
+          {confirmed && <p role="status">已确认：以上内容为最终版本（尚未上传保存）。</p>}
           <button type="button" onClick={onValidateRemote} disabled={!serverValidateAvailable}>
             发送到服务端校验（不保存）
           </button>
-          {onConfirmed && (
-            <button
-              type="button"
-              onClick={() => result.payload && onConfirmed(result.payload)}
-            >
-              确认导入并查看周课表
-            </button>
-          )}
           {!serverValidateAvailable && (
             <p role="note">
               服务端校验接口（POST /api/v1/schedules/validate）尚未由后端接入，暂不可用；
