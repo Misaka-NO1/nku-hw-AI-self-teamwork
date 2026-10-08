@@ -151,7 +151,9 @@ def test_degree_demo_expected_credits_and_no_graduation_claim(rest):
 def test_time_expected_free_slot_and_due_is_not_busy_block(rest):
     payload = load_fixture("time-free-query.demo.json")
     data = http_call(rest, "/api/v1/time/free-slots", payload).json()["data"]
-    assert data["slots"] == [{"start": "2026-09-21T09:40:00+08:00", "end": "2026-09-21T10:10:00+08:00", "duration_minutes": 30}]
+    # demo 校历为 14 节新时刻（B 模块 d5ca61a 起）：周一第 1-4 节连续排到 11:40，
+    # 窗口 08:00-12:45 内 ≥30 分钟的空档只剩午后一段。
+    assert data["slots"] == [{"start": "2026-09-21T11:40:00+08:00", "end": "2026-09-21T12:45:00+08:00", "duration_minutes": 65}]
     payload = copy.deepcopy(load_fixture("time-deadline-query.demo.json"))
     payload["estimated_minutes"] = None
     response = http_call(rest, "/api/v1/time/check", payload)
@@ -261,7 +263,14 @@ def test_browser_confirmed_schedule_and_task_are_read_but_drafts_are_not(rest):
                           json={"workspace_ref": workspace["workspace_ref"], "notice": load_fixture("notice-event.demo.json")})
     assert task_draft.status_code == 200
     assert http_call(rest, "/api/v1/time/free-slots", query).json()["data"]["slots"]
+    # 14 节新时刻下课间空档（09:40-10:00）只有 20 分钟，用 min_minutes=15 观察任务占用；
+    # 草稿提交前该空档仍应可见。
+    fine = {**query, "min_minutes": 15}
+    assert len(http_call(rest, "/api/v1/time/free-slots", fine).json()["data"]["slots"]) == 2
     confirm_and_commit(task_draft.json()["data"], "tasks")
-    assert http_call(rest, "/api/v1/time/free-slots", query).json()["data"]["slots"] == []
+    # 已确认任务（09:20-10:20）消耗了课间空档，剩余空档只剩午后一段。
+    assert http_call(rest, "/api/v1/time/free-slots", fine).json()["data"]["slots"] == [
+        {"start": "2026-09-21T11:40:00+08:00", "end": "2026-09-21T12:45:00+08:00", "duration_minutes": 65}
+    ]
     # Shared service credentials still cannot read this browser-owned workspace.
     assert mcp_call("query_free_time", query).structured_content["error"]["code"] == "IDENTITY_NOT_VERIFIED"

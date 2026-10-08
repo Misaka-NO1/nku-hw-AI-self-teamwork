@@ -13,8 +13,11 @@ export interface ExtractionWhitelist {
   paths: string[];
 }
 
-/** 生产白名单：故意为空（WAITING_HUMAN，见 docs/evidence/B/adapter-observation.md）。 */
-export const PRODUCTION_WHITELIST: ExtractionWhitelist = { origins: [], paths: [] };
+/** 生产白名单：2026-10-07 本人只读核查后启用（docs/evidence/B/adapter-observation.md）。 */
+export const PRODUCTION_WHITELIST: ExtractionWhitelist = {
+  origins: ["https://eamis.nankai.edu.cn"],
+  paths: ["/eams/courseTableForStd"],
+};
 
 /** 开发/虚构测试白名单：仅用于 fixtures 页面，不得带入生产构建。 */
 export const DEV_FIXTURE_WHITELIST: ExtractionWhitelist = {
@@ -35,4 +38,19 @@ export function isExtractionAllowed(url: string, whitelist: ExtractionWhitelist)
   const originOk = whitelist.origins.includes(parsed.origin);
   const pathOk = whitelist.paths.some((path) => parsed.pathname.startsWith(path));
   return originOk && pathOk;
+}
+
+/**
+ * 课表板块 App 的 origin（自动回传目标，EXT-B11）。
+ * 自动提取的观察值只回传到这些本地预览地址；不发给任何远程 origin。
+ */
+export const APP_ORIGINS = ["http://localhost:7100", "http://localhost:5173", "http://127.0.0.1:7100"];
+export const APP_IMPORT_PATH = "/#/import";
+
+export function isAppUrl(url: string): boolean {
+  try {
+    return APP_ORIGINS.includes(new URL(url).origin);
+  } catch {
+    return false;
+  }
 }

@@ -29,12 +29,14 @@ export const ADAPTERS: AdapterDescriptor[] = [
   {
     id: "nku-adapter-v1",
     version: "1.0.0",
-    status: "disabled",
-    originWhitelist: [],
-    pathWhitelist: [],
-    requiredHeaders: [],
-    disabledReason:
-      "WAITING_HUMAN：尚未完成有授权的真实教务页面只读核查（B07），不猜测域名与选择器",
+    status: "enabled",
+    // 2026-10-07 本人只读核查确认（docs/evidence/B/adapter-observation.md）；
+    // requiredHeaders 为 content script 提取契约（课程条目/星期/节次），
+    // 页面结构不符时提取器先抛 UNSUPPORTED_PAGE，不会走到这里。
+    originWhitelist: ["https://eamis.nankai.edu.cn"],
+    pathWhitelist: ["/eams/courseTableForStd"],
+    requiredHeaders: ["课程条目", "星期", "节次"],
+    disabledReason: null,
   },
   {
     id: "demo-fixture-adapter",

@@ -1,5 +1,6 @@
 import { recognizePage, unsupportedIssue } from "./adapters";
 import { shanghaiIsoNow } from "./calendar";
+import { eamisObservationToRawRows, extractEamisGridFromDoc, looksLikeSsoLoginPage } from "./eamis";
 import { normalizeCourses, parsePeriodRange, parseWeekday } from "./normalize";
 import type { NormalizeOptions, RawMeetingRow } from "./normalize";
 import { validateTimetableStructure } from "./schema";
@@ -275,6 +276,48 @@ function parseImportFileInner(
     return normalizeJsonPayload(parsed, normalizeOptions);
   }
 
+  // eamis「我的课表」另存 HTML：走 eamis 网格解析（B08），与扩展提取共用实现
+  if (format === "html") {
+    const doc = new DOMParser().parseFromString(input.content, "text/html");
+    const grid = extractEamisGridFromDoc(doc);
+    if (grid !== null) {
+      const converted = eamisObservationToRawRows({
+        origin: "https://eamis.nankai.edu.cn",
+        pathname: "/eams/courseTableForStd!courseTable.action",
+        frameOrigin: null,
+        tableHeaders: grid.headers,
+        rows: grid.rows,
+        selectedTerm: null,
+        selectedWeeks: [],
+        hasPagination: false,
+        hasVirtualRows: false,
+      });
+      if (converted.issues.some((issue) => issue.blocking)) {
+        return blockingParseResult(converted.issues, adapterId, adapterVersion);
+      }
+      const eamisResult = normalizeCourses(converted.rows, {
+        ...normalizeOptions,
+        kind: "file",
+        completenessHint: "complete",
+      });
+      eamisResult.issues.unshift(...converted.issues);
+      return eamisResult;
+    }
+    // 另存到的是统一身份认证登录页（未登录/会话过期）：给出可操作提示
+    if (looksLikeSsoLoginPage(doc)) {
+      return blockingParseResult(
+        [
+          unsupportedIssue(
+            "检测到这是统一身份认证登录页而非课表页：请先在教务系统完成登录，" +
+              "进入「我的课表」确认看到课表网格后，再保存/下载该页面",
+          ),
+        ],
+        adapterId,
+        adapterVersion,
+      );
+    }
+  }
+
   const table = format === "csv" ? parseCsv(input.content) : extractHtmlTable(input.content);
   if (table === null || table.headers.length === 0) {
     return blockingParseResult(
@@ -372,8 +415,19 @@ export function parseObservation(
       "0.0.0",
     );
   }
-  const rows = tableToRawRows(observation.tableHeaders, observation.rows);
-  if (rows === null) {
+  let rawRows: RawMeetingRow[] | null;
+  const extraIssues: ParseIssue[] = [];
+  if (recognition.adapterId === "nku-adapter-v1") {
+    const converted = eamisObservationToRawRows(observation);
+    if (converted.issues.some((issue) => issue.blocking)) {
+      return blockingParseResult(converted.issues, recognition.adapterId, "1.0.0");
+    }
+    extraIssues.push(...converted.issues);
+    rawRows = converted.rows;
+  } else {
+    rawRows = tableToRawRows(observation.tableHeaders, observation.rows);
+  }
+  if (rawRows === null) {
     return blockingParseResult(
       [unsupportedIssue("课程表结构不符合适配器预期（可能页面已改版），请改用文件导入")],
       recognition.adapterId,
@@ -387,7 +441,7 @@ export function parseObservation(
       : observation.selectedWeeks.length > 0
         ? "unknown"
         : "complete";
-  const result = normalizeCourses(rows, {
+  const result = normalizeCourses(rawRows, {
     calendar,
     kind: "visible_dom",
     adapterId: recognition.adapterId,
@@ -396,6 +450,7 @@ export function parseObservation(
     datasetKind: options?.datasetKind ?? "personal",
     completenessHint: completeness,
   });
+  result.issues.unshift(...extraIssues);
   if (result.payload && observation.selectedWeeks.length > 0) {
     result.payload.source.coverage = {
       scope: "selected_weeks",

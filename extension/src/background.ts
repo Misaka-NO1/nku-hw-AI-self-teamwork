@@ -1,4 +1,4 @@
-import { isExtractionAllowed, PRODUCTION_WHITELIST, DEV_FIXTURE_WHITELIST, BACKEND_ORIGIN } from "./config";
+import { isExtractionAllowed, PRODUCTION_WHITELIST, DEV_FIXTURE_WHITELIST, BACKEND_ORIGIN, APP_ORIGINS, APP_IMPORT_PATH, isAppUrl } from "./config";
 import { isSenderAllowed, parseMessage } from "./messages";
 import { submitConfirmedDraft, type ImportTicket } from "./tickets";
 
@@ -41,15 +41,55 @@ chrome.runtime.onMessage.addListener((raw, sender, sendResponse) => {
     { id: sender.id, url: sender.url, tabUrl: sender.tab?.url },
     chrome.runtime.id,
     isAllowedUrl,
+    isAppUrl,
   );
   if (!allowed) {
     return false;
   }
 
   if (message.type === "schedule-observation") {
-    void chrome.storage.session.set({ latestObservation: message.payload });
+    void chrome.storage.session.set({
+      latestObservation: message.payload,
+      latestObservationAt: Date.now(),
+    });
     void chrome.tabs.create({ url: chrome.runtime.getURL("dist/preview.html") });
     return false;
+  }
+
+  // 自动提取（EXT-B11）：课表页加载后 content script 自动回传；
+  // 存起来并打开 App 导入页，等 App 桥接脚本拉取。若用户刚手动点击过
+  // （60 秒内已有观察值，预览页流程已启动），忽略自动结果避免双开。
+  if (message.type === "schedule-auto-observation") {
+    void (async () => {
+      const stored = (await chrome.storage.session.get(["latestObservationAt"])) as {
+        latestObservationAt?: number;
+      };
+      if (stored.latestObservationAt && Date.now() - stored.latestObservationAt < 60_000) {
+        return;
+      }
+      await chrome.storage.session.set({
+        latestAutoObservation: message.payload,
+        latestObservationAt: Date.now(),
+      });
+      await chrome.tabs.create({ url: `${APP_ORIGINS[0]}${APP_IMPORT_PATH}?source=eamis-auto` });
+    })();
+    return false;
+  }
+
+  // App 导入页桥接：页面就绪后把暂存的自动观察值交给它（只回传一次）
+  if (message.type === "app-bridge-ready") {
+    void (async () => {
+      const stored = (await chrome.storage.session.get(["latestAutoObservation"])) as {
+        latestAutoObservation?: unknown;
+      };
+      if (stored.latestAutoObservation) {
+        await chrome.storage.session.remove("latestAutoObservation");
+        sendResponse({ ok: true, observation: stored.latestAutoObservation });
+      } else {
+        sendResponse({ ok: false });
+      }
+    })();
+    return true;
   }
 
   if (message.type === "submit-confirmed-draft") {
