@@ -1,0 +1,36 @@
+# B07 真实教务页面只读核查记录
+
+**状态：DONE（2026-10-07）——B07 核查 + B08 适配器均已落地并在真实页面验证**
+
+## 访问尝试记录
+
+- 2026-10-05：尝试访问 https://eamis.nankai.edu.cn/ （直连与内置浏览器均返回 **502 Bad Gateway**，校外网络不可达）。真实教务页面核查需在校内网 / VPN 环境由本人进行，B07 保持 WAITING_HUMAN，`nku-adapter-v1` 维持 disabled。
+- 同日已用本地虚构夹具页完成真实浏览器端到端链路验证（扩展产物提取 → 白名单识别 → 解析为标准课表），不依赖真实教务站点。
+- 2026-10-07：站点恢复，本人在内置浏览器经统一身份认证（本人账号、一键登录）完成课表页**只读核查**，未保存任何个人课程数据到仓库；下表为结构性结论。
+
+## 核查结论（2026-10-07）
+
+| 字段 | 核查结果 | 说明 |
+|---|---|---|
+| 学校教务域名（精确 origin） | `https://eamis.nankai.edu.cn` | 统一身份认证在 `iam.nankai.edu.cn`，CAS 回跳 |
+| 课表页面 path | 入口 `/eams/courseTableForStd.action`，POST 后到 `/eams/courseTableForStd!courseTable.action` | 表单 `courseTableForm`，参数 `semester.id`、`setting.kind=std`、`project.id` |
+| 课程区域标签/表头 | `table#manualArrangeCourseTable.gridtable`；表头 `节次/周次, 星期一…星期日`；14 个节次行 + 1 表头行 | 布局为「行=节次、列=星期」，与 demo 夹具（行=课程）方向相反，解析器需转置 |
+| 单元格文本格式 | `课程名称(课程序号) (教师)(周次,地点)`；同格多课程直接拼接；停课条目为 `(周次,停课)` 后接正常条目 | 周次写法多样：`1-17`、`1-4 6-17`、`双2-16`、`1 3-17`；地点可多个（逗号分隔），可带 `组N` 后缀 |
+| 学期选择状态 | 页面内学期条（`semesterCalendar_*`），当前学期经隐藏域 `semester.id` 提交；默认即当前学期 | 不需要额外请求即可读当前学期 |
+| 是否 iframe / 跨域 iframe | **否**（课程区域在主文档；页面另有日期选择器 iframe，与课程无关） | 主文档可直接读取 |
+| 是否分页 | **课表网格无分页**；有「选择教学周」下拉（全部/第n周），默认全部 | 默认视图即全学期，coverage 可标 term/complete |
+| 是否只渲染当前周（虚拟列表） | **否**，14 节 × 7 天全量渲染 | — |
+| 是否合并单元格 | **是**，多节次课程用 `rowSpan` 纵向合并（观测到 2/3 节合并） | 提取观察值时必须按 rowSpan 展开，否则跨节课程丢节次 |
+| 是否有正式导出按钮/格式 | 未见官方导出；页面另有课程列表表格（`#grid12042826911`，含课程代码/学分/教师） | 可选手动补学分字段 |
+
+## 核查纪律
+
+- 只读核查，不自动登录、不抓取受保护数据、不留个人信息。
+- 核查完成后才允许把 `nku-adapter-v1` 标记为 enabled 并填写精确白名单（B08）。
+
+## B08 落地记录（2026-10-07 完成）
+
+1. ✅ content script 提取器支持 `manualArrangeCourseTable`：rowSpan 展开、行头格跳过（真实页面行头是 td），输出「课程条目/星期/节次」观察值。
+2. ✅ 解析器 `eamis.ts`：单元格条目切分（含全角括号课程名、多教师、多地点、`组N`）、`双/单` 前缀周次、多周段、停课条目（忽略并记录非阻塞 issue）、残留文本 blocking。
+3. ✅ `nku-adapter-v1` 已 enabled：`https://eamis.nankai.edu.cn` + `/eams/courseTableForStd`，扩展 PRODUCTION_WHITELIST 同步启用。
+4. ✅ 匿名化样例单测（import-core 13 项 + extension 4 项）；真实页面端到端验证：19 个课程格子 → 13 门课、4 条停课提示、coverage term/complete，与页面显示逐格一致。真实课程数据仅存在于本人浏览器会话，未写入仓库。

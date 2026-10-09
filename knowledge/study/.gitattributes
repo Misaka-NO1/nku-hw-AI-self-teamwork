@@ -1,0 +1,7 @@
+# Preserve exported file hashes on Windows and Linux checkouts.
+exports/year1/*.md -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+sources/year1/text/*.md -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+sources/year1/pdf/*.pdf binary
+library/*.sqlite3 binary
+library/*.json text eol=lf
+library/tables/*.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

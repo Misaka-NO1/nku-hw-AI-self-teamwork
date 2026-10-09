@@ -1,0 +1,23 @@
+{
+  "name": "@campus/import-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "课表导入解析器（owner: B）：扩展与文件导入共用的纯 TS 解析与规范化，不执行页面脚本、不加载远程资源。",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "jsdom": "^26.1.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

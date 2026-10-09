@@ -1,0 +1,13 @@
+{
+  "name": "nku-jinnan-three-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test overview.test.mjs pointer-orbit.test.mjs scenic-service.test.mjs road-surface.test.mjs release.test.mjs",
+    "start": "node serve.mjs",
+    "export:overview": "node export.mjs --overview"
+  },
+  "dependencies": {
+    "three": "file:three-0.180.0.tgz"
+  }
+}

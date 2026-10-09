@@ -1,0 +1,35 @@
+{
+  "phase": "http_verified_pending_authenticated_acceptance",
+  "env": "sunner-wang-d8ght8niaaaea70b7",
+  "user_action_time_approval": "confirmed migrations and deployment",
+  "migration_executed": true,
+  "table_readback": {
+    "nku_identity_pilot_v1": 15,
+    "nku_competition_oauth_v1": 3,
+    "nku_notice_text_v1": 4,
+    "nku_task_calendar_v1": 2
+  },
+  "all_tables_rls": true,
+  "new_rpc_execute_roles": [
+    "existing database owner",
+    "service_role"
+  ],
+  "identity_deployment": "017",
+  "identity_build_id": "cloudbase-identity-calendar-20261006-r1",
+  "public_build_id": "cloudbase-public-content-calendar-20261006-r1",
+  "identity_health_verified": true,
+  "public_updated": true,
+  "cloud_two_account_calendar_accepted": false,
+  "school_summary_registered": false,
+  "public_deployment": "010",
+  "public_health_verified": true,
+  "health_evidence": "D15-calendar-cloud-health-retry-2026-10-06.json",
+  "summary_anonymous_status": 401,
+  "browser_calendar_entry": "loaded_real_login_page; no frontend demo selected",
+  "cloud_console_session": "restored; identity017 and public service normal read in console",
+  "identity_console_status": "normal",
+  "public_console_status": "normal",
+  "school_summary_tool_draft_created": true,
+  "school_summary_tool_id": "db2e4ml4shhbpg8ve08g",
+  "school_summary_debug": "awaiting user ordinary-account authorization; inherited demo:read scope unchanged"
+}

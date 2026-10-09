@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "dataset_kind": "demo",
+  "term": {
+    "term_id": "simulation-october-2026",
+    "timezone": "Asia/Shanghai",
+    "week1_monday": "2026-10-05",
+    "teaching_weeks": 4,
+    "calendar_status": "demo",
+    "periods": [
+      {"period": 1, "start": "08:00", "end": "08:45"},
+      {"period": 2, "start": "08:55", "end": "09:40"},
+      {"period": 3, "start": "10:10", "end": "10:55"},
+      {"period": 4, "start": "11:05", "end": "11:50"},
+      {"period": 5, "start": "14:00", "end": "14:45"},
+      {"period": 6, "start": "14:55", "end": "15:40"}
+    ],
+    "overrides": [],
+    "source_ref": "负责人要求的独立虚构排期测试，非南开真实校历、课程或作息"
+  },
+  "source": {
+    "kind": "fixture",
+    "adapter_id": "october-simulation-only",
+    "adapter_version": "1.0.0",
+    "captured_at": "2026-10-07T00:00:00+08:00",
+    "coverage": {"scope": "term", "week_numbers": [1, 2, 3, 4], "completeness": "complete"}
+  },
+  "courses": [
+    {
+      "course_id": "simulation-MATH",
+      "course_code": null,
+      "offering_id": "simulation-MATH-october",
+      "title": "高等数学（虚构测试）",
+      "credits": "4.0",
+      "teacher_display": null,
+      "meetings": [
+        {"meeting_id": "simulation-MATH-wed", "weekday": 3, "weeks": [1, 2, 3, 4], "start_period": 1, "end_period": 2, "location": "虚构教室A", "campus_id": "demo-campus"}
+      ]
+    },
+    {
+      "course_id": "simulation-PROGRAMMING",
+      "course_code": null,
+      "offering_id": "simulation-PROGRAMMING-october",
+      "title": "程序设计实验（虚构测试）",
+      "credits": "2.0",
+      "teacher_display": null,
+      "meetings": [
+        {"meeting_id": "simulation-PROGRAMMING-wed", "weekday": 3, "weeks": [1, 2, 3, 4], "start_period": 5, "end_period": 6, "location": "虚构教室B", "campus_id": "demo-campus"}
+      ]
+    },
+    {
+      "course_id": "simulation-PHYSICS",
+      "course_code": null,
+      "offering_id": "simulation-PHYSICS-october",
+      "title": "大学物理（虚构测试）",
+      "credits": "3.0",
+      "teacher_display": null,
+      "meetings": [
+        {"meeting_id": "simulation-PHYSICS-thu", "weekday": 4, "weeks": [1, 2, 3, 4], "start_period": 3, "end_period": 4, "location": "虚构教室C", "campus_id": "demo-campus"}
+      ]
+    },
+    {
+      "course_id": "simulation-ENGLISH",
+      "course_code": null,
+      "offering_id": "simulation-ENGLISH-october",
+      "title": "大学英语（虚构测试）",
+      "credits": "2.0",
+      "teacher_display": null,
+      "meetings": [
+        {"meeting_id": "simulation-ENGLISH-fri", "weekday": 5, "weeks": [1, 2, 3, 4], "start_period": 5, "end_period": 6, "location": "虚构教室D", "campus_id": "demo-campus"}
+      ]
+    }
+  ]
+}

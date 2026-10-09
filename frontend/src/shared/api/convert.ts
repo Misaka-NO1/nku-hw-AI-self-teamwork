@@ -19,3 +19,13 @@ export function snakeToCamel<T>(value: T): T {
   }
   return value;
 }
+
+/** Restore a contract-shaped object before handing it to B's snake_case parser/view. */
+export function camelToSnake<T>(value: T): T {
+  if (Array.isArray(value)) return value.map(camelToSnake) as T;
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value as Record<string, unknown>)
+      .map(([key, item]) => [key.replace(/[A-Z]/g, ch => `_${ch.toLowerCase()}`), camelToSnake(item)])) as T;
+  }
+  return value;
+}

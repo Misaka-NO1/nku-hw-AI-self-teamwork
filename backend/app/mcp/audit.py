@@ -26,7 +26,10 @@ class McpAuditLoggingMiddleware(ServerMiddleware[Any]):
         except Exception:
             self._write(ctx, started, tool_name, "error")
             raise
-        self._write(ctx, started, tool_name, "ok")
+        # Public middleware may receive either the SDK model or its wire dict.
+        failed = (result.get("isError") is True if isinstance(result, dict)
+                  else getattr(result, "is_error", False) is True)
+        self._write(ctx, started, tool_name, "error" if failed else "ok")
         return result
 
     @staticmethod
