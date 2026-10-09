@@ -3,7 +3,7 @@
   "dataset_kind": "demo",
   "kb_id": "KB_Course",
   "data_version": "demo-courses-v1",
-  "built_at": "2026-09-30",
+  "built_at": "2026-10-09",
   "courses": [
     {
       "course_id": "demo-CS101",
