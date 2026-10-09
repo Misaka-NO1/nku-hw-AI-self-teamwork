@@ -54,8 +54,27 @@ export const EAMIS_DOWNLOAD_BOOKMARKLET =
   "document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);})()";
 
 const WEEKDAY_NAMES = "一二三四五六日";
+const sameTerm = (a: string, b: string) => a.replace(/\s/g, "") === b.replace(/\s/g, "");
+const reusableCalendar = (value: unknown): value is TermCalendar => {
+  if (!validateTermCalendarStructure(value).ok) return false;
+  const term = value as TermCalendar;
+  return ["user_confirmed", "official_verified"].includes(term.calendar_status);
+};
+
+// File.text is missing in some older mobile browsers. Neither path uploads.
+async function readLocalFile(file: File): Promise<string> {
+  if (typeof file.text === "function") return file.text();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => typeof reader.result === "string" ? resolve(reader.result) : reject(new Error("无法读取文本文件"));
+    reader.onerror = () => reject(new Error("文件读取失败"));
+    reader.onabort = () => reject(new Error("文件读取已取消"));
+    reader.readAsText(file, "UTF-8");
+  });
+}
 
 export interface ImportPageProps {
+  onFileStatus?: (status: {message:string;error:boolean}|null) => void;
   onEdited?: () => void;
   initialTimetable?: TimetableImport | null;
   /** D's connection shell receives local previews; this callback never uploads. */
@@ -82,6 +101,7 @@ export default function ImportPage({
   onPreview,
   onConfirmed,
   onEdited,
+  onFileStatus,
 }: ImportPageProps) {
   const [calendar, setCalendar] = useState<TermCalendar | null>(initialTimetable?.term ?? initialCalendar);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -103,16 +123,31 @@ export default function ImportPage({
   const [fileNotice, setFileNotice] = useState<string | null>(null);
   const [readingFile, setReadingFile] = useState(false);
   const [termHint, setTermHint] = useState("");
+  const [calendarNotice, setCalendarNotice] = useState("");
+  const manualCalendar = useRef(false);
   const fileReadSequence = useRef(0);
   const editedCallback = useRef(onEdited);
   editedCallback.current = onEdited;
+  useEffect(()=>{
+    const message=error || (readingFile ? "正在读取文件，尚未上传…" : fileNotice || autoNotice);
+    onFileStatus?.(message ? {message,error:!!error} : null);
+  },[error,readingFile,fileNotice,autoNotice,onFileStatus]);
+
+  // The owned calendar arrives asynchronously. Reuse only this owner's
+  // confirmed term, never re-insert it after the user starts editing a calendar.
+  useEffect(() => {
+    if (calendar || manualCalendar.current || !reusableCalendar(initialCalendar)) return;
+    if (termHint && !sameTerm(termHint, initialCalendar.term_id)) return;
+    setCalendar(initialCalendar);
+    setCalendarNotice("已自动沿用本人已保存课表的校历与上课时间；选择同学期课程文件后自动解析。可修改学期 / 上课时间。");
+  }, [initialCalendar, calendar, termHint]);
 
   // Selecting a file is local only. Keep it while the user supplies the calendar,
   // so confirming the calendar resumes parsing without a second file selection.
   useEffect(() => {
     if (!pendingFile) return;
     if (!calendar) {
-      setFileNotice(`已接收 ${pendingFile.name}，尚未上传。请在第一步核对学期起始周和节次时间；确认后会自动解析，不需要重新选择文件。`);
+      setFileNotice(`已接收 ${pendingFile.name}，尚未上传。这不是导入失败：原始教务 JSON 不含校历。请在第一步核对学期起始周和节次时间；确认后会自动解析，不需要重新选择文件。`);
       return;
     }
     const parsed = parseImportFile(pendingFile, pendingFile.format, calendar, {datasetKind});
@@ -231,7 +266,7 @@ export default function ImportPage({
     }
     setReadingFile(true);
     try {
-      const content = await file.text();
+      const content = (await readLocalFile(file)).replace(/^\uFEFF/, "");
       if (sequence !== fileReadSequence.current) return;
       let json: unknown;
       if (format === "json") {
@@ -243,13 +278,25 @@ export default function ImportPage({
         const validation = validateTermCalendarStructure(json);
         if (!validation.ok) {setError(`这个入口只接受学期日历 JSON：${validation.errors.join("；")}。教务课程文件请选择第二步。`);return;}
         setCalendar(json as TermCalendar);
+        manualCalendar.current = true;
+        setCalendarNotice("学期日历已从文件载入，请核对；尚未保存。");
         setResult(prev=>prev?.payload ? {...prev,payload:{...(draft ?? prev.payload),term:json as TermCalendar}} : prev);
         if (!pendingFile) setFileNotice("学期日历已载入。请选择第二步的教务课程文件；尚未保存。");
         return;
       }
       if (object) {
         const term = object.term as Partial<TermCalendar> | undefined;
-        setTermHint(typeof object.selectedTerm === "string" ? object.selectedTerm : typeof term?.term_id === "string" ? term.term_id : "");
+        const hint = typeof object.selectedTerm === "string" ? object.selectedTerm : typeof term?.term_id === "string" ? term.term_id : "";
+        setTermHint(hint);
+        if (reusableCalendar(term)) {
+          manualCalendar.current = true;
+          setCalendar(term);
+          setCalendarNotice("已从课表 JSON 自动载入其已确认校历与上课时间，请核对预览；尚未上传或保存。");
+        } else if (calendar && hint && !sameTerm(hint, calendar.term_id)) {
+          manualCalendar.current = true;
+          setCalendar(null);
+          setCalendarNotice("文件学期与当前校历不同，不能自动套用旧学期日期。课程文件已保留，请核对新学期校历后继续。");
+        }
       } else setTermHint("");
       setResult(null);
       setAutoObservation(null);
@@ -463,13 +510,14 @@ export default function ImportPage({
         </details>
       </section>
 
-      <section>
+      <section id="import-calendar">
         <h2>第一步：关联学期日历</h2>
+        {calendarNotice && <p role="status" className="import-feedback">{calendarNotice}</p>}
         <p>教务导出的 timetable-import.json 是课程文件，放在第二步；这里设置学期开始日期及每天各节课的时间。可以先选文件，确认校历后自动解析。</p>
         {calendar ? (
           <p>
             当前学期：{calendar.term_id}（{calendar.calendar_status}）{" "}
-            <button type="button" onClick={() => {onEdited?.();setTermHint(calendar.term_id);setCalendar(null);setConfirmed(false);}}>
+            <button type="button" onClick={() => {onEdited?.();manualCalendar.current=true;setCalendarNotice("");setTermHint(calendar.term_id);setCalendar(null);setConfirmed(false);}}>
               修改学期 / 上课时间
             </button>
           </p>
@@ -478,7 +526,7 @@ export default function ImportPage({
             <label>学期日历 JSON<input aria-label="学期日历 JSON" type="file" accept=".json" onChange={onCalendarFileChange} /></label>
           </details>
         )}
-        {!calendar && <CalendarEditor initial={draft?.term ?? initialTimetable?.term} termHint={termHint} onConfirm={value=>{onEdited?.();setCalendar(value);setError(null);setResult(prev=>prev?.payload ? {...prev,payload:{...(draft ?? prev.payload),term:value}} : prev);}}/>}
+        {!calendar && <CalendarEditor key={termHint} initial={draft?.term ?? initialTimetable?.term} termHint={termHint} onConfirm={value=>{onEdited?.();manualCalendar.current=true;setCalendar(value);setCalendarNotice("");setError(null);setResult(prev=>prev?.payload ? {...prev,payload:{...(draft ?? prev.payload),term:value}} : prev);}}/>}
       </section>
 
       <section
@@ -487,10 +535,12 @@ export default function ImportPage({
       >
         <h2>第二步：选择课表文件</h2>
         <p>将教务读取扩展下载的 timetable-import.json 放在这里。只在本地解析；核对预览并明确确认后才上传保存。</p>
+        <p>手机也可点击下方选择 JSON 文件，无需安装扩展。同学期自动沿用本人已保存校历；首次导入需补充校历，课程文件不用重新选择。</p>
         <input aria-label="教务课表文件" type="file" accept=".json,.csv,.html,.htm" onChange={onFileChange} />
         {readingFile && <p role="status">正在读取文件，尚未上传…</p>}
         {fileName && <p>已选择文件：{fileName}</p>}
         {fileNotice && <p role="status" className="import-feedback">{fileNotice}</p>}
+        {pendingFile && !calendar && <a href="#import-calendar">前往核对校历，核对后自动继续导入 ↑</a>}
         {autoNotice && <p role="status" className="import-feedback">{autoNotice}</p>}
         {error && <p role="alert" className="import-feedback">{error}</p>}
         <p role="note">也可以把下载好的 HTML / JSON / CSV 文件直接拖到这个区域。</p>

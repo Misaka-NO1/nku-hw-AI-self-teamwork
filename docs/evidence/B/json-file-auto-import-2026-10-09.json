@@ -1,0 +1,38 @@
+{
+  "owner_category": "B timetable module supplement",
+  "root_cause": "The connected import shell fetched the owner's saved timetable but did not pass its reviewed term calendar to ImportPage. Raw extension observation JSON has no TermCalendar; choosing the file therefore waited for calendar confirmation rather than starting parsing. Even standard timetable files carrying a calendar waited unnecessarily.",
+  "reproduction": "On the old deployed UI, selected the user's previously provided timetable-import.json through the file picker. It was received successfully but the page remained in the pending-calendar state despite an existing saved timetable.",
+  "changes": [
+    "Asynchronously reuse only this owner's confirmed saved term calendar for same-term file imports",
+    "Read confirmed embedded calendars from complete timetable JSON",
+    "Require review instead of silently using an old term when selectedTerm differs",
+    "Keep pending files until initial calendar review finishes, then automatically parse without reselecting",
+    "FileReader fallback where mobile browsers lack File.text; UTF-8 BOM compatibility",
+    "Keep local preview, explicit draft generation and explicit final replacement confirmation"
+  ],
+  "verification": {
+    "frontend_suite": "214 passed",
+    "import_core_suite": "57 passed, 2 optional private-file tests skipped; additional BOM regression passed separately",
+    "authorized_private_json_test": "Passed; file-import payload exactly equals direct extension-observation payload for the same reviewed calendar and captured_at",
+    "live_file_picker": "Same user JSON automatically parsed into 10 courses; no alerts; draft-generation button enabled",
+    "writes_during_live_acceptance": "No draft generated and no timetable committed; existing personal data preserved",
+    "mobile_read_api_regression": "FileReader fallback without File.text passed",
+    "physical_mobile_acceptance": "Not performed. Viewport override did not take effect; the live screenshot is desktop, not a mobile proof."
+  },
+  "deployment": {
+    "service": "nku-campus-identity-pilot",
+    "deployment_id": "035",
+    "status": "normal",
+    "traffic_percent": 100,
+    "build_id": "cloudbase-identity-pilot-20261009-r38-json-import",
+    "baseline": "cloudbase-identity-pilot-20261009-r37-visitors",
+    "package_sha256": "0b045717fb2937f37bc775595fc5c75cb4fbb2bf125d5aad40045dcf94a61063",
+    "non_frontend_files_verified_unchanged": 103,
+    "extension_unchanged": true,
+    "database_migration_executed": false,
+    "credentials_or_permissions_changed": false,
+    "agent_published": false,
+    "screenshot": "dist/json-import-r38.png"
+  },
+  "limits": "Phone users can select an already exported JSON file. Direct cross-site reading of the authenticated teaching system from a plain mobile webpage is not implemented. First-time raw observation import still needs the user to supply and review the calendar."
+}

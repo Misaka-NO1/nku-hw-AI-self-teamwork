@@ -1,0 +1,39 @@
+{
+  "owner": "B timetable import; supplemental integration fix",
+  "date": "2026-10-09",
+  "cause": "Closing a native file chooser emits window focus. The shared browser session hook intentionally revalidates ownership, temporarily clearing session. ConnectedImportPage previously unmounted OwnedImport, discarding selected file, pending asynchronous read, calendar and preview.",
+  "repair": [
+    "Keep same-owner import mounted during revalidation, with visibility hidden, aria-hidden and disabled controls; retain layout/scroll.",
+    "Remove retained editor on authentication failure; remount for a different verified workspace.",
+    "Epoch guards stop subsequent draft/commit writes if revalidation starts during an operation.",
+    "Sticky status distinguishes reading, missing calendar, file parsed, cloud draft and committed database readback. It never equates file selection or draft creation with save success."
+  ],
+  "verification": {
+    "frontend_tests_passed": 220,
+    "typecheck": "passed",
+    "native_focus_integration": "Actual window focus event through real useBrowserSession during a deferred File.text read; same file input and resulting preview retained, no cloud writes.",
+    "account_safety": "Paused writes blocked; verified owner changes discard state; revoked verification removes editor; interrupted confirmation cannot proceed to commit.",
+    "desktop_native_user_recording": "Used as diagnosis evidence; desktop native picker itself not directly automated."
+  },
+  "deployment": {
+    "candidate": "cloudbase-identity-pilot-20261009-r40-import-feedback",
+    "sha256": "4105eefde271e29bccc455f7f69c1ab426cc73cbee84e0eb158de34de1bd04ae",
+    "non_frontend_files_unchanged": 103,
+    "extension_unchanged": true,
+    "live_deployment": "037, normal, 100% traffic, 1 instance",
+    "live_file_check": "Real local timetable-import.json accepted; calendar confirmed locally; 10 courses and 25 meeting rows previewed. No cloud draft created or committed; current timetable remains empty for user verification.",
+    "identity_permissions_changed": false
+  },
+  "user_requested_clear": {
+    "explicit_action_time_confirmation": true,
+    "target": "Current owner's 2026-2027 first-term timetable, revision 3",
+    "personal_current_rows_removed": 1,
+    "same_owner_legacy_fallback_rows_removed": 1,
+    "current_owner_current_and_legacy_readback": [0, 0],
+    "calendar_entries_before_after": [5, 5],
+    "other_owner_personal_schedules_before_after": [1, 1],
+    "historical_confirmed_calendar_draft_retained": 1,
+    "ui_readback": "还没有已确认的课表",
+    "recovery": "No product recycle bin; historical confirmed draft/calendar retained, manual reimport available."
+  }
+}
