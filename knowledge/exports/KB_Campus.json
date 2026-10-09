@@ -2,183 +2,96 @@
   "schema_version": "1.0.0",
   "dataset_kind": "demo",
   "kb_id": "KB_Campus",
-  "data_version": "demo-affairs-v1",
-  "built_at": "2026-09-23",
+  "data_version": "nku-entries-2026-10-09-r1",
+  "built_at": "2026-10-09",
   "items": [
     {
-      "entry_id": "demo-entry-01",
+      "entry_id": "nku-entry-01",
       "kind": "entry",
-      "title": "示例入口：教务系统（虚构，不是真实链接）",
+      "title": "教务系统（EAMIS）",
       "category": "academic",
       "campus_scope": [],
       "audience": [
         "本科生",
         "研究生"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://eamis.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "教务系统官方入口",
+          "url": "https://eamis.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-02",
+      "entry_id": "nku-entry-02",
       "kind": "entry",
-      "title": "示例入口：校园门户/信息门户（虚构）",
+      "title": "南开大学 AI 融合门户",
       "category": "it",
       "campus_scope": [],
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://i.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "AI 融合门户官方入口",
+          "url": "https://i.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-03",
+      "entry_id": "nku-entry-03",
       "kind": "entry",
-      "title": "示例入口：图书馆（虚构）",
-      "category": "academic",
-      "campus_scope": [
-        "八里台",
-        "津南"
-      ],
-      "audience": [
-        "全体"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-04",
-      "kind": "entry",
-      "title": "示例入口：财务处/缴费平台（虚构）",
-      "category": "finance",
-      "campus_scope": [],
-      "audience": [
-        "全体"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-05",
-      "kind": "entry",
-      "title": "示例入口：一卡通服务（虚构）",
-      "category": "life",
-      "campus_scope": [
-        "八里台",
-        "津南"
-      ],
-      "audience": [
-        "全体"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-06",
-      "kind": "entry",
-      "title": "示例入口：学生工作部/奖助（虚构）",
-      "category": "life",
-      "campus_scope": [],
-      "audience": [
-        "本科生"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-07",
-      "kind": "entry",
-      "title": "示例入口：研究生院（虚构）",
-      "category": "academic",
-      "campus_scope": [],
-      "audience": [
-        "研究生"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-entry-08",
-      "kind": "entry",
-      "title": "示例入口：体育场馆预约（虚构）",
+      "title": "图书馆 IC 空间管理系统",
       "category": "venue",
       "campus_scope": [
+        "八里台",
         "津南"
       ],
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://libic.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "图书馆 IC 空间官方入口",
+          "url": "https://libic.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-09",
+      "entry_id": "nku-entry-04",
       "kind": "entry",
-      "title": "示例入口：校医院（虚构）",
-      "category": "life",
+      "title": "图书馆空间预约系统",
+      "category": "venue",
       "campus_scope": [
         "八里台",
         "津南"
@@ -186,87 +99,428 @@
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "official_url": "https://libroom.nankai.edu.cn/",
+      "login_required": "yes",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "图书馆空间预约官方入口",
+          "url": "https://libroom.nankai.edu.cn/",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-entry-10",
+      "entry_id": "nku-entry-05",
       "kind": "entry",
-      "title": "示例入口：就业指导中心（虚构）",
-      "category": "career",
-      "campus_scope": [],
-      "audience": [
-        "本科生",
-        "研究生"
+      "title": "图书馆馆藏资源查询系统",
+      "category": "academic",
+      "campus_scope": [
+        "八里台",
+        "津南"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://space.nankai.edu.cn",
+      "login_required": "no",
+      "campus_network_required": "no",
       "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "馆藏查询官方入口",
+          "url": "https://space.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-proc-01",
-      "kind": "procedure",
-      "title": "示例办事：成绩单/在读证明开具（虚构流程）",
-      "category": "academic",
-      "campus_scope": [],
-      "audience": [
-        "本科生",
-        "研究生"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [
-        "虚构步骤占位：待正式来源核验后填写"
-      ],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
-    },
-    {
-      "entry_id": "demo-proc-02",
-      "kind": "procedure",
-      "title": "示例办事：选课/退课（虚构流程）",
+      "entry_id": "nku-entry-06",
+      "kind": "entry",
+      "title": "体育理论考试系统",
       "category": "academic",
       "campus_scope": [],
       "audience": [
         "本科生"
       ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [
-        "虚构步骤占位：待正式来源核验后填写"
-      ],
+      "official_url": "https://tyxx.nankai.edu.cn/",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
       "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
+      "source_refs": [
+        {
+          "label": "体育理论考试官方入口",
+          "url": "https://tyxx.nankai.edu.cn/",
+          "locator": "2026-09-23 校外网络实测可达"
+        }
+      ],
+      "verified_at": "2026-09-23",
       "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
     },
     {
-      "entry_id": "demo-proc-03",
+      "entry_id": "nku-entry-07",
+      "kind": "entry",
+      "title": "软件正版化平台",
+      "category": "it",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://ca.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "软件正版化官方入口",
+          "url": "https://ca.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达，首页检测到登录表单"
+        }
+      ],
+      "verified_at": "2026-09-23",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-entry-08",
+      "kind": "entry",
+      "title": "在线南开网上办事大厅",
+      "category": "service",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://online.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "网上办事大厅官方入口",
+          "url": "https://online.nankai.edu.cn",
+          "locator": "2026-09-23 实测跳转 iam.nankai.edu.cn 统一身份认证"
+        }
+      ],
+      "verified_at": "2026-09-23",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-entry-09",
+      "kind": "entry",
+      "title": "南开大学志愿服务平台",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://zyfw.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "志愿服务平台官方入口",
+          "url": "https://zyfw.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达，首页检测到登录表单"
+        }
+      ],
+      "verified_at": "2026-09-23",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-entry-10",
+      "kind": "entry",
+      "title": "南开大学团委成长服务平台",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://czfw.nankai.edu.cn",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "团委成长服务平台官方入口",
+          "url": "https://czfw.nankai.edu.cn",
+          "locator": "2026-09-23 校外网络实测可达，首页检测到登录表单"
+        }
+      ],
+      "verified_at": "2026-09-23",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-entry-11",
+      "kind": "entry",
+      "title": "教务部「在校生业务」办理指南栏目",
+      "category": "service",
+      "campus_scope": [],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://jwc.nankai.edu.cn/zxsyw/list1.htm",
+      "login_required": "no",
+      "campus_network_required": "no",
+      "steps": [],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "教务部在校生业务栏目（成绩单办理、学生证补办、自修申请等流程发布页）",
+          "url": "https://jwc.nankai.edu.cn/zxsyw/list1.htm",
+          "locator": "2026-09-27 校外网络实测 HTTP 200 可达，栏目含 8 篇业务文章"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-transcript",
       "kind": "procedure",
-      "title": "示例办事：宿舍报修（虚构流程，仅津南示例）",
+      "title": "本科生成绩单/在读证明办理",
+      "category": "academic",
+      "campus_scope": [
+        "八里台",
+        "津南"
+      ],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://jwc.nankai.edu.cn/2022/0503/c35927a550628/page.htm",
+      "login_required": "yes",
+      "campus_network_required": "unknown",
+      "steps": [
+        "在读生：本人或委托他人持一卡通，或凭学号+密码（普通全日制本科生为身份证号后 6 位）登录本科生自助打印服务系统，打印成绩单、在读证明",
+        "自助打印地点——八里台校区：主楼一楼大厅左侧、第二主教学楼甲区一楼大厅、学生活动中心二楼门岗旁；津南校区：综合业务西楼一楼自助服务室、公共教学楼 B 区一楼大厅、大通学生活动中心一楼大厅",
+        "毕业生：填写《本科生成绩单办理登记表》发送至教务部邮箱 jwcjlk@nankai.edu.cn（邮件主题：成绩单申请+姓名+学号），每周一 17:00 截止审核",
+        "毕业生领取：扫描件可邮件发送；纸质版周四 8:00-11:30、14:00-17:30 到八里台校区服务楼 211 室领取并缴费；学历证明盖章两校区时间不同（津南：周二三五，综合业务西楼 202 室）",
+        "收费：中、英文成绩单每学期免费 5 份，超出 5 元/份；在读证明免费 5 份，超出 1 元/份"
+      ],
+      "required_materials": [
+        "一卡通或学号+密码（在读生）",
+        "本科生成绩单办理登记表（毕业生）"
+      ],
+      "source_refs": [
+        {
+          "label": "本科生成绩单、在读证明及学历证书盖章等业务办理流程须知（教务部，2026-03-11 修订）",
+          "url": "https://jwc.nankai.edu.cn/2022/0503/c35927a550628/page.htm",
+          "locator": "页面附件 PDF 第 1–3 页"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-student-card",
+      "kind": "procedure",
+      "title": "本科生学生证补办",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://jwc.nankai.edu.cn/2025/0225/c35927a563019/page.htm",
+      "login_required": "no",
+      "campus_network_required": "no",
+      "steps": [
+        "学生证损坏：持损坏的学生证及一张一寸照片到教务部登记补办，一周后到补办地点领取新证",
+        "学生证遗失：先到所在学院教学办公室或团委办公室开具丢失证明并加盖公章",
+        "持学院证明及一张一寸照片到教务部登记补办，一周后到补办地点领取新证"
+      ],
+      "required_materials": [
+        "一寸照片",
+        "学院丢失证明（仅遗失情形）"
+      ],
+      "source_refs": [
+        {
+          "label": "南开大学本科生学生证补办流程（教务部文件 教字〔2025〕1 号）",
+          "url": "https://jwc.nankai.edu.cn/2025/0225/c35927a563019/page.htm",
+          "locator": "页面附件 PDF 第 1 页"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-selfstudy",
+      "kind": "procedure",
+      "title": "本科生自修课程申请",
+      "category": "academic",
+      "campus_scope": [],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm",
+      "login_required": "yes",
+      "campus_network_required": "unknown",
+      "steps": [
+        "申请条件（2026-08-17 选课通知「七、自修」）：课程时间冲突且满足以下之一可申请免听自修——自修课程为辅修专业课程；四年级（临床医学、口腔医学专业五年级）学生为满足毕业条件必须取得学分的课程；重修或缓修的课程；平均学分绩点 GPA≥3.0。课程时间不冲突的，GPA≥3.0 也可申请；校际交流学生在交流期间可申请",
+        "办理流程：教学管理信息系统→「我的」→「自修申请」，切换到相应学期搜索课程并提交，经任课教师、开课单位同意后报教务部批准；提交后须及时向任课教师和开课单位教学办公室说明情况，请老师在系统中审核",
+        "时间冲突的课程须先正常选一门，再对另一门申请自修；已通过审核的自修课程在补退选阶段不允许退课",
+        "每学期自修课程一般不得超过 2 门（2026-08-17 选课通知；教务部 2022 年操作说明为不超过 1 门，以最新通知为准）；申请时间见当学期选课通知（2026-2027 学年第一学期：9 月 7 日 10:00-11 日 16:00、9 月 21 日 10:00-24 日 16:00）"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "南开大学 2026-2027 学年第一学期本科生选课通知（教务部，2026-08-17）",
+          "url": "https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm",
+          "locator": "附件《2026-2027学年第一学期选课手册（2026.9.11更新）》PDF 第 3–4 页「七、自修」"
+        },
+        {
+          "label": "自修申请操作方法（学生）（教务部，2022-02-18）",
+          "url": "https://jwc.nankai.edu.cn/2022/0218/c35927a550802/page.htm",
+          "locator": "页面附件 PDF 第 1 页（系统操作截图说明）"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-course-select",
+      "kind": "procedure",
+      "title": "本科生选课/退课",
+      "category": "academic",
+      "campus_scope": [],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "全部网络选课：教学管理信息系统 https://eamis.nankai.edu.cn ，账号密码与统一身份认证平台相同；选课期间校外网络可直接登录，无需 VPN，建议电脑端谷歌或火狐浏览器；每门课程对应四位选课序号",
+        "选课分五个阶段：预选→正选（第一、二阶段）→补退选及跨专业选课→必修课补登→期中退课；预选、正选、补退选阶段可选课、退课，正选实行放课制（每天 13 点放出退选名额）；必须参加预选和正选，班级课表不作为已选中依据",
+        "补退选阶段根据试听情况调整，跨专业选课不再受「跨专业名额」限制",
+        "必修课补登：面向高年级（大三、大四、延期毕业）补登漏选必修课，不办理退课；须提交纸质补登申请，经开课单位、任课教师签字盖章后提交教务部办理",
+        "期中退课：开课周期 10 周（不含）以上或第 10 周之后开课、且开课单位允许期中退课的课程可退，该阶段只退不选；所退课程成绩单记载为「W」（Withdrawn），不计入学分绩",
+        "每学期选课总量原则上不得超过 32 学分（不含辅修）；重修选课在正选第二阶段、补退选阶段经「重修选课」专用通道进行，课程代码发生变化的重修课程从正常通道选课后须按规定流程办理课程替代",
+        "各阶段具体时间以当学期教务部选课通知为准（2026-2027 学年第一学期：2026 年 9 月 1 日起分年级进行，期中退课为 11 月 2 日-6 日）；选课咨询电话 022-61138941（预选、正选期间）、022-85358600"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "南开大学 2026-2027 学年第一学期本科生选课通知（教务部，2026-08-17，依据《南开大学本科生选课管理办法》南发字〔2026〕82 号）",
+          "url": "https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm",
+          "locator": "附件《2026-2027学年第一学期选课手册（2026.9.11更新）》PDF 第 2–4 页「一、操作说明」「二、选课流程」「三、时间安排」「八、其他说明」「九、注意事项」"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-dorm-housing",
+      "kind": "procedure",
+      "title": "学生住宿申请与退宿",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "no",
+      "campus_network_required": "unknown",
+      "steps": [
+        "宿舍管理机构：学生生活指导中心代表学校对学生宿舍实施管理（规定第四条）",
+        "入住：在读期间原则上只能申请入住一次，以学年为单位在规定时间内提交《南开大学学生住宿申请表》（毕业年级可按学期申请）；提出住宿申请即视为住宿学生，不得以他人名义或为他人申请",
+        "基础学制年限内未毕业需继续住宿的：在规定时间内提交住宿申请表，经批准后按当年住宿调配计划重新办理入住并服从重新调配",
+        "退宿：在读期间申请退宿须以学年为单位，在学年结束前的规定时间内提交《南开大学学生退宿申请表》；毕业生从毕业典礼之日起在限定时间内办理；因自行在外租房退宿的按有关规定办理",
+        "休学或赴外校交流 10 个月及以上须办理退宿；办理当日须清空宿舍内个人物品、交还钥匙并离宿；未办理退宿手续的视同入住学生"
+      ],
+      "required_materials": [
+        "南开大学学生住宿申请表（入住）",
+        "南开大学学生退宿申请表（退宿）"
+      ],
+      "source_refs": [
+        {
+          "label": "《南开大学学生住宿管理规定》（南发字〔2018〕37 号，2018-06-16 印发，标注「此件主动公开」）",
+          "url": null,
+          "locator": "用户提供正式文件第 2–4 页（第四、九、十、十三条）；另有人工智能学院 2026-09-17 通知引用同名规定（文号作南发字〔2026〕37 号），疑为更新版本或笔误，执行以学校最新印发为准"
+        },
+        {
+          "label": "人工智能学院《关于跨校区临时宿舍申请的通知》（2026-09-17，佐证该规定现行适用）",
+          "url": "https://ai.nankai.edu.cn/info/1020/6687.htm",
+          "locator": "通知首段引用《南开大学学生住宿管理规定》"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-dorm-repair",
+      "kind": "procedure",
+      "title": "宿舍报修（后勤维修）",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/234.html",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "宿舍后勤维修由南开大学后勤保障部负责，报修三渠道：飞书「南开微应用」中的「后勤报修」应用、24 小时电话 85358535、后勤保障部微信公众号（nkuhqbzb）；电话与微信渠道无需登录，飞书渠道需统一身份认证",
+        "飞书报修：打开飞书→「南开微应用」板块→（若无则在「＋」中）添加「后勤报修」应用→进入后依次选择/填写校区、报修人、联系电话、维修类型、地址、工单类型、问题描述（先选维修类型再选地址；师生报修的工单类型均为「客户单」，无需更改）",
+        "下单后报修平台按问题类型将维修任务分配给相应专业维修人员，尽快上门维修"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "学生生活指导中心《学生生活指导中心职能「大揭秘」！宿舍服务「全知晓」！》（2021-09-02）",
+          "url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/234.html",
+          "locator": "「报修」小节；2026-09-27 校外网络实测 HTTP 200"
+        },
+        {
+          "label": "学生生活指导中心《NKUer 的暑期留校攻略》（确认同一三渠道：电话 85358535、微信 nkuhqbzb、飞书后勤报修）",
+          "url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/248.html",
+          "locator": "「维修服务」小节；2026-09-27 校外网络实测 HTTP 200"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "demo-proc-06",
+      "kind": "procedure",
+      "title": "示例办事：虚构流程占位（仅津南，校区过滤测试夹具）",
       "category": "life",
       "campus_scope": [
         "津南"
@@ -278,7 +532,7 @@
       "login_required": "unknown",
       "campus_network_required": "unknown",
       "steps": [
-        "虚构步骤占位：待正式来源核验后填写"
+        "虚构步骤占位：用于校区过滤测试，非真实流程"
       ],
       "required_materials": [],
       "source_refs": [],
@@ -288,22 +542,351 @@
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
-      "entry_id": "demo-proc-04",
+      "entry_id": "nku-proc-campus-network",
       "kind": "procedure",
-      "title": "示例办事：校园网账号问题（虚构流程）",
+      "title": "校园网账号密码修改/重置",
       "category": "it",
       "campus_scope": [],
       "audience": [
         "全体"
       ],
-      "official_url": null,
-      "login_required": "unknown",
+      "official_url": "https://wxb.nankai.edu.cn/info/1155/1563.htm",
+      "login_required": "yes",
       "campus_network_required": "unknown",
       "steps": [
-        "虚构步骤占位：待正式来源核验后填写"
+        "自助修改：通过校园网自助服务系统 http://netservice.nankai.edu.cn/LoginAction.action 修改个人网络账号密码（需能正常登录）",
+        "忘记密码：必须本人持有效证件（身份证、一卡通、工作证等）到网信办服务中心现场重置",
+        "主管单位：党委网络安全和信息化办公室（网信办），咨询电话 022-23509599、022-23509595"
+      ],
+      "required_materials": [
+        "本人有效证件（仅现场重置需要）"
+      ],
+      "source_refs": [
+        {
+          "label": "网信办《南开大学校园网密码更改方式》（2023-12-21）",
+          "url": "https://wxb.nankai.edu.cn/info/1155/1563.htm",
+          "locator": "业务办理栏目正文；2026-09-27 校外网络实测 HTTP 200"
+        },
+        {
+          "label": "党委网络安全和信息化办公室官网首页（联系电话 23509599/23509595）",
+          "url": "https://wxb.nankai.edu.cn/",
+          "locator": "2026-09-27 校外网络实测 HTTP 200"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-credit-recognition",
+      "kind": "procedure",
+      "title": "本科课程学分认定申请（校际交流/网络课程/转校/辅修/转专业）",
+      "category": "academic",
+      "campus_scope": [],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://jwc.nankai.edu.cn/2024/0907/c35930a550108/page.htm",
+      "login_required": "yes",
+      "campus_network_required": "unknown",
+      "steps": [
+        "适用范围：国际及国内校际交流项目、开放式网络课程、转校生、校内辅修、转专业等学分认定（第二条）；保留学籍自费出国（境）留学期间的课程学分不予认定，与已修课程相同或相近的不予认定",
+        "基本原则：教学目的一致、内容相符、难度相当，课程相似度不低于 70%；认定总学分不得超过毕业要求学分的 40%；校际认定学分按我校 16 学时 1 学分折算（第三、五、六条）",
+        "校际交流：离校前在本科教务教学管理系统录入校外学习计划，生成《南开大学本科生校际交流课程学分认定申请表》，经拟认定课程负责人认定、所在学院审核盖章后报教务处备案；交流结束回校后一个月内在系统上传成绩单原件扫描件与课程教学大纲等材料并提交认定申请，纸质成绩单原件交教务处备案；离校前未认定或交流期间新增课程可于返校后一个月内申请补认",
+        "开放式网络课程：修读计划录入系统生成《开放式网络课程学分认定申请表》，经课程负责人认定、学院审核盖章后报教务处备案；获得有效成绩后在系统上传成绩证明并提交认定申请，纸质原件交教务处备案",
+        "校内课程认定（含辅修/转专业）：在系统中提交申请，生成《校内课程学分认定申请表》，经课程负责人认定、学院审核盖章后交教务处审核；教务处统一安排的通识选修课一般不允许认定为主修或辅修专业课程",
+        "成绩记载：外校课程记入成绩单、课名加「△」标记、不纳入平均学分绩；校内认定课程成绩如实记载并纳入平均学分绩；认定以自愿为原则、未申请视为放弃，一经确认不得修改"
+      ],
+      "required_materials": [
+        "学分认定申请表（系统生成）",
+        "成绩单原件扫描件及纸质原件（校际交流/网络课程/转校生）",
+        "相关课程教学大纲"
+      ],
+      "source_refs": [
+        {
+          "label": "《南开大学本科课程学分认定管理办法》（南发字〔2019〕48 号，2019-05-22 印发；教务部规章制度栏目 2024-09-07 发布）",
+          "url": "https://jwc.nankai.edu.cn/2024/0907/c35930a550108/page.htm",
+          "locator": "页面附件 PDF 第 2–7 页（第二至十三条）；2026-09-27 校外网络实测 HTTP 200"
+        }
+      ],
+      "verified_at": "2026-09-27",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-card-recharge",
+      "kind": "procedure",
+      "title": "校园卡充值指引",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开微信，进入「南开大学一卡通」微信服务号",
+        "点击「卡片充值」，按页面提示操作",
+        "安全说明：本知识库不收录任何充值支付链接或收款二维码（涉及金钱安全），仅指引官方服务号入口；请勿通过他人转发的链接或二维码充值"
       ],
       "required_materials": [],
-      "source_refs": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-electricity-recharge",
+      "kind": "procedure",
+      "title": "宿舍电费充值指引",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开飞书 APP，进入「南开微应用」板块",
+        "点击「水电充值」应用（若列表中没有，在「＋」/所有应用中添加）",
+        "进入电表界面（能源易支付），可查看剩余金额、用量信息与充值记录；未绑定宿舍时先点击右下角「绑定房间」",
+        "点击电表界面左下角「充值」，按页面提示完成缴费",
+        "充值故障报修（应用内官方显示）：津南校区 022-85358890 转 8 号窗口（工作日 9:00-12:00；其他工作时间 022-23501600、022-23502600）；八里台校区 022-23502600（工作日和周末 9:00-12:00、14:00-17:00）",
+        "安全说明：本知识库不收录任何支付链接或二维码（涉及金钱安全），仅指引官方应用入口"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供"
+        },
+        {
+          "label": "用户实机操作截图（飞书南开微应用「能源易支付」电表界面）",
+          "url": null,
+          "locator": "2026-10-09 用户实测截图核验；步骤与报修电话均为应用内官方界面显示"
+        }
+      ],
+      "verified_at": "2026-10-09",
+      "valid_until": null,
+      "status": "verified",
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-view-plan",
+      "kind": "procedure",
+      "title": "查看个人培养计划",
+      "category": "academic",
+      "campus_scope": [],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": "https://eamis.nankai.edu.cn/eams/myPlan!programDoc.action",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "登录教学管理信息系统 https://eamis.nankai.edu.cn （账号密码同统一身份认证，校外可直连无需 VPN）",
+        "登录后经深链直达「我的培养计划」页面（未登录访问会先跳转登录页，登录后自动进入）"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": "https://eamis.nankai.edu.cn/eams/myPlan!programDoc.action",
+          "locator": "2026-09-30 用户提供；当日校外实测 302 跳转登录页（链接有效），待团队核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-venue-booking",
+      "kind": "procedure",
+      "title": "体育场馆预约",
+      "category": "venue",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://tyggl.nankai.edu.cn/Views/User/UserChoose.html",
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开体育场馆管理系统（首页为「用户类型选择」页）",
+        "按本人身份类型选择并登录，进入后选择场馆与时段预约"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": "https://tyggl.nankai.edu.cn/Views/User/UserChoose.html",
+          "locator": "2026-09-30 用户提供；当日校外实测 HTTP 200（用户类型选择页），待团队核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-teaching-eval",
+      "kind": "procedure",
+      "title": "教学质量评价（教学质量平台）",
+      "category": "academic",
+      "campus_scope": [],
+      "audience": [
+        "本科生",
+        "研究生"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开飞书 APP，进入「南开微应用」板块",
+        "找到并点击「教学质量平台」应用（若列表中没有，在「＋」/所有应用中添加）",
+        "按页面提示进行教学评价"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-flea-market",
+      "kind": "procedure",
+      "title": "跳蚤市场（校内闲置物品）",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开飞书 APP，进入「南开微应用」板块",
+        "找到并点击「跳蚤市场」应用（若列表中没有，在「＋」/所有应用中添加）",
+        "按页面提示浏览或发布闲置物品信息"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-shuttle",
+      "kind": "procedure",
+      "title": "校内班车时刻查询",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开飞书 APP，进入「南开微应用」板块",
+        "找到并点击班车查询相关应用（若列表中没有，在「＋」/所有应用中添加）",
+        "按页面提示查询校内班车时刻"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-visitor-access",
+      "kind": "procedure",
+      "title": "出入校申请（外校人员来访预约）",
+      "category": "service",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开飞书 APP，进入「南开微应用」板块",
+        "找到并点击「出入校申请」应用（若列表中没有，在「＋」/所有应用中添加）",
+        "按页面提示为来访人员填写预约信息并提交"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
+    },
+    {
+      "entry_id": "nku-proc-counseling",
+      "kind": "procedure",
+      "title": "心理咨询预约",
+      "category": "life",
+      "campus_scope": [],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "yes",
+      "campus_network_required": "no",
+      "steps": [
+        "打开飞书 APP，进入「南开微应用」板块",
+        "找到并点击「心理咨询预约」应用（若列表中没有，在「＋」/所有应用中添加）",
+        "按页面提示选择咨询时段并提交预约"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "用户（在读学生）提供的日常使用路径",
+          "url": null,
+          "locator": "2026-09-30 用户提供，待团队/官方渠道核验"
+        }
+      ],
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
