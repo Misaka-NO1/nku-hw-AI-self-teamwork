@@ -18,7 +18,11 @@ def resources(records):
     if records.get("schedule") is None:
         raise AppError(404, "NOT_FOUND", "请先确认保存本人的课表")
     timetable = records["schedule"]["timetable"]
-    enforce_demo_fixture(timetable, "schedule")
+    # Only server-owned persisted snapshots reach this adapter; validate personal
+    # structure and semantics, never resolve a timetable from model arguments.
+    validate_boundary(timetable, "TimetableImport")
+    from app.domains.schedule.service import validate_timetable
+    validate_timetable(timetable)
     notices, labels = [], {}
     for task in records["tasks"]:
         state = task.get("calendar_state")
@@ -118,7 +122,7 @@ def calculate_notice(payload, records, workspace_ref):
     return {"item": item, "time_request": query, "time_result": result,
             "recommendations": recommendations,
             "conflict_labels": labels, "warnings": warnings,
-            "coverage_message": "结果仅覆盖已导入虚构课表与已确认活动；课表外安排未知",
+            "coverage_message": "结果仅覆盖本人已导入课表与已确认活动；课表外安排未知",
             "plan": {"plan_version": VERSION, **{k: payload[k] for k in
                       ("source_text", "source_ref", "reference_at", "window", "available_windows", "user_confirmations")},
                      **{k: payload[k] for k in ("model_output", "buffers", "fictional_data_confirmed", "source_kind", "document_sha256") if k in payload},

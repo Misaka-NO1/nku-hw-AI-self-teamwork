@@ -180,10 +180,22 @@ function parseCsv(content: string): { headers: string[]; rows: string[][] } {
 
 /**
  * 从 HTML 中提取课表表格。只读取文本内容（textContent），
- * DOMParser 不执行脚本、不请求远程资源。
+ * 输入先在 inert template 中解析并移除资源/执行节点及属性，不挂入活页面。
  */
+function inertHtmlDocument(content: string): Document {
+  const doc = new DOMParser().parseFromString("", "text/html");
+  const template = doc.createElement("template");
+  template.innerHTML = content;
+  template.content.querySelectorAll("script,style,link,img,iframe,frame,object,embed,svg,math,video,audio,source,track,base").forEach(node => node.remove());
+  const allowed = new Set(["id", "rowspan", "colspan", "value", "selected", "name", "content", "type"]);
+  template.content.querySelectorAll("*").forEach(node => {
+    [...node.attributes].forEach(attribute => { if (!allowed.has(attribute.name)) node.removeAttribute(attribute.name); });
+  });
+  doc.body.appendChild(template.content);
+  return doc;
+}
 export function extractHtmlTable(content: string): { headers: string[]; rows: string[][] } | null {
-  const doc = new DOMParser().parseFromString(content, "text/html");
+  const doc = inertHtmlDocument(content);
   const tables = [...doc.querySelectorAll("table")];
   for (const table of tables) {
     const headerCells = [...table.querySelectorAll("thead th, thead td")].map((cell) =>
@@ -278,17 +290,19 @@ function parseImportFileInner(
 
   // eamis「我的课表」另存 HTML：走 eamis 网格解析（B08），与扩展提取共用实现
   if (format === "html") {
-    const doc = new DOMParser().parseFromString(input.content, "text/html");
+    const doc = inertHtmlDocument(input.content);
     const grid = extractEamisGridFromDoc(doc);
     if (grid !== null) {
+      const weekText = doc.querySelector('meta[name="campus-weeks"]')?.getAttribute("content") ?? doc.querySelector<HTMLSelectElement>('#startWeek')?.selectedOptions[0]?.textContent ?? "";
+      const selectedWeek = weekText.match(/第(\d+)周/);
       const converted = eamisObservationToRawRows({
         origin: "https://eamis.nankai.edu.cn",
         pathname: "/eams/courseTableForStd!courseTable.action",
         frameOrigin: null,
         tableHeaders: grid.headers,
         rows: grid.rows,
-        selectedTerm: null,
-        selectedWeeks: [],
+        selectedTerm: doc.querySelector('meta[name="campus-term"]')?.getAttribute("content") ?? doc.querySelector<HTMLInputElement>('input[id$="Semester"]')?.value ?? null,
+        selectedWeeks: (()=>{const text=doc.querySelector('meta[name="campus-weeks"]')?.getAttribute("content") ?? doc.querySelector<HTMLSelectElement>('#startWeek')?.selectedOptions[0]?.textContent ?? "";const m=text.match(/第(\d+)周/);return m ? [Number(m[1])] : [];})(),
         hasPagination: false,
         hasVirtualRows: false,
       });
@@ -298,9 +312,17 @@ function parseImportFileInner(
       const eamisResult = normalizeCourses(converted.rows, {
         ...normalizeOptions,
         kind: "file",
-        completenessHint: "complete",
+        completenessHint: weekText.trim() === "全部" ? "complete" : "unknown",
       });
       eamisResult.issues.unshift(...converted.issues);
+      // Coverage describes the selected source view, not weeks with classes.
+      // An all-weeks export also covers empty teaching weeks at term end.
+      if (eamisResult.payload && weekText.trim() === "全部") eamisResult.payload.source.coverage = {
+        scope: "term", week_numbers: Array.from({length: calendar.teaching_weeks}, (_, i) => i + 1), completeness: "complete",
+      };
+      if (eamisResult.payload && selectedWeek) eamisResult.payload.source.coverage = {
+        scope: "selected_weeks", week_numbers: [Number(selectedWeek[1])], completeness: "unknown",
+      };
       return eamisResult;
     }
     // 另存到的是统一身份认证登录页（未登录/会话过期）：给出可操作提示
@@ -394,7 +416,10 @@ function normalizeJsonPayload(
     );
   }
   return {
-    payload,
+    // The calendar explicitly reviewed in the import UI is authoritative,
+    // including customized bell times; a standard file must not silently
+    // restore its old calendar after the user edited this one.
+    payload: {...payload, term: options.calendar},
     issues: [],
     adapterId: options.adapterId,
     adapterVersion: options.adapterVersion,
@@ -451,6 +476,11 @@ export function parseObservation(
     completenessHint: completeness,
   });
   result.issues.unshift(...extraIssues);
+  if (result.payload && completeness === "complete") {
+    result.payload.source.coverage = {
+      scope: "term", week_numbers: Array.from({length: calendar.teaching_weeks}, (_, i) => i + 1), completeness: "complete",
+    };
+  }
   if (result.payload && observation.selectedWeeks.length > 0) {
     result.payload.source.coverage = {
       scope: "selected_weeks",

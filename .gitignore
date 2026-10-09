@@ -7,6 +7,8 @@ htmlcov/
 .env
 backend/data/
 backend/.test-tmp-*/
+/.test-tmp-*/
+/artifacts/
 .local-notice-pilot-data/
 node_modules/
 .pnpm-store/

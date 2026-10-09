@@ -62,7 +62,22 @@ class TaskCalendarService:
     def list(self, args, workspace_ref):
         records = self.records(args, workspace_ref)
         return {"items": [calendar_task(t) for t in records["tasks"]],
-                "capabilities": {"scheduling": True, "status": True, "reminders": True}}
+                "capabilities": {"scheduling": True, "status": True, "reminders": True, "deletion": True}}
+
+    def delete(self, args, task_id, payload, key):
+        self.gate()
+        require_idempotency_key(key)
+        if (set(payload) != {"workspace_ref", "expected_revision", "confirmed"}
+            or payload["confirmed"] is not True or not isinstance(payload["workspace_ref"], str)
+            or not payload["workspace_ref"] or type(payload["expected_revision"]) is not int
+            or not 0 <= payload["expected_revision"] <= 2147483646):
+            raise AppError(422, "CONFIRMATION_REQUIRED", "请核对本人事项并明确确认删除")
+        if args.get("principal_kind") != "browser":
+            raise AppError(403, "FORBIDDEN", "删除仅由本人网页确认")
+        # PG rechecks session, owner, CSRF, version and idempotency in one owner-locked transaction.
+        return self.store.task_delete_call("delete", {**args, "task_id": task_id,
+            "workspace_ref": payload["workspace_ref"], "expected_revision": payload["expected_revision"],
+            "confirmed": True, "key": key, "request_hash": payload_hash({"task_id": task_id, "body": payload})})
 
     def candidates(self, args, task_id, workspace_ref):
         records = self.records(args, workspace_ref)

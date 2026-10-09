@@ -61,7 +61,7 @@ def test_full_original_notice_and_default_arrangement_static_route(calendar_env)
     _, _, _, client, owner = calendar_env
     saved = new_task(client, owner)
     data = listing(client, owner)
-    assert data["capabilities"] == {"scheduling": True, "status": True, "reminders": True}
+    assert data["capabilities"] == {"scheduling": True, "status": True, "reminders": True, "deletion": True}
     item = data["items"][0]
     assert item["task_id"] == saved and len(item["notice"]) == 13
     assert item["scheduled_start"] == "2026-09-21T09:40:00+08:00"
@@ -70,16 +70,17 @@ def test_full_original_notice_and_default_arrangement_static_route(calendar_env)
     assert client.get("/tools/calendar").status_code == 200
     result = candidates(client, owner, saved).json()["data"]
     validate_boundary(result, "CalendarCandidates")
-    assert result["candidate_slots"] == [{"start": "2026-09-21T09:40:00+08:00", "end": "2026-09-21T10:10:00+08:00", "duration_minutes": 30}]
+    # PR12's Nankai period 3 now starts at 10:00, not the old demo 10:10.
+    assert result["candidate_slots"] == [{"start": "2026-09-21T09:40:00+08:00", "end": "2026-09-21T10:00:00+08:00", "duration_minutes": 20}]
 
 
 def test_reschedule_retry_cas_reminders_readback_restart(calendar_env):
     settings, root, db, client, owner = calendar_env
-    saved = new_task(client, owner)
+    saved = new_task(client, owner, minutes=10)
     task = listing(client, owner)["items"][0]
     original = deepcopy(task["notice"])
     payload = body(owner, task, scheduled_start="2026-09-21T09:45:00+08:00",
-        scheduled_end="2026-09-21T10:05:00+08:00", reminder_minutes=0)
+        scheduled_end="2026-09-21T09:55:00+08:00", reminder_minutes=0)
     changed = update(client, owner, saved, payload)
     assert changed.status_code == 200, changed.text
     validate_boundary(changed.json()["data"], "CalendarTask")
@@ -112,7 +113,7 @@ def test_release_restore_and_time_adapter_share_busy_state(calendar_env, status)
     assert free() == []
     changed = update(client, owner, saved, body(owner, task, status=status), "calendar-release-key")
     assert changed.status_code == 200, changed.text
-    assert free()[0]["duration_minutes"] == 30
+    assert free()[0]["duration_minutes"] == 20
     released = listing(client, owner)["items"][0]
     restored = update(client, owner, saved, body(owner, released, status="pending"), "calendar-restore-key")
     assert restored.status_code == 200, restored.text

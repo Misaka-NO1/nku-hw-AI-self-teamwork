@@ -2,6 +2,6 @@
   "name": "nku-cloud-pilot-sql-tests",
   "private": true,
   "type": "module",
-  "scripts": {"test": "node --test identity-rpc.test.mjs competition-oauth.test.mjs notice-text-rpc.test.mjs task-calendar-rpc.test.mjs"},
+  "scripts": {"test": "node --test identity-rpc.test.mjs competition-oauth.test.mjs notice-text-rpc.test.mjs task-calendar-rpc.test.mjs personal-schedules.test.mjs device-login.test.mjs agent-device.test.mjs"},
   "devDependencies": {"@electric-sql/pglite": "0.5.8"}
 }

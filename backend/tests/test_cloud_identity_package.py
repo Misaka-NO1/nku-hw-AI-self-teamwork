@@ -16,7 +16,7 @@ spec.loader.exec_module(builder)
 
 @pytest.mark.parametrize("backend_only", [False, True])
 def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch, backend_only):
-    for folder in ("backend/app", "contracts", "frontend/dist-identity/assets", "fixtures", "deploy/cloudbase-identity-pilot", "backend/data"):
+    for folder in ("backend/app", "contracts", "frontend/dist-identity/assets", "fixtures", "deploy/cloudbase-identity-pilot", "backend/data", "extension/dist"):
         (tmp_path / folder).mkdir(parents=True)
     for file, value in {
         "backend/app/placeholder.py": "# public runtime source",
@@ -25,6 +25,12 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         "frontend/dist-identity/assets/main.js": "/* public asset */",
         "backend/data/auth-pilot-config.json": "DO_NOT_PACKAGE_PRIVATE_CONFIG",
         ".env": "DO_NOT_PACKAGE_SERVER_KEY",
+        "extension/manifest.json": "{}",
+        "extension/dist/background.js": "/* reader worker */",
+        "extension/dist/content.js": "/* course area only */",
+        "extension/dist/app-bridge.js": "/* one-shot transfer */",
+        "extension/dist/preview.js": "/* local preview */",
+        "extension/dist/preview.html": "<html></html>",
         "deploy/cloudbase-identity-pilot/Dockerfile": "FROM python:3.12-slim-bookworm",
         "deploy/cloudbase-identity-pilot/README.md": "Deployment candidate only",
     }.items():
@@ -33,7 +39,7 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql")
-    for migration in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql"):
+    for migration in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql"):
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / migration, tmp_path / "deploy/cloudbase-identity-pilot" / migration)
     for filename in builder.FIXTURES + builder.READ_ONLY_FIXTURES:
         shutil.copy2(ROOT / "fixtures" / filename, tmp_path / "fixtures" / filename)
@@ -70,6 +76,11 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         assert report["calendar_migration_included"] is True
         assert "personal-tasks-migration.sql" in names and "task-oauth-scopes-migration.sql" in names
         assert "persistent-auth-migration.sql" in names
+        assert "personal-schedules-migration.sql" in names
+        assert "device-login-migration.sql" in names
+        assert "agent-device-binding-migration.sql" in names
+        assert ("frontend/dist/assets/campus-schedule-reader.zip" in names) is not backend_only
+        assert all((i.external_attr >> 16) & 0o444 == 0o444 for i in archive.infolist())
         assert report["calendar_frontend_source_present"] is False
     with pytest.raises(ValueError, match="overwritten"):
         builder.build("test-identity-r1", backend_only=backend_only)

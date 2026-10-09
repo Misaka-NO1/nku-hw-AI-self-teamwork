@@ -5,7 +5,7 @@ from app.cloud_tasks_site import ENV_ID
 from app.core.errors import AppError
 
 RPC_URL = f"https://{ENV_ID}.api.tcloudbasegateway.com/v1/rdb/rest/rpc/nku_identity_pilot_v1_rpc"
-OPERATIONS = frozenset({"probe", "persistent_probe", "rate_limit", "configure_subjects", "login", "logout", "get_workspace", "records",
+OPERATIONS = frozenset({"probe", "persistent_probe", "personal_schedule_probe", "rate_limit", "configure_subjects", "login", "logout", "get_workspace", "records",
     "create_draft", "get_draft", "confirm", "commit", "list_tasks", "get_task", "current_schedule",
     "import_ticket", "authorize_start", "authorize_approve", "oauth_exchange", "oauth_revoke"})
 COMPETITION_OPERATIONS = frozenset({"probe", "authorize_start", "authorize_approve", "exchange", "records", "revoke"})
@@ -17,6 +17,9 @@ CALENDAR_RPC_URL = RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_task
 CALENDAR_OPERATIONS = frozenset({"probe", "records", "lookup", "update"})
 PERSONAL_RPC_URL = RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_personal_tasks_v1_rpc"
 PERSONAL_OPERATIONS = frozenset({"probe", "access", "records", "draft", "commit", "update"})
+DEVICE_RPC_URL = RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_browser_device_v1_rpc"
+DEVICE_OPERATIONS = frozenset({"probe", "start", "review", "approve", "claim"})
+AGENT_DEVICE_RPC_URL = RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_agent_device_v1_rpc"
 STATUSES = {"AUTH_REQUIRED":401, "FORBIDDEN":403, "NOT_FOUND":404, "TOKEN_EXPIRED":410,
     "VALIDATION_ERROR":422, "DEMO_ONLY":403, "RATE_LIMITED":429,
     "STALE_REVISION":409, "CONFIRMATION_REQUIRED":409}
@@ -45,7 +48,7 @@ class CloudIdentityStore:
     def call(self,op,args):
         if op not in OPERATIONS:
             raise AppError(403,"FORBIDDEN","Unsupported storage operation")
-        return self._request(RPC_URL,op,args)
+        return self._request(RPC_URL,op,args,max_response=2097152)
 
     def competition_call(self,op,args):
         if op not in COMPETITION_OPERATIONS:
@@ -62,10 +65,25 @@ class CloudIdentityStore:
             raise AppError(403,"FORBIDDEN","Unsupported calendar operation")
         return self._request(CALENDAR_RPC_URL,op,args,max_response=33554432)
 
+    def task_delete_call(self,op,args):
+        if op not in {"probe", "delete"}:
+            raise AppError(403,"FORBIDDEN","Unsupported task deletion operation")
+        return self._request(RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_task_delete_v1_rpc",op,args)
+
     def personal_call(self,op,args):
         if op not in PERSONAL_OPERATIONS:
             raise AppError(403,"FORBIDDEN","Unsupported personal task operation")
         return self._request(PERSONAL_RPC_URL,op,args,max_response=2097152)
+
+    def device_call(self,op,args):
+        if op not in DEVICE_OPERATIONS:
+            raise AppError(403,"FORBIDDEN","Unsupported device operation")
+        return self._request(DEVICE_RPC_URL,op,args)
+
+    def agent_device_call(self,op,args):
+        if op not in {"probe", "start", "register", "status", "detach", "bind", "claim"}:
+            raise AppError(403,"FORBIDDEN","Unsupported Agent device operation")
+        return self._request(AGENT_DEVICE_RPC_URL,op,args)
 
     def _request(self,url,op,args,max_response=262144):
         try:

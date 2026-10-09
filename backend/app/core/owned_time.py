@@ -26,14 +26,18 @@ def decode_owned_time(arguments, operation):
 
 def calculate_owned_time(records, payload, operation, *, allow_notice_text=False):
     if records["schedule"] is None:
-        raise AppError(404, "NOT_FOUND", "Save your fixture timetable first")
+        raise AppError(404, "NOT_FOUND", "Save your own timetable first")
     timetable = records["schedule"]["timetable"]
     if allow_notice_text:
         from app.core.notice_plan import resources
         timetable, notices, _ = resources(records)
     else:
         notices = [item["notice"] for item in records["tasks"]]
-        enforce_demo_fixture(timetable, "schedule")
+        # The records query already enforces owner authorization. Real saved
+        # timetables use the same contract/semantics, not a fixture hash gate.
+        validate_boundary(timetable, "TimetableImport")
+        checked = schedule.validate_timetable(timetable)
+        timetable = checked["normalized_payload"]
         for notice in notices:
             enforce_demo_fixture(notice, "task")
     events, warnings = schedule.expand_occurrences(timetable["term"], timetable["courses"], payload["window"])

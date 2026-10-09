@@ -17,7 +17,7 @@ interface CloudAuth {
 }
 interface CloudSdk { init(input: { env: string; region: string; persistence: "none"; debug: false;
   auth: { detectSessionInUrl: false } }): { auth: CloudAuth | (() => CloudAuth) } }
-interface PilotConfig { envId: string; region: string; persistentAuthorization?: boolean }
+interface PilotConfig { envId: string; region: string; persistentAuthorization?: boolean; deviceLoginEnabled?: boolean; agentDeviceBindingEnabled?: boolean }
 interface PilotSession extends DemoSession { datasetKind: "demo"; personalUploads: false; agentPaired: false }
 async function loadSdk(): Promise<CloudSdk> {
   const sdk = await import("@cloudbase/js-sdk");
@@ -109,6 +109,8 @@ export default function CloudbaseLoginPage() {
   return <section>
     <h1>腾讯云账号登录 · 封闭联调</h1>
     <p>产品主入口仍是 NK-GeniOS；此页只负责可信登录测试，不是另一个聊天产品。</p>
+    {config?.agentDeviceBindingEnabled ? <p><a href="/tools/device-login">使用固定设备码绑定这个浏览器 →</a> 首次由 Agent 当前授权账号绑定，不自动识别学校账号。</p>
+      : config?.deviceLoginEnabled && <p><a href="/tools/device-login">已有登录设备？绑定这个浏览器 →</a> 首次由本人已登录设备确认，不自动识别 GeniOS 账号。</p>}
     {consentReturn && <p>这是学校插件的授权登录步骤。登录后回到授权页；是否同意由你决定，不会自动授权。</p>}
     {reviewReturn && <p>登录后返回原来的课表、待办复核页或日历，仍须你核对并明确确认，不会自动保存。</p>}
     <p role="note">仅 nku-demo-a / nku-demo-b，分别登录各自账号。课表使用虚拟演示数据；本人待办须核对后明确确认保存。{config?.persistentAuthorization ? "保持登录与本人长期授权，退出、撤销或移出名单后失效；已导入的虚拟课表持续保留。清除浏览器数据或更换设备仍需登录。" : "会话最长 15 分钟，课表测试空间保留 24 小时。"}没有公开注册或真实成绩上传。</p>

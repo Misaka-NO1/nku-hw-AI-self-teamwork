@@ -4,7 +4,7 @@
  * 安全边界：
  * - 只在用户点击扩展图标后读取页面（activeTab）；
  * - 只允许白名单 origin + path + 课程区域；
- * - 生产域名白名单默认为空：真实教务适配器未完成授权核查前不猜任何南开域名；
+ * - 只允许已核查的南开教务课表页和团队导入页；
  * - 虚构测试页只允许出现在开发构建，不带入生产。
  */
 
@@ -42,14 +42,15 @@ export function isExtractionAllowed(url: string, whitelist: ExtractionWhitelist)
 
 /**
  * 课表板块 App 的 origin（自动回传目标，EXT-B11）。
- * 自动提取的观察值只回传到这些本地预览地址；不发给任何远程 origin。
+ * 观察值只回传到团队导入页本地核对，未经确认不写数据库。
  */
-export const APP_ORIGINS = ["http://localhost:7100", "http://localhost:5173", "http://127.0.0.1:7100"];
-export const APP_IMPORT_PATH = "/#/import";
+export const APP_ORIGINS = ["https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com"];
+export const APP_IMPORT_PATH = "/tools/import";
 
 export function isAppUrl(url: string): boolean {
   try {
-    return APP_ORIGINS.includes(new URL(url).origin);
+    const parsed=new URL(url);
+    return APP_ORIGINS.includes(parsed.origin) && parsed.pathname===APP_IMPORT_PATH;
   } catch {
     return false;
   }

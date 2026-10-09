@@ -1,5 +1,5 @@
 /**
- * App 桥接 content script（EXT-B11）：注入课表板块 App 页面（localhost 预览）。
+ * App 桥接 content script：只注入团队工具站的课表导入页。
  *
  * 页面加载后向 service worker 报到（app-bridge-ready）；如果后台暂存了
  * 教务页自动提取的观察值，就把它作为窗口事件派发给 App：
@@ -13,6 +13,9 @@
 export const APP_OBSERVATION_EVENT = "campus:schedule-observation";
 
 export function registerAppBridge(chromeApi: typeof chrome, win: Window): void {
+  // React announces readiness after installing its receive listener. Don't
+  // consume the one-shot transfer at document_idle before React mounts.
+  win.addEventListener("campus:schedule-import-ready", () => {
   void chromeApi.runtime
     .sendMessage({ type: "app-bridge-ready", payload: null })
     .then((response: unknown) => {
@@ -27,6 +30,10 @@ export function registerAppBridge(chromeApi: typeof chrome, win: Window): void {
     .catch(() => {
       // 没有暂存观察值或后台不可用：静默，用户仍可手动导入文件
     });
+  }, {once:true});
+  // Either React or document_idle may load first. Both sides announce readiness
+  // after registering listeners; the transfer is consumed only once.
+  win.dispatchEvent(new Event("campus:schedule-bridge-ready"));
 }
 
 if (typeof chrome !== "undefined" && chrome.runtime?.id) {

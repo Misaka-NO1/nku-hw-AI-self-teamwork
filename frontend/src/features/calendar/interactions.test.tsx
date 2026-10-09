@@ -3,11 +3,11 @@ import { act, createElement } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import CalendarPage from "./CalendarPage";
-import { loadCalendar, loadCandidates, updateCalendar } from "./api";
+import { deleteCalendar, loadCalendar, loadCandidates, updateCalendar } from "./api";
 import { useBrowserSession } from "../auth/useBrowserSession";
 import { previewTasks, shanghaiDay, type CalendarData } from "./model";
 import { ApiError } from "../../shared/api/client";
-vi.mock("./api",()=>({loadCalendar:vi.fn(),loadCandidates:vi.fn(),updateCalendar:vi.fn()}));
+vi.mock("./api",()=>({loadCalendar:vi.fn(),loadCandidates:vi.fn(),updateCalendar:vi.fn(),deleteCalendar:vi.fn()}));
 vi.mock("../auth/useBrowserSession",()=>({useBrowserSession:vi.fn()}));
 let root:Root;
 let container:HTMLDivElement;
@@ -41,6 +41,31 @@ describe("calendar real-mode interactions with mocked D transport",()=>{
     expect(button("确认保存安排 / 提醒").disabled).toBe(true);expect(updateCalendar).not.toHaveBeenCalled();
     await click(container.querySelector(".calendar-confirm input") as HTMLElement);
     expect(button("确认保存安排 / 提醒").disabled).toBe(false);
+  });
+  it("delete needs explicit confirmation and a fresh absent readback, not status cancellation",async()=>{
+    vi.mocked(loadCalendar).mockResolvedValueOnce({...data,capabilities:{...data.capabilities,deletion:true}});
+    await click(button("刷新记录"));await click(container.querySelector(".calendar-task-card") as HTMLElement);
+    await click(button("删除事项"));expect(deleteCalendar).not.toHaveBeenCalled();
+    expect(container.querySelector('[role=alertdialog]')?.textContent).toContain(data.items[0].notice.title);
+    await click(button("保留事项"));expect(deleteCalendar).not.toHaveBeenCalled();
+    await click(button("删除事项"));
+    vi.mocked(deleteCalendar).mockResolvedValueOnce({taskId:data.items[0].taskId,deleted:true});
+    vi.mocked(loadCalendar).mockResolvedValueOnce({...data,items:data.items.slice(1)});
+    await click(button("确认删除事项"));
+    expect(deleteCalendar).toHaveBeenCalledWith(session,data.items[0].taskId,0,"calendar-test-id");
+    expect(updateCalendar).not.toHaveBeenCalled();expect(container.textContent).toContain("事项已删除，并已从后端读回确认");
+    expect(container.querySelector('[role=alertdialog]')).toBeNull();
+  });
+  it("delete failure/readback mismatch keeps the task and exact retry key",async()=>{
+    vi.mocked(loadCalendar).mockResolvedValueOnce({...data,capabilities:{...data.capabilities,deletion:true}});
+    await click(button("刷新记录"));await click(container.querySelector(".calendar-task-card") as HTMLElement);await click(button("删除事项"));
+    vi.mocked(deleteCalendar).mockRejectedValueOnce(new Error("删除响应丢失"));
+    await click(button("确认删除事项"));const first=vi.mocked(deleteCalendar).mock.calls[0];
+    expect(container.textContent).not.toContain("事项已删除");
+    vi.mocked(deleteCalendar).mockResolvedValueOnce({taskId:data.items[0].taskId,deleted:true});
+    await click(button("确认删除事项"));
+    expect(vi.mocked(deleteCalendar).mock.calls[1]).toEqual(first);
+    expect(container.textContent).toContain("删除后读回未确认");expect(container.querySelector('[role=alertdialog]')).not.toBeNull();
   });
   it("a lost response retries the exact same time and idempotency key",async()=>{
     await selectCandidate();await click(container.querySelector(".calendar-confirm input") as HTMLElement);

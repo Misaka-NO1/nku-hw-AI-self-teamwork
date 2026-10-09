@@ -108,10 +108,15 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
         # Sanitized boundary: do not stringify credentials, request or exception.
         return JSONResponse({"error": "server_error"}, status_code=500)
 
-    def pairs(items):
+    def pairs(items, device_binding=False):
         result = {}
         for key, value in items:
-            if key in result or not isinstance(value, str) or len(value) > (16384 if settings.cloud_personal_tasks_enabled and key == "query_json" else 2048):
+            if key in result:
+                raise oauth.OAuthError()
+            if device_binding and key == "confirm_binding" and type(value) is bool:
+                result[key] = value
+                continue
+            if not isinstance(value, str) or len(value) > (16384 if settings.cloud_personal_tasks_enabled and key == "query_json" else 2048):
                 raise oauth.OAuthError()
             result[key] = value
         return result
@@ -130,7 +135,8 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
         try:
             if content_type == "application/json":
                 # Preserve pairs to reject duplicate JSON keys.
-                value = json.loads(raw, object_pairs_hook=lambda items: pairs(items))
+                value = json.loads(raw, object_pairs_hook=lambda items: pairs(items,
+                    settings.cloud_agent_device_binding_enabled and request.url.path == "/oauth/devices/bind"))
                 if not isinstance(value, dict):
                     raise oauth.OAuthError()
                 return value
@@ -178,6 +184,8 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
             label += "；读取自己已记录的事项、截止、备注和选定时段"
         if "tasks:write" in scopes:
             label += "；仅在你核对草稿并明确确认后记录本人待办"
+        if "devices:bind" in scopes:
+            label += "；仅当你明确发送本人浏览器的固定设备码并确认绑定时，允许该浏览器访问这个授权账号的课表与日历"
         mode_note = ('<p>参赛联调兼容模式：普通 OAuth 授权码，无 PKCE；仅两个已批准测试账号。真实教务课表和成绩上传仍未开放。</p>'
                      if settings.cloud_oauth_competition_compat_enabled else '')
         return HTMLResponse('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>授权校园助手</title>'
@@ -185,7 +193,7 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
             'button{padding:14px 24px;margin:16px 12px 0 0;font:inherit}</style>'
             '<h1>授权校园助手测试插件</h1><p>' + html.escape(label) + '</p>'
             + mode_note +
-            ('<p>不能查看其他账号，不自行确认或自动保存，不接入真实教务与成绩。本人长期授权；退出、撤销或移出名单即失效。</p>' if personal and settings.cloud_persistent_auth_enabled else
+            ('<p>不能查看其他账号，不自行确认或自动保存。不会代替你登录教务或上传成绩。本人长期授权；退出、撤销或移出名单即失效。</p>' if (personal or "devices:bind" in scopes) and settings.cloud_persistent_auth_enabled else
              '<p>不能查看其他账号，不自行确认或自动保存，不接入真实教务与成绩。授权最多 10 分钟，退出登录即失效。</p>' if personal else
              '<p>不能查看其他账号、不能替你确认或保存、不能接入真实个人数据。授权最多 10 分钟，退出登录即失效。</p>') +
             '<form method="post" action="/oauth/approve"><input type="hidden" name="transaction" value="' +
@@ -223,6 +231,14 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
     def records(request: Request):
         result = provider.records(request)
         return success(result, request_id=str(uuid4()), data_version="demo-v1")
+
+    if settings.cloud_agent_device_binding_enabled and hasattr(provider,"bind_device"):
+        @site.post("/devices/bind")
+        async def bind_device(request: Request):
+            if request.url.query:
+                raise oauth.OAuthError()
+            return success(provider.bind_device(request,await body(request)),
+                request_id=str(uuid4()),data_version="agent-device-v1")
 
     # Cloud-only adapter: the loopback provider and public MCP remain unchanged.
     if hasattr(provider, "time_query"):
