@@ -78,7 +78,7 @@ describe("EXT-B11 自动提取与 App 桥接消息", () => {
     const message = { type: "app-bridge-ready" as const, payload: null };
     const isApp = (url: string) => url.startsWith("http://localhost:7100");
     expect(
-      isSenderAllowed(message, { url: "http://localhost:7100/" }, "ext-id", () => false, isApp),
+      isSenderAllowed(message, { id: "ext-id", url: "http://localhost:7100/" }, "ext-id", () => false, isApp),
     ).toBe(true);
     // 教务页或其他网站不能伪装 App 桥拉取暂存观察值
     expect(
@@ -93,7 +93,7 @@ describe("EXT-B11 自动提取与 App 桥接消息", () => {
     const message = { type: "schedule-auto-observation" as const, payload: {} };
     const whitelist = (url: string) => url.startsWith("https://eamis.nankai.edu.cn/eams/courseTableForStd");
     expect(
-      isSenderAllowed(message, { tabUrl: "https://eamis.nankai.edu.cn/eams/courseTableForStd!courseTable.action" }, "ext-id", whitelist),
+      isSenderAllowed(message, { id:"ext-id", tabUrl: "https://eamis.nankai.edu.cn/eams/courseTableForStd!courseTable.action" }, "ext-id", whitelist),
     ).toBe(true);
     expect(
       isSenderAllowed(message, { tabUrl: "https://evil.example" }, "ext-id", whitelist),

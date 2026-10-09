@@ -61,34 +61,31 @@ chrome.runtime.onMessage.addListener((raw, sender, sendResponse) => {
   // （60 秒内已有观察值，预览页流程已启动），忽略自动结果避免双开。
   if (message.type === "schedule-auto-observation") {
     void (async () => {
-      const stored = (await chrome.storage.session.get(["latestObservationAt"])) as {
-        latestObservationAt?: number;
-      };
-      if (stored.latestObservationAt && Date.now() - stored.latestObservationAt < 60_000) {
-        return;
-      }
+      const transferId=crypto.randomUUID();
       await chrome.storage.session.set({
-        latestAutoObservation: message.payload,
-        latestObservationAt: Date.now(),
+        [`transfer:${transferId}`]: {observation:message.payload,expiresAt:Date.now()+600_000},
       });
-      await chrome.tabs.create({ url: `${APP_ORIGINS[0]}${APP_IMPORT_PATH}?source=eamis-auto` });
-    })();
-    return false;
+      await chrome.tabs.create({ url: `${APP_ORIGINS[0]}${APP_IMPORT_PATH}?source=eamis-auto&transfer_id=${transferId}` });
+      sendResponse({ok:true});
+    })().catch(()=>sendResponse({ok:false,error:"IMPORT_OPEN_FAILED"}));
+    return true;
   }
 
   // App 导入页桥接：页面就绪后把暂存的自动观察值交给它（只回传一次）
   if (message.type === "app-bridge-ready") {
     void (async () => {
-      const stored = (await chrome.storage.session.get(["latestAutoObservation"])) as {
-        latestAutoObservation?: unknown;
-      };
-      if (stored.latestAutoObservation) {
-        await chrome.storage.session.remove("latestAutoObservation");
-        sendResponse({ ok: true, observation: stored.latestAutoObservation });
+      const transferId=new URL(sender.url ?? sender.tab?.url ?? "").searchParams.get("transfer_id");
+      if(!transferId || !/^[a-f0-9-]{36}$/.test(transferId)){sendResponse({ok:false});return;}
+      const key=`transfer:${transferId}`;
+      const stored=await chrome.storage.session.get(key);
+      const item=stored[key] as {observation:unknown;expiresAt:number}|undefined;
+      if (item && item.expiresAt>Date.now()) {
+        await chrome.storage.session.remove(key);
+        sendResponse({ ok: true, observation: item.observation });
       } else {
         sendResponse({ ok: false });
       }
-    })();
+    })().catch(()=>sendResponse({ok:false}));
     return true;
   }
 

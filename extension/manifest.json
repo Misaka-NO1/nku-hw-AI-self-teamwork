@@ -1,14 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "南开校园助手 · 课表导入（开发版）",
+  "name": "南开校园助手 · 教务课表读取",
   "version": "0.2.0",
-  "description": "在教务课表页自动读取课程区域（仅白名单页面、仅课程表格文本），本地预览核对后导出或经短期票据上传；可自动回传到本地课表板块。不读取密码、Cookie、SSO 字段。",
+  "description": "点击教务页读取按钮，将课程表格文本送到团队工具站核对；用户确认后保存本人课表。不读取密码、Cookie 或 SSO 字段，不自动上传保存。",
   "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "host_permissions": [
     "https://eamis.nankai.edu.cn/eams/courseTableForStd*",
-    "http://localhost:7100/*",
-    "http://localhost:5173/*",
-    "http://127.0.0.1:7100/*"
+    "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/import*"
   ],
   "background": {
     "service_worker": "dist/background.js"
@@ -24,9 +22,7 @@
     },
     {
       "matches": [
-        "http://localhost:7100/*",
-        "http://localhost:5173/*",
-        "http://127.0.0.1:7100/*"
+        "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/import*"
       ],
       "js": ["dist/app-bridge.js"],
       "run_at": "document_idle"

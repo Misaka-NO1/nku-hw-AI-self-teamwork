@@ -1,6 +1,7 @@
 import type { RawMeetingRow } from "./normalize";
 import { parseWeekday } from "./normalize";
 import type { PageObservation, ParseIssue } from "./types";
+import { parseWeeks } from "./weeks";
 
 /** eamis 课表网格选择器与页面原始表头特征（2026-10-07 核查）。 */
 export const EAMIS_GRID_SELECTOR = "#manualArrangeCourseTable";
@@ -36,28 +37,27 @@ export function extractEamisGridFromDoc(
   const weekdayLabels = headerTexts.slice(1); // 星期一..星期日
   const rows: string[][] = [];
   const emitted = new Set<string>();
-  // carry[column] = 上一行 rowSpan 合并下来的格子（含节次范围）
-  const carry: (string | null)[] = new Array(weekdayLabels.length).fill(null);
+  // Occupancy is independent of text, including empty merged cells. Track the
+  // actual end row; carrying a cell for only one row shifts later courses.
+  const occupiedUntil: number[] = new Array(weekdayLabels.length).fill(0);
 
   const periodRows = [...table.querySelectorAll("tr")].slice(1);
   periodRows.forEach((row, rowIndex) => {
     const period = rowIndex + 1;
-    const spans: (string | null)[] = [...carry];
-    carry.fill(null);
+    const spans: (string | null)[] = new Array(weekdayLabels.length).fill(null);
     // row.children[0] 是节次行头（th 或 td），必须跳过——真实页面该格是 td。
     let column = 0;
     const dataCells = Array.from(row.children).slice(1) as HTMLTableCellElement[];
     for (const cell of dataCells) {
-      while (column < spans.length && spans[column] !== null) {
+      while (column < spans.length && occupiedUntil[column] >= period) {
         column += 1;
       }
       if (column >= spans.length) break;
       const text = (cell.textContent ?? "").trim();
       const span = cell.rowSpan > 1 ? cell.rowSpan : 1;
+      if(cell.colSpan>1 || period+span-1>periodRows.length) throw new Error("课表合并格结构不受支持，请核对原页或改用标准文件");
       spans[column] = text === "" ? null : `${text}@@${period}-${period + span - 1}`;
-      for (let offset = 1; offset < span; offset += 1) {
-        carry[column] = spans[column];
-      }
+      occupiedUntil[column]=period+span-1;
       column += 1;
     }
     spans.forEach((entry, weekdayIndex) => {
@@ -65,7 +65,8 @@ export function extractEamisGridFromDoc(
       const key = `${weekdayIndex}|${entry}`;
       if (emitted.has(key)) return; // rowSpan 合并格只输出一次
       emitted.add(key);
-      const [text, spanRange] = entry.split("@@");
+      const split=entry.lastIndexOf("@@");
+      const text=entry.slice(0,split),spanRange=entry.slice(split+2);
       rows.push([text, weekdayLabels[weekdayIndex] ?? String(weekdayIndex + 1), spanRange]);
     });
   });
@@ -143,6 +144,7 @@ export interface EamisCellEntry {
 export function eamisObservationToRawRows(observation: PageObservation): EamisConvertResult {
   const issues: ParseIssue[] = [];
   const rows: RawMeetingRow[] = [];
+  const cancellations: {courseId:string;weekday:number;startPeriod:number;endPeriod:number;weeks:number[]}[]=[];
 
   const headers = observation.tableHeaders.map((header) => header.trim());
   const idxEntry = headers.indexOf(EAMIS_OBSERVATION_HEADERS[0]);
@@ -212,6 +214,9 @@ export function eamisObservationToRawRows(observation: PageObservation): EamisCo
       const weeksText = entry.weeksAndLocation.slice(0, commaIndex).trim();
       const location = entry.weeksAndLocation.slice(commaIndex + 1).trim();
       if (location === "停课") {
+        const parsed=parseWeeks(weeksText);
+        if(!parsed.weeks){issues.push({code:"invalid_weeks",field,message:"停课周次无法解析，请核对",blocking:true});continue;}
+        cancellations.push({courseId:`eamis-${entry.sequence}`,weekday,startPeriod,endPeriod,weeks:parsed.weeks});
         issues.push({
           code: "cancelled_meeting",
           field,
@@ -222,7 +227,9 @@ export function eamisObservationToRawRows(observation: PageObservation): EamisCo
       }
       rows.push({
         courseId: `eamis-${entry.sequence}`,
-        courseCode: entry.sequence,
+        // Grid parentheses contain the offering sequence, not the course code.
+        // Don't display that sequence as an official course code.
+        courseCode: null,
         title: entry.title,
         credits: null,
         teacher: entry.teacher,
@@ -236,5 +243,13 @@ export function eamisObservationToRawRows(observation: PageObservation): EamisCo
     }
   });
 
-  return { rows, issues };
+  const active=rows.flatMap(row=>{
+    const cancelled=cancellations.filter(c=>c.courseId===row.courseId && c.weekday===row.weekday && c.startPeriod===row.startPeriod && c.endPeriod===row.endPeriod);
+    if(!cancelled.length)return [row];
+    const parsed=parseWeeks(row.weeksText);
+    if(!parsed.weeks)return [row]; // normalizer reports the invalid active weeks
+    const weeks=parsed.weeks.filter(w=>!cancelled.some(c=>c.weeks.includes(w)));
+    return weeks.length ? [{...row,weeksText:weeks.join(",")}] : [];
+  });
+  return { rows:active, issues };
 }

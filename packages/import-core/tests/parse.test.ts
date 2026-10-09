@@ -114,6 +114,13 @@ describe("IMPORT-02 同课程不同 meeting 都保留", () => {
 });
 
 describe("标准 JSON 导入", () => {
+  it("uses reviewed custom calendar times instead of silently restoring file times", () => {
+    const calendar = {...term, periods:term.periods.map((p,i)=>i===0 ? {...p,start:"08:10",end:"08:50"} : p)};
+    const result = parseImportFile({name:"standard.json",content:JSON.stringify(timetableFixture)},"json",calendar);
+    expect(result.payload!.term).toEqual(calendar);
+    expect(result.payload!.courses).toEqual(timetableFixture.courses);
+    expect(timetableFixture.term.periods[0].start).not.toBe("08:10");
+  });
   it("fixtures/timetable.demo.json 通过结构与语义规范化", () => {
     const result = parseImportFile(
       { name: "timetable.demo.json", content: JSON.stringify(timetableFixture) },

@@ -82,8 +82,8 @@ export function extractCourseObservation(
     frameOrigin: null,
     tableHeaders: headers,
     rows,
-    selectedTerm: options.selectedTerm ?? null,
-    selectedWeeks: options.selectedWeeks ?? [],
+    selectedTerm: options.selectedTerm ?? (doc.querySelector<HTMLInputElement>('input[id$="Semester"]')?.value || null),
+    selectedWeeks: options.selectedWeeks ?? (()=>{const selector=doc.querySelector<HTMLSelectElement>('#startWeek');const match=selector?.selectedOptions[0]?.textContent?.match(/第(\d+)周/);return match ? [Number(match[1])] : [];})(),
     hasPagination: doc.querySelector("[data-pagination], .pagination") !== null,
     hasVirtualRows: doc.querySelector("[data-virtual], .virtual-list") !== null,
   };
@@ -194,14 +194,15 @@ export function mountImportButton(
       setTimeout(() => { tip.style.display = "none"; }, ms);
     };
 
-    button.addEventListener("click", () => {
+    button.addEventListener("click", async () => {
       button.disabled = true;
       button.textContent = "读取中…";
       try {
         // 只读取课程表格文本：不碰 cookie、密码框、SSO 字段、整页 HTML
         const observation = extractCourseObservation(doc, { pageUrl });
-        button.textContent = "✓ 已读取，正在打开核对页…";
-        void chromeApi.runtime.sendMessage({ type: "schedule-auto-observation", payload: observation });
+        const response = await chromeApi.runtime.sendMessage({ type: "schedule-auto-observation", payload: observation });
+        if (!response?.ok) throw new Error("无法打开核对页，请刷新后重试");
+        button.textContent = "✓ 已读取，已打开核对页";
         showTip("已读取课表（不含任何登录信息），即将打开核对页面。");
         setTimeout(() => {
           button.disabled = false;

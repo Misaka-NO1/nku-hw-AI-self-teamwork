@@ -62,7 +62,7 @@ export function isSenderAllowed(
   isUrlWhitelisted: (url: string) => boolean,
   isAppUrlCheck: (url: string) => boolean = () => false,
 ): boolean {
-  if (sender.id !== undefined && sender.id !== extensionId) {
+  if (sender.id !== extensionId) {
     return false;
   }
   if (message.type === "submit-confirmed-draft") {
@@ -71,11 +71,11 @@ export function isSenderAllowed(
   }
   if (message.type === "schedule-observation" || message.type === "schedule-auto-observation") {
     const pageUrl = sender.tabUrl ?? sender.url ?? "";
-    return isUrlWhitelisted(pageUrl);
+    return isUrlWhitelisted(pageUrl) && (!sender.url || isUrlWhitelisted(sender.url));
   }
   if (message.type === "app-bridge-ready") {
     const pageUrl = sender.tabUrl ?? sender.url ?? "";
-    return isAppUrlCheck(pageUrl);
+    return isAppUrlCheck(pageUrl) && (!sender.url || isAppUrlCheck(sender.url));
   }
-  return sender.id === extensionId || sender.id === undefined;
+  return sender.id === extensionId;
 }
