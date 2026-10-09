@@ -39,3 +39,10 @@ def install_calendar_routes(site, settings, store, browser_args, format_times):
         if request.url.query:
             raise AppError(422, "VALIDATION_ERROR", "写入参数只来自请求正文")
         return reply(request, service.update(args(request, True), task_id, payload, key))
+
+    @site.post("/api/v1/tasks/{task_id}/calendar/delete")
+    def delete(request: Request, task_id: str, payload: Annotated[dict[str, Any], Body()],
+               key: Annotated[str, Header(alias="Idempotency-Key")]):
+        if request.url.query:
+            raise AppError(422, "VALIDATION_ERROR", "删除参数只来自请求正文")
+        return reply(request, service.delete(args(request, True), task_id, payload, key))

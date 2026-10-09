@@ -2190,7 +2190,7 @@
             "$ref": "#/$defs/CalendarTask"
           }
         },
-        "capabilities": {
+          "capabilities": {
           "type": "object",
           "properties": {
             "scheduling": {
@@ -2199,9 +2199,12 @@
             "status": {
               "type": "boolean"
             },
-            "reminders": {
-              "type": "boolean"
-            }
+              "reminders": {
+                "type": "boolean"
+              },
+              "deletion": {
+                "type": "boolean"
+              }
           },
           "required": [
             "scheduling",

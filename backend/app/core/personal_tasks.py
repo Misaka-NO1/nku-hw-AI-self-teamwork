@@ -3,7 +3,8 @@
 No school identifier or workspace supplied by a model establishes ownership.
 The existing verified session / freshly scoped OAuth grant does that in PG.
 """
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
+import re
 from secrets import token_urlsafe
 from typing import Literal
 from zoneinfo import ZoneInfo
@@ -11,8 +12,27 @@ from zoneinfo import ZoneInfo
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
 from app.core.errors import AppError
+from app.core.envelope import FieldError
 from app.core.security import payload_hash, require_idempotency_key
 from app.domains.schedule.service import parse_datetime
+
+
+def entry_datetime(value: str, *, field: str) -> str:
+    """Canonicalize explicit instants, never infer dates or parse user prose.
+
+    End-of-day 24:00 is the following midnight, not 23:59. Limit this
+    compatibility to exact zero minutes/seconds and an explicit UTC offset.
+    """
+    midnight = re.fullmatch(r"(\d{4}-\d{2}-\d{2})T24:00(?::00)?(Z|[+-]\d{2}:\d{2})", value)
+    try:
+        if midnight:
+            following = date.fromisoformat(midnight[1]) + timedelta(days=1)
+            value = f"{following.isoformat()}T00:00:00{midnight[2]}"
+        return parse_datetime(value, field=field).isoformat()
+    except (AppError, ValueError, OverflowError):
+        raise AppError(422, "VALIDATION_ERROR", "请将时间转换为含日期和时区的 ISO 格式；尚未保存",
+            field_errors=[FieldError(field=field, code="datetime_format",
+                message="时间须包含完整日期、时刻与时区；日末24:00表示次日00:00")]) from None
 
 
 class Slot(BaseModel):
@@ -42,7 +62,7 @@ class EntryContent(BaseModel):
         for name in ("due_at", "reminder_at"):
             value = getattr(self, name)
             if value is not None:
-                parse_datetime(value, field=name)
+                setattr(self, name, entry_datetime(value, field=f"content.{name}"))
         if self.due_date is not None:
             if date.fromisoformat(self.due_date).isoformat() != self.due_date:
                 raise ValueError("截止日期格式不正确")
@@ -51,7 +71,10 @@ class EntryContent(BaseModel):
         if self.reminder_minutes not in (None, 0, 5, 15, 30, 60):
             raise ValueError("提前提醒选项不正确")
         ranges = []
-        for slot in self.scheduled_slots:
+        for index, slot in enumerate(self.scheduled_slots):
+            for key in ("start", "end"):
+                setattr(slot, key, entry_datetime(getattr(slot, key),
+                    field=f"content.scheduled_slots.{index}.{key}"))
             a, b = (parse_datetime(getattr(slot, k), field=k) for k in ("start", "end"))
             if a >= b or (b - a).total_seconds() > 86400:
                 raise ValueError("每个安排区间必须递增且不超过一天")
@@ -73,7 +96,16 @@ class EntryContent(BaseModel):
 def content(value):
     try:
         return EntryContent.model_validate(value).model_dump()
-    except (ValidationError, ValueError):
+    except ValidationError as exc:
+        # Pydantic's error includes raw input; expose only known contract paths.
+        fields = []
+        for error in exc.errors(include_input=False, include_context=False, include_url=False):
+            path = "content." + ".".join(str(part) for part in error["loc"])
+            if re.fullmatch(r"content\.(?:title|kind|due_at|due_date|reminder_at|notes|reminder_minutes|scheduled_slots(?:\.[0-7](?:\.(?:start|end))?)?)", path):
+                fields.append(FieldError(field=path, code="invalid_field",
+                    message="字段类型或结构不符合接口；notes须为字符串，无备注用空字符串"))
+        raise AppError(422, "VALIDATION_ERROR", "请核对待办字段类型与时间；尚未保存", field_errors=fields) from None
+    except ValueError:
         raise AppError(422, "VALIDATION_ERROR", "请核对标题、截止、提醒点和选定区间；提醒不需要结束时间") from None
 
 

@@ -30,6 +30,7 @@ export function Layout() {
               ? <NavLink key={item.path} to={href}>{item.label}</NavLink>
               : <a key={item.path} href={href}>{item.label}</a>;
           })}
+          {identityPilot && <a href="/tools/device">我的设备码</a>}
         </nav>
         {GENIOS_AGENT_URL ? (
           <a className="back-to-genios" href={GENIOS_AGENT_URL}>

@@ -3,5 +3,5 @@ packages:
   - "extension"
   - "packages/*"
 allowBuilds:
-  core-js-pure: set this to true or false
-  esbuild: set this to true or false
+  core-js-pure: false
+  esbuild: true

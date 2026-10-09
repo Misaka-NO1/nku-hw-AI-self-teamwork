@@ -31,6 +31,20 @@ def build(name: str, *, backend_only: bool = False) -> dict:
     shutil.copytree(ROOT / "contracts", output / "contracts")
     if not backend_only:
         shutil.copytree(frontend, output / "frontend/dist")
+        # Public reader binary only. Never package local observations, source
+        # maps, tickets, browser storage or private runtime configuration.
+        reader = output / "frontend/dist/assets/campus-schedule-reader.zip"
+        extension = ROOT / "extension"
+        required = [extension / "manifest.json", *[extension / "dist" / name for name in ("background.js", "content.js", "app-bridge.js", "preview.js", "preview.html")]]
+        if any(not path.is_file() for path in required):
+            raise ValueError("Build the timetable reader extension before packaging")
+        with zipfile.ZipFile(reader, "w", zipfile.ZIP_DEFLATED) as bundle:
+            for path in required:
+                info = zipfile.ZipInfo(path.relative_to(extension).as_posix())
+                info.create_system = 3
+                info.external_attr = 0o100644 << 16
+                info.compress_type = zipfile.ZIP_DEFLATED
+                bundle.writestr(info, path.read_bytes())
     shutil.copy2(ROOT / "backend/requirements.lock", output / "backend/requirements.lock")
     if not backend_only:
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/Dockerfile", output / "Dockerfile")
@@ -38,7 +52,7 @@ def build(name: str, *, backend_only: bool = False) -> dict:
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", output / "competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", output / "notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", output / "task-calendar-migration.sql")
-    for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql"):
+    for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql"):
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / name, output / name)
     (output / "fixtures").mkdir()
     for filename in READ_ONLY_FIXTURES:
@@ -62,7 +76,11 @@ def build(name: str, *, backend_only: bool = False) -> dict:
     with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
         for path in sorted(output.rglob("*")):
             if path.is_file():
-                bundle.write(path, path.relative_to(output).as_posix())
+                info = zipfile.ZipInfo(path.relative_to(output).as_posix())
+                info.create_system = 3
+                info.external_attr = 0o100644 << 16
+                info.compress_type = zipfile.ZIP_DEFLATED
+                bundle.writestr(info, path.read_bytes())
     return {"package": str(archive), "sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
             "files": len(manifest), "schema": "nku_identity_pilot_v1", "credential_files_included": False,
             "calendar_migration_included": True,

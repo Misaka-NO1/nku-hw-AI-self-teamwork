@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ApiError, apiClient } from "../../shared/api/client";
 import { tasksApi } from "../tasks/api";
-import { loadCalendar, loadCandidates, updateCalendar } from "./api";
+import { deleteCalendar, loadCalendar, loadCandidates, updateCalendar } from "./api";
 import { previewTasks } from "./model";
 vi.mock("../../shared/api/client",async importOriginal=>{
   const original=await importOriginal<typeof import("../../shared/api/client")>();
@@ -43,5 +43,14 @@ describe("calendar adapter",()=>{
     vi.mocked(apiClient.get).mockResolvedValue({candidateSlots:[]});await loadCandidates(session,"task/a");
     expect(apiClient.get).toHaveBeenCalledWith("/api/v1/tasks/task%2Fa/calendar/candidates?workspace_ref=test-workspace");
     expect(apiClient.post).not.toHaveBeenCalled();
+  });
+  it("deletion sends single-task revision, confirmation, CSRF and validates receipt",async()=>{
+    vi.mocked(apiClient.post).mockResolvedValue({taskId:"task/a",deleted:true});
+    await deleteCalendar(session,"task/a",3,"stable-delete-key");
+    expect(apiClient.post).toHaveBeenCalledWith("/api/v1/tasks/task%2Fa/calendar/delete",{
+      workspace_ref:session.workspaceRef,expected_revision:3,confirmed:true},
+      {headers:{"X-CSRF-Token":"fictional-csrf","Idempotency-Key":"stable-delete-key"}});
+    vi.mocked(apiClient.post).mockResolvedValue({taskId:"other",deleted:true});
+    await expect(deleteCalendar(session,"task/a",3,"stable-delete-key")).rejects.toThrow("有效删除回执");
   });
 });

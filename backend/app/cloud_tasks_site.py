@@ -38,9 +38,10 @@ RPC_URL = f"https://{ENV_ID}.api.tcloudbasegateway.com/v1/rdb/rest/rpc/nku_tasks
 
 class RequestBodyLimit:
     """Bound streamed/chunked input too; Content-Length alone is not a limit."""
-    def __init__(self, app, notice_text_enabled=False):
+    def __init__(self, app, notice_text_enabled=False, personal_schedules_enabled=False):
         self.app = app
         self.notice_text_enabled = notice_text_enabled
+        self.personal_schedules_enabled = personal_schedules_enabled
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or scope["method"] not in {"POST", "PUT", "PATCH"}:
@@ -50,7 +51,9 @@ class RequestBodyLimit:
             scope.get("path", "").startswith("/api/v1/notice-text/")
             or scope.get("path", "").startswith("/oauth/notice/"))
         image = self.notice_text_enabled and scope.get("path", "") == "/api/v1/notice-text/images/read"
-        limit = 3 * 1024 * 1024 if image else 524288 if extended else 32768
+        schedule_upload = self.personal_schedules_enabled and scope.get("path", "") in {
+            "/api/v1/schedules/import-drafts", "/api/v1/schedules/validate"}
+        limit = 3 * 1024 * 1024 if image else 1048576 if schedule_upload else 524288 if extended else 32768
         while True:
             event = await receive()
             if event["type"] == "http.disconnect":

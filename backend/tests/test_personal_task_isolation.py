@@ -191,3 +191,34 @@ def test_direct_rpc_owner_injection_csrf_and_idempotency_are_rejected(personal):
     bearer = grant(client)
     client.post("/api/v1/auth/cloudbase/logout", headers=headers(b))
     assert client.get("/oauth/tasks/entries", headers=bearer).status_code == 401
+
+
+def test_datetime_errors_have_safe_fields_and_do_not_save(personal):
+    client, _, _, _ = personal
+    a = login(client)
+    response = draft(client, a, due_at="private-invalid-time-value")
+    assert response.status_code == 422
+    error = response.json()["error"]
+    assert error["field_errors"][0]["field"] == "content.due_at"
+    assert "private-invalid-time-value" not in response.text
+    response = draft(client, a, key="null-notes-test", notes=None)
+    assert response.status_code == 422
+    assert response.json()["error"]["field_errors"][0]["field"] == "content.notes"
+    assert calendar(client, a).json()["data"]["items"] == []
+
+
+def test_midnight_deadline_draft_commit_and_readback(personal):
+    client, _, _, _ = personal
+    a = login(client)
+    slots = [{"start": "2026-10-09T15:00:00+08:00", "end": "2026-10-09T17:00:00+08:00"}]
+    response = draft(client, a, kind="deadline", due_at="2026-10-13T24:00:00+08:00",
+                     scheduled_slots=slots)
+    assert response.status_code == 200, response.text
+    value = response.json()["data"]
+    assert calendar(client, a).json()["data"]["items"] == []
+    saved = commit(client, a, value)
+    assert saved.status_code == 200, saved.text
+    rows = calendar(client, a).json()["data"]["items"]
+    assert len(rows) == 1
+    assert rows[0]["notice"]["due"]["at"] == "2026-10-14T00:00:00+08:00"
+    assert rows[0]["scheduled_slots"] == slots

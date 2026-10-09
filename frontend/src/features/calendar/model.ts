@@ -16,7 +16,7 @@ export interface CalendarTask extends TaskRecord {
 export interface Candidate { start: string; end: string; durationMinutes: number }
 export interface CalendarData {
   items: CalendarTask[];
-  capabilities: { scheduling: boolean; status: boolean; reminders: boolean };
+  capabilities: { scheduling: boolean; status: boolean; reminders: boolean; deletion?: boolean };
   legacy?: boolean;
 }
 export const READ_ONLY = { scheduling:false, status:false, reminders:false };

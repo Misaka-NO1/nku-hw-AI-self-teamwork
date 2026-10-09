@@ -7,6 +7,7 @@ export async function loadCalendar(session:DemoSession,signal?:AbortSignal):Prom
   try {
     const result=await apiClient.get<CalendarData>(`/api/v1/tasks/calendar?${new URLSearchParams({workspace_ref:session.workspaceRef})}`,{signal});
     if(!Array.isArray(result.items) || !result.capabilities || ["scheduling","status","reminders"].some(k=>typeof result.capabilities[k as keyof typeof result.capabilities]!=="boolean")
+      || (result.capabilities.deletion!==undefined&&typeof result.capabilities.deletion!=="boolean")
       || result.items.some(t=>!t.taskId || !t.notice || !Number.isInteger(t.calendarRevision) || !["pending","completed","cancelled"].includes(t.status)
         || (t.reminderMinutes!==null && (!Number.isInteger(t.reminderMinutes)||t.reminderMinutes<0||t.reminderMinutes>10080))
         || (t.scheduledStart===null)!==(t.scheduledEnd===null) || (t.scheduledStart!==null && (!Number.isFinite(Date.parse(t.scheduledStart))||!(Date.parse(t.scheduledEnd!)>Date.parse(t.scheduledStart))))))
@@ -30,4 +31,11 @@ export interface CalendarUpdate {
 export function updateCalendar(session:DemoSession,taskId:string,update:CalendarUpdate,key:string):Promise<CalendarTask> {
   return apiClient.post(`/api/v1/tasks/${encodeURIComponent(taskId)}/calendar`,{workspace_ref:session.workspaceRef,...update},
     {headers:{"X-CSRF-Token":session.csrfToken,"Idempotency-Key":key}});
+}
+export async function deleteCalendar(session:DemoSession,taskId:string,revision:number,key:string) {
+  const result=await apiClient.post<{taskId:string;deleted:boolean}>(`/api/v1/tasks/${encodeURIComponent(taskId)}/calendar/delete`,
+    {workspace_ref:session.workspaceRef,expected_revision:revision,confirmed:true},
+    {headers:{"X-CSRF-Token":session.csrfToken,"Idempotency-Key":key}});
+  if(result.deleted!==true||result.taskId!==taskId)throw new Error("未取得有效删除回执，请刷新核对。");
+  return result;
 }

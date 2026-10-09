@@ -18,7 +18,7 @@ describe("OAuth login return target", () => {
       expect(oauthReturnPath(outer("/oauth/authorize?"+bad),origin)).toBeNull();
     }
   });
-  it.each(["demo:read tasks:read", "demo:read tasks:read tasks:write"])("resumes explicit personal-task consent %s without auto-approving", scope => {
+  it.each(["demo:read tasks:read", "demo:read tasks:read tasks:write", "demo:read devices:bind", "demo:read tasks:read devices:bind", "demo:read tasks:read tasks:write devices:bind"])("resumes explicit personal-task consent %s without auto-approving", scope => {
     const five = new URLSearchParams(query);
     five.delete("code_challenge"); five.delete("code_challenge_method");
     five.set("scope", scope);

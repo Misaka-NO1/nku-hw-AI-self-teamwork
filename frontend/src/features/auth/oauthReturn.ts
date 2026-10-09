@@ -9,7 +9,8 @@ export function oauthReturnPath(search: string, origin: string): string | null {
     if (next.origin !== origin || next.pathname !== "/oauth/authorize" || next.hash) return null;
     const base = ["response_type", "client_id", "redirect_uri", "scope", "state"];
     const competition = !next.searchParams.has("code_challenge") && !next.searchParams.has("code_challenge_method");
-    const consentScopes = new Set(["demo:read", "demo:read tasks:read", "demo:read tasks:read tasks:write"]);
+    const consentScopes = new Set(["demo:read", "demo:read tasks:read", "demo:read tasks:read tasks:write",
+      "demo:read devices:bind", "demo:read tasks:read devices:bind", "demo:read tasks:read tasks:write devices:bind"]);
     const required = competition ? base : [...base, "code_challenge", "code_challenge_method"];
     const keys = [...next.searchParams.keys()];
     if (keys.length !== required.length || required.some(key => next.searchParams.getAll(key).length !== 1)) return null;

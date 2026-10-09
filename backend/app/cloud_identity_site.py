@@ -35,13 +35,14 @@ from app.core.persistent_auth import COOKIE_MAX_AGE, UNTIL_REVOKED_EPOCH
 from app.core.config import get_settings
 from app.core.contracts import validate_boundary
 from app.core.demo import FIXTURE_SET_ID,enforce_demo_fixture
-from app.core.envelope import WarningItem,failure,success
+from app.core.envelope import FieldError,WarningItem,failure,success
 from app.core.errors import AppError
 from app.core.owned_time import calculate_owned_time
 from app.core.request_id import current_request_id,resolve_request_id
 from app.core.security import SESSION_COOKIE,payload_hash,require_idempotency_key,secret_hash
 from app.domains.schedule import service as schedule
 from app.core.domain_adapter import execute_domain,public_principal
+from app.device_login_site import install_device_login
 
 
 def require_cloud_identity(settings):
@@ -99,6 +100,8 @@ def install_health_diagnostics(site,runtime):
 
 def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     runtime=settings or get_settings()
+    if runtime.cloud_agent_device_binding_enabled and not (runtime.cloud_persistent_auth_enabled and runtime.cloud_oauth_competition_compat_enabled):
+        raise ValueError("Agent device binding requires explicit persistent own-account OAuth")
     if runtime.cloud_persistent_auth_enabled and not (runtime.cloud_personal_tasks_enabled and runtime.cloud_oauth_competition_compat_enabled):
         raise ValueError("Persistent access requires the explicitly scoped own-calendar configuration")
     if runtime.cloud_personal_tasks_enabled and not (runtime.cloud_task_calendar_enabled and runtime.cloud_oauth_competition_compat_enabled):
@@ -139,6 +142,12 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             raise ValueError("Unexpected database schema version")
         if runtime.cloud_persistent_auth_enabled and database.call("persistent_probe",{})!={"schema_version":"persistent-auth-v1"}:
             raise ValueError("Persistent authorization migration required")
+        if runtime.cloud_personal_schedules_enabled and database.call("personal_schedule_probe",{})!={"schema_version":"personal-schedules-v1"}:
+            raise ValueError("Personal timetable migration required")
+        if runtime.cloud_device_login_enabled and database.device_call("probe",{})!={"schema_version":"browser-device-v1"}:
+            raise ValueError("Device binding migration required")
+        if runtime.cloud_agent_device_binding_enabled and database.agent_device_call("probe",{})!={"schema_version":"agent-device-v1"}:
+            raise ValueError("Agent device binding migration required")
         if runtime.cloud_oauth_competition_compat_enabled:
             if database.competition_call("probe",{})!={"schema_version":"competition-oauth-v1"}:
                 raise ValueError("Competition OAuth migration required")
@@ -158,7 +167,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         finally: database.close()
 
     site=FastAPI(lifespan=lifespan,docs_url=None,redoc_url=None,openapi_url=None)
-    site.add_middleware(RequestBodyLimit, notice_text_enabled=runtime.cloud_notice_text_pilot_enabled)
+    site.add_middleware(RequestBodyLimit, notice_text_enabled=runtime.cloud_notice_text_pilot_enabled,
+                        personal_schedules_enabled=runtime.cloud_personal_schedules_enabled)
     attempts=defaultdict(deque); lock=Lock()
 
     @site.middleware("http")
@@ -168,12 +178,12 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             response=JSONResponse(failure(request_id=current_request_id(request),code="FORBIDDEN",message="Pilot disabled").model_dump(mode="json"),status_code=403)
         else:
             path=request.url.path
-            family="login" if path=="/api/v1/auth/cloudbase/session" else "oauth" if path.startswith("/oauth/") else "business"
+            family="device_init" if path=="/api/v1/auth/agent-device/start" else "login" if path=="/api/v1/auth/cloudbase/session" else "oauth" if path.startswith("/oauth/") else "business"
             if path.startswith(("/api/","/oauth/")):
                 try:
                     peer=request.client.host if request.client else "unknown"
                     database.call("rate_limit",{"bucket_hash":secret_hash(peer+":"+family),
-                        "limit":10 if family=="login" else 60 if family=="oauth" else 120})
+                        "limit":10 if family in {"login","device_init"} else 60 if family=="oauth" else 120})
                 except AppError as exc:
                     response=JSONResponse(failure(request_id=current_request_id(request),code=exc.code,message=exc.message,
                         retryable=exc.retryable).model_dump(mode="json"),status_code=exc.status_code)
@@ -190,8 +200,15 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
 
     @site.exception_handler(AppError)
     async def app_error(request,exc):
+        # Preserve actionable time-field locations without echoing private
+        # inputs, parser exceptions, or arbitrary database error details.
+        messages = {"datetime_format": "时间须包含完整日期、时刻与时区；日末24:00表示次日00:00",
+            "invalid_field": "字段类型或结构不符合接口；notes须为字符串，无备注用空字符串"}
+        time_fields = [FieldError(field=e.field, code=e.code, message=messages[e.code])
+            for e in exc.field_errors if e.code in messages and
+            re.fullmatch(r"content\.(?:title|kind|due_at|due_date|reminder_at|notes|reminder_minutes|scheduled_slots(?:\.[0-7](?:\.(?:start|end))?)?)", e.field)]
         return JSONResponse(failure(request_id=current_request_id(request),code=exc.code,message=exc.message,
-            retryable=exc.retryable).model_dump(mode="json"),status_code=exc.status_code)
+            field_errors=time_fields,retryable=exc.retryable).model_dump(mode="json"),status_code=exc.status_code)
 
     @site.exception_handler(RequestValidationError)
     async def validation_error(request,_):
@@ -220,6 +237,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     def reply(request,data,**kwargs):
         return success(format_times(data),request_id=current_request_id(request),data_version="demo-v1",**kwargs)
 
+    install_device_login(site,runtime,database,browser_args)
+    from app.agent_device_site import install_agent_device, RETURNS, binding_url, valid_destination, device_status
+    install_agent_device(site,runtime,database)
+
     def review(result):
         path="import" if result["kind"]=="schedule" else "tasks"
         return {**result,"review_url":runtime.app_origin+f"/tools/{path}?draft_id={result['draft_id']}"}
@@ -227,10 +248,21 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     def create_draft(args,kind,payload,key):
         require_idempotency_key(key)
         validate_boundary(payload,"TimetableImport" if kind=="schedule" else "NoticeDraft")
-        digest=enforce_demo_fixture(payload,kind)
+        personal_schedule = kind=="schedule" and runtime.cloud_personal_schedules_enabled
+        if personal_schedule:
+            checked=schedule.validate_timetable(payload)
+            payload=checked["normalized_payload"]
+            if payload["dataset_kind"]=="personal" and payload["term"]["calendar_status"] not in {"user_confirmed","official_verified"}:
+                raise AppError(422,"VALIDATION_ERROR","请先核对本人课表的学期校历，不能套用演示校历")
+            if len(payload["courses"])>300 or len(str(payload).encode())>900000:
+                raise AppError(422,"VALIDATION_ERROR","课表过大，请缩小导入范围")
+            digest=payload_hash(payload)
+        else:
+            digest=enforce_demo_fixture(payload,kind)
         return review(database.call("create_draft",{**args,"kind":kind,"key":key,
             "request_hash":payload_hash({"workspace_ref":args.get("workspace_ref"),"kind":kind,"payload":payload}),
-            "payload_hash":digest,"draft_id":"draft_"+token_urlsafe(18)}))
+            "payload_hash":digest,"draft_id":"draft_"+token_urlsafe(18),
+            **({"payload":payload} if personal_schedule else {})}))
 
     @site.get("/__tcb_probe__")
     def probe(): return Response("ok",media_type="text/plain")
@@ -239,6 +271,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     def health():
         if database.call("probe",{})!={"schema_version":"identity-pilot-v1"}:
             raise AppError(503,"DEPENDENCY_UNAVAILABLE","Identity storage unavailable",True)
+        if runtime.cloud_device_login_enabled and database.device_call("probe",{})!={"schema_version":"browser-device-v1"}:
+            raise AppError(503,"DEPENDENCY_UNAVAILABLE","Device binding storage unavailable",True)
+        if runtime.cloud_agent_device_binding_enabled and database.agent_device_call("probe",{})!={"schema_version":"agent-device-v1"}:
+            raise AppError(503,"DEPENDENCY_UNAVAILABLE","Agent device binding storage unavailable",True)
         if runtime.cloud_oauth_competition_compat_enabled:
             if database.competition_call("probe",{})!={"schema_version":"competition-oauth-v1"}:
                 raise AppError(503,"DEPENDENCY_UNAVAILABLE","Competition storage unavailable",True)
@@ -255,12 +291,16 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
                 "persistent_store":"cloudbase_pg","oauth_enabled":runtime.cloud_oauth_pilot_enabled,
                 "oauth_competition_compat":runtime.cloud_oauth_competition_compat_enabled,
                 "own_task_recording":runtime.cloud_personal_tasks_enabled,
-                "persistent_authorization":runtime.cloud_persistent_auth_enabled}
+                "persistent_authorization":runtime.cloud_persistent_auth_enabled,
+                "device_login_enabled":runtime.cloud_device_login_enabled,
+                "agent_device_binding_enabled":runtime.cloud_agent_device_binding_enabled}
 
     @site.get("/api/v1/auth/cloudbase/config")
     def config(request:Request):
         return reply(request,{"env_id":runtime.cloudbase_auth_env_id,"region":"ap-shanghai","dataset_kind":"demo",
-            "personal_uploads":False,"agent_paired":False,"persistent_authorization":runtime.cloud_persistent_auth_enabled})
+            "personal_uploads":False,"agent_paired":False,"persistent_authorization":runtime.cloud_persistent_auth_enabled,
+            "device_login_enabled":runtime.cloud_device_login_enabled,
+            "agent_device_binding_enabled":runtime.cloud_agent_device_binding_enabled})
 
     @site.post("/api/v1/auth/cloudbase/session")
     async def login(request:Request,response:Response):
@@ -307,6 +347,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         workspace=database.call("get_workspace",args)
         if workspace.get("workspace_ref")!=context["workspace_ref"]:
             raise AppError(401,"AUTH_REQUIRED","Browser session context does not match the verified owner")
+        if runtime.cloud_agent_device_binding_enabled and device_status(request,database)["status"] != "bound":
+            raise AppError(401,"AUTH_REQUIRED","Bind this browser to the Agent authorized account first")
         result={**context,"dataset_kind":"demo","personal_uploads":False,"agent_paired":False}
         validate_boundary(format_times(result),"CloudBrowserSession")
         if runtime.cloud_persistent_auth_enabled and context["expires_epoch"] == UNTIL_REVOKED_EPOCH:
@@ -314,11 +356,22 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             for name in (SESSION_COOKIE, CONTEXT_COOKIE):
                 response.set_cookie(name,request.cookies[name],max_age=COOKIE_MAX_AGE,
                                     httponly=True,secure=True,samesite="strict",path="/")
+            if runtime.cloud_agent_device_binding_enabled:
+                from app.agent_device_site import COOKIE
+                response.set_cookie(COOKIE,request.cookies[COOKIE],max_age=COOKIE_MAX_AGE,
+                                    httponly=True,secure=True,samesite="strict",path="/")
         return reply(request,result)
 
     @site.post("/api/v1/auth/cloudbase/logout")
     def logout(request:Request,response:Response):
-        result=database.call("logout",browser_args(request,True))
+        auth=browser_args(request,True)
+        if runtime.cloud_agent_device_binding_enabled:
+            from app.agent_device_site import COOKIE
+            from app.device_login_site import SECRET
+            device_secret=request.cookies.get(COOKIE,"")
+            if SECRET.fullmatch(device_secret):
+                database.agent_device_call("detach",{**auth,"challenge_hash":secret_hash(device_secret)})
+        result=database.call("logout",auth)
         response.delete_cookie(SESSION_COOKIE,path="/",httponly=True,secure=True,samesite="strict")
         response.delete_cookie(CONTEXT_COOKIE,path="/",httponly=True,secure=True,samesite="strict")
         return reply(request,result)
@@ -400,7 +453,11 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
 
     @site.post("/api/v1/schedules/validate")
     def validate(request:Request,payload:Annotated[Any,Body()]):
-        validate_boundary(payload,"TimetableImport"); enforce_demo_fixture(payload,"schedule")
+        validate_boundary(payload,"TimetableImport")
+        if runtime.cloud_personal_schedules_enabled:
+            database.call("get_workspace",browser_args(request,True))
+        else:
+            enforce_demo_fixture(payload,"schedule")
         return reply(request,schedule.validate_timetable(payload))
 
     @site.post("/api/v1/degree/audit")
@@ -447,10 +504,19 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
 
     site.mount("/assets",StaticFiles(directory=root/"assets"),name="assets")
     @site.get("/")
-    def home(): return RedirectResponse("/tools/login")
+    def home(): return RedirectResponse(binding_url("/tools/timetable") if runtime.cloud_agent_device_binding_enabled else "/tools/login")
     @site.get("/tools/{tool}")
-    def tool_page(tool:str):
+    def tool_page(tool:str,request:Request):
         if tool not in {"login","tasks","import","timetable","affairs","degree","calendar"}: raise AppError(404,"NOT_FOUND","Use the existing published public content service")
+        if runtime.cloud_agent_device_binding_enabled and request.url.path in RETURNS:
+            try:
+                database.call("get_workspace",{"session_hash":browser_args(request)["session_hash"]})
+                if device_status(request,database)["status"] != "bound": raise AppError(401,"AUTH_REQUIRED","Bind this browser to the Agent account first")
+            except AppError as exc:
+                if exc.code not in {"AUTH_REQUIRED","TOKEN_EXPIRED"}: raise
+                destination=request.url.path + ("?"+request.url.query if request.url.query else "")
+                if not valid_destination(destination): raise AppError(422,"VALIDATION_ERROR","Unsupported tool return parameters")
+                return RedirectResponse(binding_url(destination),status_code=303)
         return FileResponse(root/"index.html",headers={"Cache-Control":"no-store"})
     install_health_diagnostics(site,runtime)
     return site

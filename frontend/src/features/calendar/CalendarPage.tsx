@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ApiError } from "../../shared/api/client";
 import { useBrowserSession } from "../auth/useBrowserSession";
-import { loadCalendar, loadCandidates, updateCalendar, type CalendarUpdate } from "./api";
+import { deleteCalendar, loadCalendar, loadCandidates, updateCalendar, type CalendarUpdate } from "./api";
 import { calendarErrorText as errorText, confirmationText } from "./messages";
 import { calendarIcs, dueDay, exactCandidates, formatTime, isOverdue, monthDays, occursOn,
   plannedRange, plannedRanges, READ_ONLY, reminderKey, reminderTarget, remindersDue, shanghaiDay, shiftMonth, summary,
@@ -28,6 +28,7 @@ export default function CalendarPage() {
   const [candidates,setCandidates]=useState<Candidate[]>([]);
   const [choice,setChoice]=useState<Candidate|null>(null);
   const [confirmed,setConfirmed]=useState(false);
+  const [deleteConfirm,setDeleteConfirm]=useState(false);
   const [reminder,setReminder]=useState<number|null>(15);
   const [notifications,setNotifications]=useState(false);
   const [notificationText,setNotificationText]=useState("");
@@ -55,7 +56,7 @@ export default function CalendarPage() {
     return ()=>{active=false;controller.abort();};
   },[auth.session?.workspaceRef,reload]);
   useEffect(()=>{
-    setCandidates([]);setChoice(null);setConfirmed(false);setReminder(task?.reminderMinutes??null);
+    setCandidates([]);setChoice(null);setConfirmed(false);setDeleteConfirm(false);setReminder(task?.reminderMinutes??null);
   },[selected,task?.calendarRevision]);
   useEffect(()=>{setNotifications(false);delivered.current.clear();},[auth.session?.workspaceRef]);
   useEffect(()=>{
@@ -141,6 +142,23 @@ export default function CalendarPage() {
       setNotificationText(permission==="granted"?"仅在本页面保持运行且登录有效时提醒；关闭页面后不保证提醒。":"通知未授权，可在浏览器设置中修改；页内提醒仍可使用。");
     } catch {setNotifications(false);setNotificationText("浏览器未能开启通知，请使用页内提醒或导出日历。");}
   }
+  async function removeTask() {
+    if(!task||!editable||!deleteConfirm||!data.capabilities.deletion)return;
+    const currentScope=scope.current, id=task.taskId, revision=task.calendarRevision;
+    await perform(async()=>{
+      if(!auth.session)return;
+      if(Date.parse(auth.session.expiresAt)<=Date.now())throw new Error("会话已过期，请重新登录后删除。");
+      const signature=JSON.stringify(["delete",currentScope,id,revision]);
+      if(writeAttempt.current?.signature!==signature)writeAttempt.current={signature,key:crypto.randomUUID()};
+      await deleteCalendar(auth.session,id,revision,writeAttempt.current.key);
+      if(scope.current!==currentScope)return;
+      const fresh=await loadCalendar(auth.session);
+      if(scope.current!==currentScope)return;
+      if(fresh.legacy||fresh.items.some(t=>t.taskId===id))throw new Error("删除后读回未确认，请刷新核对；重试沿用同一幂等键。");
+      setData(fresh);setSelected(null);setDeleteConfirm(false);writeAttempt.current=null;
+      setMessage("事项已删除，并已从后端读回确认；不会再出现在日历或 Agent 的已保存事项中。");
+    });
+  }
   function downloadIcs() {
     const blob=new Blob([calendarIcs(data.items,clock)],{type:"text/calendar;charset=utf-8"});
     const url=URL.createObjectURL(blob),link=document.createElement("a");
@@ -200,7 +218,12 @@ export default function CalendarPage() {
           {task.notice.needsConfirmation.length>0&&<p>待确认：{task.notice.needsConfirmation.map(confirmationText).join("、")}</p>}
           <div className="calendar-actions"><button disabled={!editable||!data.capabilities.scheduling||task.status!=="pending"||!!task.notice.event.start||task.sourceKind==="personal_task_v1"} onClick={queryCandidates}>根据课表重新查候选</button>
             <button disabled={!editable||!data.capabilities.status} onClick={()=>save(task.status==="pending"?"completed":"pending")}>{task.status==="pending"?"标记完成":"恢复未完成"}</button>
-            <button disabled={!editable||!data.capabilities.status||task.status==="cancelled"} onClick={()=>save("cancelled")}>取消事项</button></div>
+            <button disabled={!editable||!data.capabilities.status||task.status==="cancelled"} onClick={()=>save("cancelled")}>取消事项</button>
+            <button disabled={!editable||!data.capabilities.deletion} onClick={()=>setDeleteConfirm(true)}>删除事项</button></div>
+          {deleteConfirm&&<div className="calendar-warning" role="alertdialog" aria-label="确认删除事项">
+            <p>确认删除“{task.notice.title}”？取消只是保留记录并停止安排；删除后不再显示，无法从页面恢复。已导出的系统日历副本需自行删除。</p>
+            <div className="calendar-actions"><button disabled={!editable} onClick={()=>setDeleteConfirm(false)}>保留事项</button>
+              <button disabled={!editable} onClick={removeTask}>{busy?"删除中…":"确认删除事项"}</button></div></div>}
           {candidates.length>0&&<fieldset className="calendar-candidates"><legend>选择一个参考时间</legend>{candidates.map((c,i)=><label key={c.start}><input type="radio" name="calendar-slot" checked={choice?.start===c.start} onChange={()=>{setChoice(c);setConfirmed(false);}}/>方案 {i+1} · {formatTime(c.start)} — {formatTime(c.end)}（{c.durationMinutes} 分钟）</label>)}</fieldset>}
           <label className="calendar-filter">提前提醒 <select disabled={!editable||!data.capabilities.reminders} value={reminder??"none"} onChange={e=>setReminder(e.target.value==="none"?null:Number(e.target.value))}>
             <option value="none">不提醒</option>{[0,5,15,30,60].map(n=><option key={n} value={n}>{n===0?"开始时":`${n} 分钟`}</option>)}</select></label>

@@ -31,6 +31,8 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
         allowed = {"demo:read"}
         if self.settings.cloud_personal_tasks_enabled:
             allowed |= {"demo:read tasks:read", "demo:read tasks:read tasks:write"}
+        if self.settings.cloud_agent_device_binding_enabled:
+            allowed |= {scope + " devices:bind" for scope in tuple(allowed)}
         if params["scope"] not in allowed: raise OAuthError("invalid_scope")
         if not re.fullmatch(r"[A-Za-z0-9._~-]{8,256}",params["state"]): raise OAuthError()
         raw=secrets.token_urlsafe(32)
@@ -64,6 +66,8 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
         permitted = [["demo:read"]]
         if self.settings.cloud_personal_tasks_enabled:
             permitted += [["demo:read","tasks:read"],["demo:read","tasks:read","tasks:write"]]
+        if self.settings.cloud_agent_device_binding_enabled:
+            permitted += [scope + ["devices:bind"] for scope in tuple(permitted)]
         durable = self.settings.cloud_persistent_auth_enabled and result["expires_epoch"] == UNTIL_REVOKED_EPOCH
         if (not 0<expiry or (not durable and expiry>600) or result["scopes"] not in permitted): raise OAuthError("invalid_grant")
         return {"access_token":raw,"token_type":"Bearer","expires_in":OAUTH_MAX_AGE if durable else expiry,"scope":" ".join(result["scopes"])}
@@ -71,6 +75,23 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
     def revoke(self,token):
         self.gate()
         self.store.competition_call("revoke",{"token_hash":secret_hash(token),"audience":self.settings.oauth_client_id})
+
+    def bind_device(self,request,arguments):
+        self.gate()
+        from app.agent_device_site import CODE
+        if not self.settings.cloud_agent_device_binding_enabled:
+            raise AppError(403,"FORBIDDEN","Agent device binding disabled")
+        if (type(arguments) is not dict or set(arguments)!={"device_code","confirm_binding"}
+                or type(arguments["device_code"]) is not str or not CODE.fullmatch(arguments["device_code"])):
+            raise AppError(422,"VALIDATION_ERROR","Only the displayed device code is accepted")
+        if arguments["confirm_binding"] is not True:
+            raise AppError(409,"CONFIRMATION_REQUIRED","Confirm binding your own browser explicitly")
+        result=self.store.agent_device_call("bind",{
+            "grant_hash":secret_hash(resource_token(request).get_secret_value()),
+            "audience":self.settings.oauth_client_id,"code_hash":secret_hash(arguments["device_code"]),
+            "confirm_binding":True})
+        return {**result,"device_code":arguments["device_code"],
+                "notice":"已关联到 Agent 当前授权账号。请回到生成此设备码的浏览器完成登录；不是自动识别学校账号。"}
 
     def records(self,request):
         self.gate()
