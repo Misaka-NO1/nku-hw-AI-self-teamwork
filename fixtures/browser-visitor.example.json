@@ -1,0 +1,12 @@
+{
+  "fictional": true,
+  "request": {},
+  "rejected_requests": [
+    {"workspace_ref": "someone-else"},
+    {"device_code": "DEV-AAAAAAAAAAAAAAAAAAAAAAAAAA"},
+    {"subject_id": "visitor_fake"},
+    [],
+    null
+  ],
+  "notes": "Contract examples only. No cookies, OAuth token, service key or real user identifier. Start uses the browser's private HttpOnly proof, not the displayed device_code."
+}

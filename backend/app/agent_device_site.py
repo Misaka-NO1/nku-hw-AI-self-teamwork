@@ -147,8 +147,9 @@ def install_agent_device(site, runtime, database):
                        '<button id="copy-code" type="button">复制设备码</button>'
                        '<p id="copy-status" role="status"></p>' if has_code else
                        '<p>当前浏览器尚未生成设备码。请先打开绑定页。</p>')
-        status = "已绑定并登录" if bound else "尚未完成有效登录，请前往绑定页检查"
-        action = ('<a class="action" href="/tools/timetable">返回我的课表</a>' if bound else
+        visitor = runtime.cloud_visitor_enabled and logged_in(request) and database.call("visitor_status", {"session_hash": secret_hash(request.cookies[SESSION_COOKIE])}).get("visitor") is True
+        status = "已绑定并登录" if bound else "本浏览器访客已登录；Agent 尚未完成关联授权" if visitor else "尚未完成有效登录，请前往绑定页检查"
+        action = ('<a class="action" href="/tools/timetable">返回我的课表</a>' if bound or visitor else
                   '<a class="action" href="/tools/device-login">前往绑定页</a>')
         nonce = token_urlsafe(24)
         page_html = '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -174,12 +175,13 @@ body{background:#f5f8fa;color:#183b40;font:18px/1.8 system-ui;margin:0;padding:2
         if logged_in(request) and device_status(request,database)["status"] == "bound":
             return RedirectResponse(destination, status_code=303)
         nonce = token_urlsafe(24)
+        visitor_markup = ('<hr><h2>还没有工具站账号？</h2><p>免注册创建本浏览器独立空间，不会读取其他人的课表或日历。已有 Agent 授权时，请先使用上面的绑定请求，避免创建不同身份。</p><button id="visitor">免注册开始使用</button><p class="note">清除本站全部浏览器数据会丢失访客身份；请勿在公共电脑保存私密资料。</p>' if runtime.cloud_visitor_enabled else '')
         page_html = '''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>绑定这台浏览器 · 南开校园助手</title><style nonce="NONCE">
 body{background:#f5f8fa;color:#183b40;font:18px/1.8 system-ui;margin:0;padding:8vh 24px}main{max-width:650px;margin:auto;background:white;padding:32px;border:1px solid #dbe5e7;border-radius:22px}h1{font-size:28px}code{display:block;overflow-wrap:anywhere;padding:16px;background:#eaf4f4;font-size:22px}button,a{font:inherit}button{padding:12px 18px;border-radius:12px;border:1px solid #bdd5d6;background:white;cursor:pointer}.note{font-size:15px;color:#527074}</style>
 <main><h1>绑定这台浏览器</h1><p>设备码已为当前浏览器自动生成。把下面这句话发给南开校园助手，绑定到 Agent 当前授权的账号：</p>
 <code id="code">正在生成设备码…</code><p id="command"></p><button id="copy" disabled>复制绑定请求</button> <button id="check">检查绑定并进入</button>
-<p id="status" role="status">等待绑定。</p><a href="AGENT" target="_blank" rel="noopener noreferrer">返回 Agent 发送绑定请求 ↗</a>
+<p id="status" role="status">等待绑定。</p><a href="AGENT" target="_blank" rel="noopener noreferrer">返回 Agent 发送绑定请求 ↗</a>VISITOR_MARKUP
 <p class="note">同一浏览器的设备码不随时间轮换，不需要临时确认码。清除浏览器数据或换浏览器会生成新码。首次绑定需要插件的本人设备绑定授权；学校登录不会自动识别工具站账号。退出、撤销授权或移出名单仍会失效，课表与日历数据保留且不与他人共享。</p></main>
 <script nonce="NONCE">
 const status=document.getElementById('status'),copy=document.getElementById('copy');let command='',busy=false,stopped=false;
@@ -187,8 +189,9 @@ async function post(op){const r=await fetch('/api/v1/auth/agent-device/'+op,{met
 async function check(){if(busy||stopped)return;busy=true;try{const d=await post('claim');if(d.status==='bound'||d.status==='already_logged_in'){stopped=true;status.textContent='绑定已完成，正在进入…';location.replace(DESTINATION);}else status.textContent='等待你在 Agent 中发送绑定请求；绑定成功后自动进入。';}catch(e){stopped=true;status.textContent=e.message;}finally{busy=false;}}
 copy.onclick=async()=>{try{await navigator.clipboard.writeText(command);status.textContent='已复制。请粘贴到 Agent 聊天框并发送。';}catch{status.textContent='请选中上面的绑定请求手动复制。';}};
 document.getElementById('check').onclick=()=>{stopped=false;check();};
+const visitor=document.getElementById('visitor');if(visitor)visitor.onclick=async()=>{if(busy)return;busy=true;stopped=true;visitor.disabled=true;try{const r=await fetch('/api/v1/auth/visitor/session',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-Campus-Visitor':'1'},body:'{}'});const v=await r.json();if(!r.ok||!v.ok)throw Error('无法开始访客会话；已有绑定身份时请返回 Agent 授权，不能覆盖账号。');location.replace(DESTINATION);}catch(e){status.textContent=e.message;visitor.disabled=false;}finally{busy=false;}};
 async function start(){try{const d=await post('start');if(d.status==='already_logged_in'){location.replace(DESTINATION);return;}document.getElementById('code').textContent=d.device_code;command='确认将我的这台浏览器绑定到你当前授权的账号，设备码：'+d.device_code;document.getElementById('command').textContent=command;copy.disabled=false;await check();setInterval(check,3000);}catch(e){status.textContent=e.message;}}
 start();</script></html>'''
-        page_html = page_html.replace("NONCE", html.escape(nonce)).replace("DESTINATION", json.dumps(destination)).replace("AGENT", "https://coze.nankai.edu.cn/product/llm/chat/db0ulft4shhbpg8v7rgg")
+        page_html = page_html.replace("NONCE", html.escape(nonce)).replace("DESTINATION", json.dumps(destination)).replace("AGENT", "https://coze.nankai.edu.cn/product/llm/chat/db0ulft4shhbpg8v7rgg").replace("VISITOR_MARKUP", visitor_markup)
         return HTMLResponse(page_html, headers={"Cache-Control": "no-store", "Referrer-Policy": "no-referrer",
             "Content-Security-Policy": f"default-src 'none'; script-src 'nonce-{nonce}'; style-src 'nonce-{nonce}'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"})

@@ -2,6 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://schemas.example.invalid/campus/api-1.0.0.json",
   "title": "NK Campus Assistant API Contract",
+  "x-browser-visitor-device-flow": {
+    "activation": "CLOUD_VISITOR_ENABLED defaults false; requires persistent auth, personal schedules, scoped Agent device binding and the additive browser-visitor migration. Registered-user roster is unchanged.",
+    "start": "POST /api/v1/auth/visitor/session with BrowserVisitorStartRequest (exactly {}), same-origin cookies, Origin, X-Campus-Visitor: 1 and JSON content type. Returns ApiEnvelope data CloudBrowserSession; never accepts owner, device code or token overrides.",
+    "paths": ["/tools/login", "/tools/device-login", "/tools/device", "/api/v1/auth/agent-device/start", "/api/v1/auth/agent-device/claim", "/oauth/devices/bind"],
+    "identity": "One independent private browser visitor space, not a school identity. DEV code is a stable public locator derived from an HttpOnly private cookie, never a login credential. Explicit OAuth devices:bind consent supplies the Agent owner; existing different owners cannot be overwritten.",
+    "failure": "No shared demo fallback, no automatic OAuth consent or business writes. Backend restart preserves visitors. Logout revokes the source session and grants; explicit visitor resume must not resurrect old grants. Clearing site cookies can lose visitor identity."
+  },
   "x-oauth-competition-demo-candidate": {
     "status": "explicit-opt-in-fictional-read-only-not-live-accepted",
     "activation": "CLOUD_OAUTH_PILOT_ENABLED=true and CLOUD_OAUTH_COMPETITION_COMPAT_ENABLED=true; separate additive nku_competition_oauth_v1 RPC; original strict provider unchanged.",
@@ -61,6 +68,11 @@
     "storage": "Existing verified identity and workspaces; new isolated drafts/confirmations/tasks/idempotency only. No Agent confirm/commit. New input is explicitly fictional."
   },
   "$defs": {
+    "BrowserVisitorStartRequest": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    },
     "CalendarUpdateRequest": {
       "type": "object",
       "properties": {

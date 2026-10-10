@@ -5,7 +5,7 @@ from app.cloud_tasks_site import ENV_ID
 from app.core.errors import AppError
 
 RPC_URL = f"https://{ENV_ID}.api.tcloudbasegateway.com/v1/rdb/rest/rpc/nku_identity_pilot_v1_rpc"
-OPERATIONS = frozenset({"probe", "persistent_probe", "personal_schedule_probe", "rate_limit", "configure_subjects", "login", "logout", "get_workspace", "records",
+OPERATIONS = frozenset({"probe", "persistent_probe", "personal_schedule_probe", "visitor_probe", "visitor_begin", "visitor_status", "rate_limit", "configure_subjects", "login", "logout", "get_workspace", "records",
     "create_draft", "get_draft", "confirm", "commit", "list_tasks", "get_task", "current_schedule",
     "import_ticket", "authorize_start", "authorize_approve", "oauth_exchange", "oauth_revoke"})
 COMPETITION_OPERATIONS = frozenset({"probe", "authorize_start", "authorize_approve", "exchange", "records", "revoke"})

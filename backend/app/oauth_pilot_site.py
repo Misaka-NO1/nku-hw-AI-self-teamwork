@@ -178,7 +178,7 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
             return HTMLResponse('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>先登录</title>'
                 '<h1>请先登录校园助手测试账号</h1><p>仅联调虚构数据，不接真实成绩。</p>'
                 '<a href="/tools/login">前往登录</a><p>登录完成后回到本页并刷新，才能继续授权。</p></html>', status_code=401)
-        label = "读取自己的虚构课表与待办" + ("；创建待办草稿" if "demo:draft" in scopes else "")
+        label = ("读取自己已保存的课表与待办" if settings.cloud_personal_schedules_enabled else "读取自己的虚构课表与待办") + ("；创建待办草稿" if "demo:draft" in scopes else "")
         personal = "tasks:read" in scopes
         if personal:
             label += "；读取自己已记录的事项、截止、备注和选定时段"
@@ -188,6 +188,10 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
             label += "；仅当你明确发送本人浏览器的固定设备码并确认绑定时，允许该浏览器访问这个授权账号的课表与日历"
         mode_note = ('<p>参赛联调兼容模式：普通 OAuth 授权码，无 PKCE；仅两个已批准测试账号。真实教务课表和成绩上传仍未开放。</p>'
                      if settings.cloud_oauth_competition_compat_enabled else '')
+        if settings.cloud_personal_schedules_enabled:
+            mode_note = '<p>仅访问当前工具站身份自己的数据。课表须由本人导入并确认；不是自动识别学校账号，不代替教务登录，不接收成绩上传。</p>'
+        if settings.cloud_visitor_enabled:
+            mode_note += '<p>当前可用独立浏览器访客身份。允许后，Agent 关联的是这个浏览器已登录的私有空间，不是学校学号。不要在公共电脑授权。</p>'
         return HTMLResponse('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>授权校园助手</title>'
             '<style>body{max-width:640px;margin:8vh auto;padding:24px;font:20px/1.8 sans-serif;color:#274535;background:#fffdf6}'
             'button{padding:14px 24px;margin:16px 12px 0 0;font:inherit}</style>'

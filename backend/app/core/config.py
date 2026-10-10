@@ -43,6 +43,8 @@ class Settings(BaseSettings):
     cloudbase_auth_env_id: str = ""
     cloudbase_auth_profile: Literal["legacy", "pg_registered"] = "legacy"
     cloudbase_auth_pilot_user_ids: list[str] = Field(default_factory=list, repr=False)
+    # Independent browser visitors, NOT anonymous access to registered owners.
+    cloud_visitor_enabled: bool = False
     cloudbase_auth_session_seconds: int = Field(default=900, ge=60, le=900)
     cloud_persistent_auth_enabled: bool = False
     # Independent device binding, NOT platform SSO. Explicit opt-in after migration.
