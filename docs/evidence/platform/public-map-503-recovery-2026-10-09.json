@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-09",
+  "service": "nku-campus-public-content",
+  "deployment": "010",
+  "build_id": "cloudbase-public-content-calendar-20261006-r1",
+  "reported_symptom": "nginx 503 Service Temporarily Unavailable at map entry",
+  "observations": {
+    "instance_created_at": "2026-10-09T15:31:54+08:00",
+    "application_startup_complete_at": "2026-10-09T15:32:55+08:00",
+    "previous_scaling": {"minimum": 0, "maximum": 1},
+    "console_explanation": "30 minutes without requests can scale the service down to zero",
+    "assessment": "Observed recent cold start is consistent with temporary upstream unavailability; the screenshot's exact failing request was not captured in application logs."
+  },
+  "authorized_change": {
+    "user_approval": "允许，改为 1 台常驻",
+    "minimum_instances": 1,
+    "maximum_instances": 1,
+    "cpu": 0.25,
+    "memory_gib": 0.5,
+    "configuration_readback": "最小 1 - 最大 1",
+    "cost_note": "Keeping the existing smallest instance running increases continuous cloud usage."
+  },
+  "verification": {
+    "healthz_http_status": 200,
+    "map_entry_http_status": 200,
+    "study_entry_http_status": 200,
+    "scenic_spots_visible": 34,
+    "browser_detail_opened": "思源道海棠",
+    "photo_verification": "Main photo and four thumbnails visible; photo requests returned 200 in service logs",
+    "map_screenshot": "dist/map-recovered-20261009.png",
+    "configuration_screenshot": "dist/map-always-on-20261009.png"
+  },
+  "unchanged": [
+    "application package and build ID",
+    "identity service and visitor access",
+    "personal timetables and calendar entries",
+    "authentication, permissions and integrity checks"
+  ],
+  "limitation": "Always-on mitigates scale-to-zero cold starts; it does not guarantee against gateway/default-domain outages."
+}
