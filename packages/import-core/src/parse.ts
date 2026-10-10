@@ -277,7 +277,7 @@ function parseImportFileInner(
   if (format === "json") {
     let parsed: unknown;
     try {
-      parsed = JSON.parse(input.content);
+      parsed = JSON.parse(input.content.replace(/^\uFEFF/, ""));
     } catch {
       return blockingParseResult(
         [{ code: "invalid_json", field: "file", message: "JSON 解析失败", blocking: true }],

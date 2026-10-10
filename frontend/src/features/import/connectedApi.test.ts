@@ -44,4 +44,10 @@ describe("已连接的课表确认与读回", () => {
     await expect(saveConfirmedSchedule(session, invalid, attempt(), vi.fn())).rejects.toThrow();
     expect(fetcher).not.toHaveBeenCalled();
   });
+  it("session recheck between confirmation and commit prevents a further write", async()=>{
+    const fetcher=vi.fn().mockResolvedValueOnce(success({confirmation_id:"receipt-guard"}));vi.stubGlobal("fetch",fetcher);
+    let checks=0;const guard=()=>{if(++checks===2)throw new Error("owner recheck");};
+    await expect(saveConfirmedSchedule(session,draft,attempt(),vi.fn(),guard)).rejects.toThrow("owner recheck");
+    expect(fetcher).toHaveBeenCalledTimes(1);expect(fetcher.mock.calls[0][0]).toBe("/api/v1/confirmations");
+  });
 });
