@@ -1,5 +1,13 @@
 # 南开校园助手：跨 Agent 对接约定
 
+## 2026-10-10 追加：浏览器免账号密码与固定设备身份（共用基础设施）
+
+免注册访客是 `app.cloud_identity_site` 的默认关闭扩展：`CLOUD_VISITOR_ENABLED` 依赖个人课表、持久会话及 Agent 设备 OAuth；只接受同源 `POST /api/v1/auth/visitor/session`、严格空对象 `BrowserVisitorStartRequest`，复用 `CloudBrowserSession` / ApiEnvelope 1.0.0。无 caller owner/workspace/设备码覆盖，旧公共 MCP 与领域算法不变。
+
+固定 DEV 码只定位浏览器，私密证明在 HttpOnly Cookie；Agent owner 来自已明确同意的 OAuth grant，不来自学校登录、SYS_USERID 或 MCP_SERVICE_TOKEN。新访客独立空白空间，旧注册会话不被覆盖；有存储故障时禁用而非回退共享演示。数据归属、注销撤销和拒绝跨空间读取须一并保留。
+
+源码/迁移顺序/前端入口/学校插件说明见 [完整免注册设备流程](../docs/browser-visitor-rollout.md)；跨模块交接见 [团队补交说明](../docs/handoffs/browser-visitor-device-flow-2026-10-10.md)。这是 B 课表与 D 日历共用身份，不是可删除的测试占位功能；历史章节仍保留当时的配置与验收边界。
+
 本文件是 A/B/C/D 之间的实现约定。若个人任务书与本文件冲突，以本文件和 `api.schema.json` 为准。
 
 ## 1. 命名原则

@@ -1,8 +1,9 @@
-"""Closed PG-backed identity/schedule/tasks pilot; not a production entrypoint.
+"""PG-backed private identity/schedule/tasks service with explicit feature gates.
 
-CloudBase login is validated online by the existing identity verifier. Only the
-two approved ordinary accounts and exact fictional fixtures are accepted.
-All state/ownership/confirmation/idempotency lives in isolated PostgreSQL RPC.
+Registered login retains its two-owner verifier. Opt-in browser visitors use
+independent private identities, not school SSO or anonymous database access.
+All ownership/confirmation/idempotency lives in isolated PostgreSQL RPC.
+Personal timetable imports require their separate enabled and confirmed flow.
 """
 import logging
 import os
@@ -54,7 +55,7 @@ def require_cloud_identity(settings):
         or settings.cloudbase_auth_session_seconds!=900
         or url.scheme!="https" or not url.hostname or url.username is not None or url.password is not None
         or url.path or url.query or url.fragment):
-        raise ValueError("Closed cloud identity pilot requires HTTPS, two approved PG users and fixed fictional retention")
+        raise ValueError("Cloud identity requires HTTPS, two approved registered PG users and fixed retention")
 
 
 def format_times(value):
@@ -100,6 +101,8 @@ def install_health_diagnostics(site,runtime):
 
 def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     runtime=settings or get_settings()
+    if runtime.cloud_visitor_enabled and not (runtime.cloud_persistent_auth_enabled and runtime.cloud_agent_device_binding_enabled and runtime.cloud_personal_schedules_enabled):
+        raise ValueError("Browser visitors require private persistent timetable/calendar and scoped device OAuth")
     if runtime.cloud_agent_device_binding_enabled and not (runtime.cloud_persistent_auth_enabled and runtime.cloud_oauth_competition_compat_enabled):
         raise ValueError("Agent device binding requires explicit persistent own-account OAuth")
     if runtime.cloud_persistent_auth_enabled and not (runtime.cloud_personal_tasks_enabled and runtime.cloud_oauth_competition_compat_enabled):
@@ -140,6 +143,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         result=database.call("probe",{})
         if result!={"schema_version":"identity-pilot-v1"}:
             raise ValueError("Unexpected database schema version")
+        if runtime.cloud_visitor_enabled and database.call("visitor_probe",{})!={"schema_version":"browser-visitor-v1"}:
+            raise ValueError("Private browser visitor migration required")
         if runtime.cloud_persistent_auth_enabled and database.call("persistent_probe",{})!={"schema_version":"persistent-auth-v1"}:
             raise ValueError("Persistent authorization migration required")
         if runtime.cloud_personal_schedules_enabled and database.call("personal_schedule_probe",{})!={"schema_version":"personal-schedules-v1"}:
@@ -178,7 +183,7 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             response=JSONResponse(failure(request_id=current_request_id(request),code="FORBIDDEN",message="Pilot disabled").model_dump(mode="json"),status_code=403)
         else:
             path=request.url.path
-            family="device_init" if path=="/api/v1/auth/agent-device/start" else "login" if path=="/api/v1/auth/cloudbase/session" else "oauth" if path.startswith("/oauth/") else "business"
+            family="device_init" if path=="/api/v1/auth/agent-device/start" else "login" if path in {"/api/v1/auth/cloudbase/session","/api/v1/auth/visitor/session"} else "oauth" if path.startswith("/oauth/") else "business"
             if path.startswith(("/api/","/oauth/")):
                 try:
                     peer=request.client.host if request.client else "unknown"
@@ -240,6 +245,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     install_device_login(site,runtime,database,browser_args)
     from app.agent_device_site import install_agent_device, RETURNS, binding_url, valid_destination, device_status
     install_agent_device(site,runtime,database)
+    from app.visitor_site import install_visitor
+    install_visitor(site,runtime,database,reply)
 
     def review(result):
         path="import" if result["kind"]=="schedule" else "tasks"
@@ -300,7 +307,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         return reply(request,{"env_id":runtime.cloudbase_auth_env_id,"region":"ap-shanghai","dataset_kind":"demo",
             "personal_uploads":False,"agent_paired":False,"persistent_authorization":runtime.cloud_persistent_auth_enabled,
             "device_login_enabled":runtime.cloud_device_login_enabled,
-            "agent_device_binding_enabled":runtime.cloud_agent_device_binding_enabled})
+            "agent_device_binding_enabled":runtime.cloud_agent_device_binding_enabled,
+            "visitor_enabled":runtime.cloud_visitor_enabled})
 
     @site.post("/api/v1/auth/cloudbase/session")
     async def login(request:Request,response:Response):
@@ -347,7 +355,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         workspace=database.call("get_workspace",args)
         if workspace.get("workspace_ref")!=context["workspace_ref"]:
             raise AppError(401,"AUTH_REQUIRED","Browser session context does not match the verified owner")
-        if runtime.cloud_agent_device_binding_enabled and device_status(request,database)["status"] != "bound":
+        visitor = runtime.cloud_visitor_enabled and database.call("visitor_status",{"session_hash":args["session_hash"]}).get("visitor") is True
+        if runtime.cloud_agent_device_binding_enabled and not visitor and device_status(request,database)["status"] != "bound":
             raise AppError(401,"AUTH_REQUIRED","Bind this browser to the Agent authorized account first")
         result={**context,"dataset_kind":"demo","personal_uploads":False,"agent_paired":False}
         validate_boundary(format_times(result),"CloudBrowserSession")
@@ -356,7 +365,7 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             for name in (SESSION_COOKIE, CONTEXT_COOKIE):
                 response.set_cookie(name,request.cookies[name],max_age=COOKIE_MAX_AGE,
                                     httponly=True,secure=True,samesite="strict",path="/")
-            if runtime.cloud_agent_device_binding_enabled:
+            if runtime.cloud_agent_device_binding_enabled and request.cookies.get("__Host-campus_fixed_device"):
                 from app.agent_device_site import COOKIE
                 response.set_cookie(COOKIE,request.cookies[COOKIE],max_age=COOKIE_MAX_AGE,
                                     httponly=True,secure=True,samesite="strict",path="/")
@@ -510,8 +519,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         if tool not in {"login","tasks","import","timetable","affairs","degree","calendar"}: raise AppError(404,"NOT_FOUND","Use the existing published public content service")
         if runtime.cloud_agent_device_binding_enabled and request.url.path in RETURNS:
             try:
-                database.call("get_workspace",{"session_hash":browser_args(request)["session_hash"]})
-                if device_status(request,database)["status"] != "bound": raise AppError(401,"AUTH_REQUIRED","Bind this browser to the Agent account first")
+                session_hash=browser_args(request)["session_hash"]
+                database.call("get_workspace",{"session_hash":session_hash})
+                visitor=runtime.cloud_visitor_enabled and database.call("visitor_status",{"session_hash":session_hash}).get("visitor") is True
+                if not visitor and device_status(request,database)["status"] != "bound": raise AppError(401,"AUTH_REQUIRED","Bind this browser to the Agent account first")
             except AppError as exc:
                 if exc.code not in {"AUTH_REQUIRED","TOKEN_EXPIRED"}: raise
                 destination=request.url.path + ("?"+request.url.query if request.url.query else "")

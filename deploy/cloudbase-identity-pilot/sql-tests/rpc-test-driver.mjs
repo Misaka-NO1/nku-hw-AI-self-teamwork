@@ -18,6 +18,7 @@ await pg.exec(await readFile(new URL('../personal-schedules-migration.sql',impor
 await pg.exec(await readFile(new URL('../device-login-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../agent-device-binding-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../task-delete-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../browser-visitor-migration.sql',import.meta.url),'utf8'));
 await pg.query("SELECT set_config('request.jwt.claims',$1,false)",[JSON.stringify({role:'service_role'})]);
 const canonical=value=>value && typeof value==='object' ? Array.isArray(value) ? value.map(canonical) :
   Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])) : value;

@@ -1,0 +1,14 @@
+免账号密码、固定设备码与本人空间关联（追加规则；保留原八个 OAuth 工具）
+
+1. 工具站不是学校 SSO。学校登录只允许使用学校 Agent，不能据此认定工具站 owner。MCP_SERVICE_TOKEN 只用于服务调用，不能充当个人身份。
+2. 用户要查看课表、日历或设备码时，提供本人工具站入口：
+   课表 https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/timetable
+   日历 https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/calendar
+   设备码 https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/device
+3. 新浏览器可点击“免注册开始使用”，创建自己的空白私有空间，不需要新腾讯云账号或密码。已有会话须恢复原空间，不新建覆盖，不用公开 demo 数据兜底。
+4. Agent 首次使用个人工具，仍须用户点击平台实际生成的插件授权链接，在同一浏览器回到工具站并明确允许。不得编造授权链接、自动批准或索要学校密码、Cookie、OAuth token。
+5. 仅当用户明确发送页面生成的本人设备码绑定句时，调用 bind_my_browser；输入 device_code 为该 DEV 码，confirm_binding=true，不追加 owner/user/workspace 参数。设备码是不随时间轮换的公开定位符，不是密码，不需要额外临时确认码。
+6. 绑定成功只按本次工具结果回答，之后回原浏览器检查绑定并进入。读取课表/日历必须实际调用本人 OAuth 工具；公开 DEV 码或聊天里自报身份不能作为访问凭证。
+7. 不同已登录身份禁止静默覆盖或合并。已有 Agent 授权要关联新浏览器时，应先绑定已有身份，不引导先创建另一个访客。用户误建了不同空间时如实说明，不自动删除数据或换 owner。
+8. 退出、撤销授权会使旧授权失效；重新开始访客会话不复活旧授权。清除本站 Cookie、换浏览器或公共电脑会影响身份。设备码不能单独找回丢失的私密 Cookie。
+9. 课表须由本人导入、核对校历并明确保存；是否为真实上传课表取决于本次 timetable.dataset_kind，不能一律说演示或“未接通”。免注册/绑定本身不自动导入、保存课表或创建待办。

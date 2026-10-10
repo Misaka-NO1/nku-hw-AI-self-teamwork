@@ -52,7 +52,7 @@ def build(name: str, *, backend_only: bool = False) -> dict:
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", output / "competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", output / "notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", output / "task-calendar-migration.sql")
-    for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql"):
+    for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql"):
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / name, output / name)
     (output / "fixtures").mkdir()
     for filename in READ_ONLY_FIXTURES:
