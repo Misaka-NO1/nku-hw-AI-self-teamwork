@@ -32,7 +32,8 @@ export const scheduleApi = {
 
 /** Called only from the visible human confirmation button. Never on mount. */
 export async function saveConfirmedSchedule(session: DemoSession, draft: ScheduleDraft,
-  attempt: SaveAttempt, persist: (item: SaveAttempt) => void): Promise<{ scheduleId: string; revision: number }> {
+  attempt: SaveAttempt, persist: (item: SaveAttempt) => void, guard:()=>void=()=>{}): Promise<{ scheduleId: string; revision: number }> {
+  guard();
   if (draft.kind !== "schedule" || draft.workspaceRef !== session.workspaceRef
     || draft.draftId !== attempt.draftId || draft.revision !== attempt.revision
     || draft.payloadHash !== attempt.payloadHash || !Number.isFinite(Date.parse(draft.expiresAt))
@@ -47,6 +48,7 @@ export async function saveConfirmedSchedule(session: DemoSession, draft: Schedul
     attempt.confirmationId = receipt.confirmationId;
     persist(attempt);
   }
+  guard();
   return apiClient.post("/api/v1/schedules/commit", {
     confirmation_id: attempt.confirmationId, idempotency_key: attempt.commitKey,
   }, { headers: { "X-CSRF-Token": session.csrfToken } });

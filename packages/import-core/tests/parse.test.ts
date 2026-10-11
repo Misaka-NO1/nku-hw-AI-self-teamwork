@@ -19,6 +19,13 @@ const timetableFixture = JSON.parse(
 
 const HEADERS = ["课程", "星期", "节次", "周次", "地点"];
 
+it("JSON file parser accepts a UTF-8 BOM without changing the reviewed calendar", () => {
+  const result = parseImportFile({name:"bom.json",content:"\uFEFF"+JSON.stringify(timetableFixture)},"json",term);
+  expect(result.issues.filter(issue=>issue.blocking)).toEqual([]);
+  expect(result.payload?.courses.length).toBeGreaterThan(0);
+  expect(result.payload?.term).toEqual(term);
+});
+
 function demoObservation(overrides: Partial<PageObservation> = {}): PageObservation {
   return {
     origin: "https://fixtures.example.invalid",

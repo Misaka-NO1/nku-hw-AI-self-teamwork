@@ -1,0 +1,46 @@
+{
+  "checked_at": "2026-10-10T12:18:12+08:00",
+  "service": "nku-campus-identity-pilot",
+  "deployment": "037",
+  "build_id": "cloudbase-identity-pilot-20261009-r40-import-feedback",
+  "console_observation": {
+    "deployment_created_at": "2026-10-09T18:11:24+08:00",
+    "status": "正常",
+    "traffic_percent": 100,
+    "packaged_visitor_module_present": true,
+    "older_deployment_rollback_controls_available": true
+  },
+  "local_recovery_package": {
+    "filename": "cloudbase-identity-pilot-20261009-r40-import-feedback.zip",
+    "sha256": "4105eefde271e29bccc455f7f69c1ab426cc73cbee84e0eb158de34de1bd04ae",
+    "manifest_hash_mismatches": 0,
+    "note": "Package is preserved locally under ignored dist, not committed as a binary backup. GitHub implementation and recreation instructions are in PR #16."
+  },
+  "fresh_visitor_smoke_check": {
+    "script": "backend/scripts/verify_live_visitors.py (PR #16)",
+    "health_status": 200,
+    "visitor_enabled": true,
+    "a_begin_status": 200,
+    "b_begin_status": 200,
+    "a_empty_schedule": true,
+    "b_empty_schedule": true,
+    "a_empty_calendar": true,
+    "b_empty_calendar": true,
+    "a_calendar_status": 200,
+    "b_calendar_status": 200,
+    "a_ui_status": 200,
+    "b_ui_status": 200,
+    "a_resume_same_workspace": true,
+    "b_resume_same_workspace": true,
+    "distinct_workspaces": true,
+    "cross_workspace_denied": true,
+    "fixed_device_code": true,
+    "repeat_preserves_workspace": true,
+    "owner_override_denied": true,
+    "foreign_origin_denied": true,
+    "no_cookie_private_read_denied": true
+  },
+  "side_effects": "Created two empty QA visitor spaces using independent in-memory clients. No courses or tasks written; no existing owner modified. Credentials and workspace identifiers are not exported.",
+  "decision": "No rollback or redeployment: original cloud service still runs the preserved version and the full visitor flow succeeds. The teammate's reported deletion is not observed in this service; do not infer which other checkout or deployment was changed.",
+  "unchanged": ["existing user data", "SQL migrations", "cloud environment configuration", "OAuth scopes", "school Agent publication", "application deployment"]
+}

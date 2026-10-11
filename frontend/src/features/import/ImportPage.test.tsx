@@ -11,7 +11,7 @@ const observation={origin:"https://eamis.nankai.edu.cn",pathname:"/eams/courseTa
 let host:HTMLDivElement,root:Root;
 beforeEach(()=>{vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT",true);host=document.createElement("div");document.body.append(host);root=createRoot(host);});
 afterEach(async()=>{await act(async()=>root.unmount());host.remove();vi.unstubAllGlobals();});
-async function mount(){const preview=vi.fn(),confirmed=vi.fn();await act(async()=>root.render(<ImportPage datasetKind="personal" onPreview={preview} onConfirmed={confirmed}/>));return {preview,confirmed};}
+async function mount(calendar?:TimetableImport["term"]){const preview=vi.fn(),confirmed=vi.fn();await act(async()=>root.render(<ImportPage calendar={calendar} datasetKind="personal" onPreview={preview} onConfirmed={confirmed}/>));return {preview,confirmed};}
 function latestPreview(preview:ReturnType<typeof vi.fn>){return preview.mock.calls[preview.mock.calls.length-1]?.[0];}
 function file(content:string,name="timetable-import.json"){const value=new File([content],name);Object.defineProperty(value,"text",{configurable:true,value:async()=>content});return value;}
 async function select(value:File,label="教务课表文件") {const input=host.querySelector<HTMLInputElement>(`input[aria-label="${label}"]`)!;Object.defineProperty(input,"files",{configurable:true,value:[value]});await act(async()=>input.dispatchEvent(new Event("change",{bubbles:true})));}
@@ -58,4 +58,42 @@ it("custom bell times affect standard JSON preview and calendar edits retain cou
 it("bad calendar dates and overlapping periods do not resume parsing",async()=>{
  const {preview}=await mount();await select(file(JSON.stringify(observation)));await fill("第一教学周周一","2026-09-08");await click("我已核对，使用这个校历");expect(host.textContent).toContain("必须是周一");
  await fill("第一教学周周一","2026-09-07");await fill("每节课起止时间","08:00-09:00\n08:30-09:30");await click("我已核对，使用这个校历");expect(host.textContent).toContain("互不重叠");expect(latestPreview(preview)).toBeNull();
+});
+const ownedCalendar={...fixture.term,timezone:"Asia/Shanghai" as const,term_id:observation.selectedTerm,calendar_status:"user_confirmed" as const};
+it("automatically parses a file with the owner's matching saved calendar, without any upload",async()=>{
+ const {preview,confirmed}=await mount(ownedCalendar);
+ await select(file(JSON.stringify(observation)));expect(latestPreview(preview)?.courses).toHaveLength(1);
+ expect(latestPreview(preview)?.term).toEqual(ownedCalendar);expect(confirmed).not.toHaveBeenCalled();
+});
+it("a saved calendar arriving after file selection resumes parsing and cannot undo a manual calendar edit",async()=>{
+ const {preview,confirmed}=await mount();await select(file(JSON.stringify(observation)));
+ await act(async()=>root.render(<ImportPage calendar={ownedCalendar} datasetKind="personal" onPreview={preview} onConfirmed={confirmed}/>));
+ expect(latestPreview(preview)?.courses).toHaveLength(1);expect(host.textContent).toContain("已自动沿用本人");
+ await click("修改学期 / 上课时间");expect(host.textContent).toContain("我已核对，使用这个校历");
+ expect(host.textContent).not.toContain("当前学期：");
+});
+it("an uploaded standard timetable carries its confirmed calendar and parses on first import",async()=>{
+ const {preview,confirmed}=await mount();await select(file(JSON.stringify({...fixture,term:ownedCalendar})));
+ expect(latestPreview(preview)?.courses.length).toBeGreaterThan(0);expect(latestPreview(preview)?.term).toEqual(ownedCalendar);
+ expect(confirmed).not.toHaveBeenCalled();expect(host.textContent).toContain("自动载入");
+});
+it("a different term cannot silently inherit the old owner's calendar",async()=>{
+ const {preview}=await mount({...ownedCalendar,term_id:"另一个学期"});await select(file(JSON.stringify(observation)));
+ expect(latestPreview(preview)).toBeNull();expect(host.textContent).toContain("不能自动套用旧学期");
+ expect(host.querySelector('a[href="#import-calendar"]')).not.toBeNull();
+ await confirmCalendar();expect(latestPreview(preview)?.courses).toHaveLength(1);
+});
+it("mobile FileReader fallback works without File.text",async()=>{
+ const {preview}=await mount(ownedCalendar);const value=new File([JSON.stringify(observation)],"mobile.json");
+ Object.defineProperty(value,"text",{value:undefined});await select(value);
+ await act(async()=>{await new Promise<void>(resolve=>setTimeout(resolve,30));});
+ expect(latestPreview(preview)?.courses).toHaveLength(1);expect(host.textContent).not.toContain("文件读取失败");
+});
+it("accepts UTF-8 BOM exports instead of reporting invalid JSON",async()=>{
+ const {preview}=await mount(ownedCalendar);await select(file("\uFEFF"+JSON.stringify(observation)));
+ expect(latestPreview(preview)?.courses).toHaveLength(1);expect(host.textContent).not.toContain("JSON 解析失败");
+});
+it("an unconfirmed calendar inside JSON still needs review",async()=>{
+ const {preview}=await mount();await select(file(JSON.stringify({...fixture,term:{...ownedCalendar,calendar_status:"needs_confirmation"}})));
+ expect(latestPreview(preview)).toBeNull();expect(host.textContent).toContain("确认后会自动解析");
 });

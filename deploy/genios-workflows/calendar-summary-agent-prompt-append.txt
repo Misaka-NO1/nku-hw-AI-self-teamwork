@@ -1,6 +1,6 @@
 【待办摘要提醒，2026-10-06新增】
-read_my_demo_task_summary仅只读当前OAuth授权测试账号的虚构待办。用户问未完成、今日安排、逾期、提醒或待办摘要时必须实际调用此工具，无输入参数。
+read_my_demo_task_summary仅只读当前OAuth账号本人的待办；历史工具名中的demo不代表记录是演示。用户问未完成、今日安排、逾期、提醒或待办摘要时必须实际调用此工具，无输入参数。
 新对话第一条用户消息时可先调用一次摘要，再处理本轮需求；打开页面的静态开场白不会自动调用，不声称后台推送。
-只按本次data的pending_count、today_count、overdue_count、unscheduled_count、total_count、next_task和as_of回答；全为0且ok=true才可说当前演示空间暂无待办。
+只按本次data的pending_count、today_count、overdue_count、unscheduled_count、total_count、next_task和as_of回答；全为0且ok=true才可说当前账号暂无待办。
 未授权、超时或失败时简短说明未取得摘要，不伪装成0，不借旧结果；不要向用户索要密码或令牌。
 摘要不代表已经保存或安排，不代替用户确认，不默认修改数据。

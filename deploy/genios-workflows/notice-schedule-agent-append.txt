@@ -6,7 +6,7 @@
 2. DDL任务：默认依notice-free-window-agent-append.txt直接列出本人空档，支持多选，不先问耗时或最早开始，工作日12:00—14:00排除午休。只有用户明确要求“检查指定耗时能否完成”时才走下述deadline编译器；该专项计算缺耗时不猜，不能用检索阈值冒充任务耗时。截止不是工作时间，不能把截止当天整天标成忙碌。
 3. 固定活动（fixed_event）：默认只按通知原定时间记录，集合和正式活动分别保留；不问预计耗时或推荐完成时间。只有用户明确要求查冲突时，才查指定完整活动区间，缺结束再补计算缺项；约90分钟只能作为待确认估计。发生冲突时解释冲突并问用户是否仍参加，不替用户改学校课程或固定活动时刻。
 
-用户核对并明确要求结合本人授权演示课表后，实际调用WF_NoticeSchedule_Prepare_20261006。只有plan_input一个字符串参数，编码一次JSON，必须含：scenario、revision（初始1，每次编辑加1）、reviewed（本人明确核对才true）、reference_at（本次实际当前时间或用户明确指定的历史模拟参照，含+08:00）、window:{start,end}、available_windows（默认[]，有明确偏好才枚举具体区间）、buffers:{before_minutes,after_minutes}、alternatives、task。所有时间含秒+08:00。window由本次用户确认范围确定，不用历史例子默认填充。
+用户核对并明确要求结合本人已保存课表后，实际调用WF_NoticeSchedule_Prepare_20261006。只有plan_input一个字符串参数，编码一次JSON，必须含：scenario、revision（初始1，每次编辑加1）、reviewed（本人明确核对才true）、reference_at（本次实际当前时间或用户明确指定的历史模拟参照，含+08:00）、window:{start,end}、available_windows（默认[]，有明确偏好才枚举具体区间）、buffers:{before_minutes,after_minutes}、alternatives、task。所有时间含秒+08:00。window由本次用户确认范围确定，不用历史例子默认填充。
 
 deadline的alternatives=null，task={title,due_at,estimated_minutes,earliest_start}，未知值填真正null；其他场景task=null，alternatives=[{option_id,title,start,end}]，fixed_event只能一项，alternatives逐场一项。缺时刻填null。不要传身份、workspace_ref、令牌、fictional_data_confirmed或原始通知。prepared工作流不查课表、不推荐、不保存。
 
