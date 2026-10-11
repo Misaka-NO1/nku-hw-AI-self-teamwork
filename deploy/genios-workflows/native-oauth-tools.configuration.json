@@ -34,8 +34,8 @@
   },
   "activation_blockers": [
     "Agent-level fixed SYS_USERID and model hiding not yet configured for these drafts",
-    "Both native and original tool detail editors now display load failure",
-    "Two new SQL migrations and native routes not deployed",
+    "Both editors recovered after refreshing the existing school sign-in; drafts remain unpublished",
+    "Both new private SQL migrations installed once; r42 running as version 045 with native flag false; enabled version 047 failed independent-credential startup validation and took no traffic",
     "Public channel, separate school account, actual old-space adoption and first-use browser claim still require live acceptance"
   ]
 }
