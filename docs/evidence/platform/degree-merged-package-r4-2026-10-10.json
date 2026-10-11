@@ -1,0 +1,23 @@
+{
+  "base": "0051687752b84a65d97d3c0cd2d91fccee1dd706",
+  "package": "D:\\code\\华为ai比赛\\.review-cache\\degree-main-0051687-20261010-r6\\dist\\cloudbase-identity-degree-main0051687-20261010-r4.zip",
+  "sha256": "2cba6fe084de25b07abeaa47374376fbdf2333ba29a582ef9cd8f635ced78157",
+  "files": 204,
+  "staged_input_changes_from_previous_candidate": [
+    "frontend/src/features/degree/DegreePage.tsx"
+  ],
+  "package_manifest_verified": true,
+  "all_backend_contracts_sql_equal_previous_verified_candidate": true,
+  "bundled_reader_byte_equal_previous_verified_candidate": true,
+  "local_qa_reader_excluded": true,
+  "degree_preview_default_demo_collapsed_browser_verified": true,
+  "typescript_check": "passed",
+  "production_build": "passed",
+  "degree_preview_focus_tests": {
+    "files": 2,
+    "tests": 3,
+    "passed": true
+  },
+  "live_deployed": false,
+  "migrations_executed": false
+}

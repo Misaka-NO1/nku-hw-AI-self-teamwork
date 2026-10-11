@@ -25,6 +25,8 @@ class Settings(BaseSettings):
     cloud_personal_tasks_enabled: bool = False
     # Explicit own timetable imports; does not enable general academic uploads.
     cloud_personal_schedules_enabled: bool = False
+    # Own confirmed curriculum snapshots; independent additive storage migration.
+    cloud_personal_degree_enabled: bool = False
     notice_ocr_backend: Literal["disabled", "windows", "tesseract"] = "disabled"
     notice_ocr_command: str = ""
     app_origin: str = ""

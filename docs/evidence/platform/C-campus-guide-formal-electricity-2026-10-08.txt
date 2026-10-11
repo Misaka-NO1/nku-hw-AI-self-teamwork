@@ -1,0 +1,53 @@
+请实际检索电费条目，给我已收录的查找路径，明确是否正式核验、原资料日期和未知项。
+  - generic: 已实际检索到宿舍电费充值条目，结果如下：
+  - list:
+    - text: 条目：
+    - code: nku-proc-electricity-recharge
+    - listitem: 标题：宿舍电费充值指引
+    - text: 状态：
+    - code: needs_verification
+    - text: 是否正式核验：
+    - strong: 未正式核验
+    - text: 来源类型：
+    - code: student_guidance
+    - text: （学生提供的日常使用路径）
+    - text: 原资料日期/定位日期：
+    - strong: 2026-09-30
+    - listitem: 适用：全体；校区：来源未限定
+    - text: 登录要求：需要登录；校园网要求：
+    - code: unknown
+  - strong: 已收录的查找路径
+  - list:
+    - listitem: 打开飞书 APP，进入「南开微应用」板块。
+    - listitem: 点击「充值」应用；如果列表中没有，可在「＋」/所有应用中查找添加。
+    - listitem: 按页面提示选择宿舍并完成电费充值。
+  - strong: 安全说明
+  - list:
+    - listitem: 资料明确说明：知识库不收录任何支付链接或二维码，仅指引官方应用入口。
+  - strong: 未知项/待核对项
+  - list:
+    - text: 官方入口/正式流程依据：
+    - strong: 未提供正式链接
+    - text: 。
+    - listitem: 校区适用范围：来源未限定，未明确区分八里台/津南。
+    - listitem: 所需材料：来源未列明，需向受理渠道核实。
+    - listitem: 有效期：来源未明确，办理时需核对最新通知。
+    - text: 校园网要求：
+    - code: unknown
+    - text: 。
+    - listitem: 应用名称、入口位置和当前可用性：需以学校官方最新说明为准。
+  - generic: 来源：用户（在读学生）提供的日常使用路径；无正式网页；定位为 2026-09-30 用户提供，待团队/官方渠道核验。
+  - generic: 11.366s
+  - generic: ","
+  - generic: 21329 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - generic: 5. 校园事务
+  - generic: 6. 培养方案与学分
+  - textbox [active]
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）

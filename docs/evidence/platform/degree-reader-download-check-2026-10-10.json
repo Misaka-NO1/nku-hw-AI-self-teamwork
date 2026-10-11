@@ -1,0 +1,11 @@
+{
+  "status": "online_download_verified",
+  "result": "Anonymous request returned HTTP 200; received ZIP matches reviewed original reader and contains schedule and degree scripts",
+  "http_status": 200,
+  "bytes": 17305,
+  "sha256": "33dcbf438083a8c6544922ebc8bc5fbb3f5d0aa256fb53c43aa2aae0bd44c667",
+  "path": "/assets/campus-schedule-reader.zip",
+  "reader_source_changed": false,
+  "installed_or_executed": false,
+  "personal_data_transmitted": false
+}

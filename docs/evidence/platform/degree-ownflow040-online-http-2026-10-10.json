@@ -1,0 +1,143 @@
+{
+  "deployment": "040",
+  "scope": "production_fictional_data_fresh_visitors_only",
+  "checks": [
+    {
+      "check": "health",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "public_reader_download",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "ownread_requires_oauth",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "check": "visitor_a_start",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "visitor_b_start",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "fresh_owner_no_record",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "fictional_draft",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "own_draft_readback",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "other_visitor_draft_rejected",
+      "status": 404,
+      "expected": 404
+    },
+    {
+      "check": "missing_csrf_rejected",
+      "status": 403,
+      "expected": 403
+    },
+    {
+      "check": "explicit_confirmation",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "other_visitor_commit_rejected",
+      "status": 404,
+      "expected": 404
+    },
+    {
+      "check": "confirmed_commit",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "idempotent_commit",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "saved_own_readback",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "other_visitor_no_record",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "owner_override_rejected",
+      "status": 422,
+      "expected": 422
+    },
+    {
+      "check": "original_page_/tools/degree",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "original_page_/tools/timetable",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "original_page_/tools/import",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "original_page_/tools/calendar",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "original_page_/tools/device",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "visitor_recovery",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "visitor_a_logout",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "check": "logged_out_read_rejected",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "check": "visitor_b_logout",
+      "status": 200,
+      "expected": 200
+    }
+  ],
+  "modules": 6,
+  "courses": 5,
+  "revision": 1,
+  "visitor_credentials_persisted": false,
+  "real_grades_transmitted": false,
+  "timetable_or_task_writes": false,
+  "formal_agent_saved_record_chain_proven": false
+}

@@ -1,0 +1,56 @@
+{
+  "entries": [
+    {
+      "entry_id": "demo-proc-06",
+      "kind": "procedure",
+      "title": "示例办事：虚构流程占位（仅津南，校区过滤测试夹具）",
+      "category": "life",
+      "campus_scope": [
+        "津南"
+      ],
+      "audience": [
+        "全体"
+      ],
+      "official_url": null,
+      "login_required": "unknown",
+      "campus_network_required": "unknown",
+      "steps": [
+        "虚构步骤占位：用于校区过滤测试，非真实流程"
+      ],
+      "required_materials": [],
+      "source_refs": [],
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification"
+    },
+    {
+      "entry_id": "demo-proc-05",
+      "kind": "procedure",
+      "title": "示例办事：虚构的过期规章示例（用于过期提示测试）",
+      "category": "academic",
+      "campus_scope": [
+        "八里台"
+      ],
+      "audience": [
+        "本科生"
+      ],
+      "official_url": null,
+      "login_required": "unknown",
+      "campus_network_required": "unknown",
+      "steps": [
+        "虚构步骤占位：该示例规则按设定已于 2025-09-01 过期"
+      ],
+      "required_materials": [],
+      "source_refs": [
+        {
+          "label": "虚构来源示例（不是学校规定）",
+          "url": null,
+          "locator": "demo-fixture"
+        }
+      ],
+      "verified_at": "2025-03-01",
+      "valid_until": "2025-09-01",
+      "status": "expired"
+    }
+  ]
+}

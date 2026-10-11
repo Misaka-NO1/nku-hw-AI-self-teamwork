@@ -1,0 +1,15 @@
+.degree-read-preview { margin: 24px 0; padding: 20px; border: 1px solid #dce3ed; border-radius: 12px; background: #fff; color: #1e293b; line-height: 1.65; }
+.degree-read-preview h3, .degree-read-preview h4 { margin: 20px 0 8px; }
+.degree-read-preview p { margin: 8px 0; }
+.degree-read-preview .degree-table-wrap { max-width: 100%; overflow-x: auto; margin: 12px 0; }
+.degree-read-preview table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.degree-read-preview th { background: #edf3fb; text-align: left; white-space: nowrap; }
+.degree-read-preview td, .degree-read-preview th { padding: 12px; border: 1px solid #dce3ed; vertical-align: top; min-width: 72px; }
+.degree-read-preview td small { display: block; color: #64748b; font-size: 12px; }
+.degree-read-preview details { margin: 12px 0; padding: 12px; border: 1px solid #dce3ed; border-radius: 8px; }
+.degree-read-preview summary { cursor: pointer; font-weight: 600; }
+.degree-read-preview button { margin: 8px 8px 8px 0; padding: 10px 16px; border: 1px solid #1d4ed8; border-radius: 8px; color: #fff; background: #1d4ed8; cursor: pointer; }
+.degree-read-preview button:disabled { background: #e2e8f0; color: #64748b; border-color: #cbd5e1; cursor: default; }
+.degree-read-preview button:focus-visible, .degree-read-preview summary:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+.degree-read-preview [role="alert"] { padding: 12px; color: #991b1b; background: #fef2f2; }
+@media (max-width: 640px) { .degree-read-preview { padding: 12px; } .degree-read-preview table { min-width: 800px; } }

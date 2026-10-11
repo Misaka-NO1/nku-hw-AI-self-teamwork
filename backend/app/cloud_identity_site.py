@@ -115,6 +115,7 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         raise ValueError("Competition compatibility requires explicit OAuth activation")
     if runtime.cloud_identity_bootstrap_enabled:
         if (runtime.cloud_identity_pilot_enabled or runtime.cloud_oauth_pilot_enabled or runtime.cloud_notice_text_pilot_enabled or runtime.cloud_task_calendar_enabled or runtime.cloud_personal_tasks_enabled
+            or runtime.cloud_personal_degree_enabled
             or runtime.app_env not in {"test","staging"} or runtime.auth_mode!="demo_fixture"
             or runtime.allow_personal_uploads):
             raise ValueError("Bootstrap must not enable identity, OAuth or personal business")
@@ -478,6 +479,27 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             raise AppError(403,"DEMO_ONLY","Only the fixed public degree demonstration is available")
         return execute_domain("audit_degree_progress",payload,public_principal(),runtime,current_request_id(request))
 
+    # Independent, ephemeral page analysis. The public fixed demonstration
+    # above retains its existing contract and never receives personal rows.
+    def authorize_degree_page(request):
+        from hmac import compare_digest
+        args = browser_args(request, True)
+        context = decode_context(request.cookies.get(SESSION_COOKIE, ""), request.cookies.get(CONTEXT_COOKIE, ""),
+                                 persistent=runtime.cloud_persistent_auth_enabled)
+        if not compare_digest(request.headers.get("X-CSRF-Token", ""), context["csrf_token"]):
+            raise AppError(403, "FORBIDDEN", "Browser request verification required")
+        workspace = database.call("get_workspace", args)
+        if workspace.get("workspace_ref") != context["workspace_ref"]:
+            raise AppError(401, "AUTH_REQUIRED", "Browser session context does not match the verified owner")
+        visitor = runtime.cloud_visitor_enabled and database.call("visitor_status", {"session_hash": args["session_hash"]}).get("visitor") is True
+        if runtime.cloud_agent_device_binding_enabled and not visitor and device_status(request, database)["status"] != "bound":
+            raise AppError(401, "AUTH_REQUIRED", "Bind this browser to the Agent authorized account first")
+
+    from app.api.degree_page import install_degree_page_routes
+    install_degree_page_routes(site, authorize_degree_page)
+    from app.api.personal_degree import install_personal_degree_routes
+    install_personal_degree_routes(site,runtime,database,browser_args,authorize_degree_page,format_times)
+
     def time_query(request,payload,operation):
         validate_boundary(payload,"FreeTimeQuery" if operation=="free" else "TimeCheckRequest")
         if runtime.cloud_notice_text_pilot_enabled:
@@ -517,7 +539,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     @site.get("/tools/{tool}")
     def tool_page(tool:str,request:Request):
         if tool not in {"login","tasks","import","timetable","affairs","degree","calendar"}: raise AppError(404,"NOT_FOUND","Use the existing published public content service")
-        if runtime.cloud_agent_device_binding_enabled and request.url.path in RETURNS:
+        # A transfer must wait for binding before its one-shot bridge can claim it.
+        # The existing degree page without a transfer remains a public demo entry.
+        if (runtime.cloud_agent_device_binding_enabled and request.url.path in RETURNS
+                and (request.url.path != "/tools/degree" or request.url.query)):
             try:
                 session_hash=browser_args(request)["session_hash"]
                 database.call("get_workspace",{"session_hash":session_hash})

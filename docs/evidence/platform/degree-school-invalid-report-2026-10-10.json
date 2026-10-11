@@ -1,0 +1,18 @@
+{
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "field_errors": [],
+    "message": "培养计划表格未通过校验",
+    "retryable": false
+  },
+  "meta": {
+    "calculation_version": null,
+    "data_version": null,
+    "evidence_refs": [],
+    "request_id": "a5c1a55a-a7fc-4c38-a3d4-ca39f9fbb132",
+    "schema_version": "1.0.0",
+    "warnings": []
+  },
+  "ok": false
+}

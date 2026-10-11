@@ -6,8 +6,9 @@ __pycache__/
 htmlcov/
 .env
 backend/data/
-backend/.test-tmp-*/
+backend/.test-*/
 backend/.test-python-deps/
+.review-cache/
 /.test-tmp-*/
 /artifacts/
 .local-notice-pilot-data/

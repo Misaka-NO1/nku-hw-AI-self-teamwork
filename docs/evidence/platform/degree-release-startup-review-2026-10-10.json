@@ -1,0 +1,27 @@
+{
+  "scope": "local_candidate_archive_and_startup_source_only",
+  "package": ".review-cache/degree-main-0051687-20261010-r6/dist/cloudbase-identity-degree-main0051687-20261010-r4.zip",
+  "sha256": "2cba6fe084de25b07abeaa47374376fbdf2333ba29a582ef9cd8f635ced78157",
+  "manifest_hashed_files": 204,
+  "archive_entries_including_manifest": 205,
+  "archive_directory_entries": 0,
+  "private_or_runtime_file_scan_matches": [],
+  "startup_command": "python -m uvicorn app.cloud_identity_site:create_cloud_identity_site --factory --host 0.0.0.0 --port 8080 --no-access-log",
+  "docker_startup_runs_sql_migration": false,
+  "application_lifespan": {
+    "checks_existing_schema_probes": true,
+    "existing_configure_subjects_call_preserved": true,
+    "read_only_startup_claim": false,
+    "requirement": "Preserve existing service configuration and authorized pilot subjects; do not initialize schemas, rerun SQL, replace persistent data, or enable bootstrap."
+  },
+  "cloud_environment_values_read": false,
+  "database_access_performed": false,
+  "candidate_deployed": false,
+  "school_application_publish_confirmation_visible": true,
+  "school_application_final_publish_clicked": false,
+  "unproven": [
+    "Current production toolsite configuration compatibility",
+    "Formal application publication and anonymous fresh-session acceptance",
+    "Production toolsite/extension anonymous end-to-end regression"
+  ]
+}

@@ -2,9 +2,11 @@ import { useMemo, useState } from "react";
 import { EmptyState, SourceCard, StatusBanner } from "../../shared/components";
 import {
   AFFAIRS_DATA_VERSION,
+  AFFAIRS_DATASET_KIND,
   entryDisplayState,
   entrySources,
   filterAffairs,
+  findAffairGuides,
   listAffairs,
   listCategories,
   todayISO,
@@ -50,7 +52,7 @@ function AffairCard({ entry, today }: { entry: AffairEntry; today: string }) {
       {state === "needs_verification" ? (
         <StatusBanner
           kind="unverified"
-          message="本条为待核验的演示模板，不是学校正式规定；正式来源核验前请勿按此操作。"
+          message="该使用指引尚未经正式来源核验，请先在官方渠道核对，不作为学校规定。"
         />
       ) : null}
       {entry.steps.length > 0 ? (
@@ -64,7 +66,8 @@ function AffairCard({ entry, today }: { entry: AffairEntry; today: string }) {
       )}
       {entry.requiredMaterials.length > 0 ? (
         <p>所需材料：{entry.requiredMaterials.join("、")}</p>
-      ) : null}
+      ) : <p className="state__hint">所需材料：来源未列明，请先向官方受理渠道核实。</p>}
+      {entry.cautions?.map((notice) => <p className="state__hint" key={notice}>{notice}</p>)}
       <div>
         {(() => {
           const sources = entrySources(entry);
@@ -97,24 +100,36 @@ export function AffairsPage() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("");
   const [campus, setCampus] = useState("");
+  const [question, setQuestion] = useState("");
+  const [submittedQuestion, setSubmittedQuestion] = useState("");
   const today = todayISO();
   const all = useMemo(() => listAffairs(), []);
   const filtered = useMemo(
     () => filterAffairs(all, { query, category, campus }),
     [all, query, category, campus]
   );
-  const verifiedCount = all.filter(
-    (e) => entryDisplayState(e, today) === "verified"
-  ).length;
-  const pendingCount = all.length - verifiedCount;
+  const guides = useMemo(() => findAffairGuides(submittedQuestion), [submittedQuestion]);
 
   return (
     <section>
       <h2>校园事务</h2>
       <StatusBanner
-        kind={pendingCount > 0 ? "partial" : "demo"}
-        message={`数据版本 ${AFFAIRS_DATA_VERSION}：${verifiedCount} 条已核验官方入口，${pendingCount} 条仍为待核验/演示模板。待核验条目不代表学校规定。`}
+        kind="partial"
+        message={`校园办事资料（${AFFAIRS_DATA_VERSION}）：官方来源与待核验指引分别标注，办理前核对适用人群、校区和最新通知。数据类型：${AFFAIRS_DATASET_KIND}。`}
       />
+      <form onSubmit={(event) => { event.preventDefault(); setSubmittedQuestion(question.trim()); }}>
+        <label htmlFor="affairs-question">你想办理什么？</label>
+        <div className="toolbar">
+          <input id="affairs-question" value={question} onChange={(event) => setQuestion(event.target.value)}
+            placeholder="例如：学生证丢了怎么补办？宿舍空调坏了怎么办？" />
+          <button type="submit" disabled={!question.trim()}>查办事指南</button>
+        </div>
+      </form>
+      {submittedQuestion ? <section aria-label="问题对应办事指南" aria-live="polite">
+        <h3>“{submittedQuestion}”对应的指南</h3>
+        {guides.length ? guides.map((entry) => <AffairCard key={entry.entryId} entry={entry} today={today} />)
+          : <EmptyState title="暂未收录这项办理流程" hint="可在下方查找教务部办事指南或网上办事大厅；当前资料不足，无法保证具体步骤。" />}
+      </section> : null}
       <div className="toolbar">
         <input
           type="search"

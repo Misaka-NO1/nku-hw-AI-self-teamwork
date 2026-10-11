@@ -1,6 +1,8 @@
 import { isExtractionAllowed, PRODUCTION_WHITELIST, DEV_FIXTURE_WHITELIST, BACKEND_ORIGIN, APP_ORIGINS, APP_IMPORT_PATH, isAppUrl } from "./config";
 import { isSenderAllowed, parseMessage } from "./messages";
 import { submitConfirmedDraft, type ImportTicket } from "./tickets";
+import { handleDegreeMessage } from "./degree-transfer";
+import { isDegreePage } from "../../packages/import-core/src/degree-page";
 
 /**
  * MV3 service worker。
@@ -20,6 +22,11 @@ function isAllowedUrl(url: string): boolean {
 }
 
 chrome.action.onClicked.addListener(async (tab) => {
+  // 教务菜单可在同一文档中更新URL；主动点图标补挂独立入口，不读取或触发课表消息。
+  if (tab.id !== undefined && tab.url && isDegreePage(tab.url)) {
+    await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ["dist/degree-content.js"] });
+    return;
+  }
   if (tab.id === undefined || !tab.url || !isAllowedUrl(tab.url)) {
     // EXT-01：非白名单域名不注入、不解析、不上传
     return;
@@ -32,6 +39,11 @@ chrome.action.onClicked.addListener(async (tab) => {
 });
 
 chrome.runtime.onMessage.addListener((raw, sender, sendResponse) => {
+  const degreeRoute = handleDegreeMessage(raw, sender, chrome);
+  if (degreeRoute.handled) {
+    void degreeRoute.response.then(sendResponse);
+    return true;
+  }
   const message = parseMessage(raw);
   if (!message) {
     return false;

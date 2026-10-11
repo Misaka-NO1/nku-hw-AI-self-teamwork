@@ -1,0 +1,19 @@
+{
+  "base": "0051687752b84a65d97d3c0cd2d91fccee1dd706",
+  "package": "D:\\code\\华为ai比赛\\.review-cache\\degree-main-0051687-20261010-r5\\dist\\cloudbase-identity-degree-main0051687-20261010-r3.zip",
+  "sha256": "d174c97de608aaa2ba098e8fa03f5a91859f8fa9fc2cb19da05b799fa225a026",
+  "files": 204,
+  "protected_files_byte_equal_to_merged_main_archive": [
+    "backend/app/visitor_site.py",
+    "backend/app/core/cloud_identity_store.py",
+    "backend/app/core/config.py",
+    "backend/app/oauth_pilot_site.py",
+    "browser-visitor-migration.sql",
+    "task-delete-migration.sql"
+  ],
+  "manifest_verified": true,
+  "final_browser_focus_fix_in_staged_source": true,
+  "local_qa_extension_excluded": true,
+  "live_deployed": false,
+  "migrations_executed": false
+}

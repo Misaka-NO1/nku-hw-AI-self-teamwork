@@ -1,0 +1,10 @@
+{
+  "status": "online_download_verified",
+  "http_status": 200,
+  "sha256": "33dcbf438083a8c6544922ebc8bc5fbb3f5d0aa256fb53c43aa2aae0bd44c667",
+  "bytes": 17305,
+  "name": "南开校园助手 · 教务课表读取",
+  "original_reader_preserved": true,
+  "schedule_and_degree_scripts_present": true,
+  "loaded_or_executed": false
+}

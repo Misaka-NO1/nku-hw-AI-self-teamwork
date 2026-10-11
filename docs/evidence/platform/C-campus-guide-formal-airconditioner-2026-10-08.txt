@@ -1,0 +1,84 @@
+请给官方应用里的步骤、查询进度的方法、联系渠道和来源日期，区分报修与新租空调。
+  - generic: 宿舍空调故障报修和新租空调是两个不同流程，已按已核验官方指南整理如下：
+  - heading "一、宿舍空调坏了怎么报修（故障报修）" [level=2]
+  - text: 适用：全体；八里台、津南两校区
+  - text: 状态：verified
+  - text: 来源类型：official_web_snapshot
+  - text: 原核验日期：2026-10-08
+  - text: 官方入口依据：
+  - link "https://hq.nankai.edu.cn/24032/listm.htm":
+    - /url: https://hq.nankai.edu.cn/24032/listm.htm
+  - heading "官方应用里的报修步骤" [level=3]
+  - list:
+    - listitem: 打开“尼好校园”微信小程序。
+    - listitem: 选择“空调服务”→“空调报修”。
+    - listitem: 在小程序内依次选择报修区域、房间号、报修项目。
+    - listitem: 填写报修详情、报修人和报修方式。
+    - listitem: 提交报修订单。
+  - heading "报修进度怎么查" [level=3]
+  - list:
+    - listitem: 提交后进入小程序里的“我的报修”查看订单状态。
+    - listitem: 如果进度未更新，可通过原报修渠道或下面的联系渠道咨询。
+  - heading "联系渠道" [level=3]
+  - list:
+    - listitem: 24小时热线：4000007723
+    - listitem: 飞书“后勤报修”
+    - listitem: 后勤公众号“微信报修”
+    - listitem: 咨询电话：022-85358535
+  - heading "注意" [level=3]
+  - list:
+    - listitem: 费用、受理条件和上门安排以实际官方页面为准。
+    - listitem: 个人房间、故障信息、联系方式只填官方系统，不交给校园助手。
+  - separator
+  - heading "二、新租空调/开通空调服务（不是报修）" [level=2]
+  - text: 适用：全体；八里台、津南两校区
+  - text: 状态：verified
+  - text: 来源类型：official_web_snapshot
+  - text: 原核验日期：2026-10-08
+  - text: 官方入口依据：
+  - link "https://hq.nankai.edu.cn/24032/listm.htm":
+    - /url: https://hq.nankai.edu.cn/24032/listm.htm
+  - heading "官方应用里的租赁步骤" [level=3]
+  - list:
+    - listitem: 打开“尼好校园”微信小程序。
+    - listitem: 选择“空调服务”→“开启服务”。
+    - listitem: 按毕业时间选择租赁选项。
+    - listitem: 在官方小程序填写寝室成员信息，核对订单、租期和合同条件。
+    - listitem: 在官方页面确认费用并付款，保留支付与租赁凭证。
+    - text: 凭支付凭证领取遥控器：
+    - list:
+      - listitem: 八里台：21宿1楼10门旁办公室
+      - listitem: 津南：理科宿舍学5B与学5C中间过道2楼
+      - listitem: 出发前建议核对当日办公安排。
+  - heading "联系渠道" [level=3]
+  - list:
+    - listitem: 不确定如何申请时，可先拨打官方24小时咨询热线：4000007723
+  - heading "注意" [level=3]
+  - list:
+    - listitem: 校园助手不提供支付链接、不代付。
+    - listitem: 费用、租期和领取安排以官方页面最新通知为准。
+  - separator
+  - heading "三、报修和新租空调的区别" [level=2]
+  - list:
+    - strong: 空调坏了/不制冷/漏水
+    - text: ：走“空调报修”，入口是“尼好校园”→“空调服务”→“空调报修”。
+    - strong: 还没开通空调服务/需要新租空调/领遥控器
+    - text: ：走“开启服务/租赁”，入口是“尼好校园”→“空调服务”→“开启服务”。
+  - text: 来源：南开大学官方公开服务指南《学生宿舍空调租赁办理方式》《学生宿舍空调报修流程》，
+  - link "https://hq.nankai.edu.cn/24032/listm.htm":
+    - /url: https://hq.nankai.edu.cn/24032/listm.htm
+  - text: ，2026-10-08 核验。
+  - generic: 20.129s
+  - generic: ","
+  - generic: 22160 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - generic: 5. 校园事务
+  - generic: 6. 培养方案与学分
+  - textbox [active]
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）

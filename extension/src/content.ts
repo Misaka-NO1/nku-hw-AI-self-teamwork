@@ -2,6 +2,7 @@ import { extractEamisGridFromDoc, REQUIRED_TABLE_HEADERS } from "@campus/import-
 import type { PageObservation } from "@campus/import-core";
 
 import { parseMessage } from "./messages";
+import { isExtractionAllowed, PRODUCTION_WHITELIST } from "./config";
 
 /**
  * content script 的白名单课程区域提取。
@@ -159,6 +160,8 @@ export function mountImportButton(
   pageUrl: string,
   options: { maxAttempts?: number; retryMs?: number } = {},
 ): void {
+  // A stale/manual injection must never show the timetable action on a plan page.
+  if (!isExtractionAllowed(pageUrl, PRODUCTION_WHITELIST)) return;
   const maxAttempts = options.maxAttempts ?? BUTTON_MAX_ATTEMPTS;
   const retryMs = options.retryMs ?? BUTTON_RETRY_MS;
   let attempts = 0;

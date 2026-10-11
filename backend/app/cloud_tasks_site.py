@@ -53,7 +53,9 @@ class RequestBodyLimit:
         image = self.notice_text_enabled and scope.get("path", "") == "/api/v1/notice-text/images/read"
         schedule_upload = self.personal_schedules_enabled and scope.get("path", "") in {
             "/api/v1/schedules/import-drafts", "/api/v1/schedules/validate"}
-        limit = 3 * 1024 * 1024 if image else 1048576 if schedule_upload else 524288 if extended else 32768
+        degree_analysis = scope.get("path", "") in {
+            "/api/v1/degree/page/observation", "/api/v1/degree/page/analyze", "/api/v1/degree/import-drafts"}
+        limit = 3 * 1024 * 1024 if image else 1048576 if schedule_upload or degree_analysis else 524288 if extended else 32768
         while True:
             event = await receive()
             if event["type"] == "http.disconnect":

@@ -134,6 +134,43 @@ def test_private_tool_entry_gate_no_open_redirect_or_temporary_code(fixed, envir
     assert target.get("/tools/import?access_token=secret", follow_redirects=False).status_code == 422
 
 
+def test_degree_transfer_waits_for_binding_without_changing_public_demo(fixed):
+    _, _, _, source, target = fixed
+    assert target.get("/tools/degree", follow_redirects=False).status_code == 200
+    ticket = "12345678-abcd-abcd-abcd-123456789abc"
+    destination = "/tools/degree?degree_transfer_id=" + ticket
+    response = target.get(destination, follow_redirects=False)
+    assert response.status_code == 303
+    assert parse_qs(urlsplit(response.headers["location"]).query)["return_to"] == [destination]
+    page = target.get(response.headers["location"])
+    assert page.status_code == 200
+    assert destination in page.text
+    # No preview or extension claim occurs until the binding page returns.
+    assert "campus:degree-import-ready" not in page.text
+    for query in ("degree_transfer_id=bad", "transfer_id=" + ticket,
+                  "degree_transfer_id=" + ticket + "&owner_subject_id=other",
+                  "degree_transfer_id=" + ticket + "&degree_transfer_id=" + ticket):
+        assert target.get("/tools/degree?" + query, follow_redirects=False).status_code == 422
+    login(source)
+    bearer = grant(source)
+    code = device_post(target, "start").json()["data"]["device_code"]
+    assert agent_bind(source, bearer, code).status_code == 200
+    assert device_post(target, "claim").status_code == 200
+    assert target.get(destination, follow_redirects=False).status_code == 200
+
+
+def test_degree_return_allowlist_cannot_redirect_or_mix_transfer_protocols():
+    from app.agent_device_site import valid_destination
+    ticket = "12345678-abcd-abcd-abcd-123456789abc"
+    assert valid_destination("/tools/degree")
+    assert valid_destination("/tools/degree?degree_transfer_id=" + ticket.upper())
+    for destination in ("https://evil.invalid/tools/degree", "//evil.invalid/tools/degree",
+                        "/tools/degree?draft_id=demo", "/tools/degree?degree_transfer_id=",
+                        "/tools/import?degree_transfer_id=" + ticket,
+                        "/tools/degree?degree_transfer_id=" + ticket + "#other"):
+        assert not valid_destination(destination)
+
+
 def test_target_logout_retains_locator_but_does_not_restore_login(fixed):
     _, _, _, source, target = fixed
     login(source)

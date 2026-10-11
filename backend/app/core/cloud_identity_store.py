@@ -20,6 +20,7 @@ PERSONAL_OPERATIONS = frozenset({"probe", "access", "records", "draft", "commit"
 DEVICE_RPC_URL = RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_browser_device_v1_rpc"
 DEVICE_OPERATIONS = frozenset({"probe", "start", "review", "approve", "claim"})
 AGENT_DEVICE_RPC_URL = RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_agent_device_v1_rpc"
+DEGREE_RPC_URL = RPC_URL.removesuffix("nku_identity_pilot_v1_rpc") + "nku_personal_degree_v1_rpc"
 STATUSES = {"AUTH_REQUIRED":401, "FORBIDDEN":403, "NOT_FOUND":404, "TOKEN_EXPIRED":410,
     "VALIDATION_ERROR":422, "DEMO_ONLY":403, "RATE_LIMITED":429,
     "STALE_REVISION":409, "CONFIRMATION_REQUIRED":409}
@@ -84,6 +85,11 @@ class CloudIdentityStore:
         if op not in {"probe", "start", "register", "status", "detach", "bind", "claim"}:
             raise AppError(403,"FORBIDDEN","Unsupported Agent device operation")
         return self._request(AGENT_DEVICE_RPC_URL,op,args)
+
+    def degree_call(self,op,args):
+        if op not in {"probe", "draft", "get_draft", "confirm", "commit", "current", "records"}:
+            raise AppError(403,"FORBIDDEN","Unsupported curriculum operation")
+        return self._request(DEGREE_RPC_URL,op,args,max_response=2097152)
 
     def _request(self,url,op,args,max_response=262144):
         try:

@@ -2,11 +2,11 @@
 
 NK-GeniOS 是对话入口；腾讯云负责接口、文件和持久数据。工具网页只保留课表与地图导航，不把六项对话能力做成六套网页。仓库修改不会自动同步到腾讯云或学校平台，部署和平台配置需要分别更新。
 
-2026-10-06 源码更新：新增第三项“待办日历”可视化入口，前端交互已交付；现网两入口是此前部署基线，不代表日历已上线。日历扩展接口和后端持久化仍需 D 接入，见 [待办日历前端与 D 接口对接](待办日历前端与D接口对接-2026-10-06.md)。
+2026-10-08 续接：PR #10/#11 已合入当前工作区；身份站已有课表、地图与待办日历导航，本人草稿、确认保存和读回已有正式验收记录。长期授权和两账号隔离的范围见 [N26当前成果交接](N26-current-release-and-team-use-2026-10-07.md)，本轮剩余任务和证据见 [收尾执行记录](收尾执行记录-2026-10-08.md)。早期各模块 progress 文件保留历史，不以其中“未上线”覆盖更晚验收。
 
 ## 现有地址（不含秘密）
 
-- 主 Agent：<https://coze.nankai.edu.cn/product/llm/chat/db0ulft4shhbpg8v7rgg>
+- 主 Agent（2026-10-08核对新入口）：<https://coze.nankai.edu.cn/product/llm/chat/db1s3854shhas0aklkeg>
 - 地图：<https://nku-campus-public-content-308235-6-1467707525.sh.run.tcloudbase.com/tools/map>
 - 课表：<https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/timetable>
 - 公开接口根地址：`https://nku-campus-public-content-308235-6-1467707525.sh.run.tcloudbase.com`
@@ -56,7 +56,7 @@ powershell -NoProfile -File deploy/Start-Demo.ps1 -Port 8012
 ```powershell
 powershell -NoProfile -File deploy/Build-Visual-Tools.ps1 `
   -Profile public `
-  -GeniosUrl 'https://coze.nankai.edu.cn/product/llm/chat/db0ulft4shhbpg8v7rgg' `
+  -GeniosUrl 'https://coze.nankai.edu.cn/product/llm/chat/db1s3854shhas0aklkeg' `
   -PublicContentOrigin 'https://nku-campus-public-content-308235-6-1467707525.sh.run.tcloudbase.com' `
   -TimetableOrigin 'https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com'
 ```

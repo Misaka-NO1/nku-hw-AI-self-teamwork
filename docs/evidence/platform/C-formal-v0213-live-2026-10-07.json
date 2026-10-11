@@ -1,0 +1,9 @@
+{
+  "channel": "Web 服务",
+  "version": "v0.2.13",
+  "state": "运行中",
+  "channelUpdatedAt": "2026-10-07 17:35:19",
+  "url": "https://coze.nankai.edu.cn/product/llm/chat/db1s3854shhas0aklkeg",
+  "verifiedNewConversation": "- main:\n  - generic: 会话历史\n  - generic: 今天\n  - generic: 新的会话\n  - generic: 帮我整理这份虚构测试通知：2026年10月16日19:00在虚构礼堂集合观摩；请于2026年10月17日18:00前提交虚构报告\n  - button \"新增会话\" [active]:\n    - generic: 新增会话\n  - button:\n  - button:\n  - generic: 南开校园助手\n  - generic: 你好，我是南开校园助手。想先做哪一件事？\n  - list:\n    - generic: 校园赏景：找赏花、散步、约会、草地和地标。\n    - generic: 复习资料：按课程与学期列出原文件，直接下载。\n    - generic: 课表：查看课表，核对课程与周次。\n    - generic: 通知与待办：整理通知与DDL，查冲突、推荐完成时间，核对待办。\n    - generic: 校园事务：查询学校官方办事渠道。\n    - generic: 培养方案与学分：了解固定演示审计及规则覆盖范围。\n  - generic: 回复编号，或直接告诉我你的需求；聊到一半也可以随时换方向。课表与学分使用虚构演示；待办经本人确认后保存到自己的日历。点击下方独立的“查看待办时间”，即可按时间查看自己的未完成事项，并打开日历详情。\n  - generic: 查看待办时间\n  - generic: 1. 校园赏景\n  - generic: 2. 复习资料\n  - generic: 3. 课表\n  - generic: 4. 通知与待办\n  - text: 更多\n  - textbox:\n    - paragraph\n  - generic: 发送消息，可通过 shift + enter 换行\n  - text: 上传文件\n  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）",
+  "note": "进入渠道页时已是运行中v0.2.13，未重复提交发布；新入口新增会话验证文案已生效"
+}

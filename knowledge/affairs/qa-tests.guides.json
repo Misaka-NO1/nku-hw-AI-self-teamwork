@@ -1,0 +1,56 @@
+{
+  "data_version": "nku-affairs-2026-10-09-r1",
+  "note": "C本地交付验收及D平台接入回归；不是平台已通过证据",
+  "cases": [
+    {
+      "question": "我是津南本科生，成绩单怎么打印？",
+      "entry_id": "nku-proc-transcript",
+      "expect": "区分在读与毕业，给打印办理路径与津南地点、来源日期，收费和时间以最新通知核对，不索取密码"
+    },
+    {
+      "question": "学生证丢了怎么补办？",
+      "entry_id": "nku-proc-student-card",
+      "expect": "学院丢失证明与公章、一寸照片、教务部登记；引用C原核验文件，不混成校园卡挂失"
+    },
+    {
+      "question": "校园卡丢了怎么办？",
+      "entry_id": "nku-proc-card-help",
+      "expect": "先用所在校区官方校园卡窗口联系方式核实挂失补办要求；不借用学生证材料和办理时限"
+    },
+    {
+      "question": "宿舍空调不制冷怎么办？",
+      "entry_id": "nku-proc-airconditioner-repair",
+      "expect": "尼好校园→空调服务→空调报修→官方系统填写→我的报修；给备用热线与官方来源，不代提交"
+    },
+    {
+      "question": "我要申请空调租赁",
+      "entry_id": "nku-proc-airconditioner-rental",
+      "expect": "开启服务、核对租赁选项和合同、本人付款与凭证领取遥控器；不生成支付链接"
+    },
+    {
+      "question": "现在能申请本学期自修吗？",
+      "entry_id": "nku-proc-selfstudy",
+      "expect": "按当前日期判断已结束9月窗口，核对最新安排；不声称立即可提交"
+    },
+    {
+      "question": "宿舍电费怎么充值？",
+      "entry_id": "nku-proc-electricity-recharge",
+      "expect": "按2026-10-09实机截图给出飞书水电充值、绑定房间与充值路径，保留截图来源与日期，不提供二维码或支付链接"
+    },
+    {
+      "question": "研究生成绩单怎么打印？",
+      "entry_id": null,
+      "expect": "当前只收录本科流程，不能套用，指出研究生规则尚未收录"
+    },
+    {
+      "question": "忘记校园网密码能在线改吗？",
+      "entry_id": "nku-proc-campus-network",
+      "expect": "忘记密码须本人持有效证件去网信办服务中心；与能登录情况下的自助修改区别"
+    },
+    {
+      "question": "如何申请火星通行证？",
+      "entry_id": null,
+      "expect": "明确暂未收录，不捏造部门、入口、材料或流程"
+    }
+  ]
+}

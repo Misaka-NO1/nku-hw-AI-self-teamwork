@@ -1,0 +1,47 @@
+宿舍电费怎么充值？你收录的指引是不是正式核验过的？请给查找路径，不提供支付链接。
+  - generic: 南开校园助手
+  - generic: 已完成
+  - generic: 目前收录到的宿舍电费充值查找路径是：
+  - list:
+    - listitem: 打开飞书 APP；
+    - listitem: 进入「南开微应用」板块；
+    - listitem: 点击「充值」应用；如果列表里没有，可在「＋」或所有应用中查找添加；
+    - listitem: 按页面提示选择宿舍后查看充值入口。
+  - text: 关于核验状态：
+  - strong: 这条指引目前不是正式核验过的学校官方流程。
+  - text: 它的状态是
+  - code: needs_verification
+  - text: ，来源类型为学生提供的日常使用路径，记录时间为 2026-09-30，知识库中没有收录对应的正式网页或官方通知依据，因此只能作为查找参考，不能表述为学校规定。
+  - generic: 安全说明：我不提供支付链接、二维码或代充值入口。涉及缴费时，请你在官方应用内核对应用名称、宿舍信息和收款页面，必要时向宿舍管理站、后勤部门或辅导员确认当前正确入口。
+  - generic: 13.222s
+  - generic: ","
+  - generic: 21517 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - text: 更多
+  - textbox [active]
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"

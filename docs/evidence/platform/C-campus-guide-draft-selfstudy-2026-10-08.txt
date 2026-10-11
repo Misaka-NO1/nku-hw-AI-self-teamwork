@@ -1,0 +1,119 @@
+本科生这学期自修怎么申请？今天是2026年10月8日，给办理步骤、原通知申请窗口及当前能做的第一步。
+  - generic: 南开校园助手
+  - generic: 已完成
+  - text: 适用对象：
+  - strong: 本科生
+  - text: ；校区：来源未限定。
+  - text: 来源核验时间：
+  - strong: 2026-09-27
+  - text: ，依据为南开大学教务部 2026-08-17 发布的《2026-2027 学年第一学期本科生选课通知》及附件《选课手册》。
+  - heading "一、申请条件" [level=3]
+  - generic: 根据原通知“七、自修”，课程时间冲突且满足以下条件之一，可申请免听自修：
+  - list:
+    - text: 自修课程为
+    - strong: 辅修专业课程
+    - text: ；
+    - strong: 四年级
+    - text: 学生（临床医学、口腔医学专业为五年级）为满足毕业条件必须取得学分的课程；
+    - strong: 重修或缓修
+    - text: 的课程；
+    - text: 平均学分绩点
+    - strong: GPA≥3.0
+    - text: 。
+  - generic: 另外：
+  - list:
+    - text: 课程时间
+    - strong: 不冲突
+    - text: 的，若
+    - strong: GPA≥3.0
+    - text: 也可申请；
+    - strong: 校际交流学生
+    - text: 在交流期间可申请；
+    - text: 时间冲突课程须先
+    - strong: 正常选一门
+    - text: ，再对另一门申请自修；
+    - text: 已通过审核的自修课程在补退选阶段
+    - strong: 不允许退课
+    - text: ；
+    - text: 每学期自修课程一般
+    - strong: 不超过2门
+    - text: （2022年操作说明为不超过1门，以最新通知为准）。
+  - heading "二、办理步骤" [level=3]
+  - list:
+    - listitem: 先确认自己符合自修申请条件，尤其是课程冲突情况、年级/课程类型或 GPA 要求。
+    - text: 若为时间冲突课程，先在教学管理信息系统中
+    - strong: 正常选上其中一门课程
+    - text: 。
+    - text: 登录
+    - strong: 教学管理信息系统
+    - text: ，进入：
+    - list:
+      - listitem: 「我的」→「自修申请」
+    - text: 切换到
+    - strong: 2026-2027学年第一学期
+    - text: ，搜索要申请自修的课程并提交申请。
+    - text: 提交后及时向
+    - strong: 任课教师
+    - text: 和
+    - strong: 开课单位教学办公室
+    - text: 说明情况，请老师和开课单位在系统中审核。
+    - text: 经任课教师、开课单位同意后，报
+    - strong: 教务部
+    - text: 批准。
+  - heading "三、原通知申请窗口" [level=3]
+  - generic: 原通知公布的本学期申请窗口为：
+  - list:
+    - text: 第一阶段：
+    - strong: 2026年9月7日 10:00 — 9月11日 16:00
+    - text: 第二阶段：
+    - strong: 2026年9月21日 10:00 — 9月24日 16:00
+  - text: 按当前日期
+  - strong: 2026年10月8日
+  - text: 判断，这两个9月窗口
+  - strong: 已经结束
+  - text: ，不能再按原通知窗口直接提交。
+  - heading "四、当前能做的第一步" [level=3]
+  - strong: 当前第一步：不要按9月窗口直接准备提交，先联系所在学院教学办公室核实是否还有补申请或特殊审批渠道。
+  - generic: 原因是现有已核验资料只记录了9月两个申请窗口，且明确提示窗口已结束；当前知识库未收录10月8日后是否开放补申请、逾期审批或学院特殊处理流程，因此不能保证现在还能在系统中提交。
+  - heading "五、官方来源" [level=3]
+  - list:
+    - text: 南开大学教务部：《2026-2027 学年第一学期本科生选课通知》（2026-08-17）
+    - link "https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm":
+      - /url: https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm
+    - listitem: 附件：《2026-2027学年第一学期选课手册（2026.9.11更新）》PDF 第3–4页“七、自修”
+    - text: 教务部自修申请操作方法（学生）（2022-02-18）
+    - link "https://jwc.nankai.edu.cn/2022/0218/c35927a550802/page.htm":
+      - /url: https://jwc.nankai.edu.cn/2022/0218/c35927a550802/page.htm
+  - generic: 补充说明：具体是否还能补申请、系统是否仍开放、是否需要额外材料，以办理时学院教学办公室和教务部最新答复为准。
+  - generic: 23.874s
+  - generic: ","
+  - generic: 22153 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - text: 更多
+  - textbox [active]
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"

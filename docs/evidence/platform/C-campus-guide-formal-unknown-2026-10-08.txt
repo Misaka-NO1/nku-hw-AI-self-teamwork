@@ -1,0 +1,25 @@
+怎么申请，需要什么材料、费用和具体系统菜单？只依据校园事务库回答，没收录就明确说明。
+  - generic: 本次校园事务库检索结果中，**没有收录“学校宠物入住宿舍审批”**的对应条目，因此无法依据现有库内容回答其申请流程、所需材料、费用或具体系统菜单。
+  - generic: 本次实际检索到的相关分段仅包括：
+  - list:
+    - listitem: 教学质量评价（教学质量平台）
+    - listitem: 跳蚤市场（校内闲置物品）
+    - listitem: 校内班车时刻查询
+  - generic: 这些内容均不涉及宠物入住宿舍审批。
+  - text: 因此按你的要求明确说明：
+  - strong: 当前校园事务库未收录该事项，不能给出申请步骤、材料、费用或系统菜单。
+  - text: 如需查询，建议通过学校官方后勤/学生宿舍管理部门或官方咨询渠道核实最新规定。
+  - generic: 8.644s
+  - generic: ","
+  - generic: 21403 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - generic: 5. 校园事务
+  - generic: 6. 培养方案与学分
+  - textbox [active]
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）

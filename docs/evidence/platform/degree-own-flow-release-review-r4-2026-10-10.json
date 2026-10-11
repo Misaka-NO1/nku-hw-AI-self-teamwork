@@ -1,0 +1,47 @@
+{
+  "status": "candidate_verified_not_deployed",
+  "package": "D:\\code\\华为ai比赛\\.review-cache\\degree-own-flow-main0051687-20261010-r4\\dist\\cloudbase-identity-degree-ownflow-20261010-r4.zip",
+  "sha256": "a643fde7c4b4668a7c3c48713ceb313e0004295f28417ba9e6a7effd3eda1b5d",
+  "manifest_files": 207,
+  "base_release": "039",
+  "source_base": "0051687752b84a65d97d3c0cd2d91fccee1dd706",
+  "changed": [
+    "backend/app/cloud_identity_site.py",
+    "backend/app/cloud_tasks_site.py",
+    "backend/app/core/cloud_identity_store.py",
+    "backend/app/core/cloud_oauth_provider.py",
+    "backend/app/core/config.py",
+    "backend/app/oauth_pilot_site.py",
+    "frontend/dist/index.html"
+  ],
+  "added": [
+    "backend/app/api/personal_degree.py",
+    "backend/app/core/personal_degree.py",
+    "frontend/dist/assets/index-BkoQHDtk.js",
+    "frontend/dist/assets/index.esm-Cw-ntrpJ.js",
+    "personal-degree-migration.sql"
+  ],
+  "deleted_generated_assets": [
+    "frontend/dist/assets/index-C6zRJ9s_.js",
+    "frontend/dist/assets/index.esm-CObffxa_.js"
+  ],
+  "old_migrations_byte_unchanged": true,
+  "visitor_source_byte_unchanged": true,
+  "agent_device_source_byte_unchanged": true,
+  "reader_zip_byte_unchanged": true,
+  "original_public_map_and_agent_links_preserved": true,
+  "local_qa_code_packaged": false,
+  "migrations_applied_to_production": false,
+  "school_own_degree_tool_published": false,
+  "real_grade_transmitted": false,
+  "verification": {
+    "frontend_regression_tests": 150,
+    "extension_regression_tests": 91,
+    "degree_sql_tests": 8,
+    "own_degree_http_pg_tests": 5,
+    "browser": "fixture bridge -> draft -> confirm/commit -> database readback -> existing OAuth own-degree read; refresh survived",
+    "browser_extension_read_this_revision": false,
+    "original_modules_backend_regression": "passed; personal schedules, visitors, device binding, competition OAuth, identity, body limit, packaging, source staging",
+    "frontend_typecheck_and_production_build": "passed"
+  }
+}

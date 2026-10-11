@@ -109,3 +109,24 @@ def test_kb_campus_keeps_verification_status() -> None:
     kb = build_exports.build_kb_campus(affairs)
     assert kb["items"][0]["status"] == "needs_verification"
     assert "不得表述为学校规定" in kb["items"][0]["answer_constraint"]
+
+
+def test_campus_export_has_guides_without_demo_or_unverified_laundering() -> None:
+    affairs = build_exports.load("affairs/entries.json")
+    fixtures = build_exports.load("affairs/fixtures.demo.json")
+    campus = build_exports.build_kb_campus({**affairs, "entries": affairs["entries"] + fixtures["entries"]})
+    assert len(campus["items"]) == 31
+    assert not any(item["entry_id"].startswith("demo-") for item in campus["items"])
+    pending = next(item for item in campus["items"] if item["entry_id"] == "nku-proc-card-recharge")
+    assert pending["status"] == "needs_verification"
+    assert pending["verified_at"] is None
+    assert pending["campus_network_required"] == "unknown"
+    electricity = next(item for item in campus["items"] if item["entry_id"] == "nku-proc-electricity-recharge")
+    assert electricity["status"] == "verified"
+    assert electricity["verified_at"] == "2026-10-09"
+    assert any("绑定房间" in step for step in electricity["steps"])
+    text = build_exports.build_campus_markdown(campus)
+    assert "status: needs_verification" in text
+    assert "https://hq.nankai.edu.cn/24032/listm.htm" in text
+    assert "窗口已" in text
+    assert "demo-proc" not in text

@@ -1,0 +1,25 @@
+{
+  "service": "nku-campus-degree-analysis",
+  "deployment_id": "002",
+  "task_id": "2324074",
+  "started_at": "2026-10-10T15:24:08+08:00",
+  "platform_status": "正常",
+  "build_check": "succ",
+  "instance_check": "succ",
+  "image_digest": "sha256:25153e17b7a8959df4ff5755d005c693e5d658b17ce3961875ca1a535ae37ac8",
+  "package": "dist/cloudbase-degree-analysis-20261010-r4.zip",
+  "package_sha256": "1b439e1abf9b477c6c0169b855186ec052ce208a5be184d43a12f723591a2ef8",
+  "endpoint": "https://nku-campus-degree-analysis-308235-6-1467707525.sh.run.tcloudbase.com/mcp",
+  "public_checks": [
+    {"path": "/__tcb_probe__", "status": 200, "body": "ok"},
+    {"path": "/mcp", "authorization": "absent", "status": 401, "error": "AUTH_REQUIRED"}
+  ],
+  "authenticated_tool_discovery": "pending user credential entry in school platform",
+  "anonymous_school_analysis": "not tested",
+  "real_personal_cloud_analysis": "not authorized or tested",
+  "identity_toolsite_update": "not performed",
+  "school_plugin": "campus-degree-page-analysis form prepared, not submitted",
+  "original_school_plugins": ["campus-identity-pilot-read", "campus-public-content", "campus-tools-dev"],
+  "other_service_changes": false,
+  "screenshots": ["degree-service-002-normal-2026-10-10.png", "degree-school-r4-connection-ready-2026-10-10.png"]
+}

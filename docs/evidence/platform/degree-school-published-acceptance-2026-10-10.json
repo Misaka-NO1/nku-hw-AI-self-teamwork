@@ -1,0 +1,40 @@
+{
+  "application": "南开校园助手",
+  "application_id": "datqi1l4shh989l30fp0",
+  "human_authorization": "2026-10-10 annotation reply allowing this campus assistant configuration publication",
+  "version": "v0.2.19",
+  "channel_publish_id": "db4vq8l4shhbpg901kp0",
+  "channel_publish_time": "2026-10-10 16:54:22 Asia/Shanghai",
+  "channel_approval": "已通过",
+  "existing_web_enabled": true,
+  "api_mcp_websdk_enabled": false,
+  "new_channels_or_access_changes": false,
+  "first_formal_attempt": {
+    "request_id": "0717c020-1242-432c-90bb-a0996b2e44f0",
+    "passed": false,
+    "reason": "Page completed credits mixed into the independently passed column",
+    "evidence": "degree-school-formal-r1-2026-10-10.txt"
+  },
+  "corrected_formal_new_session": {
+    "request_id": "15e1a1a5-898c-4921-a816-2038307aa4c7",
+    "seconds": 49.468,
+    "anonymous_fixture_only": true,
+    "six_columns": true,
+    "passed_credits": 2,
+    "in_progress_credits": 2,
+    "page_completed_credits_outside_passed_column": true,
+    "required_missing_course": "ANON-PRAC-01",
+    "in_progress_required_course_not_missing": true,
+    "optional_branches_not_all_required": true,
+    "source_locators_present": true,
+    "unknown_coverage_and_version_preserved": true,
+    "no_specific_course_or_semester_recommendation": true,
+    "no_graduation_eligibility_decision": true,
+    "evidence": "degree-school-formal-v0219-2026-10-10.txt",
+    "raw_tool_trace_available": false,
+    "evidence_limit": "Formal chat response and its returned request_id; separate plugin debug JSON proves the service contract, not the raw trace of this particular call."
+  },
+  "toolsite_candidate_deployed": false,
+  "real_personal_grades_sent_to_cloud": false,
+  "full_objective_complete": false
+}

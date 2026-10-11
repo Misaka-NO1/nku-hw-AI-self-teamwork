@@ -68,7 +68,8 @@ class StaticBearerAuthMiddleware:
         await self.app(scope, receive, send)
 
 
-def create_http_app(settings: Settings | None = None) -> AsgiApp:
+def create_http_app(settings: Settings | None = None, *, server_factory=create_mcp_server,
+                    max_request_body_size: int = 4_194_304) -> AsgiApp:
     runtime = settings or get_settings()
     runtime.validate_deployment()
     allowed_hosts = ["127.0.0.1:*", "localhost:*", "[::1]:*"]
@@ -78,9 +79,10 @@ def create_http_app(settings: Settings | None = None) -> AsgiApp:
         # Proxy preserves external Host; permit only the configured public authority.
         allowed_hosts.append(public.netloc)
         allowed_origins.append(f"{public.scheme}://{public.netloc}")
-    base_app = create_mcp_server(runtime).streamable_http_app(
+    base_app = server_factory(runtime).streamable_http_app(
         streamable_http_path=runtime.mcp_path,
         host=runtime.mcp_host,
+        max_request_body_size=max_request_body_size,
         transport_security=TransportSecuritySettings(
             enable_dns_rebinding_protection=True,
             allowed_hosts=allowed_hosts,

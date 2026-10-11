@@ -6,9 +6,12 @@ import {
   entryDisplayState,
   entrySources,
   filterAffairs,
+  findAffairGuides,
   listAffairs,
 } from "./data";
 import type { AffairEntry } from "./types";
+import demoFixtures from "../../../../knowledge/affairs/fixtures.demo.json";
+import { snakeToCamel } from "../../shared/api/convert";
 
 const baseEntry: AffairEntry = {
   entryId: "t-entry",
@@ -71,7 +74,7 @@ describe("CAMPUS-02 校区/人群规则不混用", () => {
 
 describe("CAMPUS-03 过期规则提示", () => {
   it("显式 expired 或 valid_until 早于今天都判定过期", () => {
-    const expired = listAffairs().find((e) => e.entryId === "demo-proc-05")!;
+    const expired = snakeToCamel(demoFixtures.entries.find((e) => e.entry_id === "demo-proc-05")) as unknown as AffairEntry;
     expect(entryDisplayState(expired, "2026-09-22")).toBe("expired");
     // 来源时间保留，供页面展示
     expect(expired.verifiedAt).toBe("2025-03-01");
@@ -85,6 +88,44 @@ describe("分类搜索", () => {
     expect(byCategory.every((e) => e.category === "academic")).toBe(true);
     const byQuery = filterAffairs(listAffairs(), { query: "报修" });
     expect(byQuery.map((e) => e.entryId)).toContain("nku-proc-dorm-repair");
+  });
+});
+
+describe("自然语言办事指南", () => {
+  it("支持掉卡口语问法，补办学生证仍走原流程", () => {
+    expect(findAffairGuides("一卡通掉了怎么办？")[0].entryId).toBe("nku-proc-card-help");
+    expect(findAffairGuides("补办学生证要带什么材料？")[0].entryId).toBe("nku-proc-student-card");
+  });
+  it("宿舍一般漏水与空调漏水分别匹配，显式研究生仍不套本科流程", () => {
+    expect(findAffairGuides("宿舍漏水找谁修？")[0].entryId).toBe("nku-proc-dorm-repair");
+    expect(findAffairGuides("宿舍空调漏水怎么办？")[0].entryId).toBe("nku-proc-airconditioner-repair");
+    expect(findAffairGuides("研究生学生证丢了怎么补？")).toEqual([]);
+  });
+  it("图书馆预约只给已收录入口，不借用体育场馆流程", () => {
+    const guide = findAffairGuides("图书馆怎么预约座位？")[0];
+    expect(guide.entryId).toBe("nku-entry-04");
+    expect(guide.steps).toEqual([]);
+    expect(guide.officialUrl).toBe("https://libroom.nankai.edu.cn/");
+    expect(findAffairGuides("电费在哪交？")[0].status).toBe("verified");
+    expect(findAffairGuides("电费在哪交？")[0].verifiedAt).toBe("2026-10-09");
+    expect(findAffairGuides("电费在哪交？")[0].steps.join(" ")).toContain("绑定房间");
+  });
+  it("学生证与校园卡丢失使用不同受理指南", () => {
+    expect(findAffairGuides("我的学生证丢了怎么补办？")[0].entryId).toBe("nku-proc-student-card");
+    expect(findAffairGuides("校园卡丢了怎么办？")[0].entryId).toBe("nku-proc-card-help");
+  });
+  it("空调故障匹配官方步骤与来源，租赁优先匹配租赁流程", () => {
+    const repair = findAffairGuides("宿舍空调不制冷怎么办？")[0];
+    expect(repair.entryId).toBe("nku-proc-airconditioner-repair");
+    expect(repair.steps.join(" ")).toContain("我的报修");
+    expect(repair.officialUrl).toBe("https://hq.nankai.edu.cn/24032/listm.htm");
+    expect(findAffairGuides("我要申请空调租赁")[0].entryId).toBe("nku-proc-airconditioner-rental");
+  });
+  it("不把待核验指引洗成规定，不回答未收录与不适用的流程", () => {
+    expect(findAffairGuides("校园卡充值指引")[0].status).toBe("needs_verification");
+    expect(findAffairGuides("研究生成绩单怎么打印？")).toEqual([]);
+    expect(findAffairGuides("如何申请火星通行证？")).toEqual([]);
+    expect(listAffairs().some((entry) => entry.entryId.startsWith("demo-"))).toBe(false);
   });
 });
 

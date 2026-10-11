@@ -1,0 +1,462 @@
+待办草稿工具，完整展示标题、所有区间、DDL、地点与提醒方式，等待下一轮明确确认后才实际提交并读回。Prepare工作流saved=false只代表Prepare未保存；不得据此拒绝使用另已接通的本人写入工具。没有实际保存回执和task_id读回前不能回答已写入。
+    - paragraph: 覆盖最终约束：coverage为unknown/partial或查询超出当前课表覆盖学期时，只说已知记录检查结果，不能称覆盖完整、建议可参加或保证有空。查询范围超出当前课表覆盖学期先说明无法据此推荐。
+    - paragraph:
+      - text: 用户回复保存成功时采用中文状态“未完成”，日历链接标签用“打开待办日历”，保存完成后不再重复内部核对hash；草稿回执必须保留真实draft_
+      - emphasis: id/payload
+      - text: _hash供下一轮。
+  - generic: "输入或引用资源:"
+  - generic: "{变量值"
+  - generic: "@资源"
+  - generic: 记忆
+  - generic: 变量
+  - table:
+    - rowgroup:
+      - row "变量 key 变量显示名 变量描述 必填 操作":
+        - columnheader "变量 key":
+          - generic: 变量 key
+        - columnheader "变量显示名":
+          - generic: 变量显示名
+        - columnheader "变量描述":
+          - generic: 变量描述
+        - columnheader "必填":
+          - generic: 必填
+        - columnheader "操作":
+          - generic: 操作
+    - rowgroup:
+      - row "SYS_USERID 平台用户ID 平台用户ID":
+        - cell "SYS_USERID":
+          - textbox [disabled]: SYS_USERID
+        - cell "平台用户ID":
+          - textbox [disabled]: 平台用户ID
+        - cell "平台用户ID":
+          - textbox [disabled]: 平台用户ID
+        - cell:
+          - switch [disabled]
+        - cell:
+      - row "SYS_USERNAME 平台用户名 平台用户名":
+        - cell "SYS_USERNAME":
+          - textbox [disabled]: SYS_USERNAME
+        - cell "平台用户名":
+          - textbox [disabled]: 平台用户名
+        - cell "平台用户名":
+          - textbox [disabled]: 平台用户名
+        - cell:
+          - switch [disabled]
+        - cell:
+  - separator
+  - generic: 技能
+  - generic: 插件
+  - table:
+    - rowgroup:
+      - row "插件 工具 操作":
+        - columnheader "插件":
+          - generic: 插件
+        - columnheader "工具":
+          - generic: 工具
+        - columnheader "操作":
+          - generic: 操作
+    - rowgroup:
+      - row "campus-identity-pilot-read read_my_demo_records":
+        - cell "campus-identity-pilot-read":
+          - generic: campus-identity-pilot-read
+        - cell "read_my_demo_records":
+          - generic: read_my_demo_records
+        - cell:
+      - row "find_my_demo_free_slots":
+        - cell
+        - cell "find_my_demo_free_slots":
+          - generic: find_my_demo_free_slots
+        - cell:
+      - row "check_my_demo_time":
+        - cell
+        - cell "check_my_demo_time":
+          - generic: check_my_demo_time
+        - cell:
+      - row "read_my_demo_task_summary":
+        - cell
+        - cell "read_my_demo_task_summary":
+          - generic: read_my_demo_task_summary
+        - cell:
+      - row "read_my_calendar_entries":
+        - cell
+        - cell "read_my_calendar_entries":
+          - generic: read_my_calendar_entries
+        - cell:
+      - row "commit_my_calendar_entry":
+        - cell
+        - cell "commit_my_calendar_entry":
+          - generic: commit_my_calendar_entry
+        - cell:
+      - row "draft_my_calendar_entry":
+        - cell
+        - cell "draft_my_calendar_entry":
+          - generic: draft_my_calendar_entry
+        - cell:
+      - row "bind_my_browser":
+        - cell
+        - cell "bind_my_browser":
+          - generic: bind_my_browser
+        - cell:
+      - row "campus-public-content platform_search_scenic_spots":
+        - cell "campus-public-content":
+          - generic: campus-public-content
+        - cell "platform_search_scenic_spots":
+          - generic: platform_search_scenic_spots
+        - cell:
+      - row "platform_search_study_materials":
+        - cell
+        - cell "platform_search_study_materials":
+          - generic: platform_search_study_materials
+        - cell:
+      - row "campus-tools-dev health_probe":
+        - cell "campus-tools-dev":
+          - generic: campus-tools-dev
+        - cell "health_probe":
+          - generic: health_probe
+        - cell:
+      - row "platform_validate_timetable":
+        - cell
+        - cell "platform_validate_timetable":
+          - generic: platform_validate_timetable
+        - cell:
+      - row "platform_query_free_time":
+        - cell
+        - cell "platform_query_free_time":
+          - generic: platform_query_free_time
+        - cell:
+      - row "platform_check_time_plan":
+        - cell
+        - cell "platform_check_time_plan":
+          - generic: platform_check_time_plan
+        - cell:
+      - row "platform_audit_degree_progress":
+        - cell
+        - cell "platform_audit_degree_progress":
+          - generic: platform_audit_degree_progress
+        - cell:
+      - row "campus-degree-page-analysis analyze_supplied_degree_page":
+        - cell "campus-degree-page-analysis":
+          - generic: campus-degree-page-analysis
+        - cell "analyze_supplied_degree_page":
+          - generic: analyze_supplied_degree_page
+        - cell:
+  - generic: Skills
+  - generic: 环境变量
+  - generic: Skills 允许智能体调用预构建的技能组件，以扩展智能体的能力范围。
+  - generic: 工作流
+  - table:
+    - rowgroup:
+      - row "名称 操作":
+        - columnheader "名称":
+          - generic: 名称
+        - columnheader "操作":
+          - generic: 操作
+    - rowgroup:
+      - row "logo WF_NoticeText_ReadOnly_20261006":
+        - cell "logo WF_NoticeText_ReadOnly_20261006":
+          - img "logo"
+          - generic: WF_NoticeText_ReadOnly_20261006
+        - cell:
+      - row "logo WF_NoticeSchedule_Prepare_20261006":
+        - cell "logo WF_NoticeSchedule_Prepare_20261006":
+          - img "logo"
+          - generic: WF_NoticeSchedule_Prepare_20261006
+        - cell:
+      - row "logo WF_D07_NoticeTime_Test":
+        - cell "logo WF_D07_NoticeTime_Test":
+          - img "logo"
+          - generic: WF_D07_NoticeTime_Test
+        - cell:
+      - row "logo WF_NoticeDraft_v1_Test":
+        - cell "logo WF_NoticeDraft_v1_Test":
+          - img "logo"
+          - generic: WF_NoticeDraft_v1_Test
+        - cell:
+      - row "logo WF_D06_TimetableFixture_Test":
+        - cell "logo WF_D06_TimetableFixture_Test":
+          - img "logo"
+          - generic: WF_D06_TimetableFixture_Test
+        - cell:
+  - generic: 智能体
+  - generic: 智能体是指基于大语言模型的对话系统，它可以理解用户的问题并生成相应的回答。
+  - generic: 触发器
+  - generic: 触发器可以按照指定规则自动执行指定任务。
+  - separator
+  - text: 知识
+  - generic: 知识库
+  - generic: 强制模式
+  - table:
+    - rowgroup:
+      - row "名称 文件数 总大小 操作":
+        - columnheader "名称":
+          - generic: 名称
+        - columnheader "文件数":
+          - generic: 文件数
+        - columnheader "总大小":
+          - generic: 总大小
+        - columnheader "操作":
+          - generic: 操作
+    - rowgroup:
+      - row "logo KB_CampusGuide_C_Test 3 45.1 KiB":
+        - cell "logo KB_CampusGuide_C_Test":
+          - img "logo"
+          - generic: KB_CampusGuide_C_Test
+        - cell "3":
+          - generic: "3"
+        - cell "45.1 KiB":
+          - generic: 45.1 KiB
+        - cell:
+  - generic: 问答库
+  - generic: 强制模式
+  - generic: 提供标准问答对给智能体参考，如果命中问题则会直接返回对应答案。
+  - generic: 术语库
+  - generic: 强制模式
+  - generic: 通过术语定义别名、消除歧义、扩展描述、配置公式等，辅助智能体更好地理解业务。
+  - generic: 数据库
+  - generic: 引用表格数据后，支持基于自然语言对数据库（即NL2SQL）进行查询和计算，不支持关联多个数据库。
+  - separator
+  - generic: 对话
+  - generic: 开场白
+  - generic: 自动生成
+  - text: 对话开场白
+  - textbox:
+    - paragraph: 你好，我是南开校园助手。想先做哪一件事？
+    - paragraph
+    - paragraph: 1. 校园赏景：找赏花、散步、约会、草地和地标。
+    - paragraph
+    - paragraph: 2. 复习资料：按课程与学期列出原文件，直接下载。
+    - paragraph
+    - paragraph: 3. 课表：查看或导入课表，核对课程与周次。
+    - paragraph
+    - paragraph: 4. 通知与待办：整理通知与DDL，查冲突、推荐完成时间，确认保存待办。
+    - paragraph
+    - paragraph: 5. 校园事务：查询学校官方办事渠道。
+    - paragraph
+    - paragraph: 6. 培养方案与学分：根据核对过的计划完成情况，解释模块缺口与补修优先建议。
+    - paragraph
+    - paragraph: "[打开课表](https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/timetable) · [打开待办日历](https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/calendar)"
+    - paragraph
+    - paragraph: 首次打开工具站会自动生成本浏览器固定设备码，按页面提示回到这里确认绑定即可。数据归属以本人插件授权为准，各账号课表与日历独立；清除浏览器数据或换浏览器需重新绑定。查看待办时间可按时间列出本人未完成事项。培养计划分析需你主动提供并核对表格，不代替学校最终毕业审核。
+  - text: 开场白问题
+  - switch [checked]
+  - textbox:
+    - paragraph:
+      - generic: 查看待办时间
+  - button "新增":
+    - text: 新增
+  - text: 反馈标签
+  - switch [checked]
+  - generic: 点赞标签
+  - generic: 配置
+  - generic: "-"
+  - generic: 点踩标签
+  - generic: 配置
+  - generic: 没有帮助
+  - generic: 知识过时
+  - generic: 问题理解错误
+  - generic: 事实错误
+  - generic: 回答不准确
+  - generic: 内容有害/不健康
+  - generic: 前后回复不一致
+  - text: 对话建议
+  - switch
+  - generic: 快捷指令
+  - table:
+    - rowgroup:
+      - row "名称 操作":
+        - columnheader "名称":
+          - generic: 名称
+        - columnheader "操作":
+          - generic: 操作
+    - rowgroup:
+      - row "1. 校园赏景":
+        - cell "1. 校园赏景":
+          - generic: 1. 校园赏景
+        - cell:
+      - row "2. 复习资料":
+        - cell "2. 复习资料":
+          - generic: 2. 复习资料
+        - cell:
+      - row "3. 课表":
+        - cell "3. 课表":
+          - generic: 3. 课表
+        - cell:
+      - row "4. 通知与待办":
+        - cell "4. 通知与待办":
+          - generic: 4. 通知与待办
+        - cell:
+      - row "5. 校园事务":
+        - cell "5. 校园事务":
+          - generic: 5. 校园事务
+        - cell:
+      - row "6. 培养方案与学分":
+        - cell "6. 培养方案与学分":
+          - generic: 6. 培养方案与学分
+        - cell:
+  - text: 引用和归属
+  - switch
+  - text: 语音互动
+  - generic: 音色设置
+  - switch [disabled]
+  - separator
+  - generic: 语音转文字
+  - switch [disabled]
+  - separator
+  - generic: 语音通话
+  - switch [disabled]
+  - text: 文件上传
+  - generic: 配置
+  - switch [checked]
+  - separator
+  - generic: 安全
+  - text: 内容审查
+  - generic: 配置
+  - switch
+  - text: 高级审查
+  - combobox:
+    - generic "未开启":
+      - textbox:
+        - /placeholder: 请选择
+      - generic: 未开启
+  - separator
+  - generic: 系统
+  - text: 思考语言
+  - combobox:
+    - generic "简体中文":
+      - textbox:
+        - /placeholder: 请选择
+      - generic: 简体中文
+  - separator
+  - text: 调试与预览
+  - generic: doubao-seed-2-1-pro
+  - text: 傅思敬
+  - generic: "第6模块匿名验收：下面全部是虚构课程和学分，不含真实学生数据。我已核对该JSON，请实际调用培养计划分析工具，说明还需修哪个模块、缺哪些明确必修、在读与已通过分别是多少。请按六列模块表格回答，并解释可选分支是否必须逐个补修；不要查课表、待办或用固定演示替换。这不是毕业资格决定。 { \"observation\": { \"kind\": \"degree-table-observation\", \"source\": { \"url\": \"https://eamis.nankai.edu.cn/eams/myPlanCompl.action\", \"captured_at\": \"2026-10-10T00:00:00Z\", \"coverage\": \"partial\", \"adapter_verified\": false }, \"headers\": [\"序号\", \"课程序号\", \"课程名称\", \"要求学分\", \"实修学分\", \"成绩\", \"是否通过\", \"备注\"], \"rows\": [ {\"locator\": \"table-row:2\", \"cells\": [\"一 虚构专业基础（所有子项均应满足要求）\", \"6\", \"4\", \"\", \"缺2学分缺1门\", \"\"]}, {\"locator\": \"table-row:3\", \"cells\": [\"（一）虚构核心基础\", \"4\", \"4\", \"\", \"是\", \"\"]}, {\"locator\": \"table-row:4\", \"cells\": [\"1\", \"ANON-CORE-01\", \"虚构基础甲\", \"2\", \"2\", \"88\", \"是\", \"必修\"]}, {\"locator\": \"table-row:5\", \"cells\": [\"2\", \"ANON-CORE-02\", \"虚构基础乙\", \"2\", \"2\", \"--\", \"是\", \"在读，必修\"]}, {\"locator\": \"table-row:6\", \"cells\": [\"（二）虚构专业实践\", \"2\", \"0\", \"\", \"缺2学分缺1门\", \"\"]}, {\"locator\": \"table-row:7\", \"cells\": [\"1\", \"ANON-PRAC-01\", \"虚构实践课程\", \"2\", \"0\", \"--\", \"否\", \"必修\"]}, {\"locator\": \"table-row:8\", \"cells\": [\"二 虚构拓展能力（所有子项至少一项满足要求）\", \"2\", \"0\", \"\", \"缺2学分缺1门\", \"\"]}, {\"locator\": \"table-row:9\", \"cells\": [\"（一）虚构拓展甲（非必须选择）\", \"2\", \"0\", \"\", \"缺2学分缺1门\", \"\"]}, {\"locator\": \"table-row:10\", \"cells\": [\"1\", \"ANON-OPT-01\", \"虚构拓展课程甲\", \"2\", \"0\", \"--\", \"否\", \"选修\"]}, {\"locator\": \"table-row:11\", \"cells\": [\"（二）虚构拓展乙（非必须选择）\", \"2\", \"0\", \"\", \"缺2学分缺1门\", \"\"]}, {\"locator\": \"table-row:12\", \"cells\": [\"1\", \"ANON-OPT-02\", \"虚构拓展课程乙\", \"2\", \"0\", \"--\", \"否\", \"选修\"]} ] } }"
+  - generic: 南开校园助手
+  - generic: 已完成
+  - text: 采集时间：2026-10-10T00:00:00Z；来源页面：
+  - code: https://eamis.nankai.edu.cn/eams/myPlanCompl.action
+  - text: ；覆盖：
+  - code: partial
+  - text: ；版本：
+  - code: adapter_verified=false
+  - text: ，培养方案版本未知。
+  - text: 统计范围：仅按你提供并核对的这份页面识别模块与课程；父子模块缺口不可简单相加，在读课程单列，不计入独立已通过学分。
+  - table:
+    - rowgroup:
+      - row "模块 要求学分 已通过 在读 仍需补修 建议下一步":
+        - columnheader "模块"
+        - columnheader "要求学分"
+        - columnheader "已通过"
+        - columnheader "在读"
+        - columnheader "仍需补修"
+        - columnheader "建议下一步"
+    - rowgroup:
+      - 'row "虚构专业基础（所有子项均应满足要求） 6 2学分：虚构基础甲 2学分：虚构基础乙 页面显示缺2学分缺1门；独立核算下仍需核实 核对在读课“虚构基础乙”成绩认定，以及页面实修4学分与独立核算2学分的差异（locator: table-row:2）"':
+        - cell "虚构专业基础（所有子项均应满足要求）"
+        - cell "6"
+        - cell "2学分：虚构基础甲"
+        - cell "2学分：虚构基础乙"
+        - cell "页面显示缺2学分缺1门；独立核算下仍需核实"
+        - 'cell "核对在读课“虚构基础乙”成绩认定，以及页面实修4学分与独立核算2学分的差异（locator: table-row:2）"'
+      - 'row "虚构核心基础 4 2学分：虚构基础甲 2学分：虚构基础乙（必修，在读） 页面显示“是”，但独立核算仍有2学分在读待认定 优先跟进必修“虚构基础乙”的最终成绩/认定（locator: table-row:3；课程 locator: table-row:5）"':
+        - cell "虚构核心基础"
+        - cell "4"
+        - cell "2学分：虚构基础甲"
+        - cell "2学分：虚构基础乙（必修，在读）"
+        - cell "页面显示“是”，但独立核算仍有2学分在读待认定"
+        - 'cell "优先跟进必修“虚构基础乙”的最终成绩/认定（locator: table-row:3；课程 locator: table-row:5）"'
+      - 'row "虚构专业实践 2 0 0 缺2学分缺1门；明确缺必修：虚构实践课程 优先核对必修“虚构实践课程”的修读/重修/认定情况（locator: table-row:6；课程 locator: table-row:7）"':
+        - cell "虚构专业实践"
+        - cell "2"
+        - cell "0"
+        - cell "0"
+        - cell "缺2学分缺1门；明确缺必修：虚构实践课程"
+        - 'cell "优先核对必修“虚构实践课程”的修读/重修/认定情况（locator: table-row:6；课程 locator: table-row:7）"'
+      - 'row "虚构拓展能力（所有子项至少一项满足要求） 2 0 0 页面显示缺2学分缺1门；需满足“至少一项”组合条件 核对该模块总学分与组合要求后补修（locator: table-row:8）"':
+        - cell "虚构拓展能力（所有子项至少一项满足要求）"
+        - cell "2"
+        - cell "0"
+        - cell "0"
+        - cell "页面显示缺2学分缺1门；需满足“至少一项”组合条件"
+        - 'cell "核对该模块总学分与组合要求后补修（locator: table-row:8）"'
+      - 'row "虚构拓展甲（非必须选择） 2 0 0 可选，核对组合条件；当前0学分 不必单独强制补修；若选此分支，需满足该组2学分要求（locator: table-row:9）"':
+        - cell "虚构拓展甲（非必须选择）"
+        - cell "2"
+        - cell "0"
+        - cell "0"
+        - cell "可选，核对组合条件；当前0学分"
+        - 'cell "不必单独强制补修；若选此分支，需满足该组2学分要求（locator: table-row:9）"'
+      - 'row "虚构拓展乙（非必须选择） 2 0 0 可选，核对组合条件；当前0学分 不必单独强制补修；若选此分支，需满足该组2学分要求（locator: table-row:11）"':
+        - cell "虚构拓展乙（非必须选择）"
+        - cell "2"
+        - cell "0"
+        - cell "0"
+        - cell "可选，核对组合条件；当前0学分"
+        - 'cell "不必单独强制补修；若选此分支，需满足该组2学分要求（locator: table-row:11）"'
+  - generic: 明确缺的必修：
+  - list:
+    - listitem: "虚构实践课程（ANON-PRAC-01，2学分，必修，页面“否”，locator: table-row:7）。"
+  - generic: 在读与已通过分别是多少：
+  - list:
+    - listitem: "独立已通过：2学分，即“虚构基础甲”（ANON-CORE-01，88分，locator: table-row:4）。"
+    - listitem: "在读：2学分，即“虚构基础乙”（ANON-CORE-02，必修，在读，locator: table-row:5）。"
+    - listitem: 页面实修列显示“虚构专业基础”实修4学分、“虚构核心基础”实修4学分；工具提示这与独立已通过核算存在差异，原因未知，不能断言页面一定把在读计入实修。
+  - generic: 可选分支是否必须逐个补修：
+  - list:
+    - listitem: 不需要逐个补修。
+    - text: “虚构拓展能力”模块原文是“所有子项至少一项满足要求”，因此它的两个子分支“虚构拓展甲（非必须选择）”“虚构拓展乙（非必须选择）”属于可选分支，工具返回
+    - code: optional_branch=true
+    - text: 。
+    - listitem: 这表示：显示缺口不代表甲、乙两组都必须修满；应按所属模块总学分和组合条件核对，满足“至少一项”即可。
+    - listitem: 但非可选模块不能按此理解：“虚构专业基础”要求“所有子项均应满足要求”，其子模块不是可任选跳过的分支。
+  - generic: 待核实项：
+  - list:
+    - listitem: 页面覆盖为 partial，且培养方案版本未知，不能据此判断整体完成或保证毕业。
+    - listitem: “虚构核心基础”等子模块的具体完成规则在本次识别中为 unknown，需结合正式培养方案核对。
+    - listitem: 页面实修学分与独立已通过学分存在差异，需核实是否包含在读、认定或其他记录。
+    - listitem: 缺少开课、先修、选课、替代、互斥、重修规则依据，因此不推荐具体选修课或具体学期。
+  - text: request_id：
+  - code: 1c024549-6222-4357-92a1-a3e10d6869a1
+  - text: 说明：这不是学校最终毕业审核结论。
+  - generic: 42.508s
+  - generic: ","
+  - generic: 80513 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - text: 更多
+  - textbox
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）
+- tooltip "有对比调试中的数据，可以继续查看 关闭 立即查看":
+  - generic: 有对比调试中的数据，可以继续查看
+  - button "关闭"
+  - button "立即查看"
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- generic: 引用了未定义的变量
+- generic: 提示词中引用了未定义的变量，是否自动添加到用户输入表单中？
+- button "取消"
+- button "添加"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- listbox "Typeahead menu"
+- generic: 链路详情
+- combobox:
+  - textbox "请选择"
+  - generic: 请选择
+- generic: 暂无数据
+- generic: 暂无数据

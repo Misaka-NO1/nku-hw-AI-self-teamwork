@@ -20,7 +20,7 @@ from app.device_login_site import SECRET, _object
 COOKIE = "__Host-campus_fixed_device"
 PATH = "/api/v1/auth/agent-device"
 CODE = re.compile(r"^DEV-[A-Z2-7]{26}$")
-RETURNS = frozenset({"/tools/timetable", "/tools/calendar", "/tools/import", "/tools/tasks"})
+RETURNS = frozenset({"/tools/timetable", "/tools/calendar", "/tools/import", "/tools/tasks", "/tools/degree"})
 
 
 def display_code(secret):
@@ -41,6 +41,9 @@ def valid_destination(value):
     query = parse_qsl(target.query, keep_blank_values=True)
     if not query:
         return not target.query
+    if target.path == "/tools/degree" and len(query) == 1:
+        return query[0][0] == "degree_transfer_id" and bool(re.fullmatch(
+            r"[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}", query[0][1], re.IGNORECASE))
     if target.path in {"/tools/import", "/tools/tasks"} and len(query) == 1:
         return query[0][0] == "draft_id" and bool(re.fullmatch(r"[A-Za-z0-9_-]{1,128}", query[0][1]))
     # Only an extension's public one-shot transfer locator, never owner/auth data.

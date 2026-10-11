@@ -1,0 +1,66 @@
+- main:
+  - generic: 南开校园助手
+  - button "新增会话 ⌘ K":
+    - generic: 新增会话
+    - generic: ⌘
+    - generic: K
+  - generic: 今天 (3)
+  - generic: 我是本科生，学生证丢了怎么补办？请给现在可做的第一步、办理步骤、材料、官方来源和原核验日期。
+  - generic: 查看我当前OAuth已授权账号的未完成待办，只读取，不新增、不修改、不保存。请按实际工具结果列标题、时间与日历链接，不因另一个网
+  - generic: 只整理下面这份虚构验收通知，不生成草稿、不保存、不设置提醒、不查课表：2026年10月16日19:00在虚构礼堂集合观摩；请于2
+  - generic: 昨天 (2)
+  - generic: 新的会话
+  - generic: 帮我整理这份虚构测试通知：2026年10月16日19:00在虚构礼堂集合观摩；请于2026年10月17日18:00前提交虚构报告
+  - button:
+  - button:
+  - generic: 我是本科生，学生证丢了怎么补办？请给现在可做的第一步、办理步骤、材料、官方来源和原核验日期。
+  - generic: 适用对象：本科生；校区：来源未限定。
+  - strong: 现在可做的第一步
+  - text: 先准备一张一寸照片；如果是
+  - strong: 遗失
+  - text: ，先到
+  - strong: 所在学院教学办公室或团委办公室
+  - text: 开具
+  - strong: 丢失证明并加盖公章
+  - text: 。
+  - strong: 办理步骤
+  - list:
+    - listitem: 学生证遗失：先到所在学院教学办公室或团委办公室开具丢失证明并加盖公章。
+    - listitem: 持学院证明及一张一寸照片到教务部登记补办。
+    - listitem: 一周后到补办地点领取新证。
+  - text: 补充：如果是
+  - strong: 学生证损坏
+  - text: 而非丢失，流程不同——持损坏的学生证及一张一寸照片到教务部登记补办，一周后领取新证。
+  - strong: 所需材料
+  - list:
+    - listitem: 一寸照片 1 张
+    - listitem: 学院丢失证明并加盖公章（仅遗失情形需要）
+  - strong: 官方来源
+  - list:
+    - text: 南开大学本科生学生证补办流程（教务部文件 教字〔2025〕1 号）：
+    - link "https://jwc.nankai.edu.cn/2025/0225/c35927a563019/page.htm":
+      - /url: https://jwc.nankai.edu.cn/2025/0225/c35927a563019/page.htm
+    - text: 教务部「在校生业务」办理指南栏目（可核对最新通知）：
+    - link "https://jwc.nankai.edu.cn/zxsyw/list1.htm":
+      - /url: https://jwc.nankai.edu.cn/zxsyw/list1.htm
+  - strong: 原核验日期
+  - list:
+    - text: 学生证补办条目核验日期：
+    - strong: 2026-09-27
+    - text: 在校生业务栏目核验日期：
+    - strong: 2026-09-27
+  - generic: 注意：以上为已核验资料记录，具体受理地点、时间和安排以办理时教务部官方页面最新通知为准。
+  - generic: 12.704s
+  - generic: ","
+  - generic: 19231 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - generic: 5. 校园事务
+  - generic: 6. 培养方案与学分
+  - textbox [active]
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）

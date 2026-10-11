@@ -2,6 +2,8 @@
 
 这是团队共享仓库。开始任何模块开发前，先阅读：
 
+当前成果与线上边界见 [`N26 当前交接`](docs/handoffs/N26-current-release-and-team-use-2026-10-07.md)；2026-10-08 的收尾任务、权限约束与最新执行结果见 [`收尾执行记录`](docs/handoffs/收尾执行记录-2026-10-08.md)。早期进度文档保留历史，应以更晚验收证据判断现状。
+
 - [`contracts/integration-conventions.md`](contracts/integration-conventions.md)：跨 Agent 的唯一命名、路由、配置和函数映射约定
 - [`contracts/api.schema.json`](contracts/api.schema.json)：统一 API 信封、查询参数、时间结果和培养方案审计结果
 - [`contracts/core.schema.json`](contracts/core.schema.json)：原始任务包内嵌的共享业务数据结构

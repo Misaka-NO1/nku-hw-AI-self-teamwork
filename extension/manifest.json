@@ -6,6 +6,8 @@
   "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "host_permissions": [
     "https://eamis.nankai.edu.cn/eams/courseTableForStd*",
+    "https://eamis.nankai.edu.cn/eams/myPlanCompl.action",
+    "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/degree*",
     "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/import*"
   ],
   "background": {
@@ -15,6 +17,16 @@
     "default_title": "导入当前页课表"
   },
   "content_scripts": [
+    {
+      "matches": ["https://eamis.nankai.edu.cn/eams/myPlanCompl.action"],
+      "js": ["dist/degree-content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/degree*"],
+      "js": ["dist/degree-app-bridge.js"],
+      "run_at": "document_idle"
+    },
     {
       "matches": ["https://eamis.nankai.edu.cn/eams/courseTableForStd*"],
       "js": ["dist/content.js"],

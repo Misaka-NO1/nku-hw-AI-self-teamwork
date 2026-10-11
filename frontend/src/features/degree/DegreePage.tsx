@@ -4,6 +4,7 @@ import { auditDegree } from "./api";
 import { DEMO_PLAN_ID, DEMO_PLAN_VERSION, demoAuditResult } from "./demoData";
 import { STATUS_LABELS, type DegreeAuditResult } from "./types";
 import { CourseCatalog } from "./CourseCatalog";
+import { DegreeReadPreview } from "./DegreeReadPreview";
 
 function ModuleTable({ result }: { result: DegreeAuditResult }) {
   return (
@@ -81,9 +82,12 @@ export function DegreePage() {
   return (
     <section>
       <h2>培养方案进度</h2>
+      <DegreeReadPreview />
+      <details>
+      <summary>固定演示审计与课程目录（独立于本人培养计划）</summary>
       <StatusBanner
         kind="demo"
-        message={`当前仅有虚构演示方案（${DEMO_PLAN_ID} / ${DEMO_PLAN_VERSION}）。正式培养方案核验前，结果不代表学校审核结论。`}
+        message={`以下区域使用虚构演示方案（${DEMO_PLAN_ID} / ${DEMO_PLAN_VERSION}），不使用上方本人读取的表格，不代表学校审核结论。`}
       />
       <p className="state__hint">
         成绩记录由后端按 transcript_ref 授权解析，本页面不接收任意成绩数据；
@@ -136,6 +140,7 @@ export function DegreePage() {
         </div>
       ) : null}
       <CourseCatalog />
+      </details>
     </section>
   );
 }

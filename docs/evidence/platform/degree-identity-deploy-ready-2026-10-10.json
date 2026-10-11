@@ -1,0 +1,23 @@
+{
+  "service": "nku-campus-identity-pilot",
+  "environment": "sunner-wang-d8ght8niaaaea70b7",
+  "observed_current_deployment": "037",
+  "observed_current_status": "已暂停",
+  "observed_current_instances": 0,
+  "current_deployment_time": "2026-10-09 18:11:24 Asia/Shanghai",
+  "remote_main_rechecked": "0051687752b84a65d97d3c0cd2d91fccee1dd706",
+  "candidate_file": "cloudbase-identity-degree-main0051687-20261010-r4.zip",
+  "candidate_sha256": "2cba6fe084de25b07abeaa47374376fbdf2333ba29a582ef9cd8f635ced78157",
+  "pinned_inputs_verified": 561,
+  "archive_manifest_hashes_verified": 204,
+  "form_uploaded_candidate": true,
+  "build_directory": ".",
+  "dockerfile": "Dockerfile",
+  "service_port": 8080,
+  "environment_settings_changed": false,
+  "environment_secret_values_read": false,
+  "database_migrations_executed": false,
+  "final_deploy_clicked": false,
+  "pending_confirmation": "Deploy reviewed candidate and, if needed, restore paused original service with its existing resource settings",
+  "evidence": "degree-identity-r4-deploy-ready-2026-10-10.png"
+}

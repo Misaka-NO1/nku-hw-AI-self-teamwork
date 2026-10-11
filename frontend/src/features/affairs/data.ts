@@ -110,8 +110,24 @@ export function filterAffairs(entries: AffairEntry[], filter: AffairFilter): Aff
     if (!query) return true;
     return (
       entry.title.toLowerCase().includes(query) ||
+      entry.keywords?.some((word) => word.toLowerCase().includes(query)) ||
       entry.steps.some((s) => s.toLowerCase().includes(query)) ||
       entry.requiredMaterials.some((m) => m.toLowerCase().includes(query))
     );
   });
+}
+
+/** 只返回知识库原条目；自然语言未命中时不猜测流程。范围不明保留卡片适用范围。 */
+export function findAffairGuides(question: string, entries: AffairEntry[] = listAffairs()): AffairEntry[] {
+  const text = question.trim().toLowerCase();
+  if (!text) return [];
+  return entries
+    .filter((entry) => !(text.includes("研究生") && entry.audience.includes("本科生") && !entry.audience.includes("研究生") && !entry.audience.includes("全体")))
+    .map((entry) => ({ entry, score: Math.max(0, ...[entry.title, ...(entry.keywords ?? [])]
+      .filter((word) => word.length >= 2 && text.includes(word.toLowerCase()))
+      .map((word) => word.length)) }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(({ entry }) => entry);
 }

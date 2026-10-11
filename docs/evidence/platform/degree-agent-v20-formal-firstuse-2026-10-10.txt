@@ -1,0 +1,54 @@
+			106 container
+				107 text 培养计划
+				108 container
+					109 image
+					110 text 深度思考
+					111 image
+				112 container
+					113 text 你还没有保存过培养计划完成情况，所以目前无法给出模块学分缺口分析。
+					114 text 首次接入步骤（只需电脑 Chrome / Edge）
+					115 content list
+						116 container
+							117 AXListMarker 1. 
+							118 text 下载原插件：
+							119 link Description: campus-schedule-reader.zip, Value: nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/assets/campus-schedule-reader.zip
+						120 container
+							121 AXListMarker 2. 
+							122 text 解压压缩包。
+						123 container
+							124 AXListMarker 3. 
+							125 text 浏览器地址栏输入  edge://extensions （Chrome 为  chrome://extensions ），回车。
+						126 container
+							127 AXListMarker 4. 
+							128 text 打开右上角“开发者模式”。
+						129 container
+							130 AXListMarker 5. 
+							131 text 点“加载解压缩的扩展”，选择解压后 包含 manifest.json 的那个文件夹 。
+						132 container
+							133 AXListMarker 6. 
+							134 text 若已安装过这个插件，不用重装。
+					135 text 读取与保存
+					136 content list
+						137 container
+							138 AXListMarker 1. 
+							139 text 在 同一个浏览器 里先登录教务，再登录工具站。
+						140 container
+							141 AXListMarker 2. 
+							142 text 打开教务的
+							143 link Description: 计划完成情况, Value: eamis.nankai.edu.cn/eams/myPlanCompl.action
+							144 text ，刷新页面。
+						145 container
+							146 AXListMarker 3. 
+							147 text 点“读取培养计划”（页面上没有按钮就点浏览器工具栏里的插件图标）。
+						148 container
+							149 AXListMarker 4. 
+							150 text 在
+							151 link Description: 核对保存页, Value: nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/degree
+							152 text 核对读取到的模块与学分 → 生成草稿 → 明确确认保存。
+						153 container
+							154 AXListMarker 5. 
+							155 text 保存完成后回来跟我说一声，我直接按已保存数据报告；不需要你复制任何 JSON。
+					156 text 来源：本次本人培养计划记录读取，数据版本 personal-degree-v1，返回 
+					157 text degree=null
+					158 text （尚未保存），请求编号 211144b9-06a4-405d-aac0-d0e101b55998。
+				159 text 6.347 s , 38097  Tokens

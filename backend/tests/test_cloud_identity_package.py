@@ -30,6 +30,8 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         "extension/dist/background.js": "/* reader worker */",
         "extension/dist/content.js": "/* course area only */",
         "extension/dist/app-bridge.js": "/* one-shot transfer */",
+        "extension/dist/degree-content.js": "/* independent degree button */",
+        "extension/dist/degree-app-bridge.js": "/* independent degree receipt */",
         "extension/dist/preview.js": "/* local preview */",
         "extension/dist/preview.html": "<html></html>",
         "deploy/cloudbase-identity-pilot/Dockerfile": "FROM python:3.12-slim-bookworm",
@@ -40,7 +42,7 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql")
-    for migration in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql"):
+    for migration in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql", "personal-degree-migration.sql"):
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / migration, tmp_path / "deploy/cloudbase-identity-pilot" / migration)
     for filename in builder.FIXTURES + builder.READ_ONLY_FIXTURES:
         shutil.copy2(ROOT / "fixtures" / filename, tmp_path / "fixtures" / filename)
@@ -78,11 +80,16 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         assert "personal-tasks-migration.sql" in names and "task-oauth-scopes-migration.sql" in names
         assert "persistent-auth-migration.sql" in names
         assert "personal-schedules-migration.sql" in names
+        assert "personal-degree-migration.sql" in names
         assert "device-login-migration.sql" in names
         assert "agent-device-binding-migration.sql" in names
         assert "browser-visitor-migration.sql" in names and "task-delete-migration.sql" in names
         assert "backend/app/visitor_site.py" in names
         assert ("frontend/dist/assets/campus-schedule-reader.zip" in names) is not backend_only
+        if not backend_only:
+            import io
+            with zipfile.ZipFile(io.BytesIO(archive.read("frontend/dist/assets/campus-schedule-reader.zip"))) as reader:
+                assert {"dist/degree-content.js", "dist/degree-app-bridge.js", "dist/content.js", "dist/app-bridge.js"} <= set(reader.namelist())
         assert all((i.external_attr >> 16) & 0o444 == 0o444 for i in archive.infolist())
         assert report["calendar_frontend_source_present"] is False
     with pytest.raises(ValueError, match="overwritten"):
@@ -93,3 +100,8 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
 def test_package_name_cannot_escape_dist(name):
     with pytest.raises(ValueError):
         builder.build(name)
+
+
+def test_degree_release_rejects_unstaged_dirty_workspace():
+    with pytest.raises(ValueError, match="Stage the reviewed degree source"):
+        builder.build("degree-must-not-package-dirty-tree", reviewed_degree=True)

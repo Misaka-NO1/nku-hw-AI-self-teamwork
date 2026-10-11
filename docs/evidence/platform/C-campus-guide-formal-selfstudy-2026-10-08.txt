@@ -1,0 +1,80 @@
+今天2026年10月8日，资料里的2026年9月办理窗口是什么？现在能否按那两个窗口提交，我现在应先做什么？请实际检索自修条目、给准确截止、来源和原核验日期，不把窗口过去改成条目expired。
+  - generic: 已实际检索到本科生自修申请条目，结果如下：
+  - list:
+    - text: 条目：
+    - code: nku-proc-selfstudy
+    - listitem: 标题：本科生自修课程申请
+    - text: 状态：
+    - code: verified
+    - text: 来源类型：
+    - code: c_review_verified
+    - text: 原核验日期：
+    - strong: 2026-09-27
+    - listitem: 适用：本科生；校区：来源未限定
+    - text: 官方入口/流程依据：
+    - link "https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm":
+      - /url: https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm
+  - heading "资料里的 2026 年 9 月办理窗口" [level=3]
+  - generic: 2026-2027 学年第一学期本科生自修申请的两个窗口是：
+  - list:
+    - strong: 9 月 7 日 10:00 — 9 月 11 日 16:00
+    - strong: 9 月 21 日 10:00 — 9 月 24 日 16:00
+  - generic: 准确截止时间分别是：
+  - list:
+    - text: 第一个窗口截止：
+    - strong: 2026-09-11 16:00
+    - text: 第二个窗口截止：
+    - strong: 2026-09-24 16:00
+  - heading "今天 2026-10-08 还能不能按这两个窗口提交？" [level=3]
+  - strong: 不能按这两个 9 月窗口提交。
+  - text: 原因是这两个窗口的截止时间都已经过去：今天是 2026-10-08，已经晚于 9 月 24 日 16:00。
+  - text: 这里按你的要求说明：
+  - strong:
+    - text: 条目状态仍是
+    - code: verified
+    - text: ，不把窗口过去改标为条目
+    - code: expired
+  - text: ；只是资料中记录的这两个 2026 年 9 月申请窗口已结束。
+  - heading "你现在应先做什么" [level=3]
+  - text: 现在应先做的第一步是：
+  - strong: 向学院教学办公室核实本学期是否还有后续自修申请安排，以及当前是否仍可补报或需走特殊审批。
+  - generic: 同时可先准备/核对这些条件：
+  - list:
+    - text: 确认自己是否符合自修申请条件：
+    - list:
+      - listitem: 课程时间冲突且满足辅修、毕业年级必修、重修/缓修、GPA≥3.0 等情形之一；
+      - listitem: 或课程时间不冲突但 GPA≥3.0；
+      - listitem: 校际交流学生在交流期间可申请。
+    - text: 如果是时间冲突课程，按资料要求：
+    - strong: 先正常选上一门，再对另一门申请自修
+    - text: 。
+    - listitem: 后续如学院确认可办理，再通过教学管理信息系统进入「我的」→「自修申请」，切换到相应学期搜索课程并提交；提交后及时联系任课教师和开课单位教学办公室审核。
+  - heading "来源" [level=3]
+  - list:
+    - listitem: 来源：南开大学 2026-2027 学年第一学期本科生选课通知（教务部，2026-08-17）
+    - text: 链接：
+    - link "https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm":
+      - /url: https://jwc.nankai.edu.cn/2026/0817/c35933a601256/page.htm
+    - listitem: 定位：附件《2026-2027学年第一学期选课手册（2026.9.11更新）》PDF 第 3–4 页「七、自修」
+    - text: 补充来源：自修申请操作方法（学生）（教务部，2022-02-18）
+    - link "https://jwc.nankai.edu.cn/2022/0218/c35927a550802/page.htm":
+      - /url: https://jwc.nankai.edu.cn/2022/0218/c35927a550802/page.htm
+  - heading "未知项" [level=3]
+  - list:
+    - listitem: 材料：来源未列明，需向受理渠道核实。
+    - listitem: 有效期：来源未明确长期固定时间，办理时需核对最新通知。
+    - listitem: 核验日期代表资料记录时间，具体当前是否开放后续窗口，以办理时官方页面和学院教学办公室答复为准。
+  - generic: 24.622s
+  - generic: ","
+  - generic: 23615 Tokens
+  - separator
+  - generic: 1. 校园赏景
+  - generic: 2. 复习资料
+  - generic: 3. 课表
+  - generic: 4. 通知与待办
+  - generic: 5. 校园事务
+  - generic: 6. 培养方案与学分
+  - textbox [active]
+  - generic: 发送消息，可通过 shift + enter 换行
+  - text: 上传文件
+  - generic: 各位老师、同学请关注：访问和使用本平台，如使用功能服务、发布内容等操作时，意味着您已充分阅读、理解并自愿接受用户行为规范与免责协议。若不同意本协议任何条款，请立即停用本平台。（NK-GeniOS用户行为规范与免责声明：https://nankai.feishu.cn/wiki/XgvpwE3pxipj0Ykit2Acw3hXn5D）

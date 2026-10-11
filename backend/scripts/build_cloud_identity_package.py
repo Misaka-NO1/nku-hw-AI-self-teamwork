@@ -16,7 +16,17 @@ FIXTURES = ("timetable.demo.json", "timetable-october-2026.simulation.json", "no
 READ_ONLY_FIXTURES = ("degree-plan.demo.json", "transcript.demo.json")
 
 
-def build(name: str, *, backend_only: bool = False) -> dict:
+def build(name: str, *, backend_only: bool = False, reviewed_degree: bool = False) -> dict:
+    if reviewed_degree:
+        # Refuse packaging a dirty workspace: only the pinned module-6 stage
+        # carries this manifest, and all its source inputs must still match.
+        if not (ROOT / "degree-source-manifest.json").is_file():
+            raise ValueError("Stage the reviewed degree source before packaging")
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("degree_stage_check", ROOT / "backend/scripts/stage_degree_identity_release.py")
+        checker = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(checker)
+        checker.verify_stage(ROOT)
     if not name or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in name):
         raise ValueError("Use lowercase ASCII letters, digits and hyphens")
     output = ROOT / "dist" / name
@@ -35,7 +45,7 @@ def build(name: str, *, backend_only: bool = False) -> dict:
         # maps, tickets, browser storage or private runtime configuration.
         reader = output / "frontend/dist/assets/campus-schedule-reader.zip"
         extension = ROOT / "extension"
-        required = [extension / "manifest.json", *[extension / "dist" / name for name in ("background.js", "content.js", "app-bridge.js", "preview.js", "preview.html")]]
+        required = [extension / "manifest.json", *[extension / "dist" / name for name in ("background.js", "content.js", "app-bridge.js", "degree-content.js", "degree-app-bridge.js", "preview.js", "preview.html")]]
         if any(not path.is_file() for path in required):
             raise ValueError("Build the timetable reader extension before packaging")
         with zipfile.ZipFile(reader, "w", zipfile.ZIP_DEFLATED) as bundle:
@@ -52,7 +62,7 @@ def build(name: str, *, backend_only: bool = False) -> dict:
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", output / "competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", output / "notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", output / "task-calendar-migration.sql")
-    for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql"):
+    for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql", "personal-degree-migration.sql"):
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / name, output / name)
     (output / "fixtures").mkdir()
     for filename in READ_ONLY_FIXTURES:
@@ -93,5 +103,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--name", default="cloudbase-identity-pilot-20261002-r1")
     parser.add_argument("--backend-only", action="store_true", help="Integration bundle without frontend or deploy Dockerfile")
+    parser.add_argument("--reviewed-degree", action="store_true", help="Require a pinned module-6 source stage")
     args = parser.parse_args()
-    print(json.dumps(build(args.name, backend_only=args.backend_only)))
+    print(json.dumps(build(args.name, backend_only=args.backend_only, reviewed_degree=args.reviewed_degree)))

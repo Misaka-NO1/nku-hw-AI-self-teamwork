@@ -104,6 +104,23 @@ def headers(owner,key='test-write-key-001'):
     return {'Origin':ORIGIN,'X-CSRF-Token':owner['csrf_token'],'Idempotency-Key':key}
 
 
+def test_degree_page_analysis_uses_verified_browser_and_keeps_demo_separate(environment):
+    _, _, database, client = environment
+    path = '/api/v1/degree/page/analyze'
+    payload = {'plan_version': None, 'source_coverage': 'unknown', 'modules': [], 'courses': []}
+    assert client.post(path, json=payload, headers={'Origin': ORIGIN}).status_code == 401
+    owner = login(client)
+    assert client.post(path, json=payload, headers={'Origin': ORIGIN}).status_code == 403
+    assert client.post(path, json=payload, headers={**headers(owner), 'Origin': 'https://other.invalid'}).status_code == 403
+    response = client.post(path, json=payload, headers=headers(owner))
+    assert response.status_code == 200, response.text
+    assert response.json()['data']['can_decide_complete'] is False
+    assert response.json()['data']['status'] == 'needs_verification'
+    assert client.post(path, json={**payload, 'workspace_ref': 'other'}, headers=headers(owner)).status_code == 422
+    assert client.post('/api/v1/degree/audit', json={'workspace_ref': 'demo-workspace-01',
+        'plan_id': 'demo-cs-plan-v1', 'transcript_ref': 'demo-transcript-01'}).status_code == 200
+
+
 def save(client,owner,kind='task',fixture='notice-event.demo.json',key='test-save-001'):
     key=key+'-'+kind
     payload=load_fixture(fixture)

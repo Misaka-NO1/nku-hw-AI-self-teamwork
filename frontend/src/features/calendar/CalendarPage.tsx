@@ -232,7 +232,7 @@ export default function CalendarPage() {
         </article>}
         <footer className="calendar-reminders"><h2>记下来，也别忘了</h2><p>打开日历可看到待办摘要。桌面通知需要你主动授权，且只在本页面运行、登录有效时工作。</p>
           <div className="calendar-actions"><button onClick={enableNotifications}>{notifications?"关闭桌面提醒":"开启桌面提醒"}</button><button disabled={!data.items.some(t=>t.status==="pending"&&plannedRange(t))||!!error} onClick={downloadIcs}>导出已安排事项（.ics）</button></div>
-          {notificationText&&<p role="status">{notificationText}</p>}<p className="calendar-muted">关闭网页后，可用系统日历提醒；需导入 .ics 并检查日历应用的通知设置。导出的安排不会自动更新。Agent 启动提醒还需要 D 接入摘要工具，不是本页已经实现的能力。</p>
+          {notificationText&&<p role="status">{notificationText}</p>}<p className="calendar-muted">关闭网页后，可用系统日历提醒；需导入 .ics 并检查日历应用的通知设置。导出的安排不会自动更新。在校园助手中点击“查看待办时间”可主动查询本人待办；打开对话不会自动提醒。</p>
         </footer>
       </>}
     </>}

@@ -1,0 +1,19 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "本人培养计划读取（沿用现有身份插件 OAuth）", "version": "1.0.0" },
+  "servers": [{ "url": "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com" }],
+  "paths": {
+    "/oauth/degree/records": {
+      "get": {
+        "operationId": "read_my_degree_records",
+        "summary": "读取当前授权账号本人已确认保存的培养计划完成情况与学分缺口",
+        "description": "无输入参数；归属仅来自现有 OAuth。未保存返回 degree=null，不使用演示数据。Agent 不可写入或确认。",
+        "responses": {
+          "200": { "description": "ApiEnvelope：data.degree 为本人已确认快照或 null；包含 report、revision、confirmed_at" },
+          "401": { "description": "当前账号未授权或授权失效" },
+          "403": { "description": "无读取权限或本模块尚未启用" }
+        }
+      }
+    }
+  }
+}

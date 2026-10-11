@@ -179,6 +179,8 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
                 '<h1>请先登录校园助手测试账号</h1><p>仅联调虚构数据，不接真实成绩。</p>'
                 '<a href="/tools/login">前往登录</a><p>登录完成后回到本页并刷新，才能继续授权。</p></html>', status_code=401)
         label = ("读取自己已保存的课表与待办" if settings.cloud_personal_schedules_enabled else "读取自己的虚构课表与待办") + ("；创建待办草稿" if "demo:draft" in scopes else "")
+        if settings.cloud_personal_degree_enabled:
+            label += "；读取自己已核对并确认保存供 Agent 使用的培养计划完成情况"
         personal = "tasks:read" in scopes
         if personal:
             label += "；读取自己已记录的事项、截止、备注和选定时段"
@@ -190,6 +192,8 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
                      if settings.cloud_oauth_competition_compat_enabled else '')
         if settings.cloud_personal_schedules_enabled:
             mode_note = '<p>仅访问当前工具站身份自己的数据。课表须由本人导入并确认；不是自动识别学校账号，不代替教务登录，不接收成绩上传。</p>'
+        if settings.cloud_personal_degree_enabled:
+            mode_note = '<p>仅访问当前工具站身份自己的已确认数据。课表和培养计划须由本人导入、核对并确认保存；不是自动识别学校账号，不代替教务登录。培养计划仅在本人确认供 Agent 读取后可用。</p>'
         if settings.cloud_visitor_enabled:
             mode_note += '<p>当前可用独立浏览器访客身份。允许后，Agent 关联的是这个浏览器已登录的私有空间，不是学校学号。不要在公共电脑授权。</p>'
         return HTMLResponse('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>授权校园助手</title>'
@@ -235,6 +239,13 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
     def records(request: Request):
         result = provider.records(request)
         return success(result, request_id=str(uuid4()), data_version="demo-v1")
+
+    if settings.cloud_personal_degree_enabled and hasattr(provider, "degree_records"):
+        @site.get("/degree/records")
+        def degree_records(request: Request):
+            if request.url.query:
+                raise oauth.OAuthError()
+            return success(provider.degree_records(request),request_id=str(uuid4()),data_version="personal-degree-v1")
 
     if settings.cloud_agent_device_binding_enabled and hasattr(provider,"bind_device"):
         @site.post("/devices/bind")

@@ -1,5 +1,7 @@
 # A 模块进度交接：赏景地图与期末复习
 
+> 2026-10-08 续接提示：本文件含历史阶段记录；当前成果优先看 N26-current-release-and-team-use-2026-10-07.md，本轮剩余任务、权限及验收看 收尾执行记录-2026-10-08.md。不要仅凭早期“未部署/未绑定”重复实现或迁移。
+
 ## D 接口补充（2026-09-30，本地联调，不修改 A 算法）
 
 D 已接入既定景点/资料 REST 搜索、详情和白名单附件下载，对应 MCP 搜索共用薄适配；D06 本机对照通过，尚未云端发布。按用户确认，两个 GET 搜索使用一个 query JSON 参数（URLSearchParams + JSON.stringify），MCP 直接用同一个查询对象；nullable 字段不能省略。数据仍为 catalog.demo.json、公开自创 study 资料，索引不提供正文，私有/待授权不可访问。公共页面需由 C 接入同源数据，不能因后端就绪自动声称页面/平台已接通。详见 contracts/integration-conventions.md §5 和 D06 证据。

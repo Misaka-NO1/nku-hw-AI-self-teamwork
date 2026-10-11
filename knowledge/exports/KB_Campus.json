@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0.0",
-  "dataset_kind": "demo",
+  "dataset_kind": "official_and_pending_guidance",
   "kb_id": "KB_Campus",
-  "data_version": "nku-entries-2026-10-09-r1",
+  "data_version": "nku-affairs-2026-10-09-r1",
   "built_at": "2026-10-09",
   "items": [
     {
@@ -30,6 +30,13 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "教务系统（EAMIS）"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -56,6 +63,13 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "南开大学 AI 融合门户"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -85,6 +99,15 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "图书馆 IC 空间管理系统",
+        "IC空间",
+        "ic空间"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -114,6 +137,17 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "图书馆空间预约系统",
+        "图书馆预约",
+        "预约座位",
+        "预约研讨室",
+        "图书馆空间"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -143,6 +177,16 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "图书馆馆藏资源查询系统",
+        "查馆藏",
+        "找图书",
+        "查图书"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -169,6 +213,13 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "体育理论考试系统"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -195,6 +246,13 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "软件正版化平台"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -221,6 +279,13 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "在线南开网上办事大厅"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -247,6 +312,13 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "南开大学志愿服务平台"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -273,6 +345,13 @@
       "verified_at": "2026-09-23",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "南开大学团委成长服务平台"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -299,6 +378,13 @@
       "verified_at": "2026-09-27",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "教务部「在校生业务」办理指南栏目"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -337,6 +423,17 @@
       "verified_at": "2026-09-27",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "成绩单",
+        "在读证明",
+        "打印成绩",
+        "成绩证明"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。",
+        "在读生和毕业生办理分支不同；打印地点、收费与领取时间沿用C核验记录，出发前查原通知，不在聊天中填写密码或证件号码。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -370,6 +467,18 @@
       "verified_at": "2026-09-27",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "学生证",
+        "丢了学生证",
+        "补学生证",
+        "学生证丢失",
+        "补办学生证",
+        "学生证坏了"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -406,6 +515,16 @@
       "verified_at": "2026-09-27",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "自修",
+        "免听",
+        "课程撞课"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。",
+        "2026-2027第一学期9月7日至11日、9月21日至24日的自修申请窗口已于本轮日期结束；不要把历史时间当成当前可提交窗口，请向学院教学办公室核实后续安排。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -440,6 +559,16 @@
       "verified_at": "2026-09-27",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "选课",
+        "退课",
+        "重修",
+        "漏选必修"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -480,6 +609,17 @@
       "verified_at": "2026-09-27",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "住宿",
+        "退宿",
+        "搬出宿舍",
+        "休学宿舍"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。",
+        "原资料记录2018版规定与2026通知文号差异；先向学生生活指导中心核对最新版本、当年办理时间和表格，不能保证旧版仍适用。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -491,16 +631,22 @@
       "audience": [
         "全体"
       ],
-      "official_url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/234.html",
+      "official_url": "https://hq.nankai.edu.cn/24030/listm.htm",
       "login_required": "yes",
       "campus_network_required": "no",
       "steps": [
-        "宿舍后勤维修由南开大学后勤保障部负责，报修三渠道：飞书「南开微应用」中的「后勤报修」应用、24 小时电话 85358535、后勤保障部微信公众号（nkuhqbzb）；电话与微信渠道无需登录，飞书渠道需统一身份认证",
-        "飞书报修：打开飞书→「南开微应用」板块→（若无则在「＋」中）添加「后勤报修」应用→进入后依次选择/填写校区、报修人、联系电话、维修类型、地址、工单类型、问题描述（先选维修类型再选地址；师生报修的工单类型均为「客户单」，无需更改）",
-        "下单后报修平台按问题类型将维修任务分配给相应专业维修人员，尽快上门维修"
+        "通过统一身份认证登录飞书，打开“南开校园微应用”，选择“后勤报修”。",
+        "也可关注“南开后勤服务”微信公众号，选择“服务指南”→“微信报修”，或拨打24小时报修电话85358535。",
+        "在官方受理渠道说明校区、设施位置和故障，按受理页面填写并提交；确认是否属于物业维修范围。",
+        "提交后保留受理记录；进度未更新时通过原受理渠道咨询，不承诺上门或完成时间。"
       ],
       "required_materials": [],
       "source_refs": [
+        {
+          "label": "后勤服务指南：物业维修",
+          "url": "https://hq.nankai.edu.cn/24030/listm.htm",
+          "locator": "二、报修途径；2026-10-08公开正文核验"
+        },
         {
           "label": "学生生活指导中心《学生生活指导中心职能「大揭秘」！宿舍服务「全知晓」！》（2021-09-02）",
           "url": "https://xgb.nankai.edu.cn/Shenghuo/News/info/id/234.html",
@@ -512,34 +658,25 @@
           "locator": "「维修服务」小节；2026-09-27 校外网络实测 HTTP 200"
         }
       ],
-      "verified_at": "2026-09-27",
+      "verified_at": "2026-10-08",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "official_web_snapshot",
+      "keywords": [
+        "宿舍报修",
+        "水龙头",
+        "漏水",
+        "灯坏",
+        "门锁",
+        "后勤维修",
+        "宿舍漏水",
+        "水管漏水"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。",
+        "楼内水电及公共设施小修范围见原文；室外、屋面、改造及批量升级不能一律按物业小修办理。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
-    },
-    {
-      "entry_id": "demo-proc-06",
-      "kind": "procedure",
-      "title": "示例办事：虚构流程占位（仅津南，校区过滤测试夹具）",
-      "category": "life",
-      "campus_scope": [
-        "津南"
-      ],
-      "audience": [
-        "全体"
-      ],
-      "official_url": null,
-      "login_required": "unknown",
-      "campus_network_required": "unknown",
-      "steps": [
-        "虚构步骤占位：用于校区过滤测试，非真实流程"
-      ],
-      "required_materials": [],
-      "source_refs": [],
-      "verified_at": null,
-      "valid_until": null,
-      "status": "needs_verification",
-      "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
       "entry_id": "nku-proc-campus-network",
@@ -573,9 +710,19 @@
           "locator": "2026-09-27 校外网络实测 HTTP 200"
         }
       ],
-      "verified_at": "2026-09-27",
+      "verified_at": "2026-10-08",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "official_web_snapshot",
+      "keywords": [
+        "校园网",
+        "网络密码",
+        "上网密码",
+        "忘记网密码"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -613,6 +760,16 @@
       "verified_at": "2026-09-27",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "c_review_verified",
+      "keywords": [
+        "学分认定",
+        "交换学分",
+        "交流学分",
+        "转专业学分"
+      ],
+      "cautions": [
+        "核验日期代表资料记录时间，具体受理安排以办理时官方页面为准。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -626,7 +783,7 @@
       ],
       "official_url": null,
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "打开微信，进入「南开大学一卡通」微信服务号",
         "点击「卡片充值」，按页面提示操作",
@@ -643,6 +800,15 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "一卡通充值",
+        "校园卡充值",
+        "饭卡充值"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
@@ -681,6 +847,17 @@
       "verified_at": "2026-10-09",
       "valid_until": null,
       "status": "verified",
+      "source_kind": "user_verified_app_screenshot",
+      "keywords": [
+        "电费",
+        "充电费",
+        "宿舍充值",
+        "交电费",
+        "宿舍电费"
+      ],
+      "cautions": [
+        "步骤与报修电话依据2026-10-09用户实机截图；办理时以官方应用当前界面为准，不提供支付链接或二维码。"
+      ],
       "answer_constraint": "引用时注明来源与核验时间"
     },
     {
@@ -694,7 +871,7 @@
       ],
       "official_url": "https://eamis.nankai.edu.cn/eams/myPlan!programDoc.action",
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "登录教学管理信息系统 https://eamis.nankai.edu.cn （账号密码同统一身份认证，校外可直连无需 VPN）",
         "登录后经深链直达「我的培养计划」页面（未登录访问会先跳转登录页，登录后自动进入）"
@@ -710,6 +887,14 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "培养计划",
+        "个人培养方案"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
@@ -723,7 +908,7 @@
       ],
       "official_url": "https://tyggl.nankai.edu.cn/Views/User/UserChoose.html",
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "打开体育场馆管理系统（首页为「用户类型选择」页）",
         "按本人身份类型选择并登录，进入后选择场馆与时段预约"
@@ -739,6 +924,15 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "体育场馆",
+        "订球场",
+        "预约球场"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
@@ -753,7 +947,7 @@
       ],
       "official_url": null,
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "打开飞书 APP，进入「南开微应用」板块",
         "找到并点击「教学质量平台」应用（若列表中没有，在「＋」/所有应用中添加）",
@@ -770,6 +964,14 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "评教",
+        "教学评价"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
@@ -783,7 +985,7 @@
       ],
       "official_url": null,
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "打开飞书 APP，进入「南开微应用」板块",
         "找到并点击「跳蚤市场」应用（若列表中没有，在「＋」/所有应用中添加）",
@@ -800,6 +1002,15 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "跳蚤市场",
+        "二手",
+        "闲置"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
@@ -813,7 +1024,7 @@
       ],
       "official_url": null,
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "打开飞书 APP，进入「南开微应用」板块",
         "找到并点击班车查询相关应用（若列表中没有，在「＋」/所有应用中添加）",
@@ -830,6 +1041,14 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "班车",
+        "校车"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
@@ -843,7 +1062,7 @@
       ],
       "official_url": null,
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "打开飞书 APP，进入「南开微应用」板块",
         "找到并点击「出入校申请」应用（若列表中没有，在「＋」/所有应用中添加）",
@@ -860,6 +1079,16 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "访客",
+        "朋友进校",
+        "家长进校",
+        "出入校"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
@@ -873,7 +1102,7 @@
       ],
       "official_url": null,
       "login_required": "yes",
-      "campus_network_required": "no",
+      "campus_network_required": "unknown",
       "steps": [
         "打开飞书 APP，进入「南开微应用」板块",
         "找到并点击「心理咨询预约」应用（若列表中没有，在「＋」/所有应用中添加）",
@@ -890,36 +1119,158 @@
       "verified_at": null,
       "valid_until": null,
       "status": "needs_verification",
+      "source_kind": "student_guidance",
+      "keywords": [
+        "心理咨询",
+        "预约咨询"
+      ],
+      "cautions": [
+        "学生提供的使用路径尚未经正式来源核验；先核对应用名称与官方说明。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     },
     {
-      "entry_id": "demo-proc-05",
+      "entry_id": "nku-proc-airconditioner-repair",
       "kind": "procedure",
-      "title": "示例办事：虚构的过期规章示例（用于过期提示测试）",
-      "category": "academic",
+      "title": "宿舍空调故障报修",
+      "category": "life",
       "campus_scope": [
-        "八里台"
+        "八里台",
+        "津南"
       ],
       "audience": [
-        "本科生"
+        "全体"
       ],
-      "official_url": null,
+      "official_url": "https://hq.nankai.edu.cn/24032/listm.htm",
       "login_required": "unknown",
       "campus_network_required": "unknown",
       "steps": [
-        "虚构步骤占位：该示例规则按设定已于 2025-09-01 过期"
+        "打开“尼好校园”微信小程序，选择“空调服务”→“空调报修”。",
+        "在小程序内依次选择报修区域、房间号、报修项目，填写报修详情、报修人和报修方式。",
+        "提交后进入“我的报修”查看订单。",
+        "小程序无法使用时可拨打24小时热线4000007723，或通过飞书“后勤报修”、后勤公众号“微信报修”、022-85358535咨询。"
+      ],
+      "required_materials": [
+        "官方系统要求的区域、房间、故障与报修信息"
+      ],
+      "source_refs": [
+        {
+          "label": "南开大学官方公开服务指南",
+          "url": "https://hq.nankai.edu.cn/24032/listm.htm",
+          "locator": "二、学生宿舍空调报修流程"
+        }
+      ],
+      "verified_at": "2026-10-08",
+      "valid_until": null,
+      "status": "verified",
+      "source_kind": "official_web_snapshot",
+      "keywords": [
+        "空调",
+        "空调不制冷",
+        "空调漏水",
+        "空调坏"
+      ],
+      "cautions": [
+        "费用、受理条件和安排以实际官方页面为准；个人信息只填官方系统，不交给校园助手。"
+      ],
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-airconditioner-rental",
+      "kind": "procedure",
+      "title": "宿舍空调租赁办理",
+      "category": "life",
+      "campus_scope": [
+        "八里台",
+        "津南"
+      ],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://hq.nankai.edu.cn/24032/listm.htm",
+      "login_required": "unknown",
+      "campus_network_required": "unknown",
+      "steps": [
+        "在“尼好校园”微信小程序打开“空调服务”→“开启服务”。",
+        "按毕业时间选择租赁选项，在官方小程序填写寝室成员信息并核对订单、租期和合同条件。",
+        "自行在官方页面确认费用并付款，保留支付与租赁凭证；校园助手不提供支付链接、不代付。",
+        "凭支付凭证领取遥控器：八里台21宿1楼10门旁办公室；津南理科宿舍学5B与学5C中间过道2楼。出发前核对当日安排。",
+        "不确定如何申请时，先拨打官方24小时咨询热线4000007723。"
+      ],
+      "required_materials": [
+        "寝室成员信息（仅官方系统填写）",
+        "租赁/支付凭证（领取遥控器时）"
+      ],
+      "source_refs": [
+        {
+          "label": "南开大学官方公开服务指南",
+          "url": "https://hq.nankai.edu.cn/24032/listm.htm",
+          "locator": "一、学生宿舍空调租赁办理方式"
+        }
+      ],
+      "verified_at": "2026-10-08",
+      "valid_until": null,
+      "status": "verified",
+      "source_kind": "official_web_snapshot",
+      "keywords": [
+        "空调租赁",
+        "租空调",
+        "空调遥控器"
+      ],
+      "cautions": [
+        "费用、受理条件和安排以实际官方页面为准；个人信息只填官方系统，不交给校园助手。"
+      ],
+      "answer_constraint": "引用时注明来源与核验时间"
+    },
+    {
+      "entry_id": "nku-proc-card-help",
+      "kind": "procedure",
+      "title": "校园卡业务窗口咨询",
+      "category": "it",
+      "campus_scope": [
+        "八里台",
+        "津南"
+      ],
+      "audience": [
+        "全体"
+      ],
+      "official_url": "https://mp.weixin.qq.com/s/tPD7dQTdg2hSKvAXVs5ngw",
+      "login_required": "unknown",
+      "campus_network_required": "unknown",
+      "steps": [
+        "先确认所在校区：八里台校园卡业务咨询022-23508231；津南022-85358890转19号窗口。",
+        "向官方窗口说明需要咨询挂失、补办或充值，核对当前办理入口、材料、地点与时间后再办理。",
+        "可通过官方业务邮箱nkecard@nankai.edu.cn咨询；不要向校园助手发送卡密码、验证码或证件照片。"
       ],
       "required_materials": [],
       "source_refs": [
         {
-          "label": "虚构来源示例（不是学校规定）",
-          "url": null,
-          "locator": "demo-fixture"
+          "label": "校园卡业务指引（用户更正链接，正文待核验）",
+          "url": "https://mp.weixin.qq.com/s/tPD7dQTdg2hSKvAXVs5ngw",
+          "locator": "用户于2026-10-08指定；本次未取得文章正文"
         }
       ],
-      "verified_at": "2025-03-01",
-      "valid_until": "2025-09-01",
-      "status": "expired",
+      "verified_at": null,
+      "valid_until": null,
+      "status": "needs_verification",
+      "source_kind": "official_web_snapshot",
+      "keywords": [
+        "校园卡丢了",
+        "一卡通丢了",
+        "饭卡丢了",
+        "校园卡补办",
+        "一卡通挂失",
+        "一卡通掉了",
+        "校园卡掉了",
+        "饭卡掉了",
+        "校园卡丢失",
+        "一卡通丢失",
+        "饭卡丢失"
+      ],
+      "cautions": [
+        "业务链接已按用户更正为微信公众号文章；本次未能读取新文章正文，原联系方式未据新文章重新核验，办理要求以新文章及官方窗口确认为准。",
+        "费用、受理条件和安排以实际官方页面为准；个人信息只填官方系统，不交给校园助手。"
+      ],
       "answer_constraint": "未核验或已过期条目必须明示状态，不得表述为学校规定"
     }
   ]

@@ -114,6 +114,12 @@ class CloudOAuthProvider:
         return {"principal_kind":"agent","grant_mode":"competition" if self.settings.cloud_oauth_competition_compat_enabled else "strict",
                 "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":self.settings.oauth_client_id}
 
+    def degree_records(self,request):
+        from app.core.personal_degree import PersonalDegreeService
+        from app.cloud_identity_site import format_times
+        value = PersonalDegreeService(self.settings,self.store).read(self._notice_args(request),agent=True)
+        return format_times({"degree":value,"degree_url":self.settings.app_origin+"/tools/degree"})
+
     def notice_query(self,request,arguments,operation):
         from app.core.cloud_notice_text import CloudNoticeService
         from app.core.contracts import validate_boundary

@@ -27,7 +27,7 @@ describe("identity deployment navigation configuration", () => {
 
   it("returns to the existing user-facing Agent rather than a draft editor", () => {
     assert.equal(config.VITE_GENIOS_AGENT_URL,
-      "https://coze.nankai.edu.cn/product/llm/chat/db0ulft4shhbpg8v7rgg",
+      "https://coze.nankai.edu.cn/product/llm/chat/db1s3854shhas0aklkeg",
     );
     assert.equal(config.VITE_API_BASE_URL, "/");
   });

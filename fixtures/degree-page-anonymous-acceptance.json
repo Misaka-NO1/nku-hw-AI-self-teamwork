@@ -1,0 +1,25 @@
+{
+  "observation": {
+    "kind": "degree-table-observation",
+    "source": {
+      "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action",
+      "captured_at": "2026-10-10T00:00:00Z",
+      "coverage": "partial",
+      "adapter_verified": false
+    },
+    "headers": ["序号", "课程序号", "课程名称", "要求学分", "实修学分", "成绩", "是否通过", "备注"],
+    "rows": [
+      {"locator": "table-row:2", "cells": ["一 虚构专业基础（所有子项均应满足要求）", "6", "4", "", "缺2学分缺1门", ""]},
+      {"locator": "table-row:3", "cells": ["（一）虚构核心基础", "4", "4", "", "是", ""]},
+      {"locator": "table-row:4", "cells": ["1", "ANON-CORE-01", "虚构基础甲", "2", "2", "88", "是", "必修"]},
+      {"locator": "table-row:5", "cells": ["2", "ANON-CORE-02", "虚构基础乙", "2", "2", "--", "是", "在读，必修"]},
+      {"locator": "table-row:6", "cells": ["（二）虚构专业实践", "2", "0", "", "缺2学分缺1门", ""]},
+      {"locator": "table-row:7", "cells": ["1", "ANON-PRAC-01", "虚构实践课程", "2", "0", "--", "否", "必修"]},
+      {"locator": "table-row:8", "cells": ["二 虚构拓展能力（所有子项至少一项满足要求）", "2", "0", "", "缺2学分缺1门", ""]},
+      {"locator": "table-row:9", "cells": ["（一）虚构拓展甲（非必须选择）", "2", "0", "", "缺2学分缺1门", ""]},
+      {"locator": "table-row:10", "cells": ["1", "ANON-OPT-01", "虚构拓展课程甲", "2", "0", "--", "否", "选修"]},
+      {"locator": "table-row:11", "cells": ["（二）虚构拓展乙（非必须选择）", "2", "0", "", "缺2学分缺1门", ""]},
+      {"locator": "table-row:12", "cells": ["1", "ANON-OPT-02", "虚构拓展课程乙", "2", "0", "--", "否", "选修"]}
+    ]
+  }
+}

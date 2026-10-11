@@ -1,0 +1,2725 @@
+{
+  "data": {
+    "adapter_verified": false,
+    "can_decide_complete": false,
+    "courses": [
+      {
+        "code": "ANON-CORE-01",
+        "evidence": {
+          "cells": [
+            "1",
+            "ANON-CORE-01",
+            "虚构基础甲",
+            "2",
+            "2",
+            "88",
+            "是",
+            "必修"
+          ],
+          "locator": "table-row:4",
+          "row_role": "course"
+        },
+        "grade": "88",
+        "in_progress": false,
+        "locator": "table-row:4",
+        "module_locator": "table-row:3",
+        "module_row_index": 1,
+        "name": "虚构基础甲",
+        "page_earned_credits": "2",
+        "pass_text": "是",
+        "raw_cells": [
+          "1",
+          "ANON-CORE-01",
+          "虚构基础甲",
+          "2",
+          "2",
+          "88",
+          "是",
+          "必修"
+        ],
+        "remark": "必修",
+        "required_credits": "2",
+        "row_index": 2,
+        "sequence": "1",
+        "state": "passed"
+      },
+      {
+        "code": "ANON-CORE-02",
+        "evidence": {
+          "cells": [
+            "2",
+            "ANON-CORE-02",
+            "虚构基础乙",
+            "2",
+            "2",
+            "--",
+            "是",
+            "在读，必修"
+          ],
+          "locator": "table-row:5",
+          "row_role": "course"
+        },
+        "grade": "--",
+        "in_progress": true,
+        "locator": "table-row:5",
+        "module_locator": "table-row:3",
+        "module_row_index": 1,
+        "name": "虚构基础乙",
+        "page_earned_credits": "2",
+        "pass_text": "是",
+        "raw_cells": [
+          "2",
+          "ANON-CORE-02",
+          "虚构基础乙",
+          "2",
+          "2",
+          "--",
+          "是",
+          "在读，必修"
+        ],
+        "remark": "在读，必修",
+        "required_credits": "2",
+        "row_index": 3,
+        "sequence": "2",
+        "state": "in_progress"
+      },
+      {
+        "code": "ANON-PRAC-01",
+        "evidence": {
+          "cells": [
+            "1",
+            "ANON-PRAC-01",
+            "虚构实践课程",
+            "2",
+            "0",
+            "--",
+            "否",
+            "必修"
+          ],
+          "locator": "table-row:7",
+          "row_role": "course"
+        },
+        "grade": "--",
+        "in_progress": false,
+        "locator": "table-row:7",
+        "module_locator": "table-row:6",
+        "module_row_index": 4,
+        "name": "虚构实践课程",
+        "page_earned_credits": "0",
+        "pass_text": "否",
+        "raw_cells": [
+          "1",
+          "ANON-PRAC-01",
+          "虚构实践课程",
+          "2",
+          "0",
+          "--",
+          "否",
+          "必修"
+        ],
+        "remark": "必修",
+        "required_credits": "2",
+        "row_index": 5,
+        "sequence": "1",
+        "state": "failed"
+      },
+      {
+        "code": "ANON-OPT-01",
+        "evidence": {
+          "cells": [
+            "1",
+            "ANON-OPT-01",
+            "虚构拓展课程甲",
+            "2",
+            "0",
+            "--",
+            "否",
+            "选修"
+          ],
+          "locator": "table-row:10",
+          "row_role": "course"
+        },
+        "grade": "--",
+        "in_progress": false,
+        "locator": "table-row:10",
+        "module_locator": "table-row:9",
+        "module_row_index": 7,
+        "name": "虚构拓展课程甲",
+        "page_earned_credits": "0",
+        "pass_text": "否",
+        "raw_cells": [
+          "1",
+          "ANON-OPT-01",
+          "虚构拓展课程甲",
+          "2",
+          "0",
+          "--",
+          "否",
+          "选修"
+        ],
+        "remark": "选修",
+        "required_credits": "2",
+        "row_index": 8,
+        "sequence": "1",
+        "state": "failed"
+      },
+      {
+        "code": "ANON-OPT-02",
+        "evidence": {
+          "cells": [
+            "1",
+            "ANON-OPT-02",
+            "虚构拓展课程乙",
+            "2",
+            "0",
+            "--",
+            "否",
+            "选修"
+          ],
+          "locator": "table-row:12",
+          "row_role": "course"
+        },
+        "grade": "--",
+        "in_progress": false,
+        "locator": "table-row:12",
+        "module_locator": "table-row:11",
+        "module_row_index": 9,
+        "name": "虚构拓展课程乙",
+        "page_earned_credits": "0",
+        "pass_text": "否",
+        "raw_cells": [
+          "1",
+          "ANON-OPT-02",
+          "虚构拓展课程乙",
+          "2",
+          "0",
+          "--",
+          "否",
+          "选修"
+        ],
+        "remark": "选修",
+        "required_credits": "2",
+        "row_index": 10,
+        "sequence": "1",
+        "state": "failed"
+      }
+    ],
+    "headers": [
+      "序号",
+      "课程序号",
+      "课程名称",
+      "要求学分",
+      "实修学分",
+      "成绩",
+      "是否通过",
+      "备注"
+    ],
+    "in_progress_courses": [
+      {
+        "code": "ANON-CORE-02",
+        "evidence": {
+          "cells": [
+            "2",
+            "ANON-CORE-02",
+            "虚构基础乙",
+            "2",
+            "2",
+            "--",
+            "是",
+            "在读，必修"
+          ],
+          "locator": "table-row:5",
+          "row_role": "course"
+        },
+        "grade": "--",
+        "locator": "table-row:5",
+        "name": "虚构基础乙",
+        "pass_text": "是",
+        "remark": "在读，必修",
+        "row_index": 3,
+        "state": "in_progress"
+      }
+    ],
+    "kind": "degree-table-observation",
+    "limits": {
+      "max_bytes": 1048576,
+      "max_cell_chars": 4096,
+      "max_cells_per_row": 64,
+      "max_rows": 2000
+    },
+    "module_summaries": [
+      {
+        "calculation": {
+          "children_satisfied": {
+            "module-row-1": null,
+            "module-row-4": null
+          },
+          "counted_course_ids": [
+            "ANON-CORE-01"
+          ],
+          "earned_credits": "0",
+          "in_progress_course_ids": [],
+          "missing_required_course_ids": [],
+          "own_counted_course_ids": [],
+          "pending_recognition_course_ids": [],
+          "remaining_credits": "4",
+          "required_credits": "6",
+          "requirement_satisfied": true,
+          "satisfied": null,
+          "subtree_earned_credits": "2",
+          "unallocated_course_ids": []
+        },
+        "discrepancies": [
+          {
+            "calculated_own": "0",
+            "calculated_subtree": "2",
+            "code": "page_earned_credits_mismatch",
+            "page": "4"
+          },
+          {
+            "calculated": "4",
+            "code": "page_remaining_credits_mismatch",
+            "page": "2"
+          }
+        ],
+        "duplicate_records": false,
+        "evidence": {
+          "cells": [
+            "一 虚构专业基础（所有子项均应满足要求）",
+            "6",
+            "4",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:2",
+          "row_role": "module"
+        },
+        "in_progress_course_names": [
+          "虚构基础乙"
+        ],
+        "locator": "table-row:2",
+        "missing_required_courses": [],
+        "name": "虚构专业基础（所有子项均应满足要求）",
+        "next_step": "教务显示仍缺2学分；核对在读及模块选修条件后补修",
+        "observed_in_progress_credits": "2",
+        "observed_passed_credits": "2",
+        "optional_branch": false,
+        "passed_course_names": [
+          "虚构基础甲"
+        ],
+        "pending_courses": [],
+        "required_category_pending_courses": [],
+        "required_course_coverage": "仅页面明确标记必修的记录，其他要求仍待核实",
+        "statistics_scope": "已识别模块及有明确层级的子模块；覆盖和规则仍待核实"
+      },
+      {
+        "calculation": {
+          "children_satisfied": {},
+          "counted_course_ids": [
+            "ANON-CORE-01"
+          ],
+          "earned_credits": "2",
+          "in_progress_course_ids": [
+            "ANON-CORE-02"
+          ],
+          "missing_required_course_ids": [],
+          "own_counted_course_ids": [
+            "ANON-CORE-01"
+          ],
+          "pending_recognition_course_ids": [],
+          "remaining_credits": "2",
+          "required_credits": "4",
+          "requirement_satisfied": null,
+          "satisfied": null,
+          "subtree_earned_credits": "2",
+          "unallocated_course_ids": []
+        },
+        "discrepancies": [
+          {
+            "calculated_own": "2",
+            "calculated_subtree": "2",
+            "code": "page_earned_credits_mismatch",
+            "page": "4"
+          }
+        ],
+        "duplicate_records": false,
+        "evidence": {
+          "cells": [
+            "（一）虚构核心基础",
+            "4",
+            "4",
+            "",
+            "是",
+            ""
+          ],
+          "locator": "table-row:3",
+          "row_role": "module"
+        },
+        "in_progress_course_names": [
+          "虚构基础乙"
+        ],
+        "locator": "table-row:3",
+        "missing_required_courses": [
+          {
+            "code": "ANON-CORE-02",
+            "evidence": {
+              "cells": [
+                "2",
+                "ANON-CORE-02",
+                "虚构基础乙",
+                "2",
+                "2",
+                "--",
+                "是",
+                "在读，必修"
+              ],
+              "locator": "table-row:5",
+              "row_role": "course"
+            },
+            "name": "虚构基础乙",
+            "state": "in_progress"
+          }
+        ],
+        "name": "虚构核心基础",
+        "next_step": "优先核对必修：虚构基础乙；在读课程先跟进成绩，待认定课程先核实认定",
+        "observed_in_progress_credits": "2",
+        "observed_passed_credits": "2",
+        "optional_branch": false,
+        "passed_course_names": [
+          "虚构基础甲"
+        ],
+        "pending_courses": [],
+        "required_category_pending_courses": [],
+        "required_course_coverage": "仅页面明确标记必修的记录，其他要求仍待核实",
+        "statistics_scope": "已识别模块及有明确层级的子模块；覆盖和规则仍待核实"
+      },
+      {
+        "calculation": {
+          "children_satisfied": {},
+          "counted_course_ids": [],
+          "earned_credits": "0",
+          "in_progress_course_ids": [],
+          "missing_required_course_ids": [],
+          "own_counted_course_ids": [],
+          "pending_recognition_course_ids": [],
+          "remaining_credits": "2",
+          "required_credits": "2",
+          "requirement_satisfied": null,
+          "satisfied": null,
+          "subtree_earned_credits": "0",
+          "unallocated_course_ids": []
+        },
+        "discrepancies": [],
+        "duplicate_records": false,
+        "evidence": {
+          "cells": [
+            "（二）虚构专业实践",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:6",
+          "row_role": "module"
+        },
+        "in_progress_course_names": [],
+        "locator": "table-row:6",
+        "missing_required_courses": [
+          {
+            "code": "ANON-PRAC-01",
+            "evidence": {
+              "cells": [
+                "1",
+                "ANON-PRAC-01",
+                "虚构实践课程",
+                "2",
+                "0",
+                "--",
+                "否",
+                "必修"
+              ],
+              "locator": "table-row:7",
+              "row_role": "course"
+            },
+            "name": "虚构实践课程",
+            "state": "failed"
+          }
+        ],
+        "name": "虚构专业实践",
+        "next_step": "优先核对必修：虚构实践课程；在读课程先跟进成绩，待认定课程先核实认定",
+        "observed_in_progress_credits": "0",
+        "observed_passed_credits": "0",
+        "optional_branch": false,
+        "passed_course_names": [],
+        "pending_courses": [],
+        "required_category_pending_courses": [],
+        "required_course_coverage": "仅页面明确标记必修的记录，其他要求仍待核实",
+        "statistics_scope": "已识别模块及有明确层级的子模块；覆盖和规则仍待核实"
+      },
+      {
+        "calculation": {
+          "children_satisfied": {
+            "module-row-7": null,
+            "module-row-9": null
+          },
+          "counted_course_ids": [],
+          "earned_credits": "0",
+          "in_progress_course_ids": [],
+          "missing_required_course_ids": [],
+          "own_counted_course_ids": [],
+          "pending_recognition_course_ids": [],
+          "remaining_credits": "2",
+          "required_credits": "2",
+          "requirement_satisfied": null,
+          "satisfied": null,
+          "subtree_earned_credits": "0",
+          "unallocated_course_ids": []
+        },
+        "discrepancies": [],
+        "duplicate_records": false,
+        "evidence": {
+          "cells": [
+            "二 虚构拓展能力（所有子项至少一项满足要求）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:8",
+          "row_role": "module"
+        },
+        "in_progress_course_names": [],
+        "locator": "table-row:8",
+        "missing_required_courses": [],
+        "name": "虚构拓展能力（所有子项至少一项满足要求）",
+        "next_step": "教务显示仍缺2学分；核对在读及模块选修条件后补修",
+        "observed_in_progress_credits": "0",
+        "observed_passed_credits": "0",
+        "optional_branch": false,
+        "passed_course_names": [],
+        "pending_courses": [],
+        "required_category_pending_courses": [],
+        "required_course_coverage": "仅页面明确标记必修的记录，其他要求仍待核实",
+        "statistics_scope": "已识别模块及有明确层级的子模块；覆盖和规则仍待核实"
+      },
+      {
+        "calculation": {
+          "children_satisfied": {},
+          "counted_course_ids": [],
+          "earned_credits": "0",
+          "in_progress_course_ids": [],
+          "missing_required_course_ids": [],
+          "own_counted_course_ids": [],
+          "pending_recognition_course_ids": [],
+          "remaining_credits": "2",
+          "required_credits": "2",
+          "requirement_satisfied": null,
+          "satisfied": null,
+          "subtree_earned_credits": "0",
+          "unallocated_course_ids": []
+        },
+        "discrepancies": [],
+        "duplicate_records": false,
+        "evidence": {
+          "cells": [
+            "（一）虚构拓展甲（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:9",
+          "row_role": "module"
+        },
+        "in_progress_course_names": [],
+        "locator": "table-row:9",
+        "missing_required_courses": [],
+        "name": "虚构拓展甲（非必须选择）",
+        "next_step": "页面注明此分支可选；显示缺口不代表必须补修本组，需核对所属模块总学分与组合要求",
+        "observed_in_progress_credits": "0",
+        "observed_passed_credits": "0",
+        "optional_branch": true,
+        "passed_course_names": [],
+        "pending_courses": [],
+        "required_category_pending_courses": [],
+        "required_course_coverage": "仅页面明确标记必修的记录，其他要求仍待核实",
+        "statistics_scope": "已识别模块及有明确层级的子模块；覆盖和规则仍待核实"
+      },
+      {
+        "calculation": {
+          "children_satisfied": {},
+          "counted_course_ids": [],
+          "earned_credits": "0",
+          "in_progress_course_ids": [],
+          "missing_required_course_ids": [],
+          "own_counted_course_ids": [],
+          "pending_recognition_course_ids": [],
+          "remaining_credits": "2",
+          "required_credits": "2",
+          "requirement_satisfied": null,
+          "satisfied": null,
+          "subtree_earned_credits": "0",
+          "unallocated_course_ids": []
+        },
+        "discrepancies": [],
+        "duplicate_records": false,
+        "evidence": {
+          "cells": [
+            "（二）虚构拓展乙（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:11",
+          "row_role": "module"
+        },
+        "in_progress_course_names": [],
+        "locator": "table-row:11",
+        "missing_required_courses": [],
+        "name": "虚构拓展乙（非必须选择）",
+        "next_step": "页面注明此分支可选；显示缺口不代表必须补修本组，需核对所属模块总学分与组合要求",
+        "observed_in_progress_credits": "0",
+        "observed_passed_credits": "0",
+        "optional_branch": true,
+        "passed_course_names": [],
+        "pending_courses": [],
+        "required_category_pending_courses": [],
+        "required_course_coverage": "仅页面明确标记必修的记录，其他要求仍待核实",
+        "statistics_scope": "已识别模块及有明确层级的子模块；覆盖和规则仍待核实"
+      }
+    ],
+    "modules": [
+      {
+        "evidence": {
+          "cells": [
+            "一 虚构专业基础（所有子项均应满足要求）",
+            "6",
+            "4",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:2",
+          "row_role": "module"
+        },
+        "gap_course_count": 1,
+        "gap_credits": "2",
+        "gap_text": "缺2学分缺1门",
+        "grade": null,
+        "hierarchy_basis": "chapter_numbering",
+        "label": "一 虚构专业基础（所有子项均应满足要求）",
+        "locator": "table-row:2",
+        "module_number": "一",
+        "name": "虚构专业基础（所有子项均应满足要求）",
+        "number_kind": "chinese",
+        "numerical_id": null,
+        "page_earned_credits": "4",
+        "parent_locator": null,
+        "pass_text": "缺2学分缺1门",
+        "raw_cells": [
+          "一 虚构专业基础（所有子项均应满足要求）",
+          "6",
+          "4",
+          "",
+          "缺2学分缺1门",
+          ""
+        ],
+        "remark": null,
+        "reported_satisfied": false,
+        "required_credits": "6",
+        "requirement": "all",
+        "requirement_rule_text": "所有子项均应满足要求",
+        "row_index": 0
+      },
+      {
+        "evidence": {
+          "cells": [
+            "（一）虚构核心基础",
+            "4",
+            "4",
+            "",
+            "是",
+            ""
+          ],
+          "locator": "table-row:3",
+          "row_role": "module"
+        },
+        "gap_course_count": null,
+        "gap_credits": null,
+        "gap_text": null,
+        "grade": null,
+        "hierarchy_basis": "chapter_numbering",
+        "label": "（一）虚构核心基础",
+        "locator": "table-row:3",
+        "module_number": "（一）",
+        "name": "虚构核心基础",
+        "number_kind": "chinese",
+        "numerical_id": null,
+        "page_earned_credits": "4",
+        "parent_locator": "table-row:2",
+        "pass_text": "是",
+        "raw_cells": [
+          "（一）虚构核心基础",
+          "4",
+          "4",
+          "",
+          "是",
+          ""
+        ],
+        "remark": null,
+        "reported_satisfied": null,
+        "required_credits": "4",
+        "requirement": "unknown",
+        "requirement_rule_text": null,
+        "row_index": 1
+      },
+      {
+        "evidence": {
+          "cells": [
+            "（二）虚构专业实践",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:6",
+          "row_role": "module"
+        },
+        "gap_course_count": 1,
+        "gap_credits": "2",
+        "gap_text": "缺2学分缺1门",
+        "grade": null,
+        "hierarchy_basis": "chapter_numbering",
+        "label": "（二）虚构专业实践",
+        "locator": "table-row:6",
+        "module_number": "（二）",
+        "name": "虚构专业实践",
+        "number_kind": "chinese",
+        "numerical_id": null,
+        "page_earned_credits": "0",
+        "parent_locator": "table-row:2",
+        "pass_text": "缺2学分缺1门",
+        "raw_cells": [
+          "（二）虚构专业实践",
+          "2",
+          "0",
+          "",
+          "缺2学分缺1门",
+          ""
+        ],
+        "remark": null,
+        "reported_satisfied": false,
+        "required_credits": "2",
+        "requirement": "unknown",
+        "requirement_rule_text": null,
+        "row_index": 4
+      },
+      {
+        "evidence": {
+          "cells": [
+            "二 虚构拓展能力（所有子项至少一项满足要求）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:8",
+          "row_role": "module"
+        },
+        "gap_course_count": 1,
+        "gap_credits": "2",
+        "gap_text": "缺2学分缺1门",
+        "grade": null,
+        "hierarchy_basis": "chapter_numbering",
+        "label": "二 虚构拓展能力（所有子项至少一项满足要求）",
+        "locator": "table-row:8",
+        "module_number": "二",
+        "name": "虚构拓展能力（所有子项至少一项满足要求）",
+        "number_kind": "chinese",
+        "numerical_id": null,
+        "page_earned_credits": "0",
+        "parent_locator": null,
+        "pass_text": "缺2学分缺1门",
+        "raw_cells": [
+          "二 虚构拓展能力（所有子项至少一项满足要求）",
+          "2",
+          "0",
+          "",
+          "缺2学分缺1门",
+          ""
+        ],
+        "remark": null,
+        "reported_satisfied": false,
+        "required_credits": "2",
+        "requirement": "any",
+        "requirement_rule_text": "至少一项",
+        "row_index": 6
+      },
+      {
+        "evidence": {
+          "cells": [
+            "（一）虚构拓展甲（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:9",
+          "row_role": "module"
+        },
+        "gap_course_count": 1,
+        "gap_credits": "2",
+        "gap_text": "缺2学分缺1门",
+        "grade": null,
+        "hierarchy_basis": "chapter_numbering",
+        "label": "（一）虚构拓展甲（非必须选择）",
+        "locator": "table-row:9",
+        "module_number": "（一）",
+        "name": "虚构拓展甲（非必须选择）",
+        "number_kind": "chinese",
+        "numerical_id": null,
+        "page_earned_credits": "0",
+        "parent_locator": "table-row:8",
+        "pass_text": "缺2学分缺1门",
+        "raw_cells": [
+          "（一）虚构拓展甲（非必须选择）",
+          "2",
+          "0",
+          "",
+          "缺2学分缺1门",
+          ""
+        ],
+        "remark": null,
+        "reported_satisfied": false,
+        "required_credits": "2",
+        "requirement": "unknown",
+        "requirement_rule_text": null,
+        "row_index": 7
+      },
+      {
+        "evidence": {
+          "cells": [
+            "（二）虚构拓展乙（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:11",
+          "row_role": "module"
+        },
+        "gap_course_count": 1,
+        "gap_credits": "2",
+        "gap_text": "缺2学分缺1门",
+        "grade": null,
+        "hierarchy_basis": "chapter_numbering",
+        "label": "（二）虚构拓展乙（非必须选择）",
+        "locator": "table-row:11",
+        "module_number": "（二）",
+        "name": "虚构拓展乙（非必须选择）",
+        "number_kind": "chinese",
+        "numerical_id": null,
+        "page_earned_credits": "0",
+        "parent_locator": "table-row:8",
+        "pass_text": "缺2学分缺1门",
+        "raw_cells": [
+          "（二）虚构拓展乙（非必须选择）",
+          "2",
+          "0",
+          "",
+          "缺2学分缺1门",
+          ""
+        ],
+        "remark": null,
+        "reported_satisfied": false,
+        "required_credits": "2",
+        "requirement": "unknown",
+        "requirement_rule_text": null,
+        "row_index": 9
+      }
+    ],
+    "not_graduation_decision": true,
+    "observation_version": "degree-page-observation-v1",
+    "page_progress": {
+      "calculation_version": "degree-page-v1",
+      "can_decide_complete": false,
+      "courses": [
+        {
+          "code": "ANON-CORE-01",
+          "counted": true,
+          "course_id": "ANON-CORE-01",
+          "credit_candidates": null,
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-CORE-01",
+              "虚构基础甲",
+              "2",
+              "2",
+              "88",
+              "是",
+              "必修"
+            ],
+            "locator": "table-row:4",
+            "row_role": "course"
+          },
+          "id": "ANON-CORE-01",
+          "name": "虚构基础甲",
+          "observed_states": [
+            "passed"
+          ],
+          "record_count": 1,
+          "state": "passed",
+          "verification_codes": [],
+          "verification_required": false
+        },
+        {
+          "code": "ANON-CORE-02",
+          "counted": false,
+          "course_id": "ANON-CORE-02",
+          "credit_candidates": null,
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "2",
+              "ANON-CORE-02",
+              "虚构基础乙",
+              "2",
+              "2",
+              "--",
+              "是",
+              "在读，必修"
+            ],
+            "locator": "table-row:5",
+            "row_role": "course"
+          },
+          "id": "ANON-CORE-02",
+          "name": "虚构基础乙",
+          "observed_states": [
+            "in_progress"
+          ],
+          "record_count": 1,
+          "state": "in_progress",
+          "verification_codes": [],
+          "verification_required": false
+        },
+        {
+          "code": "ANON-OPT-01",
+          "counted": false,
+          "course_id": "ANON-OPT-01",
+          "credit_candidates": null,
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-OPT-01",
+              "虚构拓展课程甲",
+              "2",
+              "0",
+              "--",
+              "否",
+              "选修"
+            ],
+            "locator": "table-row:10",
+            "row_role": "course"
+          },
+          "id": "ANON-OPT-01",
+          "name": "虚构拓展课程甲",
+          "observed_states": [
+            "failed"
+          ],
+          "record_count": 1,
+          "state": "failed",
+          "verification_codes": [],
+          "verification_required": false
+        },
+        {
+          "code": "ANON-OPT-02",
+          "counted": false,
+          "course_id": "ANON-OPT-02",
+          "credit_candidates": null,
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-OPT-02",
+              "虚构拓展课程乙",
+              "2",
+              "0",
+              "--",
+              "否",
+              "选修"
+            ],
+            "locator": "table-row:12",
+            "row_role": "course"
+          },
+          "id": "ANON-OPT-02",
+          "name": "虚构拓展课程乙",
+          "observed_states": [
+            "failed"
+          ],
+          "record_count": 1,
+          "state": "failed",
+          "verification_codes": [],
+          "verification_required": false
+        },
+        {
+          "code": "ANON-PRAC-01",
+          "counted": false,
+          "course_id": "ANON-PRAC-01",
+          "credit_candidates": null,
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-PRAC-01",
+              "虚构实践课程",
+              "2",
+              "0",
+              "--",
+              "否",
+              "必修"
+            ],
+            "locator": "table-row:7",
+            "row_role": "course"
+          },
+          "id": "ANON-PRAC-01",
+          "name": "虚构实践课程",
+          "observed_states": [
+            "failed"
+          ],
+          "record_count": 1,
+          "state": "failed",
+          "verification_codes": [],
+          "verification_required": false
+        }
+      ],
+      "coverage_evidence": {
+        "coverage": "partial",
+        "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+      },
+      "evidence": {
+        "adapter_verified": false,
+        "captured_at": "2026-10-10T00:00:00Z",
+        "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+      },
+      "in_progress_courses": [
+        {
+          "code": "ANON-CORE-02",
+          "course_id": "ANON-CORE-02",
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "2",
+              "ANON-CORE-02",
+              "虚构基础乙",
+              "2",
+              "2",
+              "--",
+              "是",
+              "在读，必修"
+            ],
+            "locator": "table-row:5",
+            "row_role": "course"
+          },
+          "id": "ANON-CORE-02",
+          "name": "虚构基础乙"
+        }
+      ],
+      "independent_calculation": {
+        "calculation_version": "degree-page-v1",
+        "counted_course_count": 1,
+        "counted_credits": "2",
+        "not_graduation_decision": true,
+        "root_module_id": "observed-table-root",
+        "root_satisfied": null
+      },
+      "missing_pages": [],
+      "missing_required_courses": [],
+      "modules": [
+        {
+          "calculation": {
+            "children_satisfied": {},
+            "counted_course_ids": [
+              "ANON-CORE-01"
+            ],
+            "earned_credits": "2",
+            "in_progress_course_ids": [
+              "ANON-CORE-02"
+            ],
+            "missing_required_course_ids": [],
+            "own_counted_course_ids": [
+              "ANON-CORE-01"
+            ],
+            "pending_recognition_course_ids": [],
+            "remaining_credits": "2",
+            "required_credits": "4",
+            "requirement_satisfied": null,
+            "satisfied": null,
+            "subtree_earned_credits": "2",
+            "unallocated_course_ids": []
+          },
+          "course_ids": [
+            "ANON-CORE-01",
+            "ANON-CORE-02"
+          ],
+          "depth": 2,
+          "discrepancies": [
+            {
+              "calculated_own": "2",
+              "calculated_subtree": "2",
+              "code": "page_earned_credits_mismatch",
+              "page": "4"
+            }
+          ],
+          "evidence": {
+            "cells": [
+              "（一）虚构核心基础",
+              "4",
+              "4",
+              "",
+              "是",
+              ""
+            ],
+            "locator": "table-row:3",
+            "row_role": "module"
+          },
+          "id": "module-row-1",
+          "module_id": "module-row-1",
+          "name": "虚构核心基础",
+          "page": {
+            "earned_credits": "4",
+            "remaining_credits": null,
+            "required_credits": "4",
+            "satisfied": null
+          },
+          "page_vs_calculation": {
+            "agrees": false,
+            "comparable": true,
+            "discrepancy_codes": [
+              "page_earned_credits_mismatch"
+            ]
+          },
+          "parent_id": "module-row-0",
+          "path": [
+            "observed-table-root",
+            "module-row-0",
+            "module-row-1"
+          ],
+          "reported_earned_credits": "4",
+          "reported_remaining_credits": null,
+          "reported_satisfied": null,
+          "required_course_ids": [
+            "ANON-CORE-01",
+            "ANON-CORE-02"
+          ],
+          "required_credits": "4",
+          "requirement": "unknown"
+        },
+        {
+          "calculation": {
+            "children_satisfied": {},
+            "counted_course_ids": [],
+            "earned_credits": "0",
+            "in_progress_course_ids": [],
+            "missing_required_course_ids": [],
+            "own_counted_course_ids": [],
+            "pending_recognition_course_ids": [],
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "requirement_satisfied": null,
+            "satisfied": null,
+            "subtree_earned_credits": "0",
+            "unallocated_course_ids": []
+          },
+          "course_ids": [
+            "ANON-PRAC-01"
+          ],
+          "depth": 2,
+          "discrepancies": [],
+          "evidence": {
+            "cells": [
+              "（二）虚构专业实践",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:6",
+            "row_role": "module"
+          },
+          "id": "module-row-4",
+          "module_id": "module-row-4",
+          "name": "虚构专业实践",
+          "page": {
+            "earned_credits": "0",
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "satisfied": false
+          },
+          "page_vs_calculation": {
+            "agrees": true,
+            "comparable": true,
+            "discrepancy_codes": []
+          },
+          "parent_id": "module-row-0",
+          "path": [
+            "observed-table-root",
+            "module-row-0",
+            "module-row-4"
+          ],
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [
+            "ANON-PRAC-01"
+          ],
+          "required_credits": "2",
+          "requirement": "unknown"
+        },
+        {
+          "calculation": {
+            "children_satisfied": {},
+            "counted_course_ids": [],
+            "earned_credits": "0",
+            "in_progress_course_ids": [],
+            "missing_required_course_ids": [],
+            "own_counted_course_ids": [],
+            "pending_recognition_course_ids": [],
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "requirement_satisfied": null,
+            "satisfied": null,
+            "subtree_earned_credits": "0",
+            "unallocated_course_ids": []
+          },
+          "course_ids": [
+            "ANON-OPT-01"
+          ],
+          "depth": 2,
+          "discrepancies": [],
+          "evidence": {
+            "cells": [
+              "（一）虚构拓展甲（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:9",
+            "row_role": "module"
+          },
+          "id": "module-row-7",
+          "module_id": "module-row-7",
+          "name": "虚构拓展甲（非必须选择）",
+          "page": {
+            "earned_credits": "0",
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "satisfied": false
+          },
+          "page_vs_calculation": {
+            "agrees": true,
+            "comparable": true,
+            "discrepancy_codes": []
+          },
+          "parent_id": "module-row-6",
+          "path": [
+            "observed-table-root",
+            "module-row-6",
+            "module-row-7"
+          ],
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "2",
+          "requirement": "unknown"
+        },
+        {
+          "calculation": {
+            "children_satisfied": {},
+            "counted_course_ids": [],
+            "earned_credits": "0",
+            "in_progress_course_ids": [],
+            "missing_required_course_ids": [],
+            "own_counted_course_ids": [],
+            "pending_recognition_course_ids": [],
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "requirement_satisfied": null,
+            "satisfied": null,
+            "subtree_earned_credits": "0",
+            "unallocated_course_ids": []
+          },
+          "course_ids": [
+            "ANON-OPT-02"
+          ],
+          "depth": 2,
+          "discrepancies": [],
+          "evidence": {
+            "cells": [
+              "（二）虚构拓展乙（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:11",
+            "row_role": "module"
+          },
+          "id": "module-row-9",
+          "module_id": "module-row-9",
+          "name": "虚构拓展乙（非必须选择）",
+          "page": {
+            "earned_credits": "0",
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "satisfied": false
+          },
+          "page_vs_calculation": {
+            "agrees": true,
+            "comparable": true,
+            "discrepancy_codes": []
+          },
+          "parent_id": "module-row-6",
+          "path": [
+            "observed-table-root",
+            "module-row-6",
+            "module-row-9"
+          ],
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "2",
+          "requirement": "unknown"
+        },
+        {
+          "calculation": {
+            "children_satisfied": {
+              "module-row-1": null,
+              "module-row-4": null
+            },
+            "counted_course_ids": [
+              "ANON-CORE-01"
+            ],
+            "earned_credits": "0",
+            "in_progress_course_ids": [],
+            "missing_required_course_ids": [],
+            "own_counted_course_ids": [],
+            "pending_recognition_course_ids": [],
+            "remaining_credits": "4",
+            "required_credits": "6",
+            "requirement_satisfied": true,
+            "satisfied": null,
+            "subtree_earned_credits": "2",
+            "unallocated_course_ids": []
+          },
+          "course_ids": [],
+          "depth": 1,
+          "discrepancies": [
+            {
+              "calculated_own": "0",
+              "calculated_subtree": "2",
+              "code": "page_earned_credits_mismatch",
+              "page": "4"
+            },
+            {
+              "calculated": "4",
+              "code": "page_remaining_credits_mismatch",
+              "page": "2"
+            }
+          ],
+          "evidence": {
+            "cells": [
+              "一 虚构专业基础（所有子项均应满足要求）",
+              "6",
+              "4",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:2",
+            "row_role": "module"
+          },
+          "id": "module-row-0",
+          "module_id": "module-row-0",
+          "name": "虚构专业基础（所有子项均应满足要求）",
+          "page": {
+            "earned_credits": "4",
+            "remaining_credits": "2",
+            "required_credits": "6",
+            "satisfied": false
+          },
+          "page_vs_calculation": {
+            "agrees": false,
+            "comparable": true,
+            "discrepancy_codes": [
+              "page_earned_credits_mismatch",
+              "page_remaining_credits_mismatch"
+            ]
+          },
+          "parent_id": "observed-table-root",
+          "path": [
+            "observed-table-root",
+            "module-row-0"
+          ],
+          "reported_earned_credits": "4",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "6",
+          "requirement": "all"
+        },
+        {
+          "calculation": {
+            "children_satisfied": {
+              "module-row-7": null,
+              "module-row-9": null
+            },
+            "counted_course_ids": [],
+            "earned_credits": "0",
+            "in_progress_course_ids": [],
+            "missing_required_course_ids": [],
+            "own_counted_course_ids": [],
+            "pending_recognition_course_ids": [],
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "requirement_satisfied": null,
+            "satisfied": null,
+            "subtree_earned_credits": "0",
+            "unallocated_course_ids": []
+          },
+          "course_ids": [],
+          "depth": 1,
+          "discrepancies": [],
+          "evidence": {
+            "cells": [
+              "二 虚构拓展能力（所有子项至少一项满足要求）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:8",
+            "row_role": "module"
+          },
+          "id": "module-row-6",
+          "module_id": "module-row-6",
+          "name": "虚构拓展能力（所有子项至少一项满足要求）",
+          "page": {
+            "earned_credits": "0",
+            "remaining_credits": "2",
+            "required_credits": "2",
+            "satisfied": false
+          },
+          "page_vs_calculation": {
+            "agrees": true,
+            "comparable": true,
+            "discrepancy_codes": []
+          },
+          "parent_id": "observed-table-root",
+          "path": [
+            "observed-table-root",
+            "module-row-6"
+          ],
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "2",
+          "requirement": "any"
+        },
+        {
+          "calculation": {
+            "children_satisfied": {
+              "module-row-0": null,
+              "module-row-6": null
+            },
+            "counted_course_ids": [
+              "ANON-CORE-01"
+            ],
+            "earned_credits": "0",
+            "in_progress_course_ids": [],
+            "missing_required_course_ids": [],
+            "own_counted_course_ids": [],
+            "pending_recognition_course_ids": [],
+            "remaining_credits": null,
+            "required_credits": null,
+            "requirement_satisfied": null,
+            "satisfied": null,
+            "subtree_earned_credits": "2",
+            "unallocated_course_ids": []
+          },
+          "course_ids": [],
+          "depth": 0,
+          "discrepancies": [],
+          "evidence": {
+            "cells": [],
+            "locator": "observed-table-root",
+            "row_role": "synthetic_group"
+          },
+          "id": "observed-table-root",
+          "module_id": "observed-table-root",
+          "name": "本次读取的顶层模块",
+          "page": {
+            "earned_credits": null,
+            "remaining_credits": null,
+            "required_credits": null,
+            "satisfied": null
+          },
+          "page_vs_calculation": {
+            "agrees": null,
+            "comparable": false,
+            "discrepancy_codes": []
+          },
+          "parent_id": null,
+          "path": [
+            "observed-table-root"
+          ],
+          "reported_earned_credits": null,
+          "reported_remaining_credits": null,
+          "reported_satisfied": null,
+          "required_course_ids": [],
+          "required_credits": null,
+          "requirement": "unknown"
+        }
+      ],
+      "not_graduation_decision": true,
+      "page_display": {
+        "modules_with_page_values": [
+          "module-row-0",
+          "module-row-1",
+          "module-row-4",
+          "module-row-6",
+          "module-row-7",
+          "module-row-9"
+        ],
+        "root_module_id": "observed-table-root",
+        "root_satisfied": null
+      },
+      "passed_courses": [
+        {
+          "code": "ANON-CORE-01",
+          "course_id": "ANON-CORE-01",
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-CORE-01",
+              "虚构基础甲",
+              "2",
+              "2",
+              "88",
+              "是",
+              "必修"
+            ],
+            "locator": "table-row:4",
+            "row_role": "course"
+          },
+          "id": "ANON-CORE-01",
+          "module_id": "module-row-1",
+          "name": "虚构基础甲"
+        }
+      ],
+      "pending_recognition_courses": [],
+      "pending_verification": [
+        {
+          "code": "plan_version_unknown",
+          "course_id": null,
+          "detail": "培养方案版本未知，不能给出整体完成判断",
+          "evidence": null,
+          "module_id": null
+        },
+        {
+          "code": "source_coverage_incomplete",
+          "course_id": null,
+          "detail": "页面来源覆盖为 partial，缺少页面 未标注，不能据此给出整体完成结论",
+          "evidence": {
+            "coverage": "partial",
+            "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+          },
+          "module_id": null
+        },
+        {
+          "code": "unknown_requirement_rule",
+          "course_id": null,
+          "detail": "模块 module-row-1 的要求类型为 unknown，无法判断是否完成",
+          "evidence": {
+            "cells": [
+              "（一）虚构核心基础",
+              "4",
+              "4",
+              "",
+              "是",
+              ""
+            ],
+            "locator": "table-row:3",
+            "row_role": "module"
+          },
+          "module_id": "module-row-1"
+        },
+        {
+          "code": "unknown_requirement_rule",
+          "course_id": null,
+          "detail": "模块 module-row-4 的要求类型为 unknown，无法判断是否完成",
+          "evidence": {
+            "cells": [
+              "（二）虚构专业实践",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:6",
+            "row_role": "module"
+          },
+          "module_id": "module-row-4"
+        },
+        {
+          "code": "unknown_requirement_rule",
+          "course_id": null,
+          "detail": "模块 module-row-7 的要求类型为 unknown，无法判断是否完成",
+          "evidence": {
+            "cells": [
+              "（一）虚构拓展甲（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:9",
+            "row_role": "module"
+          },
+          "module_id": "module-row-7"
+        },
+        {
+          "code": "unknown_requirement_rule",
+          "course_id": null,
+          "detail": "模块 module-row-9 的要求类型为 unknown，无法判断是否完成",
+          "evidence": {
+            "cells": [
+              "（二）虚构拓展乙（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:11",
+            "row_role": "module"
+          },
+          "module_id": "module-row-9"
+        },
+        {
+          "code": "unknown_requirement_rule",
+          "course_id": null,
+          "detail": "模块 observed-table-root 的要求类型为 unknown，无法判断是否完成",
+          "evidence": {
+            "cells": [],
+            "locator": "observed-table-root",
+            "row_role": "synthetic_group"
+          },
+          "module_id": "observed-table-root"
+        }
+      ],
+      "plan_version": null,
+      "plan_version_known": false,
+      "repeat_policy": null,
+      "source_coverage": "partial",
+      "status": "needs_verification",
+      "suggestions": [
+        {
+          "code": "confirm_plan_version",
+          "course_ids": [],
+          "evidence": null,
+          "message": "培养方案版本未知，需确认版本后再判断完成情况",
+          "module_id": null
+        },
+        {
+          "code": "obtain_missing_pages",
+          "course_ids": [],
+          "evidence": {
+            "coverage": "partial",
+            "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+          },
+          "message": "页面覆盖不完整（partial），补全页面后才能给出整体完成结论",
+          "module_id": null
+        },
+        {
+          "code": "track_in_progress_course",
+          "course_ids": [
+            "ANON-CORE-02"
+          ],
+          "evidence": {
+            "cells": [
+              "2",
+              "ANON-CORE-02",
+              "虚构基础乙",
+              "2",
+              "2",
+              "--",
+              "是",
+              "在读，必修"
+            ],
+            "locator": "table-row:5",
+            "row_role": "course"
+          },
+          "message": "课程 ANON-CORE-02 仍在读，独立核算未计入已获得学分",
+          "module_id": null
+        },
+        {
+          "code": "verify_page_display",
+          "course_ids": [],
+          "evidence": {
+            "cells": [
+              "一 虚构专业基础（所有子项均应满足要求）",
+              "6",
+              "4",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:2",
+            "row_role": "module"
+          },
+          "message": "模块 module-row-0 页面显示与独立核算不一致，请核对页面来源",
+          "module_id": "module-row-0"
+        },
+        {
+          "code": "verify_page_display",
+          "course_ids": [],
+          "evidence": {
+            "cells": [
+              "（一）虚构核心基础",
+              "4",
+              "4",
+              "",
+              "是",
+              ""
+            ],
+            "locator": "table-row:3",
+            "row_role": "module"
+          },
+          "message": "模块 module-row-1 页面显示与独立核算不一致，请核对页面来源",
+          "module_id": "module-row-1"
+        }
+      ],
+      "unallocated_courses": []
+    },
+    "parse_status": "parsed",
+    "pending_verification": [
+      {
+        "code": "plan_version_unknown",
+        "course_id": null,
+        "detail": "培养方案版本未知，不能给出整体完成判断",
+        "evidence": null,
+        "module_id": null,
+        "raw_detail": "培养方案版本未知，不能给出整体完成判断"
+      },
+      {
+        "code": "source_coverage_incomplete",
+        "course_id": null,
+        "detail": "页面来源覆盖为 partial，缺少页面 未标注，不能据此给出整体完成结论",
+        "evidence": {
+          "coverage": "partial",
+          "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+        },
+        "module_id": null,
+        "raw_detail": "页面来源覆盖为 partial，缺少页面 未标注，不能据此给出整体完成结论"
+      },
+      {
+        "code": "unknown_requirement_rule",
+        "course_id": null,
+        "detail": "模块 虚构核心基础 的要求类型为 未知，无法判断是否完成",
+        "evidence": {
+          "cells": [
+            "（一）虚构核心基础",
+            "4",
+            "4",
+            "",
+            "是",
+            ""
+          ],
+          "locator": "table-row:3",
+          "row_role": "module"
+        },
+        "module_id": "module-row-1",
+        "raw_detail": "模块 module-row-1 的要求类型为 unknown，无法判断是否完成"
+      },
+      {
+        "code": "unknown_requirement_rule",
+        "course_id": null,
+        "detail": "模块 虚构专业实践 的要求类型为 未知，无法判断是否完成",
+        "evidence": {
+          "cells": [
+            "（二）虚构专业实践",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:6",
+          "row_role": "module"
+        },
+        "module_id": "module-row-4",
+        "raw_detail": "模块 module-row-4 的要求类型为 unknown，无法判断是否完成"
+      },
+      {
+        "code": "unknown_requirement_rule",
+        "course_id": null,
+        "detail": "模块 虚构拓展甲（非必须选择） 的要求类型为 未知，无法判断是否完成",
+        "evidence": {
+          "cells": [
+            "（一）虚构拓展甲（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:9",
+          "row_role": "module"
+        },
+        "module_id": "module-row-7",
+        "raw_detail": "模块 module-row-7 的要求类型为 unknown，无法判断是否完成"
+      },
+      {
+        "code": "unknown_requirement_rule",
+        "course_id": null,
+        "detail": "模块 虚构拓展乙（非必须选择） 的要求类型为 未知，无法判断是否完成",
+        "evidence": {
+          "cells": [
+            "（二）虚构拓展乙（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:11",
+          "row_role": "module"
+        },
+        "module_id": "module-row-9",
+        "raw_detail": "模块 module-row-9 的要求类型为 unknown，无法判断是否完成"
+      },
+      {
+        "code": "unknown_requirement_rule",
+        "course_id": null,
+        "detail": "模块 本次读取的顶层模块 的要求类型为 未知，无法判断是否完成",
+        "evidence": {
+          "cells": [],
+          "locator": "observed-table-root",
+          "row_role": "synthetic_group"
+        },
+        "module_id": "observed-table-root",
+        "raw_detail": "模块 observed-table-root 的要求类型为 unknown，无法判断是否完成"
+      }
+    ],
+    "priority_suggestions": [
+      {
+        "evidence": {
+          "cells": [
+            "（一）虚构核心基础",
+            "4",
+            "4",
+            "",
+            "是",
+            ""
+          ],
+          "locator": "table-row:3",
+          "row_role": "module"
+        },
+        "message": "优先核对必修：虚构基础乙；在读课程先跟进成绩，待认定课程先核实认定",
+        "module_name": "虚构核心基础",
+        "priority": 1
+      },
+      {
+        "evidence": {
+          "cells": [
+            "（二）虚构专业实践",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:6",
+          "row_role": "module"
+        },
+        "message": "优先核对必修：虚构实践课程；在读课程先跟进成绩，待认定课程先核实认定",
+        "module_name": "虚构专业实践",
+        "priority": 1
+      },
+      {
+        "evidence": {
+          "cells": [
+            "一 虚构专业基础（所有子项均应满足要求）",
+            "6",
+            "4",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:2",
+          "row_role": "module"
+        },
+        "message": "教务显示仍缺2学分；核对在读及模块选修条件后补修",
+        "module_name": "虚构专业基础（所有子项均应满足要求）",
+        "priority": 2
+      },
+      {
+        "evidence": {
+          "cells": [
+            "二 虚构拓展能力（所有子项至少一项满足要求）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "locator": "table-row:8",
+          "row_role": "module"
+        },
+        "message": "教务显示仍缺2学分；核对在读及模块选修条件后补修",
+        "module_name": "虚构拓展能力（所有子项至少一项满足要求）",
+        "priority": 2
+      }
+    ],
+    "recommendation_limits": [
+      "方案版本及页面覆盖尚未核实，不能判断整体完成。",
+      "父子模块缺口不能简单相加；教务实修可能包含在读。",
+      "缺少开课、先修和选课条件依据，不推荐具体课程或学期。",
+      "替代、互斥、重修及认定须有学校规则依据，未知规则待核实。"
+    ],
+    "reports": {
+      "courses": [
+        {
+          "code": "ANON-CORE-01",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-CORE-01",
+              "虚构基础甲",
+              "2",
+              "2",
+              "88",
+              "是",
+              "必修"
+            ],
+            "locator": "table-row:4",
+            "row_role": "course"
+          },
+          "grade": "88",
+          "in_progress": false,
+          "locator": "table-row:4",
+          "module_locator": "table-row:3",
+          "module_row_index": 1,
+          "name": "虚构基础甲",
+          "page_earned_credits": "2",
+          "pass_text": "是",
+          "raw_cells": [
+            "1",
+            "ANON-CORE-01",
+            "虚构基础甲",
+            "2",
+            "2",
+            "88",
+            "是",
+            "必修"
+          ],
+          "remark": "必修",
+          "required_credits": "2",
+          "row_index": 2,
+          "sequence": "1",
+          "state": "passed"
+        },
+        {
+          "code": "ANON-CORE-02",
+          "evidence": {
+            "cells": [
+              "2",
+              "ANON-CORE-02",
+              "虚构基础乙",
+              "2",
+              "2",
+              "--",
+              "是",
+              "在读，必修"
+            ],
+            "locator": "table-row:5",
+            "row_role": "course"
+          },
+          "grade": "--",
+          "in_progress": true,
+          "locator": "table-row:5",
+          "module_locator": "table-row:3",
+          "module_row_index": 1,
+          "name": "虚构基础乙",
+          "page_earned_credits": "2",
+          "pass_text": "是",
+          "raw_cells": [
+            "2",
+            "ANON-CORE-02",
+            "虚构基础乙",
+            "2",
+            "2",
+            "--",
+            "是",
+            "在读，必修"
+          ],
+          "remark": "在读，必修",
+          "required_credits": "2",
+          "row_index": 3,
+          "sequence": "2",
+          "state": "in_progress"
+        },
+        {
+          "code": "ANON-PRAC-01",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-PRAC-01",
+              "虚构实践课程",
+              "2",
+              "0",
+              "--",
+              "否",
+              "必修"
+            ],
+            "locator": "table-row:7",
+            "row_role": "course"
+          },
+          "grade": "--",
+          "in_progress": false,
+          "locator": "table-row:7",
+          "module_locator": "table-row:6",
+          "module_row_index": 4,
+          "name": "虚构实践课程",
+          "page_earned_credits": "0",
+          "pass_text": "否",
+          "raw_cells": [
+            "1",
+            "ANON-PRAC-01",
+            "虚构实践课程",
+            "2",
+            "0",
+            "--",
+            "否",
+            "必修"
+          ],
+          "remark": "必修",
+          "required_credits": "2",
+          "row_index": 5,
+          "sequence": "1",
+          "state": "failed"
+        },
+        {
+          "code": "ANON-OPT-01",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-OPT-01",
+              "虚构拓展课程甲",
+              "2",
+              "0",
+              "--",
+              "否",
+              "选修"
+            ],
+            "locator": "table-row:10",
+            "row_role": "course"
+          },
+          "grade": "--",
+          "in_progress": false,
+          "locator": "table-row:10",
+          "module_locator": "table-row:9",
+          "module_row_index": 7,
+          "name": "虚构拓展课程甲",
+          "page_earned_credits": "0",
+          "pass_text": "否",
+          "raw_cells": [
+            "1",
+            "ANON-OPT-01",
+            "虚构拓展课程甲",
+            "2",
+            "0",
+            "--",
+            "否",
+            "选修"
+          ],
+          "remark": "选修",
+          "required_credits": "2",
+          "row_index": 8,
+          "sequence": "1",
+          "state": "failed"
+        },
+        {
+          "code": "ANON-OPT-02",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-OPT-02",
+              "虚构拓展课程乙",
+              "2",
+              "0",
+              "--",
+              "否",
+              "选修"
+            ],
+            "locator": "table-row:12",
+            "row_role": "course"
+          },
+          "grade": "--",
+          "in_progress": false,
+          "locator": "table-row:12",
+          "module_locator": "table-row:11",
+          "module_row_index": 9,
+          "name": "虚构拓展课程乙",
+          "page_earned_credits": "0",
+          "pass_text": "否",
+          "raw_cells": [
+            "1",
+            "ANON-OPT-02",
+            "虚构拓展课程乙",
+            "2",
+            "0",
+            "--",
+            "否",
+            "选修"
+          ],
+          "remark": "选修",
+          "required_credits": "2",
+          "row_index": 10,
+          "sequence": "1",
+          "state": "failed"
+        }
+      ],
+      "in_progress_courses": [
+        {
+          "code": "ANON-CORE-02",
+          "evidence": {
+            "cells": [
+              "2",
+              "ANON-CORE-02",
+              "虚构基础乙",
+              "2",
+              "2",
+              "--",
+              "是",
+              "在读，必修"
+            ],
+            "locator": "table-row:5",
+            "row_role": "course"
+          },
+          "grade": "--",
+          "locator": "table-row:5",
+          "name": "虚构基础乙",
+          "pass_text": "是",
+          "remark": "在读，必修",
+          "row_index": 3,
+          "state": "in_progress"
+        }
+      ],
+      "modules": [
+        {
+          "evidence": {
+            "cells": [
+              "一 虚构专业基础（所有子项均应满足要求）",
+              "6",
+              "4",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:2",
+            "row_role": "module"
+          },
+          "gap_course_count": 1,
+          "gap_credits": "2",
+          "gap_text": "缺2学分缺1门",
+          "grade": null,
+          "hierarchy_basis": "chapter_numbering",
+          "label": "一 虚构专业基础（所有子项均应满足要求）",
+          "locator": "table-row:2",
+          "module_number": "一",
+          "name": "虚构专业基础（所有子项均应满足要求）",
+          "number_kind": "chinese",
+          "numerical_id": null,
+          "page_earned_credits": "4",
+          "parent_locator": null,
+          "pass_text": "缺2学分缺1门",
+          "raw_cells": [
+            "一 虚构专业基础（所有子项均应满足要求）",
+            "6",
+            "4",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "remark": null,
+          "reported_satisfied": false,
+          "required_credits": "6",
+          "requirement": "all",
+          "requirement_rule_text": "所有子项均应满足要求",
+          "row_index": 0
+        },
+        {
+          "evidence": {
+            "cells": [
+              "（一）虚构核心基础",
+              "4",
+              "4",
+              "",
+              "是",
+              ""
+            ],
+            "locator": "table-row:3",
+            "row_role": "module"
+          },
+          "gap_course_count": null,
+          "gap_credits": null,
+          "gap_text": null,
+          "grade": null,
+          "hierarchy_basis": "chapter_numbering",
+          "label": "（一）虚构核心基础",
+          "locator": "table-row:3",
+          "module_number": "（一）",
+          "name": "虚构核心基础",
+          "number_kind": "chinese",
+          "numerical_id": null,
+          "page_earned_credits": "4",
+          "parent_locator": "table-row:2",
+          "pass_text": "是",
+          "raw_cells": [
+            "（一）虚构核心基础",
+            "4",
+            "4",
+            "",
+            "是",
+            ""
+          ],
+          "remark": null,
+          "reported_satisfied": null,
+          "required_credits": "4",
+          "requirement": "unknown",
+          "requirement_rule_text": null,
+          "row_index": 1
+        },
+        {
+          "evidence": {
+            "cells": [
+              "（二）虚构专业实践",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:6",
+            "row_role": "module"
+          },
+          "gap_course_count": 1,
+          "gap_credits": "2",
+          "gap_text": "缺2学分缺1门",
+          "grade": null,
+          "hierarchy_basis": "chapter_numbering",
+          "label": "（二）虚构专业实践",
+          "locator": "table-row:6",
+          "module_number": "（二）",
+          "name": "虚构专业实践",
+          "number_kind": "chinese",
+          "numerical_id": null,
+          "page_earned_credits": "0",
+          "parent_locator": "table-row:2",
+          "pass_text": "缺2学分缺1门",
+          "raw_cells": [
+            "（二）虚构专业实践",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "remark": null,
+          "reported_satisfied": false,
+          "required_credits": "2",
+          "requirement": "unknown",
+          "requirement_rule_text": null,
+          "row_index": 4
+        },
+        {
+          "evidence": {
+            "cells": [
+              "二 虚构拓展能力（所有子项至少一项满足要求）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:8",
+            "row_role": "module"
+          },
+          "gap_course_count": 1,
+          "gap_credits": "2",
+          "gap_text": "缺2学分缺1门",
+          "grade": null,
+          "hierarchy_basis": "chapter_numbering",
+          "label": "二 虚构拓展能力（所有子项至少一项满足要求）",
+          "locator": "table-row:8",
+          "module_number": "二",
+          "name": "虚构拓展能力（所有子项至少一项满足要求）",
+          "number_kind": "chinese",
+          "numerical_id": null,
+          "page_earned_credits": "0",
+          "parent_locator": null,
+          "pass_text": "缺2学分缺1门",
+          "raw_cells": [
+            "二 虚构拓展能力（所有子项至少一项满足要求）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "remark": null,
+          "reported_satisfied": false,
+          "required_credits": "2",
+          "requirement": "any",
+          "requirement_rule_text": "至少一项",
+          "row_index": 6
+        },
+        {
+          "evidence": {
+            "cells": [
+              "（一）虚构拓展甲（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:9",
+            "row_role": "module"
+          },
+          "gap_course_count": 1,
+          "gap_credits": "2",
+          "gap_text": "缺2学分缺1门",
+          "grade": null,
+          "hierarchy_basis": "chapter_numbering",
+          "label": "（一）虚构拓展甲（非必须选择）",
+          "locator": "table-row:9",
+          "module_number": "（一）",
+          "name": "虚构拓展甲（非必须选择）",
+          "number_kind": "chinese",
+          "numerical_id": null,
+          "page_earned_credits": "0",
+          "parent_locator": "table-row:8",
+          "pass_text": "缺2学分缺1门",
+          "raw_cells": [
+            "（一）虚构拓展甲（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "remark": null,
+          "reported_satisfied": false,
+          "required_credits": "2",
+          "requirement": "unknown",
+          "requirement_rule_text": null,
+          "row_index": 7
+        },
+        {
+          "evidence": {
+            "cells": [
+              "（二）虚构拓展乙（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:11",
+            "row_role": "module"
+          },
+          "gap_course_count": 1,
+          "gap_credits": "2",
+          "gap_text": "缺2学分缺1门",
+          "grade": null,
+          "hierarchy_basis": "chapter_numbering",
+          "label": "（二）虚构拓展乙（非必须选择）",
+          "locator": "table-row:11",
+          "module_number": "（二）",
+          "name": "虚构拓展乙（非必须选择）",
+          "number_kind": "chinese",
+          "numerical_id": null,
+          "page_earned_credits": "0",
+          "parent_locator": "table-row:8",
+          "pass_text": "缺2学分缺1门",
+          "raw_cells": [
+            "（二）虚构拓展乙（非必须选择）",
+            "2",
+            "0",
+            "",
+            "缺2学分缺1门",
+            ""
+          ],
+          "remark": null,
+          "reported_satisfied": false,
+          "required_credits": "2",
+          "requirement": "unknown",
+          "requirement_rule_text": null,
+          "row_index": 9
+        }
+      ],
+      "unclassified_rows": []
+    },
+    "snapshot": {
+      "courses": [
+        {
+          "code": "ANON-CORE-01",
+          "course_id": "ANON-CORE-01",
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-CORE-01",
+              "虚构基础甲",
+              "2",
+              "2",
+              "88",
+              "是",
+              "必修"
+            ],
+            "locator": "table-row:4",
+            "row_role": "course"
+          },
+          "name": "虚构基础甲",
+          "state": "passed"
+        },
+        {
+          "code": "ANON-CORE-02",
+          "course_id": "ANON-CORE-02",
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "2",
+              "ANON-CORE-02",
+              "虚构基础乙",
+              "2",
+              "2",
+              "--",
+              "是",
+              "在读，必修"
+            ],
+            "locator": "table-row:5",
+            "row_role": "course"
+          },
+          "name": "虚构基础乙",
+          "state": "in_progress"
+        },
+        {
+          "code": "ANON-PRAC-01",
+          "course_id": "ANON-PRAC-01",
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-PRAC-01",
+              "虚构实践课程",
+              "2",
+              "0",
+              "--",
+              "否",
+              "必修"
+            ],
+            "locator": "table-row:7",
+            "row_role": "course"
+          },
+          "name": "虚构实践课程",
+          "state": "failed"
+        },
+        {
+          "code": "ANON-OPT-01",
+          "course_id": "ANON-OPT-01",
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-OPT-01",
+              "虚构拓展课程甲",
+              "2",
+              "0",
+              "--",
+              "否",
+              "选修"
+            ],
+            "locator": "table-row:10",
+            "row_role": "course"
+          },
+          "name": "虚构拓展课程甲",
+          "state": "failed"
+        },
+        {
+          "code": "ANON-OPT-02",
+          "course_id": "ANON-OPT-02",
+          "credits": "2",
+          "evidence": {
+            "cells": [
+              "1",
+              "ANON-OPT-02",
+              "虚构拓展课程乙",
+              "2",
+              "0",
+              "--",
+              "否",
+              "选修"
+            ],
+            "locator": "table-row:12",
+            "row_role": "course"
+          },
+          "name": "虚构拓展课程乙",
+          "state": "failed"
+        }
+      ],
+      "coverage_evidence": {
+        "coverage": "partial",
+        "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+      },
+      "evidence": {
+        "adapter_verified": false,
+        "captured_at": "2026-10-10T00:00:00Z",
+        "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+      },
+      "missing_pages": [],
+      "modules": [
+        {
+          "course_ids": [],
+          "evidence": {
+            "cells": [
+              "一 虚构专业基础（所有子项均应满足要求）",
+              "6",
+              "4",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:2",
+            "row_role": "module"
+          },
+          "module_id": "module-row-0",
+          "name": "虚构专业基础（所有子项均应满足要求）",
+          "parent_id": "observed-table-root",
+          "reported_earned_credits": "4",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "6",
+          "requirement": "all"
+        },
+        {
+          "course_ids": [
+            "ANON-CORE-01",
+            "ANON-CORE-02"
+          ],
+          "evidence": {
+            "cells": [
+              "（一）虚构核心基础",
+              "4",
+              "4",
+              "",
+              "是",
+              ""
+            ],
+            "locator": "table-row:3",
+            "row_role": "module"
+          },
+          "module_id": "module-row-1",
+          "name": "虚构核心基础",
+          "parent_id": "module-row-0",
+          "reported_earned_credits": "4",
+          "reported_remaining_credits": null,
+          "reported_satisfied": null,
+          "required_course_ids": [
+            "ANON-CORE-01",
+            "ANON-CORE-02"
+          ],
+          "required_credits": "4",
+          "requirement": "unknown"
+        },
+        {
+          "course_ids": [
+            "ANON-PRAC-01"
+          ],
+          "evidence": {
+            "cells": [
+              "（二）虚构专业实践",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:6",
+            "row_role": "module"
+          },
+          "module_id": "module-row-4",
+          "name": "虚构专业实践",
+          "parent_id": "module-row-0",
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [
+            "ANON-PRAC-01"
+          ],
+          "required_credits": "2",
+          "requirement": "unknown"
+        },
+        {
+          "course_ids": [],
+          "evidence": {
+            "cells": [
+              "二 虚构拓展能力（所有子项至少一项满足要求）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:8",
+            "row_role": "module"
+          },
+          "module_id": "module-row-6",
+          "name": "虚构拓展能力（所有子项至少一项满足要求）",
+          "parent_id": "observed-table-root",
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "2",
+          "requirement": "any"
+        },
+        {
+          "course_ids": [
+            "ANON-OPT-01"
+          ],
+          "evidence": {
+            "cells": [
+              "（一）虚构拓展甲（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:9",
+            "row_role": "module"
+          },
+          "module_id": "module-row-7",
+          "name": "虚构拓展甲（非必须选择）",
+          "parent_id": "module-row-6",
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "2",
+          "requirement": "unknown"
+        },
+        {
+          "course_ids": [
+            "ANON-OPT-02"
+          ],
+          "evidence": {
+            "cells": [
+              "（二）虚构拓展乙（非必须选择）",
+              "2",
+              "0",
+              "",
+              "缺2学分缺1门",
+              ""
+            ],
+            "locator": "table-row:11",
+            "row_role": "module"
+          },
+          "module_id": "module-row-9",
+          "name": "虚构拓展乙（非必须选择）",
+          "parent_id": "module-row-6",
+          "reported_earned_credits": "0",
+          "reported_remaining_credits": "2",
+          "reported_satisfied": false,
+          "required_course_ids": [],
+          "required_credits": "2",
+          "requirement": "unknown"
+        },
+        {
+          "course_ids": [],
+          "evidence": {
+            "cells": [],
+            "locator": "observed-table-root",
+            "row_role": "synthetic_group"
+          },
+          "module_id": "observed-table-root",
+          "name": "本次读取的顶层模块",
+          "parent_id": null,
+          "required_course_ids": [],
+          "required_credits": null,
+          "requirement": "unknown"
+        }
+      ],
+      "plan_version": null,
+      "repeat_policy": null,
+      "source_coverage": "partial"
+    },
+    "snapshot_error": null,
+    "snapshot_status": "built",
+    "source": {
+      "adapter_verified": false,
+      "captured_at": "2026-10-10T00:00:00Z",
+      "coverage": "partial",
+      "url": "https://eamis.nankai.edu.cn/eams/myPlanCompl.action"
+    },
+    "status": "needs_verification",
+    "unclassified_rows": []
+  },
+  "error": null,
+  "meta": {
+    "calculation_version": null,
+    "data_version": "degree-page-v1",
+    "evidence_refs": [],
+    "request_id": "28400e8e-3e0e-4f06-a1ff-4724c1478da6",
+    "schema_version": "1.0.0",
+    "warnings": [
+      {
+        "code": "UNVERIFIED_PAGE_DATA",
+        "message": "用户提供的表格内容，真实页面与覆盖范围尚未核实"
+      },
+      {
+        "code": "NOT_GRADUATION_DECISION",
+        "message": "不构成学校最终毕业审核"
+      }
+    ]
+  },
+  "ok": true
+}
