@@ -12,10 +12,11 @@
 
 ## 免账号密码使用、固定设备码与 Agent 关联（团队共用身份链路）
 
-这不是废弃的演示功能，也不是学校 SSO：浏览器创建独立私有空间，固定 `DEV-…` 码用于定位设备，Agent 经本人 OAuth 授权后关联同一个空间。不能用共享 MCP token 或学校登录替代本人授权，不能把不同浏览器的数据静默合并。
+这不是废弃的演示功能，也不是学校 SSO。2026-10-11 当前源码已改为身份优先：固定 `DEV-…` 码只定位设备；新浏览器经原 Agent 本人授权接入原空间，未知身份不能匿名创建第二个账号/空间。原浏览器私密身份恢复仍保留。不能用共享 MCP token 或学校登录替代本人授权，不能把不同身份的数据静默合并。没有可信身份来源的真正新用户仍需支持的本人身份登录，并非已实现全校免注册入驻。
 
 - [完整流程、配置、源码索引与验收](docs/browser-visitor-rollout.md)
 - [本轮交接：已有 PR 与缺失补交范围](docs/handoffs/browser-visitor-device-flow-2026-10-10.md)
+- [最新本地修复：统一页与未知身份创建守卫（未上线）](docs/handoffs/unified-private-space-onboarding-2026-10-11.md)
 - [Agent 追加规则](deploy/genios-workflows/browser-visitor-agent-append.txt)
 
 维护课表（B）、日历（D）或公共页面（C）时须保留这套身份入口、Cookie 恢复、owner 校验及撤销行为。课表文件上传修复另见 PR #15；这套身份链路不属于课表解析器，不要因本地未启用配置而删除它。

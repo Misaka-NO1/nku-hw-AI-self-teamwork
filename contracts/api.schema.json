@@ -3,10 +3,11 @@
   "$id": "https://schemas.example.invalid/campus/api-1.0.0.json",
   "title": "NK Campus Assistant API Contract",
   "x-browser-visitor-device-flow": {
-    "activation": "CLOUD_VISITOR_ENABLED defaults false; requires persistent auth, personal schedules, scoped Agent device binding and the additive browser-visitor migration. Registered-user roster is unchanged.",
-    "start": "POST /api/v1/auth/visitor/session with BrowserVisitorStartRequest (exactly {}), same-origin cookies, Origin, X-Campus-Visitor: 1 and JSON content type. Returns ApiEnvelope data CloudBrowserSession; never accepts owner, device code or token overrides.",
-    "paths": ["/tools/login", "/tools/device-login", "/tools/device", "/api/v1/auth/agent-device/start", "/api/v1/auth/agent-device/claim", "/oauth/devices/bind"],
-    "identity": "One independent private browser visitor space, not a school identity. DEV code is a stable public locator derived from an HttpOnly private cookie, never a login credential. Explicit OAuth devices:bind consent supplies the Agent owner; existing different owners cannot be overwritten.",
+    "activation": "CLOUD_VISITOR_ENABLED defaults false; requires persistent auth, personal schedules, scoped Agent device binding and browser-visitor plus visitor-identity-first migrations. Probe must be browser-visitor-identity-first-v2; registered-user roster unchanged.",
+    "start": "Legacy POST /api/v1/auth/visitor/session is now RESTORE ONLY. BrowserVisitorStartRequest exactly {}, same-origin cookies, Origin, X-Campus-Visitor: 1 and JSON content type. Known private proof or valid session restores CloudBrowserSession; unknown browsers return 401 with no enrollment. Never accepts owner, device code or token overrides.",
+    "paths": ["/tools/login", "/tools/device-login", "/tools/device", "/api/v1/auth/agent-device/start", "/api/v1/auth/agent-device/state", "/api/v1/auth/agent-device/claim", "/oauth/devices/bind"],
+    "identity": "One workspace per verified server OAuth owner. Unknown/incognito browsers cannot anonymously enroll; explicit Agent devices:bind consent connects them to the existing owner. No trusted school account ID is available, so first-time school-only login cannot provision a space. Existing private browser identity can be restored. DEV is a public locator, never a credential; different owners cannot overwrite/merge.",
+    "state": "POST /api/v1/auth/agent-device/state with exactly {}, Origin and X-Campus-Device: 1. Read-only ApiEnvelope data BrowserIdentityState; verified Cookie/context/device owner, no enrollment, claim, renewal, owner/user overrides or credential export.",
     "failure": "No shared demo fallback, no automatic OAuth consent or business writes. Backend restart preserves visitors. Logout revokes the source session and grants; explicit visitor resume must not resurrect old grants. Clearing site cookies can lose visitor identity."
   },
   "x-oauth-competition-demo-candidate": {
@@ -70,8 +71,25 @@
   "$defs": {
     "BrowserVisitorStartRequest": {
       "type": "object",
+      "description": "Restore known identity only. Empty body does not authorize enrollment of an unknown browser.",
       "properties": {},
       "additionalProperties": false
+    },
+    "BrowserIdentityState": {
+      "type": "object",
+      "properties": {
+        "device_code": {"type": ["string", "null"], "pattern": "^DEV-[A-Z2-7]{26}$"},
+        "has_space": {"type": "boolean"},
+        "agent_linked": {"type": "boolean"},
+        "space_label": {"type": ["string", "null"], "pattern": "^SPACE-[A-F0-9]{12}$"},
+        "school_identity_verified": {"const": false}
+      },
+      "required": ["device_code", "has_space", "agent_linked", "space_label", "school_identity_verified"],
+      "additionalProperties": false,
+      "allOf": [
+        {"if": {"properties": {"agent_linked": {"const": true}}}, "then": {"properties": {"has_space": {"const": true}, "device_code": {"type": "string"}}}},
+        {"if": {"properties": {"has_space": {"const": true}}}, "then": {"properties": {"space_label": {"type": "string"}}}, "else": {"properties": {"space_label": {"type": "null"}}}}
+      ]
     },
     "CalendarUpdateRequest": {
       "type": "object",

@@ -1,0 +1,41 @@
+{
+  "status": "saved_platform_drafts_not_published_or_live_verified",
+  "date": "2026-10-11",
+  "original_plugin_id": "db09q154shhas0akfcn0",
+  "authentication": "Preserve existing OAuth configuration; do not copy or expose its client_secret or access token",
+  "required_headers": [
+    {"name": "platform_user_id", "type": "String", "required": true, "source": "SYS_USERID", "model_enabled": false, "default": null},
+    {"name": "platform_attestation", "type": "String", "required": true, "source": "this run's attest_my_platform_identity.data.platform_attestation", "user_input_allowed": false, "default": null}
+  ],
+  "preserved_original_tools": [
+    "read_my_degree_records",
+    "bind_my_browser",
+    "commit_my_calendar_entry",
+    "draft_my_calendar_entry",
+    "read_my_calendar_entries",
+    "read_my_demo_task_summary",
+    "check_my_demo_time",
+    "find_my_demo_free_slots",
+    "read_my_demo_records"
+  ],
+  "preservation_rule": "Only add identity/proof headers. Preserve existing method, path, business body fields, OAuth scope and response definitions. Historical demo names are not permission to substitute fixtures for real user data.",
+  "associate_my_original_space": {
+    "tool_id": "db5mhod4shhbpg90l1ig",
+    "method": "POST",
+    "path": "/api/v1/auth/genios/associate",
+    "body": {
+      "device_code": {"type": "String", "required": true, "pattern": "^DEV-[A-Z2-7]{26}$"},
+      "intent": {"type": "String", "required": true, "enum": ["bind"]},
+      "confirmed": {"type": "Boolean", "required": true, "value_rule": "true only after user's explicit original-space association and device-binding confirmation"}
+    },
+    "response": "Same OnboardingEnvelope as native-onboarding-tools.openapi.json; no raw UID, owner, OAuth token or browser session returned",
+    "requires": "Prior trusted lookup; actual original OAuth grant; this run's signed native identity proof; fixed hidden SYS_USERID",
+    "mutations": "Adopt the proven original owner and bind this browser atomically; never create, merge, copy or delete original private data"
+  },
+  "activation_blockers": [
+    "Agent-level fixed SYS_USERID and model hiding not yet configured for these drafts",
+    "Both native and original tool detail editors now display load failure",
+    "Two new SQL migrations and native routes not deployed",
+    "Public channel, separate school account, actual old-space adoption and first-use browser claim still require live acceptance"
+  ]
+}

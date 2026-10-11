@@ -51,6 +51,7 @@ class RealPostgresPipeStore:
     def task_delete_call(self,op,args): return self.call('__task_delete__:'+op,args)
     def personal_call(self,op,args): return self.call('__personal__:'+op,args)
     def agent_device_call(self,op,args): return self.call('__agent_device__:'+op,args)
+    def native_identity_call(self,op,args): return self.call('__native__:'+op,args)
     def shutdown(self):
         self.process.stdin.close(); self.process.wait(timeout=20)
 

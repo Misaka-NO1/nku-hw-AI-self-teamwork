@@ -6,6 +6,8 @@ import { oauthReturnPath } from "./oauthReturn";
 import { toolReviewReturnPath } from "./toolReviewReturn";
 import { useBrowserSession } from "./useBrowserSession";
 import { cloudAuthFailure } from "./cloudAuthFailure";
+import IdentityOnboarding from "./IdentityOnboarding";
+import NativeIdentityOnboarding from "./NativeIdentityOnboarding";
 
 // Fixed official npm version, bundled and loaded only on this closed pilot page.
 // No service_role/MCP key; password goes to CloudBase SDK, not our backend/Agent.
@@ -17,7 +19,7 @@ interface CloudAuth {
 }
 interface CloudSdk { init(input: { env: string; region: string; persistence: "none"; debug: false;
   auth: { detectSessionInUrl: false } }): { auth: CloudAuth | (() => CloudAuth) } }
-interface PilotConfig { envId: string; region: string; persistentAuthorization?: boolean; deviceLoginEnabled?: boolean; agentDeviceBindingEnabled?: boolean; visitorEnabled?: boolean }
+interface PilotConfig { envId: string; region: string; persistentAuthorization?: boolean; deviceLoginEnabled?: boolean; agentDeviceBindingEnabled?: boolean; visitorEnabled?: boolean; visitorIdentityFirst?: boolean; geniosNativeIdentityEnabled?: boolean }
 interface PilotSession extends DemoSession { datasetKind: "demo"; personalUploads: false; agentPaired: false }
 async function loadSdk(): Promise<CloudSdk> {
   const sdk = await import("@cloudbase/js-sdk");
@@ -39,6 +41,7 @@ export default function CloudbaseLoginPage() {
   const password = useRef<HTMLInputElement>(null);
   const reviewReturn = toolReviewReturnPath(window.location.search, window.location.origin);
   const consentReturn = oauthReturnPath(window.location.search, window.location.origin);
+  const unified = !!config?.agentDeviceBindingEnabled && !!config?.visitorEnabled;
   useEffect(() => {
     let active = true;
     apiClient.get<PilotConfig>("/api/v1/auth/cloudbase/config").then(value => {
@@ -106,25 +109,33 @@ export default function CloudbaseLoginPage() {
     clearDemoSession();
     setSession(null); setMessage("已退出工具站会话。重新登录同一账号可读回自己的已保存记录。");
   }
-  async function beginVisitor() {
+  async function restoreVisitor() {
+    if (config?.visitorIdentityFirst !== true) throw new Error("服务端身份优先保护尚未启用，未发送恢复请求，不会新建空间。");
     const verified = await apiClient.post<PilotSession>("/api/v1/auth/visitor/session", {}, {
       headers: { "X-Campus-Visitor": "1" },
     });
     if (!verified.workspaceRef || !verified.csrfToken) throw new Error("浏览器身份未完成，停止使用");
     sessionStorage.removeItem("campus-demo-schedule-v1");
     writeDemoSession(verified); setSession(verified);
-    // OAuth consent is still a separate explicit decision, never auto-approve.
-    window.location.assign(consentReturn ?? reviewReturn ?? "/tools/timetable");
+    // This restores known server identity only. OAuth consent remains explicit.
+    if (!unified) window.location.assign(consentReturn ?? reviewReturn ?? "/tools/timetable");
   }
   return <section>
-    <h1>{config?.visitorEnabled ? "免注册使用校园助手" : "登录并授权我的校园助手"}</h1>
+    <h1>{unified ? "我的身份、私有空间与设备" : config?.visitorEnabled ? "免注册使用校园助手" : "登录并授权我的校园助手"}</h1>
     <p>课表和日历属于你自己的私有空间；学校登录不会自动关联工具站身份。</p>
-    {config?.visitorEnabled && !session && <><p>无需创建账号或输入密码。开始后，本浏览器获得独立身份和固定设备码；其他浏览器不会看到这里的数据。</p>
-      <button disabled={busy || checking || (!!recoveryError && !browserSession.needsLogin)} onClick={() => void perform(beginVisitor)}>免注册开始使用</button>
-      <p>首次关联 Agent：点击聊天中的工具授权链接，在同一浏览器打开，选择允许授权，再发送本浏览器的设备码绑定请求。只凭学校登录或设备码不能读取数据。</p>
+    {config?.visitorEnabled && config.visitorIdentityFirst !== true && <p role="alert">服务端身份优先保护尚未启用。停止恢复和接入操作，避免旧接口重复创建空间。</p>}
+    {unified && config?.geniosNativeIdentityEnabled === true && <NativeIdentityOnboarding checking={checking}
+      blocked={config?.visitorIdentityFirst !== true || (!!recoveryError && !browserSession.needsLogin)}
+      consentReturn={consentReturn} destination={reviewReturn ?? "/tools/timetable"} />}
+    {unified && config?.geniosNativeIdentityEnabled !== true && <IdentityOnboarding checking={checking} blocked={config?.visitorIdentityFirst !== true || (!!recoveryError && !browserSession.needsLogin)}
+      consentReturn={consentReturn} destination={reviewReturn ?? "/tools/timetable"}
+      sessionIdentity={session?.workspaceRef ?? null} resumeVisitor={restoreVisitor} />}
+    {!unified && config?.visitorEnabled && !session && <><p>仅恢复本浏览器已验证的原身份，不新建账号或私有空间。</p>
+      <button disabled={busy || checking || config.visitorIdentityFirst !== true || (!!recoveryError && !browserSession.needsLogin)} onClick={() => void perform(restoreVisitor)}>恢复本浏览器原有身份</button>
+      <p>新浏览器请先通过 Agent 本人授权绑定，不能凭学校登录或设备码新建身份。</p>
       <p>请勿使用公共电脑保存私人课表。清除本站全部浏览器数据会丢失访客身份；未另行绑定设备时无法找回。</p></>}
-    {config?.agentDeviceBindingEnabled ? <p><a href="/tools/device-login">使用固定设备码绑定这个浏览器 →</a> 首次由 Agent 当前授权账号绑定，不自动识别学校账号。</p>
-      : config?.deviceLoginEnabled && <p><a href="/tools/device-login">已有登录设备？绑定这个浏览器 →</a> 首次由本人已登录设备确认，不自动识别 GeniOS 账号。</p>}
+    {!unified && (config?.agentDeviceBindingEnabled ? <p><a href="/tools/device-login">使用固定设备码绑定这个浏览器 →</a> 首次由 Agent 当前授权账号绑定，不自动识别学校账号。</p>
+      : config?.deviceLoginEnabled && <p><a href="/tools/device-login">已有登录设备？绑定这个浏览器 →</a> 首次由本人已登录设备确认，不自动识别 GeniOS 账号。</p>)}
     {consentReturn && <p>这是学校插件的授权登录步骤。登录后回到授权页；是否同意由你决定，不会自动授权。</p>}
     {reviewReturn && <p>登录后返回原来的课表、待办复核页或日历，仍须你核对并明确确认，不会自动保存。</p>}
     <p role="note">不共用账号或他人的授权。导入内容核对后明确确认保存。{config?.persistentAuthorization ? "退出或撤销授权仍会失效；已保存记录保留。" : "授权期限以实际授权页面为准。"}{!config?.visitorEnabled && "当前仅限已批准账号。"}不接收成绩上传。</p>
@@ -138,9 +149,9 @@ export default function CloudbaseLoginPage() {
       <button type="submit" disabled={busy || checking || (identityPilot && !!recoveryError && !browserSession.needsLogin)}>登录并验证身份</button>
     </form>}
     {session && <><p>当前浏览器已登录；账号身份以服务端验证为准。</p>
-      {(consentReturn || reviewReturn) && <p><a href={consentReturn ?? reviewReturn!}>{consentReturn ? "返回授权页，由我决定是否同意" : reviewReturn === "/tools/calendar" ? "返回待办日历" : "返回原草稿复核页"}</a></p>}
+      {!unified && (consentReturn || reviewReturn) && <p><a href={consentReturn ?? reviewReturn!}>{consentReturn ? "返回授权页，由我决定是否同意" : reviewReturn === "/tools/calendar" ? "返回待办日历" : "返回原草稿复核页"}</a></p>}
       <button disabled={busy} onClick={() => void perform(logout)}>退出当前账号</button>
-      <p><a href="/tools/import">导入我的课表 →</a>　<a href="/tools/calendar">我的待办日历 →</a></p></>}
+      {!unified && <p><a href="/tools/import">导入我的课表 →</a>　<a href="/tools/calendar">我的待办日历 →</a></p>}</>}
     {busy && <p role="status">正在处理，请勿重复点击。</p>}
     {message && <p role="status">{message}</p>}{error && <p role="alert">{error}</p>}
   </section>;

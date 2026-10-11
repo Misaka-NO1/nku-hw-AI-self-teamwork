@@ -101,6 +101,8 @@ def install_health_diagnostics(site,runtime):
 
 def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     runtime=settings or get_settings()
+    from app.genios_identity_site import native_configuration, install_genios_identity
+    native_configuration(runtime, os.environ.get("CLOUDBASE_APIKEY") or os.environ.get("CLOUDBASE_API_KEY", ""))
     if runtime.cloud_visitor_enabled and not (runtime.cloud_persistent_auth_enabled and runtime.cloud_agent_device_binding_enabled and runtime.cloud_personal_schedules_enabled):
         raise ValueError("Browser visitors require private persistent timetable/calendar and scoped device OAuth")
     if runtime.cloud_agent_device_binding_enabled and not (runtime.cloud_persistent_auth_enabled and runtime.cloud_oauth_competition_compat_enabled):
@@ -143,8 +145,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         result=database.call("probe",{})
         if result!={"schema_version":"identity-pilot-v1"}:
             raise ValueError("Unexpected database schema version")
-        if runtime.cloud_visitor_enabled and database.call("visitor_probe",{})!={"schema_version":"browser-visitor-v1"}:
-            raise ValueError("Private browser visitor migration required")
+        if runtime.cloud_visitor_enabled and database.call("visitor_probe",{})!={"schema_version":"browser-visitor-identity-first-v2"}:
+            raise ValueError("Private visitor identity-first migration required; unknown browsers must not enroll")
         if runtime.cloud_persistent_auth_enabled and database.call("persistent_probe",{})!={"schema_version":"persistent-auth-v1"}:
             raise ValueError("Persistent authorization migration required")
         if runtime.cloud_personal_schedules_enabled and database.call("personal_schedule_probe",{})!={"schema_version":"personal-schedules-v1"}:
@@ -153,6 +155,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             raise ValueError("Device binding migration required")
         if runtime.cloud_agent_device_binding_enabled and database.agent_device_call("probe",{})!={"schema_version":"agent-device-v1"}:
             raise ValueError("Agent device binding migration required")
+        if runtime.cloud_genios_native_identity_enabled and database.native_identity_call("probe",{})!={"schema_version":"native-browser-v1"}:
+            raise ValueError("Native identity and private browser migrations required")
         if runtime.cloud_oauth_competition_compat_enabled:
             if database.competition_call("probe",{})!={"schema_version":"competition-oauth-v1"}:
                 raise ValueError("Competition OAuth migration required")
@@ -245,6 +249,7 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     install_device_login(site,runtime,database,browser_args)
     from app.agent_device_site import install_agent_device, RETURNS, binding_url, valid_destination, device_status
     install_agent_device(site,runtime,database)
+    install_genios_identity(site,runtime,database)
     from app.visitor_site import install_visitor
     install_visitor(site,runtime,database,reply)
 
@@ -308,7 +313,9 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             "personal_uploads":False,"agent_paired":False,"persistent_authorization":runtime.cloud_persistent_auth_enabled,
             "device_login_enabled":runtime.cloud_device_login_enabled,
             "agent_device_binding_enabled":runtime.cloud_agent_device_binding_enabled,
-            "visitor_enabled":runtime.cloud_visitor_enabled})
+            "visitor_enabled":runtime.cloud_visitor_enabled,
+            "visitor_identity_first":runtime.cloud_visitor_enabled,
+            "genios_native_identity_enabled":runtime.cloud_genios_native_identity_enabled})
 
     @site.post("/api/v1/auth/cloudbase/session")
     async def login(request:Request,response:Response):
@@ -356,7 +363,15 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         if workspace.get("workspace_ref")!=context["workspace_ref"]:
             raise AppError(401,"AUTH_REQUIRED","Browser session context does not match the verified owner")
         visitor = runtime.cloud_visitor_enabled and database.call("visitor_status",{"session_hash":args["session_hash"]}).get("visitor") is True
-        if runtime.cloud_agent_device_binding_enabled and not visitor and device_status(request,database)["status"] != "bound":
+        native_bound = False
+        if runtime.cloud_genios_native_identity_enabled:
+            from app.agent_device_site import COOKIE
+            from app.device_login_site import SECRET
+            proof = request.cookies.get(COOKIE, "")
+            if SECRET.fullmatch(proof):
+                native_bound = database.native_identity_call("state", {"challenge_hash":secret_hash(proof),
+                    "session_hash":args["session_hash"]}).get("status") == "bound"
+        if runtime.cloud_agent_device_binding_enabled and not visitor and not native_bound and device_status(request,database)["status"] != "bound":
             raise AppError(401,"AUTH_REQUIRED","Bind this browser to the Agent authorized account first")
         result={**context,"dataset_kind":"demo","personal_uploads":False,"agent_paired":False}
         validate_boundary(format_times(result),"CloudBrowserSession")
@@ -379,6 +394,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             from app.device_login_site import SECRET
             device_secret=request.cookies.get(COOKIE,"")
             if SECRET.fullmatch(device_secret):
+                if runtime.cloud_genios_native_identity_enabled:
+                    database.native_identity_call("detach",{**auth,"challenge_hash":secret_hash(device_secret)})
                 database.agent_device_call("detach",{**auth,"challenge_hash":secret_hash(device_secret)})
         result=database.call("logout",auth)
         response.delete_cookie(SESSION_COOKIE,path="/",httponly=True,secure=True,samesite="strict")

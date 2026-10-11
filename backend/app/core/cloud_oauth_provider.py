@@ -1,7 +1,8 @@
 """Cloud OAuth provider using shared durable PostgreSQL transactions.
 
 The HTTP parser/consent UI is shared with the local pilot. No global/session
-memory or filesystem grants, no SYS_USERID binding, no shared token as owner.
+memory or filesystem grants, no shared token as owner. Native mode additionally
+attests a hidden fixed platform ID and checks it against the actual OAuth owner.
 """
 import base64
 import hashlib
@@ -100,6 +101,8 @@ class CloudOAuthProvider:
 
     def _agent(self,request):
         self.gate()
+        from app.core.genios_identity import guard_native_oauth_owner
+        guard_native_oauth_owner(request, self.settings, self.store)
         return {"principal_kind":"agent","grant_hash":secret_hash(resource_token(request).get_secret_value()),
                 "audience":self.settings.oauth_client_id}
 
@@ -111,6 +114,8 @@ class CloudOAuthProvider:
 
     def _notice_args(self,request):
         self.gate()
+        from app.core.genios_identity import guard_native_oauth_owner
+        guard_native_oauth_owner(request, self.settings, self.store)
         return {"principal_kind":"agent","grant_mode":"competition" if self.settings.cloud_oauth_competition_compat_enabled else "strict",
                 "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":self.settings.oauth_client_id}
 

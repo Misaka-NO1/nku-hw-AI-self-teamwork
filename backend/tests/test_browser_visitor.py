@@ -2,11 +2,14 @@
 import pytest
 import json
 import httpx
+from secrets import token_urlsafe
 from fastapi.testclient import TestClient
 from app.cloud_identity_site import create_cloud_identity_site
 from app.core.security import SESSION_COOKIE, secret_hash
 from app.core.browser_session_context import CONTEXT_COOKIE
 from app.agent_device_site import COOKIE
+from app.agent_device_site import display_code
+from app.device_login_site import SECRET
 from app.core.cloud_identity_store import CloudIdentityStore, RPC_URL
 from app.core.errors import AppError
 from test_cloud_identity_site import environment, login, headers, ORIGIN
@@ -63,11 +66,30 @@ def visitors(environment):
             return getattr(db, name)
     transport_db = TransportStore()
     with TestClient(create_cloud_identity_site(root, transport_db, runtime), base_url=ORIGIN) as a, TestClient(create_cloud_identity_site(root, transport_db, runtime), base_url=ORIGIN) as b:
+        a._legacy_fixture_store = b._legacy_fixture_store = db
         yield runtime, root, db, a, b
     identity.close()
 
 
 def begin(client, body=None, **extra_headers):
+    # Positive regressions restore historical, isolated fictional identities.
+    # Seed through the test-only superuser pipe, NEVER through an HTTP fallback.
+    if body is None and not extra_headers and not client.cookies.get(SESSION_COOKIE) and not getattr(client, '_legacy_fixture_seeded', False):
+        secret = client.cookies.get(COOKIE, '')
+        if not secret:
+            device_post(client, 'start')
+            secret = client.cookies.get(COOKIE, '')
+        if SECRET.fullmatch(secret):
+            try:
+                client._legacy_fixture_store.call('__test_legacy_visitor_fixture__', {
+                    'challenge_hash':secret_hash(secret), 'code_hash':secret_hash(display_code(secret)),
+                    'subject_id':'visitor_'+secret_hash(token_urlsafe(32)),
+                    'token_hash':secret_hash(token_urlsafe(32)), 'csrf_hash':secret_hash(token_urlsafe(32)),
+                    'workspace_ref':'pilot_workspace_'+token_urlsafe(18)})
+            except AppError as exc:
+                if exc.code != 'STALE_REVISION':
+                    raise
+            client._legacy_fixture_seeded = True
     return client.post('/api/v1/auth/visitor/session', json={} if body is None else body,
         headers={"Origin": ORIGIN, "X-Campus-Visitor": "1", **extra_headers})
 
@@ -150,7 +172,8 @@ def test_visitor_never_overwrites_registered_owner_or_accepts_owner_inputs(visit
         assert begin(b, body).status_code == 422
     assert begin(b, Origin='https://evil.invalid').status_code == 403
     assert environment[3].post('/api/v1/auth/visitor/session', json={}).status_code == 404
-    assert '免注册开始使用' in b.get('/tools/device-login').text or b.get('/tools/timetable').status_code == 200
+    unified = b.get('/tools/device-login', follow_redirects=False)
+    assert unified.status_code == 303 and unified.headers['location'].startswith('/tools/login?return_to=')
 
 
 def test_visitor_capacity_rate_limit_and_public_code_cannot_resume(visitors):
@@ -159,7 +182,7 @@ def test_visitor_capacity_rate_limit_and_public_code_cannot_resume(visitors):
     code = device_post(a, 'start').json()['data']['device_code']
     # DEV is public locator only; a copied code never recovers A's workspace.
     b.cookies.set(COOKIE, code)
-    assert begin(b).json()['data']['workspace_ref'] != owner['workspace_ref']
+    assert begin(b).status_code == 401  # Copied public code cannot restore OR enroll.
     for _ in range(10):
         response = begin(a)
     assert response.status_code == 429
@@ -200,6 +223,87 @@ def test_visitor_device_details_is_read_only_and_contains_no_private_proof(visit
     assert 'set-cookie' not in page.headers
     assert all(secret not in page.text for secret in before.values())
     assert dict(a.cookies) == before
+
+
+def test_unified_identity_state_is_readonly_and_only_reports_current_owner(visitors):
+    _, _, _, a, b = visitors
+    pending = device_post(a, 'state')
+    assert pending.status_code == 200 and pending.json()['meta']['request_id']
+    validate_boundary(pending.json()['data'], 'BrowserIdentityState')
+    assert pending.json()['data'] == {'device_code': None, 'has_space': False, 'agent_linked': False,
+        'space_label': None, 'school_identity_verified': False}
+    assert 'set-cookie' not in pending.headers
+    owner = begin(a).json()['data']
+    other = begin(b).json()['data']
+    before = dict(a.cookies)
+    data = device_post(a, 'state').json()['data']
+    assert data['has_space'] and not data['agent_linked']
+    assert data['space_label'] != device_post(b, 'state').json()['data']['space_label']
+    assert owner['workspace_ref'] not in json.dumps(data)
+    assert other['workspace_ref'] not in json.dumps(data)
+    assert all(secret not in json.dumps(data) for secret in before.values())
+    assert 'set-cookie' not in device_post(a, 'state').headers and dict(a.cookies) == before
+    assert agent_bind(a, grant(a), data['device_code']).status_code == 200
+    bound = device_post(a, 'state').json()['data']
+    assert bound['agent_linked'] and bound['space_label'] == data['space_label']
+    validate_boundary(bound, 'BrowserIdentityState')
+    for forged in ({'owner_subject_id': 'other'}, {'workspace_ref': other['workspace_ref']}, {'device_code': data['device_code']}):
+        assert device_post(a, 'state', forged).status_code == 422
+    assert a.post('/api/v1/auth/agent-device/state', json={}, headers={'Origin':'https://evil.invalid', 'X-Campus-Device':'1'}).status_code == 403
+
+
+def test_same_authorized_account_uses_one_workspace_on_multiple_browsers(visitors):
+    _, root, db, source, target = visitors
+    original = begin(source).json()['data']
+    bearer = grant(source)
+    code = device_post(target, 'start').json()['data']['device_code']
+    assert agent_bind(source, bearer, code).status_code == 200
+    # A pending authorization must prevent accidental second-space creation.
+    assert begin(target).status_code == 409
+    assert device_post(target, 'claim').json()['data']['workspace_ref'] == original['workspace_ref']
+    state = device_post(target, 'state').json()['data']
+    assert state['agent_linked'] and state['space_label'] == device_post(source, 'state').json()['data']['space_label']
+    assert begin(target).json()['data']['workspace_ref'] == original['workspace_ref']
+    assert calendar(target, original).status_code == 200
+
+
+def test_identity_state_fails_closed_for_tampered_context(visitors):
+    _, _, _, a, _ = visitors
+    begin(a)
+    a.cookies.set(CONTEXT_COOKIE, 'tampered', domain='pilot.example.invalid', path='/')
+    response = device_post(a, 'state')
+    assert response.status_code == 401
+    assert response.json()['data'] is None and 'set-cookie' not in response.headers
+
+
+def test_unknown_incognito_browser_cannot_create_a_second_identity(visitors):
+    _, _, db, original, incognito = visitors
+    owner = begin(original).json()['data']
+    counts = db.call('__test_identity_counts__', {})
+    headers = {'Origin':ORIGIN,'X-Campus-Visitor':'1'}
+    for _ in range(2):
+        response = incognito.post('/api/v1/auth/visitor/session', json={}, headers=headers)
+        assert response.status_code == 401 and response.json()['error']['code'] == 'AUTH_REQUIRED'
+        assert 'set-cookie' not in response.headers
+    # Even after a legitimate public locator is generated, unknown proof cannot enroll.
+    code = device_post(incognito, 'start').json()['data']['device_code']
+    response = incognito.post('/api/v1/auth/visitor/session', json={}, headers=headers)
+    assert response.status_code == 401 and 'set-cookie' not in response.headers
+    assert db.call('__test_identity_counts__', {}) == counts
+    assert not device_post(incognito, 'state').json()['data']['has_space']
+    assert agent_bind(original, grant(original), code).status_code == 200
+    assert device_post(incognito, 'claim').json()['data']['workspace_ref'] == owner['workspace_ref']
+    linked = db.call('__test_identity_counts__', {})
+    assert linked['visitors'] == counts['visitors'] and linked['owners'] == counts['owners']
+
+
+def test_missing_identity_first_guard_refuses_startup(visitors, monkeypatch):
+    runtime, root, db, _, _ = visitors
+    original = db.call
+    monkeypatch.setattr(db, 'call', lambda op,args: {'schema_version':'browser-visitor-v1'} if op=='visitor_probe' else original(op,args))
+    with pytest.raises(ValueError, match='identity-first migration required'):
+        with TestClient(create_cloud_identity_site(root, db, runtime), base_url=ORIGIN):
+            pass
 
 
 @pytest.mark.parametrize('missing_gate', [

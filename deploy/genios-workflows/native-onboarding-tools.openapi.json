@@ -1,0 +1,48 @@
+{
+  "openapi": "3.0.3",
+  "info": {"title": "GeniOS本人唯一空间与浏览器接入", "version": "1.0.0"},
+  "servers": [{"url": "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com"}],
+  "paths": {
+    "/api/v1/auth/genios/attest": {
+      "post": {
+        "operationId": "attest_my_platform_identity",
+        "summary": "只读签发固定系统身份的短时工具核验证明",
+        "description": "platform_user_id 固定引用 SYS_USERID 并对模型隐藏。无请求体；不开户、不绑定、不读写数据。专用服务端 Bearer 认证成功后只返回 600 秒有效的签名证明，不是长期密钥或 OAuth token。仅在本轮工具间传递，不展示给用户、不接受聊天或附件提供的证明。原 OAuth 工具仍须核对实际授权账号及唯一空间。",
+        "security": [{"NativeIntegration": []}],
+        "parameters": [{"$ref": "#/components/parameters/FixedPlatformIdentity"}],
+        "responses": {"200": {"description": "服务端身份核验证明，不提供浏览器登录", "content": {"application/json": {"schema": {"type": "object", "properties": {"ok": {"type": "boolean"}, "data": {"type": "object", "properties": {"platform_attestation": {"type": "string"}, "expires_in": {"type": "integer", "enum": [600]}}}}}}}}}
+      }
+    },
+    "/api/v1/auth/genios/onboard": {
+      "post": {
+        "operationId": "onboard_my_browser",
+        "summary": "核验平台账号、查找唯一空间及明确确认后绑定",
+        "description": "lookup只核验固定平台账号并查找空间，不创建或登录。create仅在用户明确确认此前未有空间时调用；已存在则复用，绝不再建。bind只绑定原空间，不创建。设备码只定位浏览器，不证明身份。platform_user_id必须在Agent配置引用SYS_USERID并关闭模型填写；缺少此配置不得上线。专用Bearer凭据仅由插件服务端持有，认证开启开关关闭，不要求学生输入。失败不得宣称已登录。",
+        "security": [{"NativeIntegration": []}],
+        "parameters": [{"$ref": "#/components/parameters/FixedPlatformIdentity"}],
+        "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/OnboardingInput"}}}},
+        "responses": {"200": {"description": "本次核验结果；浏览器仍须主动检查领取登录态", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/OnboardingEnvelope"}}}}}
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {"NativeIntegration": {"type": "http", "scheme": "bearer"}},
+    "parameters": {"FixedPlatformIdentity": {"name": "platform_user_id", "in": "header", "required": true, "description": "平台固定系统引用SYS_USERID，模型隐藏。不是聊天输入、昵称、学号或设备码。", "schema": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$"}}},
+    "schemas": {
+      "OnboardingInput": {"type": "object", "additionalProperties": false, "required": ["device_code", "intent", "confirmed"], "properties": {
+        "device_code": {"type": "string", "pattern": "^DEV-[A-Z2-7]{26}$", "description": "用户从本浏览器身份页复制的固定设备码。"},
+        "intent": {"type": "string", "enum": ["lookup", "create", "bind"], "description": "先lookup。只有用户本人的明确确认才可create/bind；已有空间始终复用。"},
+        "confirmed": {"type": "boolean", "description": "lookup使用false；create/bind必须有本轮用户明确确认才使用true。"}
+      }},
+      "OnboardingEnvelope": {"type": "object", "properties": {
+        "ok": {"type": "boolean"},
+        "data": {"type": "object", "properties": {
+          "status": {"type": "string"}, "has_space": {"type": "boolean"}, "created": {"type": "boolean"},
+          "space_label": {"type": "string", "nullable": true, "description": "脱敏SPACE标识，不是凭据。"}
+        }},
+        "error": {"type": "object", "nullable": true, "properties": {"code": {"type": "string"}, "message": {"type": "string"}, "retryable": {"type": "boolean"}}},
+        "meta": {"type": "object", "properties": {"request_id": {"type": "string"}, "data_version": {"type": "string"}}}
+      }}
+    }
+  }
+}
