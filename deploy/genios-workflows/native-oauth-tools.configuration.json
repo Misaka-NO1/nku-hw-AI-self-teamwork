@@ -4,8 +4,8 @@
   "original_plugin_id": "db09q154shhas0akfcn0",
   "authentication": "Preserve existing OAuth configuration; do not copy or expose its client_secret or access token",
   "required_headers": [
-    {"name": "platform_user_id", "type": "String", "required": true, "source": "SYS_USERID", "model_enabled": false, "default": null},
-    {"name": "platform_attestation", "type": "String", "required": true, "source": "this run's attest_my_platform_identity.data.platform_attestation", "user_input_allowed": false, "default": null}
+    {"name": "platform-user-id", "type": "String", "required": true, "source": "SYS_USERID", "model_enabled": false, "default": null},
+    {"name": "platform-attestation", "type": "String", "required": true, "source": "this run's attest_my_platform_identity.data.platform_attestation", "user_input_allowed": false, "default": null}
   ],
   "preserved_original_tools": [
     "read_my_degree_records",
@@ -33,9 +33,9 @@
     "mutations": "Adopt the proven original owner and bind this browser atomically; never create, merge, copy or delete original private data"
   },
   "activation_blockers": [
-    "Agent-level fixed SYS_USERID and model hiding not yet configured for these drafts",
-    "Both editors recovered after refreshing the existing school sign-in; drafts remain unpublished",
-    "Both new private SQL migrations installed once; r42 running as version 045 with native flag false; enabled version 047 failed independent-credential startup validation and took no traffic",
+    "Original OAuth tools still require per-tool hidden SYS_USERID configuration and migration of old underscore header names to canonical hyphen names; associate draft already uses canonical names",
+    "Dedicated native plugin published only for draft acceptance; actual Agent signer passed, but onboard Agent execution reports None is not of type object before an HTTP result",
+    "Both private SQL migrations already installed once; r43 enabled version 051 passed signer Debug; restoration deployment 052 is normal at 100 percent traffic and its non-sensitive native flag verified false",
     "Public channel, separate school account, actual old-space adoption and first-use browser claim still require live acceptance"
   ]
 }

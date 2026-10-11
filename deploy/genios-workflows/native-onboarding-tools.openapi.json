@@ -7,7 +7,7 @@
       "post": {
         "operationId": "attest_my_platform_identity",
         "summary": "只读签发固定系统身份的短时工具核验证明",
-        "description": "platform_user_id 固定引用 SYS_USERID 并对模型隐藏。无请求体；不开户、不绑定、不读写数据。专用服务端 Bearer 认证成功后只返回 600 秒有效的签名证明，不是长期密钥或 OAuth token。仅在本轮工具间传递，不展示给用户、不接受聊天或附件提供的证明。原 OAuth 工具仍须核对实际授权账号及唯一空间。",
+        "description": "platform-user-id 固定引用 SYS_USERID 并对模型隐藏。无请求体；不开户、不绑定、不读写数据。专用服务端 Bearer 认证成功后只返回 600 秒有效的签名证明，不是长期密钥或 OAuth token。仅在本轮工具间传递，不展示给用户、不接受聊天或附件提供的证明。原 OAuth 工具仍须核对实际授权账号及唯一空间。",
         "security": [{"NativeIntegration": []}],
         "parameters": [{"$ref": "#/components/parameters/FixedPlatformIdentity"}],
         "responses": {"200": {"description": "服务端身份核验证明，不提供浏览器登录", "content": {"application/json": {"schema": {"type": "object", "properties": {"ok": {"type": "boolean"}, "data": {"type": "object", "properties": {"platform_attestation": {"type": "string"}, "expires_in": {"type": "integer", "enum": [600]}}}}}}}}}
@@ -17,7 +17,7 @@
       "post": {
         "operationId": "onboard_my_browser",
         "summary": "核验平台账号、查找唯一空间及明确确认后绑定",
-        "description": "lookup只核验固定平台账号并查找空间，不创建或登录。create仅在用户明确确认此前未有空间时调用；已存在则复用，绝不再建。bind只绑定原空间，不创建。设备码只定位浏览器，不证明身份。platform_user_id必须在Agent配置引用SYS_USERID并关闭模型填写；缺少此配置不得上线。专用Bearer凭据仅由插件服务端持有，认证开启开关关闭，不要求学生输入。失败不得宣称已登录。",
+        "description": "lookup只核验固定平台账号并查找空间，不创建或登录。create仅在用户明确确认此前未有空间时调用；已存在则复用，绝不再建。bind只绑定原空间，不创建。设备码只定位浏览器，不证明身份。platform-user-id必须在Agent配置引用SYS_USERID并关闭模型填写；缺少此配置不得上线。专用Bearer凭据仅由插件服务端持有，认证开启开关关闭，不要求学生输入。失败不得宣称已登录。",
         "security": [{"NativeIntegration": []}],
         "parameters": [{"$ref": "#/components/parameters/FixedPlatformIdentity"}],
         "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/OnboardingInput"}}}},
@@ -27,7 +27,7 @@
   },
   "components": {
     "securitySchemes": {"NativeIntegration": {"type": "http", "scheme": "bearer"}},
-    "parameters": {"FixedPlatformIdentity": {"name": "platform_user_id", "in": "header", "required": true, "description": "平台固定系统引用SYS_USERID，模型隐藏。不是聊天输入、昵称、学号或设备码。", "schema": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$"}}},
+    "parameters": {"FixedPlatformIdentity": {"name": "platform-user-id", "in": "header", "required": true, "description": "平台固定系统引用SYS_USERID，模型隐藏。使用连字符 Header 名避免网关过滤下划线。不是聊天输入、昵称、学号或设备码。", "schema": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,128}$"}}},
     "schemas": {
       "OnboardingInput": {"type": "object", "additionalProperties": false, "required": ["device_code", "intent", "confirmed"], "properties": {
         "device_code": {"type": "string", "pattern": "^DEV-[A-Z2-7]{26}$", "description": "用户从本浏览器身份页复制的固定设备码。"},

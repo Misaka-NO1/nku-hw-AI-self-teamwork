@@ -2,6 +2,22 @@
 
 状态：2026-10-11，**固定参数实测通过；两份新私有迁移已安装，r42 候选已部署；正式 Agent 和真实登录闭环尚未验收发布**。
 
+## 最新进展：r43 Header 兼容与平台 Body 阻塞
+
+以下为最新状态；本文后续 043–047、未发布专用插件等描述是历史过程，不代表当前状态。
+
+- 用户亲自重新提交两端独立凭据；启用 r42 的 049 正常，启动验证通过。没有读取或记录凭据内容。专用插件“开启”保持关闭：平台说明为调用者使用服务端默认凭据，而不是要求学生填写。
+- 下划线身份 Header 在 Debug 中缺失。r43 改用 `platform-user-id` / `platform-attestation`；后端保留旧别名但拒绝重复或混发。身份、签名和 OAuth 一致性要求不变。相同私密配置使用新 Header 后，051 的只读签名 Debug 返回 600 秒证明；据此定位到 Header 传输兼容问题，未断言腾讯云具体网关配置。
+- 后端本次回归：身份边界 **42 项通过**，真实隔离 PostgreSQL HTTP **14 项通过**；身份前端本次 **9 项通过**。这些是本地合成测试，不是生产绑定成功。
+- r43 包 SHA256：`6fcbe667a7402ccb7ef35fb7bbc2386bf1c879a727463ca9168cffa5fff4c8d3`；205 archive entries（204 非 manifest 文件）。与 r42 仅 `backend/app/core/genios_identity.py` 和 manifest digest 不同。可用 `Build-Native-Header-Variant.ps1` 从已核验 r42 原包复现，不覆写原包、不含凭据。
+- 按用户专项批准，专用插件 `campus-genios-native-onboarding` 已发布供**未发布**测试 Agent 验收；发布警告只剩 onboard Debug 未通过。正式 Agent 未改动、未发布。
+- 学校会话过期导致已发布插件选择器空白；一键登录恢复后可正常添加。测试 Agent 两个新工具均固定引用 `平台用户ID(平台用户ID)`，参数对模型关闭。实际 Agent 的无 Body 签名调用成功，不展示证明。
+- `onboard_my_browser` 的插件 Debug 可将完整 JSON 送到后端：合成不存在的设备按预期返回 `404 NOT_FOUND`。实际 Agent 的 lookup 则反复报 `None is not of type 'object'`，没有 HTTP 响应码。检查 Body=json、三字段必填、模型入参开关；把 intent=lookup / confirmed=false 锁定后，以及明确模型 JSON 对象重试，仍失败。**当前仅能定位到平台 Agent 参数组装层，尚未完成根因修复。** 不能通过自动创建、改 UID 或弱化身份校验绕过。
+- 未创建真实空间映射、未进行旧空间 adopt、未绑定或 claim 真实浏览器，没有合并或删除个人数据。原 OAuth 插件九工具仍有旧 Header 名草稿需逐项升级；associate 草稿已使用新 Header，尚未发布。
+- 根据已批准的失败回退范围，提交同一 r43 包的 **052 / task 2333963**，最终部署表单明确 native flag=false；已验证状态正常、100% 流量，单独展开该非敏感开关确认 false（其他环境变量未展开）。旧正式调用恢复到原模式。安全截图保存在本机 `dist/native-r43-restored-052-20261011.png`。SQL 不删除、不重跑。
+
+下一步：修复学校 Agent 的 Body 对象组装，重测 lookup，再依序进行原 OAuth 一致性与实际 bind/claim；全程通过前不得发布正式 Agent 或声称免注册闭环完成。
+
 ## 真实平台验证
 
 - 原 MCP 测试将系统用户 ID 引用到字符串 `query_json`，平台在发出请求前报 `objectMerge: Base is not an object`。不是服务端拒绝，也不证明系统变量不能用。

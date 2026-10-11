@@ -20,16 +20,25 @@ ISSUER = "nankai-genios-campus-agent-v1"
 UID = re.compile(r"^[A-Za-z0-9_-]{1,128}$")
 DEVICE = re.compile(r"^DEV-[A-Z2-7]{26}$")
 KEY = re.compile(r"^[A-Za-z0-9_-]{43,128}$")
-ATTESTATION_HEADER = "platform_attestation"
+IDENTITY_HEADERS = ("platform-user-id", "platform_user_id")
+ATTESTATION_HEADER = "platform-attestation"
+ATTESTATION_HEADERS = (ATTESTATION_HEADER, "platform_attestation")
 ATTESTATION_SECONDS = 600
 
 
+def _header_values(headers, names):
+    # Standard hyphenated names survive gateways which reject underscores.
+    # Legacy aliases remain supported, but sending both is ambiguous and denied.
+    return [value for name in names for value in headers.getlist(name)]
+
+
 def _fixed_identity(headers):
-    if len(headers.getlist("platform_user_id")) != 1:
-        raise AppError(401, "AUTH_REQUIRED", "Native integration required")
+    identities = _header_values(headers, IDENTITY_HEADERS)
+    if len(identities) != 1:
+        raise AppError(401, "AUTH_REQUIRED", "Fixed platform identity header required")
     if headers.get("origin") or headers.get("sec-fetch-site") or headers.get("cookie"):
         raise AppError(403, "FORBIDDEN", "Browser cannot attest platform identity")
-    uid = headers.get("platform_user_id", "")
+    uid = identities[0]
     if not UID.fullmatch(uid) or uid in {"SYS_USERID", "null", "undefined"}:
         raise AppError(422, "VALIDATION_ERROR", "Invalid fixed platform identity")
     return hashlib.sha256((ISSUER + "\0" + uid).encode()).hexdigest()
@@ -101,20 +110,21 @@ def verify_native_headers(headers, dedicated_key: str, other_keys=(), *, credent
     if credential_header not in {"authorization", "x-campus-native-key"}:
         raise ValueError("Unsupported integration credential header")
     identity_hash = _fixed_identity(headers)
-    if headers.getlist(ATTESTATION_HEADER):
-        if (credential_header != "x-campus-native-key" or len(headers.getlist(ATTESTATION_HEADER)) != 1
+    attestations = _header_values(headers, ATTESTATION_HEADERS)
+    if attestations:
+        if (credential_header != "x-campus-native-key" or len(attestations) != 1
                 or headers.getlist("x-campus-native-key")):
             raise AppError(401, "AUTH_REQUIRED", "Unambiguous platform attestation required")
-        _verify_attestation(headers.get(ATTESTATION_HEADER, ""), identity_hash, dedicated_key)
+        _verify_attestation(attestations[0], identity_hash, dedicated_key)
         return identity_hash
     if len(headers.getlist(credential_header)) != 1:
-        raise AppError(401, "AUTH_REQUIRED", "Native integration required")
+        raise AppError(401, "AUTH_REQUIRED", "Dedicated integration credential header required")
     authorization = headers.get(credential_header, "")
     expected = "Bearer " + dedicated_key if credential_header == "authorization" else dedicated_key
     # Compare fixed-length digests, including unexpected Unicode/header lengths.
     if not compare_digest(hashlib.sha256(authorization.encode()).digest(),
                           hashlib.sha256(expected.encode()).digest()):
-        raise AppError(401, "AUTH_REQUIRED", "Native integration required")
+        raise AppError(401, "AUTH_REQUIRED", "Dedicated integration credential rejected")
     return identity_hash
 
 

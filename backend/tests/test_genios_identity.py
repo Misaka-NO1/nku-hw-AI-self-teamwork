@@ -98,6 +98,44 @@ def test_signed_attestation_is_scoped_to_fixed_identity_and_not_a_service_login(
         verify_native_headers(headers, KEY)  # Cannot use proof to mint another proof or enroll.
 
 
+def test_hyphenated_headers_preserve_identity_and_proof_validation():
+    original = verify().identity_hash
+    identity = verify_native_headers(Headers({"platform-user-id": "fictional-platform-a",
+        "authorization": "Bearer " + KEY}), KEY)
+    assert identity == original
+    proof = issue_native_attestation(identity, KEY)
+    assert verify_native_headers(Headers({"platform-user-id": "fictional-platform-a",
+        "platform-attestation": proof}), KEY, credential_header="x-campus-native-key") == original
+
+
+@pytest.mark.parametrize("names", [("platform-user-id", "platform_user_id"),
+    ("platform-attestation", "platform_attestation")])
+def test_mixed_header_aliases_are_rejected_even_when_values_match(names):
+    identity = verify().identity_hash
+    value = "fictional-platform-a" if names[0] == "platform-user-id" else issue_native_attestation(identity, KEY)
+    pairs = [(names[0], value), (names[1], value)]
+    if names[0] == "platform-user-id":
+        pairs.append(("authorization", "Bearer " + KEY))
+    else:
+        pairs.append(("platform-user-id", "fictional-platform-a"))
+    with pytest.raises(AppError) as caught:
+        verify_native_headers(Headers(raw=[(n.encode(), v.encode()) for n,v in pairs]), KEY,
+            credential_header="authorization" if names[0] == "platform-user-id" else "x-campus-native-key")
+    assert caught.value.code == "AUTH_REQUIRED"
+
+
+@pytest.mark.parametrize("headers,message", [
+    ({"authorization": "Bearer " + KEY}, "Fixed platform identity header required"),
+    ({"platform-user-id": "fictional-platform-a"}, "Dedicated integration credential header required"),
+    ({"platform-user-id": "fictional-platform-a", "authorization": "Bearer fictional-wrong"},
+     "Dedicated integration credential rejected")])
+def test_transport_diagnostics_do_not_expose_identity_or_credentials(headers, message):
+    with pytest.raises(AppError) as caught:
+        verify_native_headers(Headers(headers), KEY)
+    assert caught.value.message == message
+    assert KEY not in caught.value.message and "fictional-platform-a" not in caught.value.message
+
+
 @pytest.mark.parametrize("change", ["signature", "identity", "key", "duplicate", "both", "browser", "malformed", "too_long"])
 def test_attestation_tampering_and_confusion_rejected(change):
     proof = issue_native_attestation(verify().identity_hash, KEY)

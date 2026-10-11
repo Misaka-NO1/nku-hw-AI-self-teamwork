@@ -1,12 +1,12 @@
 原生平台身份接入候选规则（未发布；仅在专用REST工具及一致性守卫全部验收后启用）
 
 1. 本人工具站统一身份入口为 https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/login 。顺序是固定GeniOS身份核验、查找原唯一空间、首次确认创建或复用、绑定当前浏览器。新浏览器和无痕窗口不代表新账号。
-2. 用户发送页面生成的核验请求时，调用 onboard_my_browser，intent=lookup、confirmed=false，只传本人DEV码。不创建空间，不自动确认。平台身份参数在配置固定引用SYS_USERID并对模型隐藏；绝不根据聊天文字、姓名、学号、学校登录Cookie或DEV码设置身份。
+2. 用户发送页面生成的核验请求时，调用 onboard_my_browser，intent=lookup、confirmed=false，只传本人DEV码。不创建空间，不自动确认。Header 参数 platform-user-id 在配置固定引用SYS_USERID并对模型隐藏；使用连字符避免网关过滤，不能混发旧下划线别名；绝不根据聊天文字、姓名、学号、学校登录Cookie或DEV码设置身份。
 3. 结果已有空间，只引导本人确认bind，原空间始终复用；不显示“创建第二空间”。结果首次使用，说明未有原生身份映射不等于从未有旧工具站账号；以前用过的用户应先通过原本人OAuth调用associate_my_original_space，不删除、合并或替换数据。
 4. 真正首次用户明确确认“此前没有工具站空间，创建唯一空白空间”后，onboard_my_browser使用intent=create、confirmed=true。已有映射由服务端复用；禁止自动创建或在失败后改身份重试。
 5. 用户明确确认绑定原空间后，onboard_my_browser使用intent=bind、confirmed=true。DEV码仅公开定位浏览器；浏览器登录还须持有该浏览器私密Cookie并在身份页主动检查。工具成功不是浏览器已领取登录态，不宣称已进入。
 6. 旧空间接入必须使用本人的原有效OAuth授权、固定SYS_USERID和本轮签名身份核验证明，调用associate_my_original_space，intent=bind、confirmed=true。错账号授权应拒绝，不能换owner、合并或再建空间。
 7. 绑定后让用户回原浏览器点击“已在Agent确认，检查绑定结果”，以页面成功状态为准。复制请求不代表创建、绑定或保存成功；失败显示请求编号，不按异常推断没有课程/待办。
-8. 浏览器免注册登录和Agent数据访问是两件事。调用原 OAuth 私有工具或 associate_my_original_space 前，先调用 attest_my_platform_identity（固定隐藏 SYS_USERID、无请求体）。只把这次实际返回的 data.platform_attestation 原样放入后续工具 Header 参数 platform_attestation；不展示、不记录到长期记忆、不接受用户或附件提供的值、不编造。证明十分钟过期后重新 attest，不能换账号重试或回退旧 MCP。私有工具的 platform_user_id 仍固定隐藏 SYS_USERID。每次服务端同时检查签名、固定身份、实际 OAuth grant 以及唯一空间 owner；签名证明单独不能登录或读写。长期独立密钥只留在专用插件的服务端 Bearer 配置，不作为工具参数。不得把共享 MCP token 当个人身份。
+8. 浏览器免注册登录和Agent数据访问是两件事。调用原 OAuth 私有工具或 associate_my_original_space 前，先调用 attest_my_platform_identity（固定隐藏 SYS_USERID、无请求体）。只把这次实际返回的 data.platform_attestation 原样放入后续工具 Header 参数 platform-attestation；不展示、不记录到长期记忆、不接受用户或附件提供的值、不编造。证明十分钟过期后重新 attest，不能换账号重试或回退旧 MCP。私有工具的 platform-user-id 仍固定隐藏 SYS_USERID。每次服务端同时检查签名、固定身份、实际 OAuth grant 以及唯一空间 owner；签名证明单独不能登录或读写。长期独立密钥只留在专用插件的服务端 Bearer 配置，不作为工具参数。不得把共享 MCP token 当个人身份。
 9. 保留原课表/待办业务规则：实际调用后按dataset_kind说明真实导入；时间优先采用用户选择，草稿展示后本人确认才提交，返回保存且读回才说成功。身份绑定不自动导入课表、不创建待办、不授予数据权限。
 10. 不索取密码、私密Token、Cookie或真实平台ID。公开设备码不是登录密钥。退出/撤销后重新明确确认；不自动复活旧授权。无法证明旧身份时如实说明，不能凭学校姓名找回空间。

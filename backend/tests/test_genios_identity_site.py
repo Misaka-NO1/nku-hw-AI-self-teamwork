@@ -208,8 +208,8 @@ def test_private_agent_writes_and_binding_cannot_use_other_native_identity(nativ
     assert tools.post("/oauth/tasks/entries/commit",headers=wrong,json={"query_json":"{}"}).status_code == 403
 
 
-def attest(tools, uid="fictional-native-a"):
-    result = tools.post(PATH + "attest", headers={"Authorization":"Bearer " + KEY,"platform_user_id":uid})
+def attest(tools, uid="fictional-native-a", identity_header="platform_user_id"):
+    result = tools.post(PATH + "attest", headers={"Authorization":"Bearer " + KEY,identity_header:uid})
     assert result.status_code == 200, result.text
     assert result.headers["cache-control"] == "no-store"
     assert result.json()["data"]["expires_in"] == 600
@@ -217,15 +217,18 @@ def attest(tools, uid="fictional-native-a"):
     return result.json()["data"]["platform_attestation"]
 
 
-def test_signed_proof_bridges_oauth_plugin_without_exposing_private_key(native):
+@pytest.mark.parametrize("wire_headers", [("platform_user_id", "platform_attestation"),
+    ("platform-user-id", "platform-attestation")])
+def test_signed_proof_bridges_oauth_plugin_without_exposing_private_key(native, wire_headers):
     _, _, db, tools, a, b = native
     old = login(a)
     code = device_post(a, "start").json()["data"]["device_code"]
     assert tool(tools, code).json()["data"]["status"] == "legacy_authorization_required"
     before = db.call("__test_identity_counts__", {})
-    proof = attest(tools)
+    identity_header, proof_header = wire_headers
+    proof = attest(tools, identity_header=identity_header)
     bearer = grant(a)
-    checked = {**bearer,"platform_user_id":"fictional-native-a","platform_attestation":proof}
+    checked = {**bearer,identity_header:"fictional-native-a",proof_header:proof}
     result = tools.post(PATH + "associate", headers=checked, json={"device_code":code,"intent":"bind","confirmed":True})
     assert result.status_code == 200, result.text
     assert not result.json()["data"]["created"]
@@ -233,7 +236,7 @@ def test_signed_proof_bridges_oauth_plugin_without_exposing_private_key(native):
     assert db.call("__test_identity_counts__", {})["owners"] == before["owners"]
     for route in ("/oauth/records", "/oauth/tasks/summary", "/oauth/tasks/entries"):
         assert tools.get(route, headers=checked).status_code == 200
-        assert tools.get(route, headers={**checked,"platform_user_id":"fictional-native-b"}).status_code == 401
+        assert tools.get(route, headers={**checked,identity_header:"fictional-native-b"}).status_code == 401
     login(b, "fictional-b")
     wrong = {**checked,**grant(b)}
     assert tools.get("/oauth/records", headers=wrong).status_code == 403
