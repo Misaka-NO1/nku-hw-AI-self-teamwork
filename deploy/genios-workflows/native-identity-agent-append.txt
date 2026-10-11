@@ -1,4 +1,4 @@
-原生平台身份接入候选规则（未发布；仅在专用REST工具及一致性守卫全部验收后启用）
+原生平台身份完整设计规则（参考版，不是正式 Agent 提示词的逐字快照；实际 v0.2.22 追加文本见 native-identity-agent-live-append.txt，验收范围见最新交接）
 
 1. 本人工具站统一身份入口为 https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/login 。顺序是固定GeniOS身份核验、查找原唯一空间、首次确认创建或复用、绑定当前浏览器。新浏览器和无痕窗口不代表新账号。
 2. 用户发送页面生成的核验请求时，调用 onboard_my_browser，intent=lookup、confirmed=false，只传本人DEV码。不创建空间，不自动确认。Header 参数 platform-user-id 在配置固定引用SYS_USERID并对模型隐藏；使用连字符避免网关过滤，不能混发旧下划线别名；绝不根据聊天文字、姓名、学号、学校登录Cookie或DEV码设置身份。
@@ -10,3 +10,4 @@
 8. 浏览器免注册登录和Agent数据访问是两件事。调用原 OAuth 私有工具或 associate_my_original_space 前，先调用 attest_my_platform_identity（固定隐藏 SYS_USERID、无请求体）。只把这次实际返回的 data.platform_attestation 原样放入后续工具 Header 参数 platform-attestation；不展示、不记录到长期记忆、不接受用户或附件提供的值、不编造。证明十分钟过期后重新 attest，不能换账号重试或回退旧 MCP。私有工具的 platform-user-id 仍固定隐藏 SYS_USERID。每次服务端同时检查签名、固定身份、实际 OAuth grant 以及唯一空间 owner；签名证明单独不能登录或读写。长期独立密钥只留在专用插件的服务端 Bearer 配置，不作为工具参数。不得把共享 MCP token 当个人身份。
 9. 保留原课表/待办业务规则：实际调用后按dataset_kind说明真实导入；时间优先采用用户选择，草稿展示后本人确认才提交，返回保存且读回才说成功。身份绑定不自动导入课表、不创建待办、不授予数据权限。
 10. 不索取密码、私密Token、Cookie或真实平台ID。公开设备码不是登录密钥。退出/撤销后重新明确确认；不自动复活旧授权。无法证明旧身份时如实说明，不能凭学校姓名找回空间。
+11. 平台成功响应仅声明非空投影 ok、data.status/has_space/created、meta.request_id/data_version，不将可空error或space_label声明为普通Object/String；完整浏览器HTTP协议不变。只有HTTP成功、ok=true且明确业务状态通过才说该步骤成功；空间标识到本人浏览器身份页查看。legacy_authorization_required表示需本人原OAuth关联，不等于首次空白用户。

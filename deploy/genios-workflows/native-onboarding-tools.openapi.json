@@ -34,13 +34,11 @@
         "intent": {"type": "string", "enum": ["lookup", "create", "bind"], "description": "先lookup。只有用户本人的明确确认才可create/bind；已有空间始终复用。"},
         "confirmed": {"type": "boolean", "description": "lookup使用false；create/bind必须有本轮用户明确确认才使用true。"}
       }},
-      "OnboardingEnvelope": {"type": "object", "properties": {
+      "OnboardingEnvelope": {"type": "object", "description": "Agent插件成功响应投影：平台nullable支持不完整，仅声明成功时非空的字段；完整HTTP信封仍返回error=null及可空space_label，浏览器协议不变。非2xx仍按失败处理，绝不把投影缺少error当作成功。", "required": ["ok", "data", "meta"], "properties": {
         "ok": {"type": "boolean"},
-        "data": {"type": "object", "properties": {
-          "status": {"type": "string"}, "has_space": {"type": "boolean"}, "created": {"type": "boolean"},
-          "space_label": {"type": "string", "nullable": true, "description": "脱敏SPACE标识，不是凭据。"}
+        "data": {"type": "object", "required": ["status", "has_space", "created"], "properties": {
+          "status": {"type": "string"}, "has_space": {"type": "boolean"}, "created": {"type": "boolean"}
         }},
-        "error": {"type": "object", "nullable": true, "properties": {"code": {"type": "string"}, "message": {"type": "string"}, "retryable": {"type": "boolean"}}},
         "meta": {"type": "object", "properties": {"request_id": {"type": "string"}, "data_version": {"type": "string"}}}
       }}
     }

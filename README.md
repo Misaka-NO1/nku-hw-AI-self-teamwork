@@ -12,12 +12,14 @@
 
 ## 免账号密码使用、固定设备码与 Agent 关联（团队共用身份链路）
 
-这不是废弃的演示功能，也不是学校 SSO。2026-10-11 当前源码已改为身份优先：固定 `DEV-…` 码只定位设备；新浏览器经原 Agent 本人授权接入原空间，未知身份不能匿名创建第二个账号/空间。原浏览器私密身份恢复仍保留。不能用共享 MCP token 或学校登录替代本人授权，不能把不同身份的数据静默合并。没有可信身份来源的真正新用户仍需支持的本人身份登录，并非已实现全校免注册入驻。
+这不是废弃的演示功能，也不是学校 SSO。2026-10-12 最新实现以 Agent 隐藏的固定 GeniOS 平台身份查找唯一私有空间：已有账号只复用原空间，真正首次使用经本人明确确认才免注册创建空白空间，随后绑定浏览器。固定 `DEV-…` 码只定位设备，不是身份或密码；换浏览器或无痕窗口不代表新账号。原有账号须用本人的原有效 OAuth 授权关联旧空间，不合并或删除旧数据。不能用共享 MCP token、学校登录状态或聊天中的账号文字替代可信身份。
 
 - [完整流程、配置、源码索引与验收](docs/browser-visitor-rollout.md)
 - [本轮交接：已有 PR 与缺失补交范围](docs/handoffs/browser-visitor-device-flow-2026-10-10.md)
-- [最新本地修复：统一页与未知身份创建守卫（未上线）](docs/handoffs/unified-private-space-onboarding-2026-10-11.md)
-- [Agent 追加规则](deploy/genios-workflows/browser-visitor-agent-append.txt)
+- [最新交付与 PR 关系：最终身份绑定流程](docs/handoffs/native-identity-final-delivery-2026-10-12.md)
+- [实际上线与验收记录（包含历史过程）](docs/handoffs/genios-native-identity-intake-2026-10-11.md)
+- [旧版身份优先守卫（历史阶段）](docs/handoffs/unified-private-space-onboarding-2026-10-11.md)
+- [正式 Agent 实际追加规则](deploy/genios-workflows/native-identity-agent-live-append.txt)
 
 维护课表（B）、日历（D）或公共页面（C）时须保留这套身份入口、Cookie 恢复、owner 校验及撤销行为。课表文件上传修复另见 PR #15；这套身份链路不属于课表解析器，不要因本地未启用配置而删除它。
 

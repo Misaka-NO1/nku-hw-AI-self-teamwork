@@ -1,6 +1,6 @@
 {
-  "status": "saved_platform_drafts_not_published_or_live_verified",
-  "date": "2026-10-11",
+  "status": "plugins_published_formal_web_v022_live_r45_057_original_space_verified",
+  "date": "2026-10-12",
   "original_plugin_id": "db09q154shhas0akfcn0",
   "authentication": "Preserve existing OAuth configuration; do not copy or expose its client_secret or access token",
   "required_headers": [
@@ -28,14 +28,15 @@
       "intent": {"type": "String", "required": true, "enum": ["bind"]},
       "confirmed": {"type": "Boolean", "required": true, "value_rule": "true only after user's explicit original-space association and device-binding confirmation"}
     },
-    "response": "Same OnboardingEnvelope as native-onboarding-tools.openapi.json; no raw UID, owner, OAuth token or browser session returned",
+    "response": "Same non-null success projection OnboardingEnvelope as native-onboarding-tools.openapi.json: ok,data(status,has_space,created),meta(request_id,data_version). Do not declare nullable error or space_label as plain Object/String in the platform; the full browser HTTP envelope remains unchanged. No raw UID, owner, OAuth token or browser session returned",
     "requires": "Prior trusted lookup; actual original OAuth grant; this run's signed native identity proof; fixed hidden SYS_USERID",
     "mutations": "Adopt the proven original owner and bind this browser atomically; never create, merge, copy or delete original private data"
   },
   "activation_blockers": [
-    "Original OAuth tools still require per-tool hidden SYS_USERID configuration and migration of old underscore header names to canonical hyphen names; associate draft already uses canonical names",
-    "Dedicated native plugin published only for draft acceptance; actual Agent signer passed, but onboard Agent execution reports None is not of type object before an HTTP result",
-    "Both private SQL migrations already installed once; r43 enabled version 051 passed signer Debug; restoration deployment 052 is normal at 100 percent traffic and its non-sensitive native flag verified false",
-    "Public channel, separate school account, actual old-space adoption and first-use browser claim still require live acceptance"
+    "Both plugins published under explicit staged-publication approvals. Original-space association returned browser_authorized, has_space=true, created=false; the same browser claimed login and relookup returned existing_space",
+    "Formal Agent has all twelve native/original REST tools with hidden fixed SYS_USERID; draft onboard, signed-proof timetable and calendar reads passed actual call-tree verification. Original Web channel is v0.2.22 running; public readonly lookup reported existing_space without creation",
+    "Both private SQL migrations installed once; current r45 version 057 is normal with 100% traffic and native=true. Its non-frontend archive files are unchanged from r43; browser reopen remains bound to the original space",
+    "Independent school account, truly fresh browser and first-time user creation still require live acceptance; do not claim these from the successful original-space association",
+    "Private integration credential was exposed in an earlier observation. Rotation was recommended; user explicitly chose to retain it. This is an unresolved security risk, not acceptance evidence. Never store or echo its value in source or handoff"
   ]
 }

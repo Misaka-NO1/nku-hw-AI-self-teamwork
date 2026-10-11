@@ -42,6 +42,7 @@ export default function CloudbaseLoginPage() {
   const reviewReturn = toolReviewReturnPath(window.location.search, window.location.origin);
   const consentReturn = oauthReturnPath(window.location.search, window.location.origin);
   const unified = !!config?.agentDeviceBindingEnabled && !!config?.visitorEnabled;
+  const native = unified && config?.geniosNativeIdentityEnabled === true;
   useEffect(() => {
     let active = true;
     apiClient.get<PilotConfig>("/api/v1/auth/cloudbase/config").then(value => {
@@ -121,8 +122,8 @@ export default function CloudbaseLoginPage() {
     if (!unified) window.location.assign(consentReturn ?? reviewReturn ?? "/tools/timetable");
   }
   return <section>
-    <h1>{unified ? "我的身份、私有空间与设备" : config?.visitorEnabled ? "免注册使用校园助手" : "登录并授权我的校园助手"}</h1>
-    <p>课表和日历属于你自己的私有空间；学校登录不会自动关联工具站身份。</p>
+    <h1>{native ? "绑定我的浏览器" : unified ? "我的身份、私有空间与设备" : config?.visitorEnabled ? "免注册使用校园助手" : "登录并授权我的校园助手"}</h1>
+    {!native && <p>课表和日历属于你自己的私有空间；学校登录不会自动关联工具站身份。</p>}
     {config?.visitorEnabled && config.visitorIdentityFirst !== true && <p role="alert">服务端身份优先保护尚未启用。停止恢复和接入操作，避免旧接口重复创建空间。</p>}
     {unified && config?.geniosNativeIdentityEnabled === true && <NativeIdentityOnboarding checking={checking}
       blocked={config?.visitorIdentityFirst !== true || (!!recoveryError && !browserSession.needsLogin)}
@@ -136,9 +137,9 @@ export default function CloudbaseLoginPage() {
       <p>请勿使用公共电脑保存私人课表。清除本站全部浏览器数据会丢失访客身份；未另行绑定设备时无法找回。</p></>}
     {!unified && (config?.agentDeviceBindingEnabled ? <p><a href="/tools/device-login">使用固定设备码绑定这个浏览器 →</a> 首次由 Agent 当前授权账号绑定，不自动识别学校账号。</p>
       : config?.deviceLoginEnabled && <p><a href="/tools/device-login">已有登录设备？绑定这个浏览器 →</a> 首次由本人已登录设备确认，不自动识别 GeniOS 账号。</p>)}
-    {consentReturn && <p>这是学校插件的授权登录步骤。登录后回到授权页；是否同意由你决定，不会自动授权。</p>}
-    {reviewReturn && <p>登录后返回原来的课表、待办复核页或日历，仍须你核对并明确确认，不会自动保存。</p>}
-    <p role="note">不共用账号或他人的授权。导入内容核对后明确确认保存。{config?.persistentAuthorization ? "退出或撤销授权仍会失效；已保存记录保留。" : "授权期限以实际授权页面为准。"}{!config?.visitorEnabled && "当前仅限已批准账号。"}不接收成绩上传。</p>
+    {!native && consentReturn && <p>这是学校插件的授权登录步骤。登录后回到授权页；是否同意由你决定，不会自动授权。</p>}
+    {!native && reviewReturn && <p>登录后返回原来的课表、待办复核页或日历，仍须你核对并明确确认，不会自动保存。</p>}
+    {!native && <p role="note">不共用账号或他人的授权。导入内容核对后明确确认保存。{config?.persistentAuthorization ? "退出或撤销授权仍会失效；已保存记录保留。" : "授权期限以实际授权页面为准。"}{!config?.visitorEnabled && "当前仅限已批准账号。"}不接收成绩上传。</p>}
     {checking && <p role="status">正在核验当前浏览器会话。</p>}
     {!!recoveryError && !browserSession.needsLogin && <p role="alert">{recoveryError instanceof ApiError ? `${recoveryError.message}（${recoveryError.code} · ${recoveryError.requestId ?? "无请求编号"}）` : String(recoveryError)}</p>}
     {!!recoveryError && !browserSession.needsLogin && <button disabled={checking || busy} onClick={browserSession.retryRecovery}>重新核验浏览器会话</button>}
@@ -148,7 +149,7 @@ export default function CloudbaseLoginPage() {
       <label>账号密码 <input ref={password} name="password" type="password" autoComplete="off" disabled={busy} /></label>
       <button type="submit" disabled={busy || checking || (identityPilot && !!recoveryError && !browserSession.needsLogin)}>登录并验证身份</button>
     </form>}
-    {session && <><p>当前浏览器已登录；账号身份以服务端验证为准。</p>
+    {session && <>{!native && <p>当前浏览器已登录；账号身份以服务端验证为准。</p>}
       {!unified && (consentReturn || reviewReturn) && <p><a href={consentReturn ?? reviewReturn!}>{consentReturn ? "返回授权页，由我决定是否同意" : reviewReturn === "/tools/calendar" ? "返回待办日历" : "返回原草稿复核页"}</a></p>}
       <button disabled={busy} onClick={() => void perform(logout)}>退出当前账号</button>
       {!unified && <p><a href="/tools/import">导入我的课表 →</a>　<a href="/tools/calendar">我的待办日历 →</a></p>}</>}
