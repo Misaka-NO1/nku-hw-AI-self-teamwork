@@ -19,6 +19,9 @@ await pg.exec(await readFile(new URL('../device-login-migration.sql',import.meta
 await pg.exec(await readFile(new URL('../agent-device-binding-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../task-delete-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../browser-visitor-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../visitor-identity-first-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../native-identity-registry-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../native-browser-binding-migration.sql',import.meta.url),'utf8'));
 await pg.query("SELECT set_config('request.jwt.claims',$1,false)",[JSON.stringify({role:'service_role'})]);
 const canonical=value=>value && typeof value==='object' ? Array.isArray(value) ? value.map(canonical) :
   Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])) : value;
@@ -31,6 +34,21 @@ process.stdout.write('{"ready":true}\n');
 for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity})) {
   try {
     const {op,args}=JSON.parse(line);
+    if(op.startsWith('__native__:')) {
+      const result=await pg.query('SELECT public.nku_native_browser_v1_rpc($1,$2::jsonb) result',
+        [op.slice('__native__:'.length),JSON.stringify(args)]);
+      process.stdout.write(JSON.stringify(result.rows[0].result)+'\n');continue;
+    }
+    if(op==='__test_legacy_visitor_fixture__') {
+      // Historical identities seeded ONLY in this isolated superuser test pipe.
+      // The renamed legacy RPC is inaccessible to deployed service_role callers.
+      const result=await pg.query("SELECT public.nku_identity_pilot_v1_before_identity_first_rpc('visitor_begin',$1::jsonb) result",[JSON.stringify(args)]);
+      process.stdout.write(JSON.stringify(result.rows[0].result)+'\n');continue;
+    }
+    if(op==='__test_identity_counts__') {
+      const result=await pg.query('SELECT (SELECT count(*) FROM nku_identity_pilot_v1.browser_visitors) visitors,(SELECT count(*) FROM nku_identity_pilot_v1.owner_workspaces) owners,(SELECT count(*) FROM nku_identity_pilot_v1.browser_sessions) sessions');
+      process.stdout.write(JSON.stringify({ok:true,data:result.rows[0]})+'\n');continue;
+    }
     if(op.startsWith('__task_delete__:')) {
       const result=await pg.query('SELECT public.nku_task_delete_v1_rpc($1,$2::jsonb) result',
         [op.slice('__task_delete__:'.length),JSON.stringify(args)]);

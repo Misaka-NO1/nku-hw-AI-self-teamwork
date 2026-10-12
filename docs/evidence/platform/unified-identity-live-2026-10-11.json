@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-11",
+  "service": "nku-campus-identity-pilot",
+  "deployment": "041",
+  "deployment_task": "2331447",
+  "console_status": "正常",
+  "build_id": "cloudbase-identity-pilot-20261011-r41-unified-identity",
+  "health_status": 200,
+  "package_sha256": "7572b91feefb90c7ec56927c814238453fcabd6ba80a07bf89a4755de697bd0f",
+  "identity_guard_installed": true,
+  "old_creation_bypass": false,
+  "protected_rpc_allowed": true,
+  "business_counts_before_and_after": {"visitors": 10, "workspaces": 16, "personal_schedules": 2},
+  "live_probe": {
+    "identity_first_enabled": true,
+    "unknown_browser_denied": true,
+    "fixed_device_code": true,
+    "unknown_private_proof_denied": true,
+    "no_space_created": true,
+    "no_school_identity_claim": true,
+    "no_unauthorized_claim": true,
+    "owner_override_denied": true,
+    "foreign_origin_denied": true
+  },
+  "browser_existing_owner_check": {"original_space_reused": true, "busy_feedback_visible": true, "success_feedback_visible": true},
+  "new_incognito_agent_oauth_e2e": "not_executed_by_agent",
+  "first_time_school_verified_enrollment": "not_supported",
+  "production_agent_published": false,
+  "private_tokens_exported": false,
+  "notes": "Unknown friend application overwritten with explicit human approval. No business data deleted or merged; roster, credentials and authorization scopes unchanged. Non-idempotent guard migration applied once."
+}

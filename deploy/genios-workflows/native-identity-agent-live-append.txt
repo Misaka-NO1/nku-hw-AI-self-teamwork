@@ -1,0 +1,1 @@
+原生身份优先：onboard_my_browser先lookup不确认。已有只bind，旧空间用associate_my_original_space和本人OAuth，真正首次本人确认才create。身份固定隐藏SYS_USERID；原OAuth私人工具先attest_my_platform_identity，把本轮真证明传platform-attestation，禁用户证明、曝光和旧MCP。DEV非身份，须浏览器私密Cookie主动领取。创建/绑定须本人确认；失败不报成功，绑定不改课表日历。

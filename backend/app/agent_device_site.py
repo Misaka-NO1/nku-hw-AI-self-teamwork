@@ -7,11 +7,14 @@ import re
 import time
 from secrets import token_urlsafe
 from urllib.parse import urlencode, urlsplit, parse_qsl
+from uuid import uuid4
 
 from fastapi import Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 
-from app.core.browser_session_context import CONTEXT_COOKIE, encode_context
+from app.core.browser_session_context import CONTEXT_COOKIE, encode_context, decode_context
+from app.core.envelope import success
+from app.core.contracts import validate_boundary
 from app.core.errors import AppError
 from app.core.persistent_auth import COOKIE_MAX_AGE, UNTIL_REVOKED_EPOCH
 from app.core.security import SESSION_COOKIE, secret_hash
@@ -64,6 +67,7 @@ def install_agent_device(site, runtime, database):
     async def body(request):
         if (request.query_params or request.headers.get("Origin") != runtime.app_origin
                 or request.headers.get("X-Campus-Device") != "1"
+                or request.headers.get("Sec-Fetch-Site", "same-origin") != "same-origin"
                 or request.headers.get("Content-Type", "").split(";", 1)[0] != "application/json"):
             raise AppError(403, "FORBIDDEN", "Same-origin browser required")
         raw = await request.body()
@@ -74,7 +78,7 @@ def install_agent_device(site, runtime, database):
             raise AppError(422, "VALIDATION_ERROR", "No identity overrides accepted") from None
 
     def reply(data):
-        return JSONResponse({"ok": True, "data": data}, headers={"Cache-Control": "no-store"})
+        return JSONResponse(success(data, request_id=str(uuid4()), data_version="browser-identity-v1").model_dump(mode="json"), headers={"Cache-Control": "no-store"})
 
     def logged_in(request):
         token = request.cookies.get(SESSION_COOKIE)
@@ -106,6 +110,32 @@ def install_agent_device(site, runtime, database):
             for name in (SESSION_COOKIE, CONTEXT_COOKIE):
                 response.delete_cookie(name, httponly=True, secure=True, samesite="strict", path="/")
         return response
+
+    @site.post(PATH + "/state")
+    async def identity_state(request: Request):
+        """Read current browser only. No enrollment, renewal, merge or caller owner."""
+        await body(request)
+        secret = request.cookies.get(COOKIE, "")
+        has_code = bool(SECRET.fullmatch(secret))
+        token = request.cookies.get(SESSION_COOKIE, "")
+        workspace = None
+        if token:
+            try:
+                workspace = database.call("get_workspace", {"session_hash": secret_hash(token)})
+            except AppError as exc:
+                if exc.code not in {"AUTH_REQUIRED", "TOKEN_EXPIRED"}:
+                    raise
+            else:
+                context = decode_context(token, request.cookies.get(CONTEXT_COOKIE, ""), persistent=runtime.cloud_persistent_auth_enabled)
+                if context["workspace_ref"] != workspace["workspace_ref"]:
+                    raise AppError(401, "AUTH_REQUIRED", "Browser identity context mismatch")
+        bound = bool(workspace and has_code and device_status(request, database)["status"] == "bound")
+        data = {"device_code": display_code(secret) if has_code else None,
+            "has_space": workspace is not None, "agent_linked": bound,
+            "space_label": "SPACE-" + secret_hash(workspace["workspace_ref"])[:12].upper() if workspace else None,
+            "school_identity_verified": False}
+        validate_boundary(data, "BrowserIdentityState")
+        return reply(data)
 
     @site.post(PATH + "/claim")
     async def claim(request: Request):
@@ -172,6 +202,10 @@ body{background:#f5f8fa;color:#183b40;font:18px/1.8 system-ui;margin:0;padding:2
         destination = request.query_params.get("return_to", "/tools/timetable")
         if (params and (len(params) != 1 or params[0][0] != "return_to")) or not valid_destination(destination):
             raise AppError(422, "VALIDATION_ERROR", "Choose a toolstation page")
+        if runtime.cloud_visitor_enabled:
+            # One canonical UI owns creation, authorization and device binding.
+            # Keep old Agent/bookmark URLs, without a second independent create button.
+            return RedirectResponse("/tools/login?" + urlencode({"return_to": destination}), status_code=303)
         if logged_in(request) and device_status(request,database)["status"] == "bound":
             return RedirectResponse(destination, status_code=303)
         nonce = token_urlsafe(24)

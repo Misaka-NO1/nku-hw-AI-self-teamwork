@@ -1,4 +1,4 @@
-"""Passwordless private browser identity, never a school identity or public data access."""
+"""Restore known private browser identity only; unknown browsers cannot enroll."""
 import json
 from secrets import token_urlsafe
 
@@ -45,10 +45,12 @@ def install_visitor(site, runtime, database, reply):
                 if context["workspace_ref"] != workspace["workspace_ref"]:
                     raise AppError(401, "AUTH_REQUIRED", "Invalid browser session context")
                 return reply(request, {**context, "dataset_kind": "demo", "personal_uploads": False, "agent_paired": False})
-        # Private HttpOnly proof, not the public DEV code, preserves the visitor.
+        # Private HttpOnly proof restores ONLY an existing server-side identity.
+        # The identity-first RPC rejects unknown proof atomically, without writes.
+        # Do not fall back to legacy enrollment or invent a school user ID.
         secret = request.cookies.get(COOKIE, "")
         if not SECRET.fullmatch(secret):
-            secret = token_urlsafe(32)
+            raise AppError(401, "AUTH_REQUIRED", "Verify your existing account through Agent binding or supported login first; no space was created")
         code = display_code(secret)
         token, csrf = token_urlsafe(32), token_urlsafe(32)
         result = database.call("visitor_begin", {

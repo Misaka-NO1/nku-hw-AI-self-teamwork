@@ -1,7 +1,8 @@
-"""Own-service smoke check with fresh in-memory visitors, no browser credentials.
+"""Own-service identity-first probe; never enroll anonymous QA owners.
 
-Creates two empty QA visitor identities only; never writes courses/tasks, exports
-cookies, or touches existing users. Prints status/boolean evidence only.
+Check capability before POSTing: an old enrollment deployment is not exercised.
+With the new guard, generate only public device locators, then verify unknown
+proof is denied. No courses/tasks/account/space are created; no Cookie export.
 """
 import json
 import httpx
@@ -11,47 +12,42 @@ ORIGIN = 'https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbas
 
 def main():
     results = {}
-    with httpx.Client(base_url=ORIGIN, timeout=25, trust_env=False) as a, httpx.Client(base_url=ORIGIN, timeout=25, trust_env=False) as b:
-        health = a.get('/healthz')
+    with httpx.Client(base_url=ORIGIN, timeout=25, trust_env=False) as client:
+        health = client.get('/healthz')
         results['health_status'] = health.status_code
         if health.status_code != 200:
             print(json.dumps(results)); return 1
         results['build_id'] = health.json().get('build_id')
-        config = a.get('/api/v1/auth/cloudbase/config')
-        results['visitor_enabled'] = config.json().get('data', {}).get('visitor_enabled') is True
-        if not results['visitor_enabled']:
+        config = client.get('/api/v1/auth/cloudbase/config')
+        if config.status_code != 200:
             print(json.dumps(results)); return 1
-        begin_headers = {'Origin': ORIGIN, 'X-Campus-Visitor': '1'}
-        owners = []
-        for label, client in (('a', a), ('b', b)):
-            response = client.post('/api/v1/auth/visitor/session', json={}, headers=begin_headers)
-            results[label+'_begin_status'] = response.status_code
-            if response.status_code != 200:
-                results[label+'_error_code'] = response.json().get('error', {}).get('code')
+        results['identity_first_enabled'] = config.json().get('data', {}).get('visitor_identity_first') is True
+        if not results['identity_first_enabled']:
+            results['stopped_before_post'] = True
+            print(json.dumps(results)); return 1
+        begin_headers = {'Origin':ORIGIN,'X-Campus-Visitor':'1'}
+        device_headers = {'Origin':ORIGIN,'X-Campus-Device':'1'}
+        unknown = client.post('/api/v1/auth/visitor/session', json={}, headers=begin_headers)
+        results['unknown_browser_denied'] = unknown.status_code == 401 and 'set-cookie' not in unknown.headers
+        if not results['unknown_browser_denied']:
+            print(json.dumps(results)); return 1
+        first = client.post('/api/v1/auth/agent-device/start', json={}, headers=device_headers)
+        second = client.post('/api/v1/auth/agent-device/start', json={}, headers=device_headers)
+        results['fixed_device_code'] = first.status_code == second.status_code == 200 and first.json()['data']['device_code'] == second.json()['data']['device_code']
+        for _ in range(2):
+            denied = client.post('/api/v1/auth/visitor/session', json={}, headers=begin_headers)
+            results['unknown_private_proof_denied'] = denied.status_code == 401 and 'set-cookie' not in denied.headers
+            if not results['unknown_private_proof_denied']:
                 print(json.dumps(results)); return 1
-            owner = response.json()['data']; owners.append(owner)
-            query = {'workspace_ref': owner['workspace_ref']}
-            results[label+'_empty_schedule'] = client.get('/api/v1/schedules/current', params=query).status_code == 404
-            calendar = client.get('/api/v1/tasks/calendar', params=query)
-            results[label+'_calendar_status'] = calendar.status_code
-            results[label+'_empty_calendar'] = calendar.status_code == 200 and calendar.json()['data']['items'] == []
-            results[label+'_ui_status'] = client.get('/tools/timetable').status_code
-            session = client.get('/api/v1/auth/cloudbase/browser-session', headers={'X-Campus-Session-Read':'1'})
-            results[label+'_resume_same_workspace'] = session.status_code == 200 and session.json()['data']['workspace_ref'] == owner['workspace_ref']
-        results['distinct_workspaces'] = owners[0]['workspace_ref'] != owners[1]['workspace_ref']
-        results['cross_workspace_denied'] = b.get('/api/v1/tasks/calendar', params={'workspace_ref':owners[0]['workspace_ref']}).status_code == 404
-        code_headers = {'Origin':ORIGIN, 'X-Campus-Device':'1'}
-        code_one = a.post('/api/v1/auth/agent-device/start', json={}, headers=code_headers)
-        code_two = a.post('/api/v1/auth/agent-device/start', json={}, headers=code_headers)
-        results['fixed_device_code'] = code_one.status_code == code_two.status_code == 200 and code_one.json()['data']['device_code'] == code_two.json()['data']['device_code']
-        repeated = a.post('/api/v1/auth/visitor/session', json={}, headers=begin_headers)
-        results['repeat_preserves_workspace'] = repeated.status_code == 200 and repeated.json()['data']['workspace_ref'] == owners[0]['workspace_ref']
-        results['owner_override_denied'] = b.post('/api/v1/auth/visitor/session', json={'workspace_ref':owners[0]['workspace_ref']}, headers=begin_headers).status_code == 422
-        results['foreign_origin_denied'] = b.post('/api/v1/auth/visitor/session', json={}, headers={**begin_headers,'Origin':'https://foreign.invalid'}).status_code == 403
-    with httpx.Client(base_url=ORIGIN, timeout=25, trust_env=False) as unauthenticated:
-        results['no_cookie_private_read_denied'] = unauthenticated.get('/api/v1/tasks/calendar', params={'workspace_ref':owners[0]['workspace_ref']}).status_code == 401
+        state = client.post('/api/v1/auth/agent-device/state', json={}, headers=device_headers)
+        results['no_space_created'] = state.status_code == 200 and state.json()['data']['has_space'] is False and state.json()['data']['agent_linked'] is False
+        results['no_school_identity_claim'] = state.status_code == 200 and state.json()['data']['school_identity_verified'] is False
+        claim = client.post('/api/v1/auth/agent-device/claim', json={}, headers=device_headers)
+        results['no_unauthorized_claim'] = claim.status_code == 200 and claim.json()['data']['status'] == 'pending' and 'set-cookie' not in claim.headers
+        results['owner_override_denied'] = client.post('/api/v1/auth/visitor/session', json={'workspace_ref':'other'}, headers=begin_headers).status_code == 422
+        results['foreign_origin_denied'] = client.post('/api/v1/auth/visitor/session', json={}, headers={**begin_headers,'Origin':'https://foreign.invalid'}).status_code == 403
     print(json.dumps(results, ensure_ascii=False))
-    return 0 if all(value is True for key, value in results.items() if not key.endswith('_status') and key != 'build_id') else 1
+    return 0 if all(value is True for key,value in results.items() if key not in {'health_status','build_id'}) else 1
 
 
 if __name__ == '__main__':

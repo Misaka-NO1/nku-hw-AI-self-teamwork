@@ -78,6 +78,8 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
 
     def bind_device(self,request,arguments):
         self.gate()
+        from app.core.genios_identity import guard_native_oauth_owner
+        guard_native_oauth_owner(request, self.settings, self.store)
         from app.agent_device_site import CODE
         if not self.settings.cloud_agent_device_binding_enabled:
             raise AppError(403,"FORBIDDEN","Agent device binding disabled")
@@ -95,6 +97,8 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
 
     def records(self,request):
         self.gate()
+        from app.core.genios_identity import guard_native_oauth_owner
+        guard_native_oauth_owner(request, self.settings, self.store)
         from app.cloud_identity_site import format_times
         if self.settings.cloud_notice_text_pilot_enabled:
             data = self.store.notice_call("records",self._notice_args(request))

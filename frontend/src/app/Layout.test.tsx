@@ -6,10 +6,22 @@ import { Layout } from "./Layout";
 afterEach(() => vi.unstubAllEnvs());
 
 describe("工具站设备码入口", () => {
+  it.each(["true", "false"])("身份入口不显示功能导航（身份模式 %s），只保留返回平台入口", (identityPilot) => {
+    vi.stubEnv("VITE_IDENTITY_PILOT", identityPilot);
+    const page = renderToStaticMarkup(<StaticRouter location="/tools/login?return_to=%2Ftools%2Fcalendar"><Layout /></StaticRouter>);
+    expect(page).not.toContain('aria-label="工具导航"');
+    for (const label of ["课表", "赏景地图", "待办日历", "我的设备码"]) {
+      expect(page).not.toContain(label);
+    }
+    expect(page).toContain("返回 NK-GeniOS");
+    expect(page).toContain("南开校园助手 · 工具站");
+  });
+
   it("身份工具站提供服务端设备码页链接，不在前端创建或修改绑定", () => {
     vi.stubEnv("VITE_IDENTITY_PILOT", "true");
     const page = renderToStaticMarkup(<StaticRouter location="/tools/calendar"><Layout /></StaticRouter>);
     expect(page).toContain('<a href="/tools/device">我的设备码</a>');
+    expect(page).toContain('aria-label="工具导航"');
     expect(page).not.toContain("agent-device/start");
   });
 

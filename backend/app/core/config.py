@@ -51,6 +51,9 @@ class Settings(BaseSettings):
     cloud_device_login_enabled: bool = False
     # Fresh devices:bind consent; old grants are never silently upgraded.
     cloud_agent_device_binding_enabled: bool = False
+    # Dedicated REST integration with hidden fixed SYS_USERID; NEVER MCP token.
+    cloud_genios_native_identity_enabled: bool = False
+    genios_native_integration_key: SecretStr = Field(default=SecretStr(""), repr=False)
     # Internal local prototype only: no REST route or MCP tool is registered.
     agent_pairing_local_enabled: bool = False
     agent_pairing_audience: str = ""

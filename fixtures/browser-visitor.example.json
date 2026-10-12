@@ -8,5 +8,5 @@
     [],
     null
   ],
-  "notes": "Contract examples only. No cookies, OAuth token, service key or real user identifier. Start uses the browser's private HttpOnly proof, not the displayed device_code."
+  "notes": "Contract examples only. No cookies, OAuth token, service key or real user identifier. Legacy start now RESTORES ONLY a known server identity using private HttpOnly proof; unknown/incognito browsers cannot enroll. Public device_code cannot log in or create a space."
 }
