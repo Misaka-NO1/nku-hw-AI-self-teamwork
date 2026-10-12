@@ -37,6 +37,37 @@ process.stdout.write('{"ready":true}\n');
 for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity})) {
   try {
     const {op,args}=JSON.parse(line);
+    if(op==='__test_legacy_degree_reset_fixture__') {
+      // Minimal fictional structure for the exact optional legacy table names.
+      // Never deployed; validates cross-schema FK handling without CASCADE.
+      await pg.exec(`CREATE SCHEMA nku_personal_degree_v1;
+        CREATE TABLE nku_personal_degree_v1.degree_drafts(id text PRIMARY KEY,
+          workspace_ref text REFERENCES nku_identity_pilot_v1.workspaces(workspace_ref));
+        CREATE TABLE nku_personal_degree_v1.degree_confirmations(id text,
+          draft text REFERENCES nku_personal_degree_v1.degree_drafts(id));
+        CREATE TABLE nku_personal_degree_v1.degree_snapshots(workspace_ref text
+          REFERENCES nku_identity_pilot_v1.workspaces(workspace_ref));
+        CREATE TABLE nku_personal_degree_v1.degree_idempotency(id text);
+        ALTER TABLE nku_personal_degree_v1.degree_drafts ENABLE ROW LEVEL SECURITY;
+        ALTER TABLE nku_personal_degree_v1.degree_confirmations ENABLE ROW LEVEL SECURITY;
+        ALTER TABLE nku_personal_degree_v1.degree_snapshots ENABLE ROW LEVEL SECURITY;
+        ALTER TABLE nku_personal_degree_v1.degree_idempotency ENABLE ROW LEVEL SECURITY;
+        INSERT INTO nku_personal_degree_v1.degree_drafts SELECT 'fictional',workspace_ref
+          FROM nku_identity_pilot_v1.workspaces LIMIT 1;
+        INSERT INTO nku_personal_degree_v1.degree_confirmations VALUES('fictional','fictional');
+        INSERT INTO nku_personal_degree_v1.degree_snapshots SELECT workspace_ref
+          FROM nku_identity_pilot_v1.workspaces LIMIT 1;
+        INSERT INTO nku_personal_degree_v1.degree_idempotency VALUES('fictional');`);
+      process.stdout.write('{"ok":true,"data":{}}\n');continue;
+    }
+    if(op==='__test_legacy_degree_reset_counts__') {
+      const result=await pg.query(`SELECT
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_drafts) drafts,
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_confirmations) confirmations,
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_snapshots) snapshots,
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_idempotency) idempotency`);
+      process.stdout.write(JSON.stringify({ok:true,data:result.rows[0]})+'\n');continue;
+    }
     if(op==='__test_reset_guard__') {
       const table = args.kind==='outside_fk' ? 'public.reset_guard_fixture' :
         args.kind==='schema_drift' ? 'nku_degree_progress_v1.reset_guard_fixture' : null;

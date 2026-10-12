@@ -22,9 +22,14 @@ def test_manual_reset_revokes_sessions_preserves_policy_and_allows_fresh_identit
         for kind in ('schema_drift', 'outside_fk'):
             assert db.call('__test_reset_guard__', {'kind': kind}) == {'rejected': True, 'spaces': 1}
             assert browser.get('/api/v1/degree/progress').json()['data']['report'] is not None
+        assert db.call('__test_legacy_degree_reset_fixture__', {}) == {}
+        assert db.call('__test_legacy_degree_reset_counts__', {}) == {
+            'drafts': 1, 'confirmations': 1, 'snapshots': 1, 'idempotency': 1}
         result = db.call('__test_reset_private_spaces__', {})
         assert result == {'spaces': 0, 'fixtures': 4, 'approved': 2, 'reports': 0,
                           'anonymous_execute': False, 'backend_execute': True}
+        assert db.call('__test_legacy_degree_reset_counts__', {}) == {
+            'drafts': 0, 'confirmations': 0, 'snapshots': 0, 'idempotency': 0}
         assert browser.get('/api/v1/auth/cloudbase/browser-session',
                            headers={'X-Campus-Session-Read': '1'}).status_code == 401
         assert tools.get('/oauth/degree/progress', headers=credential).status_code == 401

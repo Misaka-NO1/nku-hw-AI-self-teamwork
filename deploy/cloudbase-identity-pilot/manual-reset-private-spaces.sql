@@ -58,11 +58,22 @@ DECLARE
   fixtures_before bigint;
   roster_before bigint;
 BEGIN
+  -- Historical campus-tool module installed by an earlier deployment. Its four
+  -- private tables reference the same workspaces; do not confuse it with an
+  -- unrelated project or use CASCADE. Only this exact optional inventory is allowed.
+  IF to_regnamespace('nku_personal_degree_v1') IS NOT NULL THEN
+    cleared := cleared || ARRAY[
+      'nku_personal_degree_v1.degree_drafts',
+      'nku_personal_degree_v1.degree_confirmations',
+      'nku_personal_degree_v1.degree_snapshots',
+      'nku_personal_degree_v1.degree_idempotency'
+    ];
+  END IF;
   expected := cleared || kept;
   SELECT array_agg(n.nspname || '.' || c.relname ORDER BY n.nspname,c.relname)
     INTO actual FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
     WHERE n.nspname IN ('nku_identity_pilot_v1','nku_competition_oauth_v1',
-      'nku_notice_text_v1','nku_task_calendar_v1','nku_degree_progress_v1')
+      'nku_notice_text_v1','nku_task_calendar_v1','nku_degree_progress_v1','nku_personal_degree_v1')
       AND c.relkind IN ('r','p','f');
   SELECT array_agg(v ORDER BY v) INTO expected FROM unnest(expected) v;
   IF actual IS DISTINCT FROM expected THEN
@@ -76,6 +87,10 @@ BEGIN
       AND confrelid=ANY(ARRAY(SELECT v::regclass::oid FROM unnest(cleared) v))
       AND NOT conrelid=ANY(ARRAY(SELECT v::regclass::oid FROM unnest(cleared) v))) THEN
     RAISE EXCEPTION 'Reset aborted: a preserved or outside table references private data';
+  END IF;
+  IF EXISTS (SELECT 1 FROM pg_trigger WHERE NOT tgisinternal AND (tgtype & 32) <> 0
+      AND tgrelid=ANY(ARRAY(SELECT v::regclass::oid FROM unnest(cleared) v))) THEN
+    RAISE EXCEPTION 'Reset aborted: an unreviewed truncate trigger exists';
   END IF;
   -- Lock the fixed inventory; never enumerate outside schemas for mutation.
   EXECUTE 'LOCK TABLE ' || array_to_string(expected, ', ') || ' IN ACCESS EXCLUSIVE MODE';
