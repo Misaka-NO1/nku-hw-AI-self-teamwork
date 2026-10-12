@@ -11,11 +11,13 @@
  */
 
 export const APP_OBSERVATION_EVENT = "campus:schedule-observation";
+export const DEGREE_OBSERVATION_EVENT = "campus:degree-plan-observation";
 
 export function registerAppBridge(chromeApi: typeof chrome, win: Window): void {
+  const degree = win.location.pathname === "/tools/degree";
   // React announces readiness after installing its receive listener. Don't
   // consume the one-shot transfer at document_idle before React mounts.
-  win.addEventListener("campus:schedule-import-ready", () => {
+  win.addEventListener(degree ? "campus:degree-import-ready" : "campus:schedule-import-ready", () => {
   void chromeApi.runtime
     .sendMessage({ type: "app-bridge-ready", payload: null })
     .then((response: unknown) => {
@@ -24,7 +26,7 @@ export function registerAppBridge(chromeApi: typeof chrome, win: Window): void {
         return;
       }
       win.dispatchEvent(
-        new CustomEvent(APP_OBSERVATION_EVENT, { detail: result.observation }),
+        new CustomEvent(degree ? DEGREE_OBSERVATION_EVENT : APP_OBSERVATION_EVENT, { detail: result.observation }),
       );
     })
     .catch(() => {
@@ -33,7 +35,7 @@ export function registerAppBridge(chromeApi: typeof chrome, win: Window): void {
   }, {once:true});
   // Either React or document_idle may load first. Both sides announce readiness
   // after registering listeners; the transfer is consumed only once.
-  win.dispatchEvent(new Event("campus:schedule-bridge-ready"));
+  win.dispatchEvent(new Event(degree ? "campus:degree-bridge-ready" : "campus:schedule-bridge-ready"));
 }
 
 if (typeof chrome !== "undefined" && chrome.runtime?.id) {

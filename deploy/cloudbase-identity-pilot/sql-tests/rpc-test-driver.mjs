@@ -22,6 +22,9 @@ await pg.exec(await readFile(new URL('../browser-visitor-migration.sql',import.m
 await pg.exec(await readFile(new URL('../visitor-identity-first-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../native-identity-registry-migration.sql',import.meta.url),'utf8'));
 await pg.exec(await readFile(new URL('../native-browser-binding-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../degree-progress-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../degree-agent-import-migration.sql',import.meta.url),'utf8'));
+await pg.exec(await readFile(new URL('../degree-in-progress-migration.sql',import.meta.url),'utf8'));
 await pg.query("SELECT set_config('request.jwt.claims',$1,false)",[JSON.stringify({role:'service_role'})]);
 const canonical=value=>value && typeof value==='object' ? Array.isArray(value) ? value.map(canonical) :
   Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])) : value;
@@ -34,6 +37,78 @@ process.stdout.write('{"ready":true}\n');
 for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity})) {
   try {
     const {op,args}=JSON.parse(line);
+    if(op==='__test_legacy_degree_reset_fixture__') {
+      // Minimal fictional structure for the exact optional legacy table names.
+      // Never deployed; validates cross-schema FK handling without CASCADE.
+      await pg.exec(`CREATE SCHEMA nku_personal_degree_v1;
+        CREATE TABLE nku_personal_degree_v1.degree_drafts(id text PRIMARY KEY,
+          workspace_ref text REFERENCES nku_identity_pilot_v1.workspaces(workspace_ref));
+        CREATE TABLE nku_personal_degree_v1.degree_confirmations(id text,
+          draft text REFERENCES nku_personal_degree_v1.degree_drafts(id));
+        CREATE TABLE nku_personal_degree_v1.degree_snapshots(workspace_ref text
+          REFERENCES nku_identity_pilot_v1.workspaces(workspace_ref));
+        CREATE TABLE nku_personal_degree_v1.degree_idempotency(id text);
+        ALTER TABLE nku_personal_degree_v1.degree_drafts ENABLE ROW LEVEL SECURITY;
+        ALTER TABLE nku_personal_degree_v1.degree_confirmations ENABLE ROW LEVEL SECURITY;
+        ALTER TABLE nku_personal_degree_v1.degree_snapshots ENABLE ROW LEVEL SECURITY;
+        ALTER TABLE nku_personal_degree_v1.degree_idempotency ENABLE ROW LEVEL SECURITY;
+        INSERT INTO nku_personal_degree_v1.degree_drafts SELECT 'fictional',workspace_ref
+          FROM nku_identity_pilot_v1.workspaces LIMIT 1;
+        INSERT INTO nku_personal_degree_v1.degree_confirmations VALUES('fictional','fictional');
+        INSERT INTO nku_personal_degree_v1.degree_snapshots SELECT workspace_ref
+          FROM nku_identity_pilot_v1.workspaces LIMIT 1;
+        INSERT INTO nku_personal_degree_v1.degree_idempotency VALUES('fictional');`);
+      process.stdout.write('{"ok":true,"data":{}}\n');continue;
+    }
+    if(op==='__test_legacy_degree_reset_counts__') {
+      const result=await pg.query(`SELECT
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_drafts) drafts,
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_confirmations) confirmations,
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_snapshots) snapshots,
+        (SELECT count(*) FROM nku_personal_degree_v1.degree_idempotency) idempotency`);
+      process.stdout.write(JSON.stringify({ok:true,data:result.rows[0]})+'\n');continue;
+    }
+    if(op==='__test_reset_guard__') {
+      const table = args.kind==='outside_fk' ? 'public.reset_guard_fixture' :
+        args.kind==='schema_drift' ? 'nku_degree_progress_v1.reset_guard_fixture' : null;
+      if(!table)throw new Error('invalid fixed test case');
+      await pg.exec(`CREATE TABLE ${table}(ref text REFERENCES nku_identity_pilot_v1.workspaces(workspace_ref));`);
+      let rejected=false;
+      try {
+        await pg.exec(await readFile(new URL('../manual-reset-private-spaces.sql',import.meta.url),'utf8'));
+      } catch { rejected=true; await pg.exec('ROLLBACK;'); }
+      await pg.exec(`DROP TABLE ${table};`);
+      const result=await pg.query('SELECT count(*) spaces FROM nku_identity_pilot_v1.workspaces');
+      process.stdout.write(JSON.stringify({ok:true,data:{rejected,spaces:result.rows[0].spaces}})+'\n');continue;
+    }
+    if(op==='__test_reset_private_spaces__') {
+      // Fixed manual-maintenance script in isolated test DB only. This driver
+      // and the reset script are excluded from deployment packages.
+      await pg.exec(await readFile(new URL('../manual-reset-private-spaces.sql',import.meta.url),'utf8'));
+      const result=await pg.query(`SELECT
+        (SELECT count(*) FROM nku_identity_pilot_v1.workspaces) spaces,
+        (SELECT count(*) FROM nku_identity_pilot_v1.fixtures) fixtures,
+        (SELECT count(*) FROM nku_identity_pilot_v1.approved_subjects) approved,
+        (SELECT count(*) FROM nku_degree_progress_v1.reports) reports,
+        has_function_privilege('anon','public.nku_degree_agent_v1_rpc(text,jsonb)','EXECUTE') anonymous_execute,
+        has_function_privilege('service_role','public.nku_degree_agent_v1_rpc(text,jsonb)','EXECUTE') backend_execute`);
+      process.stdout.write(JSON.stringify({ok:true,data:result.rows[0]})+'\n');continue;
+    }
+    if(op==='__test_expire_degree_draft__') {
+      if(!/^degree_[0-9a-f]{32}$/.test(args.draft_id ?? ''))throw new Error('invalid draft');
+      await pg.query('UPDATE nku_degree_progress_v1.agent_drafts SET expires_epoch=0 WHERE draft_id=$1',[args.draft_id]);
+      process.stdout.write('{"ok":true,"data":{}}\n');continue;
+    }
+    if(op.startsWith('__degree_agent__:')) {
+      const result=await pg.query('SELECT public.nku_degree_agent_v1_rpc($1,$2::jsonb) result',
+        [op.slice('__degree_agent__:'.length),JSON.stringify(args)]);
+      process.stdout.write(JSON.stringify(result.rows[0].result)+'\n');continue;
+    }
+    if(op.startsWith('__degree__:')) {
+      const result=await pg.query('SELECT public.nku_degree_progress_v1_rpc($1,$2::jsonb) result',
+        [op.slice('__degree__:'.length),JSON.stringify(args)]);
+      process.stdout.write(JSON.stringify(result.rows[0].result)+'\n');continue;
+    }
     if(op.startsWith('__native__:')) {
       const result=await pg.query('SELECT public.nku_native_browser_v1_rpc($1,$2::jsonb) result',
         [op.slice('__native__:'.length),JSON.stringify(args)]);

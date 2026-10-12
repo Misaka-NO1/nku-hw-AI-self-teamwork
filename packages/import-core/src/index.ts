@@ -23,3 +23,7 @@ export { getTimetableValidator, validateTimetableStructure } from "./schema";
 export { parseWeeks } from "./weeks";
 export type { WeeksParseResult } from "./weeks";
 export * from "./types";
+export { DEGREE_PLAN_URL, DEGREE_LIMITS, extractDegreePlanFromDoc, validateDegreePlanImport, parseDegreePlanFile, degreePlanWarnings } from "./degree";
+export type { DegreePlanImport, DegreePlanCourse, DegreePlanModule } from "./degree";
+export { GENERAL_ELECTIVE_POLICY, isGeneralElectiveModule, degreeProgressForQuestions, degreeProgressForStorage } from "./degree-progress";
+export type { DegreeCreditProgress } from "./degree-progress";

@@ -13,7 +13,7 @@ import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
 const extRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const distFiles = ["background.js", "content.js", "preview.js"].map((name) =>
+const distFiles = ["background.js", "content.js", "degree-content.js", "eamis-content.js", "app-bridge.js", "preview.js"].map((name) =>
   resolve(extRoot, "dist", name),
 );
 

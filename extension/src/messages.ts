@@ -11,6 +11,8 @@ export const MESSAGE_TYPES = [
   "extract-visible-schedule",
   "schedule-observation",
   "schedule-auto-observation",
+  "extract-visible-degree-plan",
+  "degree-plan-observation",
   "app-bridge-ready",
   "open-import-preview",
   "submit-confirmed-draft",
@@ -61,6 +63,7 @@ export function isSenderAllowed(
   extensionId: string,
   isUrlWhitelisted: (url: string) => boolean,
   isAppUrlCheck: (url: string) => boolean = () => false,
+  isDegreeUrlCheck: (url: string) => boolean = () => false,
 ): boolean {
   if (sender.id !== extensionId) {
     return false;
@@ -72,6 +75,9 @@ export function isSenderAllowed(
   if (message.type === "schedule-observation" || message.type === "schedule-auto-observation") {
     const pageUrl = sender.tabUrl ?? sender.url ?? "";
     return isUrlWhitelisted(pageUrl) && (!sender.url || isUrlWhitelisted(sender.url));
+  }
+  if (message.type === "degree-plan-observation") {
+    return isDegreeUrlCheck(sender.tabUrl ?? sender.url ?? "") && (!sender.url || isDegreeUrlCheck(sender.url));
   }
   if (message.type === "app-bridge-ready") {
     const pageUrl = sender.tabUrl ?? sender.url ?? "";

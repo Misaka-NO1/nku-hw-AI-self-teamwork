@@ -2,13 +2,13 @@
   "name": "@campus/extension",
   "version": "0.1.0",
   "private": true,
-  "description": "课表导入扩展（owner: B）：MV3 骨架、白名单校验、消息协议、独立预览页。nku-adapter-v1 未完成真实核查前保持 disabled。",
+  "description": "课表与计划完成情况共用 MV3 扩展：分类学分 JSON 导给 Agent 核对；不导出课程成绩或身份认证字段。",
   "type": "module",
   "scripts": {
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json",
     "build": "npm run build:js && npm run build:copy",
-    "build:js": "esbuild src/background.ts src/content.ts src/app-bridge.ts --bundle --format=iife --target=chrome110 --outdir=dist && esbuild src/preview/preview.ts --bundle --format=iife --target=chrome110 --outfile=dist/preview.js",
+    "build:js": "esbuild src/background.ts src/content.ts src/degree-content.ts src/eamis-content.ts src/app-bridge.ts --bundle --format=iife --target=chrome110 --outdir=dist && esbuild src/preview/preview.ts --bundle --format=iife --target=chrome110 --outfile=dist/preview.js",
     "build:copy": "node scripts/copy-static.mjs",
     "verify": "npm run build && vitest run"
   },

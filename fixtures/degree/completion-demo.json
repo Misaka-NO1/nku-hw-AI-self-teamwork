@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "degree_completion_snapshot",
+  "program": "虚构验收专业（不是个人数据）",
+  "cohort": "2025",
+  "source": { "kind": "file", "origin": null, "pathname": null },
+  "summary": {
+    "required_credits": "150", "completed_credits": "12.5", "actual_credits": "15",
+    "reported_result": "未通过 预审，有在读课程",
+    "reviewed_at": "2026-10-12 10:00:00", "note": "该完成情况，不作为最终审核结果"
+  },
+  "rows": [
+    { "kind": "module", "title": "一 虚构基础分类（所有子项均应满足要求）", "required_credits": "8", "actual_credits": "2.5", "reported_status": "缺 5.5 学分 缺 2 门", "note": null },
+    { "kind": "course", "course_code": "TEST001", "title": "虚构在读课程", "required_credits": "2.5", "actual_credits": "2.5", "grade": "--", "reported_pass": "是", "note": "在读" },
+    { "kind": "module", "title": "(一) 虚构子分类（所有子项至少一项满足要求）", "required_credits": "2", "actual_credits": "2", "reported_status": "是", "note": null },
+    { "kind": "course", "course_code": "TEST002", "title": "虚构已修课程", "required_credits": "2", "actual_credits": "2", "grade": "通过", "reported_pass": "是", "note": null }
+  ]
+}

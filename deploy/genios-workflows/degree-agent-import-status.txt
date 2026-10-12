@@ -1,0 +1,136 @@
+Status: published_cloud_062_extension_0.3.3_formal_web_v0.2.23
+Current status as of 2026-10-12: cloud 062/r52 normal, 100% traffic;
+formal Web v0.2.23 published with doubao-seed-2-1-lite.
+Final degree-only prompt: degree-progress-qa-fit-live.txt.
+Optional in-progress aggregates installed; old personal reports were not rewritten.
+Below is the chronological work log, NOT a list of remaining deployment actions.
+Private-space reset is separate, manual, explicitly authorized maintenance;
+see deploy/cloudbase-identity-pilot/DEGREE-DELIVERY.md for the current handoff.
+Current saved degree-only prompt: degree-progress-qa-fit-live.txt (refresh verified).
+degree-progress-agent-compact-live.txt is the earlier import-only version, not the current Q&A correction.
+Detailed design reference: degree-progress-agent-live-append.txt.
+Cloud current: 060 / r50 extension-switch; console normal, 100% traffic; public guide and ZIP verified.
+Cloud source archive: cloudbase-identity-pilot-20261012-r50-extension-switch.zip
+SHA256: 554e81d1ba36ad1c38f14ff0cfeee7a3f2321c96668caa7612fac97c7a5076a6
+Prior degree API version: 059 / r49 (unchanged API implementation in 060).
+Read-only baseline: 058 / r47; first migration installed once. Do NOT run it again.
+Agent upload candidate: degree-agent-import-migration.sql + CLOUD_DEGREE_AGENT_WRITE_ENABLED (default false).
+Agent write migration installed once: agent_import_exists=true, drafts_rls=true,
+anonymous_execute=false, direct_user_execute=false, backend_execute=true.
+Original plugin published with degree:read degree:write and both new tools.
+Preview tool ID: db68avt4shhbpg9117ag. Formal Agent DRAFT includes both tools (refresh verified);
+platform-user-id fixed hidden SYS_USERID (model enabled=false); signed proof required.
+Draft model: doubao-seed-2-1-lite (refresh verified; DeepSeek removed from this draft).
+Draft greeting now instructs degree-progress.json conversation upload; old degree-page save link removed.
+2026-10-12 18:26 / 18:30 real read-only Agent attempts reached tool execution but cloud gateway returned 503.
+Refreshed cloud deployment 059 shows starting; its instance created at 18:26:20 was Pending.
+Cloud availability must recover before production import acceptance; do not infer unsaved report from a 503.
+2026-10-12 follow-up: user confirmed real extension sequence works.
+Latest real read reached read_my_degree_records OAuth consent (no longer gateway 503).
+Human completed platform-generated degree:read/write consent.
+Fresh native-proof + OAuth read succeeded: report=null, revision=0.
+Latest local export passed strict backend report contract (31 modules).
+Requires new degree:write consent; existing grants are not upgraded.
+No PR submitted for this feature yet. Formal Agent publication remains pending.
+Actual JSON attachment upload accepted by school UI, but file body was not available to this model.
+Full original text fallback reached preview: two malformed model inputs were rejected (JSON syntax, categories-only summary).
+Draft model max_tokens increased from 4096 to 8192; model remains doubao-seed-2-1-lite.
+Fresh full original structure then passed real preview (31 modules, saved=false, replaces_existing=false).
+Returned payload_hash exactly matches backend canonical hash of original full export.
+Preview required human review before confirmation. The human subsequently confirmed the save themselves.
+2026-10-12 19:29:22 +08:00: real confirmation returned revision=1 and readback_verified=true.
+Eight real read-only Q&A cases then successfully read the saved report without changing revision=1.
+Numeric module gaps passed; common answers are too verbose and general-elective advice double-counted
+the art module as an extra module outside the two additional modules required by the four-of-six rule.
+Candidate concise Q&A correction: degree-progress-qa-live-append.txt.
+Candidate is NOT persisted online: typing, paste, full editor fill and a fresh school tab were attempted;
+refresh still returns the old prompt and last_saved remains 2026-10-12 19:21:41.
+School editor console reports opaque Object errors; exact server rejection cause is not established.
+Do not mark the Q&A correction passed or publish the candidate before refresh and live regressions pass.
+Follow-up: native page input and removal of excess blank lines also did not update last_saved.
+A one-token max_tokens diagnostic change did not update last_saved; restored the original 8192 value.
+Single-module retest was shorter, but elective retest still repeated art plus two other modules.
+No acceptance claim: no persisted candidate prompt and the important elective regression still fails.
+Candidate configuration publication was blocked by safety review because regression had not passed;
+no new configuration version or Web-channel release was submitted.
+School session logout/refresh was separately blocked by safety review pending specific human approval.
+Requested approval to sign out and sign back in to the same school account; no bypass attempted.
+Candidate local Q&A rule now adds explicit coverage-count formula and synthetic art-count example;
+this strengthened version has not been installed or tested online yet.
+Private local preview/proof is under ignored artifacts, never include in PR.
+2026-10-12 follow-up after user signed out and signed back in:
+School console now exposes SaveAppConfigDraft / Error 1406 (22001), Data too long for column pre_prompt.
+Original rendered prompt measured 65,594 UTF-8 bytes; adding another prefix exceeded the field capacity.
+Cross-module duplicate removal was rejected by safety review and NOT submitted.
+Safer candidate changes only the existing degree paragraph plus repeated blank-line spacing;
+all other original business paragraphs are unchanged (verified by normalized string comparison).
+Candidate plain text is 65,193 UTF-8 bytes. Saved at 20:27:18, survives refresh.
+Source: degree-progress-qa-fit-live.txt. Full source prompt retains other original business rules.
+Live read-only regressions are in progress; no configuration or Web-channel publication yet.
+Single-module retest returned correct gap but remains more verbose than requested.
+No cloud data was deleted; future reset intention is not treated as present deletion authority.
+Final degree-only block is moved after other original rules (no unrelated paragraph removal).
+Final normalized prompt is 65,480 UTF-8 bytes; saved 20:40:00 and survives refresh.
+Live common Q&A now gives correct single-module and deficient top-level gaps without duplicate totals.
+Art coverage retest counts art within four-of-six, not outside it; distinguishes total gap from coverage.
+A yes/no contradiction was found and corrected: latest independent retest opens with "不需要"
+and explains only one further module after art. Parent/submodule difference remains unlocated,
+not assigned to an invented module. Returned revision 1 / confirmed_at 19:29:22 unchanged.
+Output remains somewhat explanatory; do not claim strict one-line formatting is perfectly enforced.
+Formal Web channel is still v0.2.22 until a subsequent verified publication, not yet claimed here.
+Extension follow-up 0.3.2: shared live-route entry, stale host cleanup and current-URL extraction.
+Navigation sequence regression added (degree → timetable, timetable → degree → timetable, delayed grid).
+41 extension tests and TypeScript passed; 6 package allowlist tests passed.
+Cloud follow-up published: 060 / task 2341360 / r50-extension-switch; console normal, 100% traffic.
+Public degree guide loads; live reader ZIP downloaded: manifest 0.3.2, eamis-content.js present,
+SHA256 exactly matches local ZIP (byte-for-byte verification passed).
+Local reader ZIP: dist/campus-schedule-reader-0.3.2.zip.
+SHA256: 90deb31609e072195d9e413706750c68d00bcb965ca51a0428acf8426674072f.
+
+2026-10-12 follow-up: combined elective Q&A still miscalculated child sum (2+2 as 7).
+Do not treat earlier independent prompt checks as a complete acceptance pass.
+Added read-only general_elective_progress: exact Decimal subtotal/difference, threshold counts,
+art counted within four-of-six, unknown/ambiguous groups unavailable, no policy/graduation verdict.
+41 backend private-import/math/package tests passed using fictional fixtures, with sandbox
+loopback restriction diagnosed separately; no live DB or private credentials used in tests.
+r51-degree-qa-math differs from r50 runtime only in backend/app/core/degree_progress.py.
+Package SHA256: 8039a36aa76ca70e5a380f3a722b0738e893f4a69b41292f30a01d929b89a5b0.
+Deployment 061 submitted; no SQL migration, access-scope or credential change.
+Degree-only prompt now references backend arithmetic; formal publication still pending live QA.
+
+2026-10-12 21:50 follow-up: 061 verified normal / 100% traffic; real read-only elective
+projection returns parent 7 / six-child sum 4 / difference 3 / threshold count 2.
+User supplied source screenshot: two DIRECT parent courses are explicitly marked 在读,
+2+1 credits; this explains the difference in the source, but old saved JSON lacks the fields.
+Added OPTIONAL school_in_progress_credits / school_direct_in_progress_credits category
+aggregates; no course rows, grades, name or student ID are exported/stored.
+Unknown hierarchy/duplicate allocation stays null. Subtracting marked in-progress is NOT
+a final earned-credit determination. Old absent fields stay unknown, never inferred from gaps.
+User approved compatibility migration and deployment. Ran only degree-in-progress-migration.sql;
+console success, both validator flags true, anon/authenticated execute false, saved reports still 1.
+46 backend tests passed including private owner/CSRF/revision, SQL invalid-aggregate rejection,
+Agent preview-confirm-readback with fictional optional fields, QA math, and package allowlist.
+Shared extension 0.3.3: 41 built tests, import-core 77 passed / 2 private fixtures skipped;
+both TypeScript checks passed. r52 only changes degree_progress.py, reader ZIP, and new migration.
+r52 package SHA256: 2941c9cac347fd5eea672d2e057a1d9aefbb7f388f3cf3dcaaaa0a2c0359165a.
+Cloud 062 normal / 100% / 1 instance, started 21:42:49. No credentials/env/scopes changed.
+Public ZIP version 0.3.3; downloaded SHA256 matches packaged ZIP byte-for-byte:
+e979ba77ccce5e9ad58332423f808fb5ecc92b9c0d5547dea6741059d9ba67f0.
+Degree-only prompt 65,517 UTF-8 bytes, saved 21:44:57 and survives refresh;
+other original nonempty paragraphs unchanged. Model remains doubao-seed-2-1-lite.
+Live old-report read-only test correctly returns old revision 1 / confirmed 19:29 unchanged,
+ongoing aggregates null, difference explanation false; does not turn user assertion into saved data.
+No automatic personal reimport, no wipe, no GitHub PR. Fresh real 0.3.3 export still requires
+the user's preview and explicit next-turn confirmation before replacing the stored report.
+Formal Web-channel publication still pending final live QA at this entry.
+Final art/graduation live QA passed: after art reaches 2, only one OTHER module needed;
+coverage does not satisfy total credits and cannot guarantee graduation. Formatting remains verbose.
+Agent CONFIG v0.2.23 published successfully. Channel submission 2026-10-12 21:55:16
+is APPROVAL PENDING (visible history row 审批中); formal Web still v0.2.22.
+Do not claim full formal rollout until approval passes and Web shows v0.2.23.
+No further SQL/data writes or access changes; user personal report remains old revision 1.
+Later screenshot and row read show submission 21:55:16 APPROVED (已通过),
+after the earlier pending observation. Refreshing formal Web channel to verify rollout.
+Refresh verified Web 服务 / 运行中 / v0.2.23 at the original formal chat URL.
+Rollout now confirmed. Updated real in-progress aggregate report still not saved automatically;
+user must update original extension, refresh EAMIS, export, preview, and explicitly confirm.

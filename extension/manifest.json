@@ -1,28 +1,31 @@
 {
   "manifest_version": 3,
-  "name": "南开校园助手 · 教务课表读取",
-  "version": "0.2.0",
-  "description": "点击教务页读取按钮，将课程表格文本送到团队工具站核对；用户确认后保存本人课表。不读取密码、Cookie 或 SSO 字段，不自动上传保存。",
+  "name": "南开校园助手 · 教务课表与培养计划",
+  "version": "0.3.3",
+  "description": "共用扩展提取课表、导出分类学分 JSON 给 Agent 核对并确认保存。不导出课程成绩、姓名或学号，不读取认证信息。",
   "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "host_permissions": [
     "https://eamis.nankai.edu.cn/eams/courseTableForStd*",
-    "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/import*"
+    "https://eamis.nankai.edu.cn/eams/myPlanCompl.action*",
+    "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/import*",
+    "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/degree*"
   ],
   "background": {
     "service_worker": "dist/background.js"
   },
   "action": {
-    "default_title": "导入当前页课表"
+    "default_title": "提取课表 / 导出计划完成情况"
   },
   "content_scripts": [
     {
-      "matches": ["https://eamis.nankai.edu.cn/eams/courseTableForStd*"],
-      "js": ["dist/content.js"],
+      "matches": ["https://eamis.nankai.edu.cn/eams/courseTableForStd*", "https://eamis.nankai.edu.cn/eams/myPlanCompl.action*"],
+      "js": ["dist/eamis-content.js"],
       "run_at": "document_idle"
     },
     {
       "matches": [
-        "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/import*"
+        "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/import*",
+        "https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com/tools/degree*"
       ],
       "js": ["dist/app-bridge.js"],
       "run_at": "document_idle"

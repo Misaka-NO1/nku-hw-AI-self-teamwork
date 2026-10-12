@@ -97,6 +97,8 @@ export function registerContentListener(
   chromeApi: typeof chrome,
   doc: Document,
   pageUrl: string,
+  getPageUrl: () => string = () => pageUrl,
+  isCurrentPage: () => boolean = () => true,
 ): void {
   chromeApi.runtime.onMessage.addListener((raw, _sender, sendResponse) => {
     const message = parseMessage(raw);
@@ -104,7 +106,8 @@ export function registerContentListener(
       return false;
     }
     try {
-      const observation = extractCourseObservation(doc, { pageUrl });
+      if (!isCurrentPage()) throw new UnsupportedPageError("当前不是课表页，请返回我的课表后重试");
+      const observation = extractCourseObservation(doc, { pageUrl: getPageUrl() });
       void chromeApi.runtime.sendMessage({
         type: "schedule-observation",
         payload: observation,
@@ -123,11 +126,6 @@ export function registerContentListener(
     }
     return false;
   });
-}
-
-// 真实 content script 环境中自动注册；单测中显式调用 registerContentListener
-if (typeof chrome !== "undefined" && chrome.runtime?.onMessage) {
-  registerContentListener(chrome, document, location.href);
 }
 
 /**
@@ -157,13 +155,14 @@ export function mountImportButton(
   chromeApi: typeof chrome,
   doc: Document,
   pageUrl: string,
-  options: { maxAttempts?: number; retryMs?: number } = {},
+  options: { maxAttempts?: number; retryMs?: number; getPageUrl?: () => string; isCurrentPage?: () => boolean } = {},
 ): void {
   const maxAttempts = options.maxAttempts ?? BUTTON_MAX_ATTEMPTS;
   const retryMs = options.retryMs ?? BUTTON_RETRY_MS;
   let attempts = 0;
   const tryMount = () => {
     attempts += 1;
+    if (options.isCurrentPage && !options.isCurrentPage()) return;
     // 登录页：不注入，等用户登录后页面跳转/重载重新注入
     if (doc.querySelector("input[type=password]") && !doc.querySelector("table")) return;
     if (!doc.querySelector(EAMIS_GRID_SELECTOR)) {
@@ -199,7 +198,8 @@ export function mountImportButton(
       button.textContent = "读取中…";
       try {
         // 只读取课程表格文本：不碰 cookie、密码框、SSO 字段、整页 HTML
-        const observation = extractCourseObservation(doc, { pageUrl });
+        if (options.isCurrentPage && !options.isCurrentPage()) throw new UnsupportedPageError("当前不是课表页，请刷新教务页面");
+        const observation = extractCourseObservation(doc, { pageUrl: options.getPageUrl?.() ?? pageUrl });
         const response = await chromeApi.runtime.sendMessage({ type: "schedule-auto-observation", payload: observation });
         if (!response?.ok) throw new Error("无法打开核对页，请刷新后重试");
         button.textContent = "✓ 已读取，已打开核对页";
@@ -217,21 +217,4 @@ export function mountImportButton(
     });
   };
   tryMount();
-}
-
-// 仅在教务域名由 manifest 自动注入时挂载按钮；window 标记避免重复注入重复挂载
-declare global {
-  interface Window {
-    __campusImportButtonMounted?: boolean;
-  }
-}
-if (
-  typeof chrome !== "undefined" &&
-  chrome.runtime?.id &&
-  typeof window !== "undefined" &&
-  !window.__campusImportButtonMounted &&
-  location.hostname === "eamis.nankai.edu.cn"
-) {
-  window.__campusImportButtonMounted = true;
-  mountImportButton(chrome, document, location.href);
 }

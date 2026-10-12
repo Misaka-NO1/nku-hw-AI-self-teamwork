@@ -46,11 +46,16 @@ export function isExtractionAllowed(url: string, whitelist: ExtractionWhitelist)
  */
 export const APP_ORIGINS = ["https://nku-campus-identity-pilot-308235-6-1467707525.sh.run.tcloudbase.com"];
 export const APP_IMPORT_PATH = "/tools/import";
+export const APP_DEGREE_PATH = "/tools/degree";
+export function isDegreePageUrl(url: string): boolean {
+  try { const parsed = new URL(url); return parsed.origin === "https://eamis.nankai.edu.cn" && parsed.pathname === "/eams/myPlanCompl.action"; }
+  catch { return false; }
+}
 
 export function isAppUrl(url: string): boolean {
   try {
     const parsed=new URL(url);
-    return APP_ORIGINS.includes(parsed.origin) && parsed.pathname===APP_IMPORT_PATH;
+    return APP_ORIGINS.includes(parsed.origin) && [APP_IMPORT_PATH, APP_DEGREE_PATH].includes(parsed.pathname);
   } catch {
     return false;
   }

@@ -103,6 +103,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     runtime=settings or get_settings()
     from app.genios_identity_site import native_configuration, install_genios_identity
     native_configuration(runtime, os.environ.get("CLOUDBASE_APIKEY") or os.environ.get("CLOUDBASE_API_KEY", ""))
+    if runtime.cloud_degree_progress_enabled and not runtime.cloud_oauth_competition_compat_enabled:
+        raise ValueError("Degree progress requires independently scoped own-account OAuth")
+    if runtime.cloud_degree_agent_write_enabled and not (runtime.cloud_degree_progress_enabled and runtime.cloud_genios_native_identity_enabled):
+        raise ValueError("Agent degree writing requires private progress and verified native identity")
     if runtime.cloud_visitor_enabled and not (runtime.cloud_persistent_auth_enabled and runtime.cloud_agent_device_binding_enabled and runtime.cloud_personal_schedules_enabled):
         raise ValueError("Browser visitors require private persistent timetable/calendar and scoped device OAuth")
     if runtime.cloud_agent_device_binding_enabled and not (runtime.cloud_persistent_auth_enabled and runtime.cloud_oauth_competition_compat_enabled):
@@ -118,7 +122,7 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
     if runtime.cloud_identity_bootstrap_enabled:
         if (runtime.cloud_identity_pilot_enabled or runtime.cloud_oauth_pilot_enabled or runtime.cloud_notice_text_pilot_enabled or runtime.cloud_task_calendar_enabled or runtime.cloud_personal_tasks_enabled
             or runtime.app_env not in {"test","staging"} or runtime.auth_mode!="demo_fixture"
-            or runtime.allow_personal_uploads):
+            or runtime.allow_personal_uploads or runtime.cloud_degree_progress_enabled):
             raise ValueError("Bootstrap must not enable identity, OAuth or personal business")
         bootstrap=FastAPI(docs_url=None,redoc_url=None,openapi_url=None)
         @bootstrap.get("/__tcb_probe__")
@@ -151,6 +155,10 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
             raise ValueError("Persistent authorization migration required")
         if runtime.cloud_personal_schedules_enabled and database.call("personal_schedule_probe",{})!={"schema_version":"personal-schedules-v1"}:
             raise ValueError("Personal timetable migration required")
+        if runtime.cloud_degree_progress_enabled and database.degree_call("probe",{})!={"schema_version":"degree-progress-v1"}:
+            raise ValueError("Degree progress migration required")
+        if runtime.cloud_degree_agent_write_enabled and database.degree_agent_call("probe",{})!={"schema_version":"degree-agent-v1"}:
+            raise ValueError("Agent degree import migration required")
         if runtime.cloud_device_login_enabled and database.device_call("probe",{})!={"schema_version":"browser-device-v1"}:
             raise ValueError("Device binding migration required")
         if runtime.cloud_agent_device_binding_enabled and database.agent_device_call("probe",{})!={"schema_version":"agent-device-v1"}:
@@ -177,7 +185,8 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
 
     site=FastAPI(lifespan=lifespan,docs_url=None,redoc_url=None,openapi_url=None)
     site.add_middleware(RequestBodyLimit, notice_text_enabled=runtime.cloud_notice_text_pilot_enabled,
-                        personal_schedules_enabled=runtime.cloud_personal_schedules_enabled)
+                        personal_schedules_enabled=runtime.cloud_personal_schedules_enabled,
+                        degree_progress_enabled=runtime.cloud_degree_progress_enabled)
     attempts=defaultdict(deque); lock=Lock()
 
     @site.middleware("http")
@@ -299,10 +308,16 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         if runtime.cloud_personal_tasks_enabled:
             if database.personal_call("probe", {}) != {"schema_version": "personal-tasks-v1"}:
                 raise AppError(503,"DEPENDENCY_UNAVAILABLE","Own task storage unavailable",True)
+        if runtime.cloud_degree_progress_enabled and database.degree_call("probe",{})!={"schema_version":"degree-progress-v1"}:
+            raise AppError(503,"DEPENDENCY_UNAVAILABLE","Degree progress storage unavailable",True)
+        if runtime.cloud_degree_agent_write_enabled and database.degree_agent_call("probe",{})!={"schema_version":"degree-agent-v1"}:
+            raise AppError(503,"DEPENDENCY_UNAVAILABLE","Agent degree import storage unavailable",True)
         return {"status":"ok","build_id":runtime.build_id,"dataset_kind":"demo","personal_uploads":False,
                 "persistent_store":"cloudbase_pg","oauth_enabled":runtime.cloud_oauth_pilot_enabled,
                 "oauth_competition_compat":runtime.cloud_oauth_competition_compat_enabled,
                 "own_task_recording":runtime.cloud_personal_tasks_enabled,
+                "degree_progress_enabled":runtime.cloud_degree_progress_enabled,
+                "degree_agent_write_enabled":runtime.cloud_degree_agent_write_enabled,
                 "persistent_authorization":runtime.cloud_persistent_auth_enabled,
                 "device_login_enabled":runtime.cloud_device_login_enabled,
                 "agent_device_binding_enabled":runtime.cloud_agent_device_binding_enabled}
@@ -485,6 +500,28 @@ def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
         else:
             enforce_demo_fixture(payload,"schedule")
         return reply(request,schedule.validate_timetable(payload))
+
+    @site.get("/api/v1/degree/capabilities")
+    def degree_capabilities(request:Request):
+        return success({"private_progress_enabled":runtime.cloud_degree_progress_enabled},
+            request_id=current_request_id(request),data_version="degree-progress-v1")
+
+    @site.get("/api/v1/degree/progress")
+    def read_degree_progress(request:Request):
+        if request.url.query:
+            raise AppError(422,"VALIDATION_ERROR","No owner or query arguments accepted")
+        from app.core.degree_progress import DegreeProgressService,format_degree_receipt
+        data=DegreeProgressService(runtime,database).read({"principal_kind":"browser",**browser_args(request)})
+        return success(format_degree_receipt(data),request_id=current_request_id(request),data_version="degree-progress-v1")
+
+    @site.post("/api/v1/degree/progress")
+    def save_degree_progress(request:Request,payload:Annotated[Any,Body()]):
+        if request.url.query:
+            raise AppError(422,"VALIDATION_ERROR","No owner or query arguments accepted")
+        from app.core.degree_progress import DegreeProgressService,format_degree_receipt
+        data=DegreeProgressService(runtime,database).save({"principal_kind":"browser",**browser_args(request,True)},
+            payload,request.headers.get("Idempotency-Key",""))
+        return success(format_degree_receipt(data),request_id=current_request_id(request),data_version="degree-progress-v1")
 
     @site.post("/api/v1/degree/audit")
     def degree(request:Request,payload:Annotated[Any,Body()]):
