@@ -7,6 +7,7 @@ SQL test dependencies and private configuration are not packaged.
 import argparse
 import hashlib
 import json
+import re
 import shutil
 import zipfile
 from pathlib import Path
@@ -33,8 +34,11 @@ def build(name: str, *, backend_only: bool = False) -> dict:
         shutil.copytree(frontend, output / "frontend/dist")
         # Public reader binary only. Never package local observations, source
         # maps, tickets, browser storage or private runtime configuration.
-        reader = output / "frontend/dist/assets/campus-schedule-reader.zip"
         extension = ROOT / "extension"
+        version = json.loads((extension / "manifest.json").read_text(encoding="utf-8"))["version"]
+        if not re.fullmatch(r"\d+\.\d+\.\d+(?:\.\d+)?", version):
+            raise ValueError("Invalid reader extension version")
+        reader = output / "frontend/dist/assets" / f"campus-reader-{version}.zip"
         required = [extension / "manifest.json",extension / "README.md", *[extension / "dist" / name for name in ("background.js", "content.js", "degree-content.js", "eamis-content.js", "app-bridge.js", "preview.js", "preview.html")]]
         if any(not path.is_file() for path in required):
             raise ValueError("Build the timetable reader extension before packaging")
@@ -45,6 +49,8 @@ def build(name: str, *, backend_only: bool = False) -> dict:
                 info.external_attr = 0o100644 << 16
                 info.compress_type = zipfile.ZIP_DEFLATED
                 bundle.writestr(info, path.read_bytes())
+        # Old bookmarks remain usable, but every new UI links to the explicit version.
+        shutil.copy2(reader, reader.with_name("campus-schedule-reader.zip"))
     shutil.copy2(ROOT / "backend/requirements.lock", output / "backend/requirements.lock")
     if not backend_only:
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/Dockerfile", output / "Dockerfile")

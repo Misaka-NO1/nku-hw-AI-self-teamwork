@@ -1,3 +1,4 @@
+import { ReaderInstallGuide } from '../../components/ReaderInstallGuide';
 /** Compatibility for old links; review and saving happen in Agent. */
 export function DegreePage() {
   const agentUrl = import.meta.env.VITE_GENIOS_AGENT_URL as string | undefined;
@@ -10,6 +11,6 @@ export function DegreePage() {
     </ol>
     <p>只保存总览、分类学分与状态，不保存课程成绩、姓名或学号。未确认不会覆盖旧报告。</p>
     {agentUrl ? <a href={agentUrl}>打开南开 Agent →</a> : <p>请回到学校平台的南开校园助手对话。</p>}
-    <p><a href="/assets/campus-schedule-reader.zip">下载课表与培养计划共用拓展</a></p>
+    <ReaderInstallGuide />
   </section>;
 }

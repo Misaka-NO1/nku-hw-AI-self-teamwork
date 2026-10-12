@@ -17,7 +17,7 @@
       "post": {
         "operationId": "onboard_my_browser",
         "summary": "核验平台账号、查找唯一空间及明确确认后绑定",
-        "description": "lookup只核验固定平台账号并查找空间，不创建或登录。create仅在用户明确确认此前未有空间时调用；已存在则复用，绝不再建。bind只绑定原空间，不创建。设备码只定位浏览器，不证明身份。platform-user-id必须在Agent配置引用SYS_USERID并关闭模型填写；缺少此配置不得上线。专用Bearer凭据仅由插件服务端持有，认证开启开关关闭，不要求学生输入。失败不得宣称已登录。",
+        "description": "先lookup，confirmed=false，不创建或登录。status=existing_space表示固定平台身份已关联原空间：本人确认后仍用本工具intent=bind、confirmed=true复用绑定，不用attest、OAuth、associate_my_original_space或bind_my_browser；不能把用户说原空间误判为旧账号迁移。仅legacy_authorization_required走本人OAuth迁移。first_use_confirmation核对确为首次且本人确认才create；已存在绝不重复创建。browser_authorized之后须回原浏览器主动领取，不能宣称已登录。设备码只定位浏览器，不证明身份。platform-user-id固定引用隐藏SYS_USERID，专用Bearer仅插件服务端持有，不要求学生输入。失败停止，不换身份或路径绕过。",
         "security": [{"NativeIntegration": []}],
         "parameters": [{"$ref": "#/components/parameters/FixedPlatformIdentity"}],
         "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/OnboardingInput"}}}},

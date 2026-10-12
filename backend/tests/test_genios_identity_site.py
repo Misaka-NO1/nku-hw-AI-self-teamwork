@@ -95,6 +95,31 @@ def test_second_browser_and_repeated_create_reuse_exact_space(native):
     assert b.cookies.get(SESSION_COOKIE) == token
 
 
+def test_existing_space_binds_new_browser_without_oauth_adoption(native):
+    # Regression: existing_space was misrouted by the Agent to OAuth adoption.
+    # Native consent + fixed service identity suffice for a second browser;
+    # OAuth remains necessary for private Agent data access, not native binding.
+    _, _, db, tools, a, b = native
+    _, first, owner = start_and_create(tools, a)
+    before = db.call("__test_identity_counts__", {})
+    code = device_post(b, "start").json()["data"]["device_code"]
+    assert tool(tools, code).json()["data"]["status"] == "existing_space"
+    assert browser(b, "claim").json()["data"]["status"] == "existing_space"
+    assert not b.cookies.get(SESSION_COOKIE)
+    assert tool(tools, code, intent="bind", confirmed=False).status_code == 409
+    bound = tool(tools, code, intent="bind", confirmed=True)
+    assert bound.status_code == 200, bound.text
+    assert bound.json()["data"] == {"status": "browser_authorized", "has_space": True,
+        "created": False, "space_label": first["space_label"]}
+    assert browser(b, "claim").json()["data"]["status"] == "bound"
+    assert current(b)["workspace_ref"] == owner["workspace_ref"]
+    assert db.call("__test_identity_counts__", {})["owners"] == before["owners"]
+    # A short-lived attestation by itself cannot read private OAuth data.
+    proof = attest(tools)
+    assert tools.get("/oauth/records", headers={"platform-user-id": "fictional-native-a",
+        "platform-attestation": proof}).status_code == 401
+
+
 def test_different_accounts_private_code_alone_and_owner_injection_cannot_enter(native):
     runtime, root, db, tools, a, b = native
     code, _, owner = start_and_create(tools, a)

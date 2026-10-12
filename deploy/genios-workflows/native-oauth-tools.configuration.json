@@ -29,7 +29,7 @@
       "confirmed": {"type": "Boolean", "required": true, "value_rule": "true only after user's explicit original-space association and device-binding confirmation"}
     },
     "response": "Same non-null success projection OnboardingEnvelope as native-onboarding-tools.openapi.json: ok,data(status,has_space,created),meta(request_id,data_version). Do not declare nullable error or space_label as plain Object/String in the platform; the full browser HTTP envelope remains unchanged. No raw UID, owner, OAuth token or browser session returned",
-    "requires": "Prior trusted lookup; actual original OAuth grant; this run's signed native identity proof; fixed hidden SYS_USERID",
+    "requires": "Prior trusted lookup with legacy_authorization_required, not existing_space; actual original OAuth grant; this run's signed native identity proof; fixed hidden SYS_USERID. existing_space must use onboard_my_browser(intent=bind,confirmed=true) without OAuth adoption",
     "mutations": "Adopt the proven original owner and bind this browser atomically; never create, merge, copy or delete original private data"
   },
   "activation_blockers": [

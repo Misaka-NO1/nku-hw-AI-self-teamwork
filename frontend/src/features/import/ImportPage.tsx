@@ -16,6 +16,7 @@ import {
 
 import { validateTimetableRemote } from "./api";
 import CalendarEditor from "./CalendarEditor";
+import { ReaderInstallGuide } from "../../components/ReaderInstallGuide";
 import "./import.css";
 
 /**
@@ -462,19 +463,7 @@ export default function ImportPage({
           安装本团队读取扩展后，打开教务并登录，选择正确学期和“全部”教学周，
           点击教务页右下角“读取并导入课表”。扩展不会在登录后自动采集，也不会自动保存。
         </p>
-        <p>
-          <a href="/assets/campus-schedule-reader.zip" download>下载本团队课表读取扩展（Chrome / Edge）</a>
-        </p>
-        <details>
-          <summary>扩展怎么安装？</summary>
-          <ol>
-            <li>下载并解压扩展包，用 Chrome 或 Edge 打开扩展管理页。</li>
-            <li>启用开发者模式，选择“加载已解压的扩展程序”，选中含 manifest.json 的解压文件夹。</li>
-            <li>请核对扩展名称“南开校园助手 · 教务课表与培养计划”。权限仅限教务课表/计划完成情况页、本站核对页和临时交接存储；新增权限须本人确认。</li>
-            <li>刷新教务课表页，点击“读取并导入课表”；回到本页核对并确认保存。</li>
-          </ol>
-          <p>内置浏览器暂不能安装这种扩展，请在同一个 Chrome / Edge 浏览器内完成教务登录和本站本人登录；也可用下面文件导入方式。</p>
-        </details>
+        <ReaderInstallGuide />
         <p>
           <a href={EAMIS_TIMETABLE_URL} target="_blank" rel="noreferrer">
             <strong>打开南开教务课表 ↗</strong>
