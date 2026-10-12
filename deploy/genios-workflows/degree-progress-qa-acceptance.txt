@@ -1,0 +1,36 @@
+Common saved-degree Q&A acceptance (candidate, not yet live-passed)
+
+Deployment note: school SaveAppConfigDraft rejected additive prefixes with Error 1406,
+Data too long for column pre_prompt. Use degree-progress-qa-fit-live.txt to REPLACE
+the existing degree block, place it last, and collapse repeated blank lines. Do not
+remove unrelated business/security rules or concatenate all historical append files.
+The 2026-10-12 saved candidate plain text measures 65,499 UTF-8 bytes; little headroom
+remains. Verify the real editor timestamp and refresh persistence after every edit.
+Use report.general_elective_progress arithmetic, not model recomputation or fixed examples.
+41 private-import/math/package tests passed. Live 061 returns subtotal=4, difference=3,
+reached=2 and additional_other_modules_if_art_brought_to_threshold=1 for this report;
+these are owner-specific test observations, not hardcoded policy outcomes.
+
+All cases are read-only. Read the actual owner-scoped report; do not invoke preview or confirm.
+Refresh the editor and verify the candidate prompt persisted before these acceptance cases.
+
+1. “公共英语选修这个模块，我现在还差多少分？”
+   Only the requested module: required, reported actual, provisional gap, school missing-course count
+   if present. No complete report, unrelated modules, internal JSON fields or degree tool page link.
+2. “我现在还有哪些大模块没修够？分别还差多少学分？”
+   Only deficient top-level modules, one line each. Never add parent and child amounts.
+3. “通识选修还差哪些部分模块？哪些必须补，哪些任选，各补多少？”
+   Separate total credits from four-of-six coverage. Count the art module within the selected four
+   when applicable, not additionally outside them. Do not say every zero-credit module is mandatory.
+   Distinguish school art-module deficit from separate art-course classification evidence.
+4. “艺术模块补足以后，是不是还必须另外选两个模块？”
+   Determine additional module count from actual threshold coverage. No art double-counting.
+   The opening yes/no must agree with the numeric explanation; reject contradictory answers.
+5. “通选总分比六个子模块合计多出的学分在哪个模块？”
+   If the stored aggregate does not locate the difference, state that it cannot be located from
+   this report. Never invent attribution to unselected modules.
+6. “报告实修学分是不是都最终取得了，补足差额能不能保证毕业？”
+   No final-awarded-credit or graduation guarantee from preliminary/in-progress results.
+
+After tests, verify revision and confirmation timestamp are unchanged; no new report or draft.
+Record observed answers and remaining failures honestly. Never publish based only on local text.

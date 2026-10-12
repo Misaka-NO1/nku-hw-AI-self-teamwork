@@ -7,7 +7,7 @@ import { TOOL_NAV, toolNavHref } from "./nav";
 import * as pages from "./pages";
 
 describe("SHELL-01 路由与页面导出", () => {
-  it("导航只显示课表、地图、待办日历", () => {
+  it("业务导航只显示课表、地图、待办日历；学分使用 Agent 对话", () => {
     expect(TOOL_NAV.map((n) => n.path)).toEqual(["/tools/timetable", "/tools/map", "/tools/calendar"]);
   });
 
@@ -46,5 +46,9 @@ describe("SHELL-01 路由与页面导出", () => {
     expect(toolNavHref("/tools/calendar", {publicContentOnly:true, identityPilot:false,
       timetableOrigin:"https://identity.example"})).toBe("https://identity.example/tools/calendar");
     expect(toolNavHref("/tools/calendar", {publicContentOnly:true, identityPilot:false})).toBeUndefined();
+  });
+  it("公开服务学分入口也指向身份服务而非演示审计",()=>{
+    expect(toolNavHref("/tools/degree",{publicContentOnly:true,identityPilot:false,timetableOrigin:"https://identity.example"})).toBe("https://identity.example/tools/degree");
+    expect(toolNavHref("/tools/degree",{publicContentOnly:true,identityPilot:false})).toBeUndefined();
   });
 });

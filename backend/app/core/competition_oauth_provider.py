@@ -33,6 +33,10 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
             allowed |= {"demo:read tasks:read", "demo:read tasks:read tasks:write"}
         if self.settings.cloud_agent_device_binding_enabled:
             allowed |= {scope + " devices:bind" for scope in tuple(allowed)}
+        if self.settings.cloud_degree_progress_enabled:
+            allowed |= {scope + " degree:read" for scope in tuple(allowed)}
+        if self.settings.cloud_degree_agent_write_enabled:
+            allowed |= {scope + " degree:write" for scope in tuple(allowed) if scope.endswith(" degree:read")}
         if params["scope"] not in allowed: raise OAuthError("invalid_scope")
         if not re.fullmatch(r"[A-Za-z0-9._~-]{8,256}",params["state"]): raise OAuthError()
         raw=secrets.token_urlsafe(32)
@@ -68,6 +72,10 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
             permitted += [["demo:read","tasks:read"],["demo:read","tasks:read","tasks:write"]]
         if self.settings.cloud_agent_device_binding_enabled:
             permitted += [scope + ["devices:bind"] for scope in tuple(permitted)]
+        if self.settings.cloud_degree_progress_enabled:
+            permitted += [scope + ["degree:read"] for scope in tuple(permitted)]
+        if self.settings.cloud_degree_agent_write_enabled:
+            permitted += [scope + ["degree:write"] for scope in tuple(permitted) if scope[-1] == "degree:read"]
         durable = self.settings.cloud_persistent_auth_enabled and result["expires_epoch"] == UNTIL_REVOKED_EPOCH
         if (not 0<expiry or (not durable and expiry>600) or result["scopes"] not in permitted): raise OAuthError("invalid_grant")
         return {"access_token":raw,"token_type":"Bearer","expires_in":OAUTH_MAX_AGE if durable else expiry,"scope":" ".join(result["scopes"])}
@@ -108,6 +116,26 @@ class CompetitionOAuthProvider(CloudOAuthProvider):
             return format_times(data)
         return format_times(self.store.competition_call("records",{
             "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":self.settings.oauth_client_id}))
+
+    def degree_progress(self,request):
+        self.gate()
+        from app.core.genios_identity import guard_native_oauth_owner
+        from app.core.degree_progress import DegreeProgressService
+        guard_native_oauth_owner(request, self.settings, self.store)
+        return DegreeProgressService(self.settings,self.store).read({
+            "principal_kind":"agent","grant_mode":"competition",
+            "grant_hash":secret_hash(resource_token(request).get_secret_value()),
+            "audience":self.settings.oauth_client_id})
+
+    def degree_import(self,request,arguments,operation):
+        self.gate()
+        from app.core.genios_identity import guard_native_oauth_owner
+        from app.core.degree_progress import DegreeAgentImportService
+        guard_native_oauth_owner(request, self.settings, self.store)
+        service = DegreeAgentImportService(self.settings,self.store)
+        args = {"grant_hash":secret_hash(resource_token(request).get_secret_value()),
+            "audience":self.settings.oauth_client_id}
+        return service.prepare(args,arguments) if operation == 'prepare' else service.confirm(args,arguments)
 
     def draft(self,request,notice,key):
         self.gate()

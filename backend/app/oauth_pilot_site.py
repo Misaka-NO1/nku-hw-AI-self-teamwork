@@ -184,6 +184,8 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
             label += "；读取自己已记录的事项、截止、备注和选定时段"
         if "tasks:write" in scopes:
             label += "；仅在你核对草稿并明确确认后记录本人待办"
+        if "degree:read" in scopes:
+            label += "；读取本人已确认保存的培养计划总览、分类学分及状态（不含课程成绩）"
         if "devices:bind" in scopes:
             label += "；仅当你明确发送本人浏览器的固定设备码并确认绑定时，允许该浏览器访问这个授权账号的课表与日历"
         mode_note = ('<p>参赛联调兼容模式：普通 OAuth 授权码，无 PKCE；仅两个已批准测试账号。真实教务课表和成绩上传仍未开放。</p>'
@@ -192,12 +194,18 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
             mode_note = '<p>仅访问当前工具站身份自己的数据。课表须由本人导入并确认；不是自动识别学校账号，不代替教务登录，不接收成绩上传。</p>'
         if settings.cloud_visitor_enabled:
             mode_note += '<p>当前可用独立浏览器访客身份。允许后，Agent 关联的是这个浏览器已登录的私有空间，不是学校学号。不要在公共电脑授权。</p>'
+        if "degree:read" in scopes:
+            mode_note += '<p>新增 degree:read 只读权限：仅本人确认保存的分类学分报告，不含课程成绩、姓名学号；不自动登录教务、不替你上传或作毕业审核。原授权不会自动升级。</p>'
+        if "degree:write" in scopes:
+            mode_note += '<p>新增 degree:write：Agent 可核对你上传的分类学分 JSON，在你明确确认该草稿后保存到本人原空间。更新会替换旧学分报告，不动课表和日历；不含课程成绩、姓名学号。原授权不会自动升级。</p>'
         return HTMLResponse('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>授权校园助手</title>'
             '<style>body{max-width:640px;margin:8vh auto;padding:24px;font:20px/1.8 sans-serif;color:#274535;background:#fffdf6}'
             'button{padding:14px 24px;margin:16px 12px 0 0;font:inherit}</style>'
             '<h1>授权校园助手测试插件</h1><p>' + html.escape(label) + '</p>'
             + mode_note +
-            ('<p>不能查看其他账号，不自行确认或自动保存。不会代替你登录教务或上传成绩。本人长期授权；退出、撤销或移出名单即失效。</p>' if (personal or "devices:bind" in scopes) and settings.cloud_persistent_auth_enabled else
+            ('<p>仅本人分类学分，退出、撤销或身份不一致即失效。</p>' if "degree:read" in scopes else '') +
+            ('<p>不能查看其他账号，不自行确认或自动保存。不会代替你登录教务或上传成绩。本人长期授权；退出、撤销或移出名单即失效。</p>' if (personal or "devices:bind" in scopes or "degree:read" in scopes) and settings.cloud_persistent_auth_enabled else
+             '<p>不能查看其他账号、不代确认、不自动保存。授权最多 10 分钟，退出登录即失效。</p>' if "degree:read" in scopes else
              '<p>不能查看其他账号，不自行确认或自动保存，不接入真实教务与成绩。授权最多 10 分钟，退出登录即失效。</p>' if personal else
              '<p>不能查看其他账号、不能替你确认或保存、不能接入真实个人数据。授权最多 10 分钟，退出登录即失效。</p>') +
             '<form method="post" action="/oauth/approve"><input type="hidden" name="transaction" value="' +
@@ -235,6 +243,53 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
     def records(request: Request):
         result = provider.records(request)
         return success(result, request_id=str(uuid4()), data_version="demo-v1")
+
+    if settings.cloud_degree_progress_enabled and hasattr(provider,"degree_progress"):
+        @site.get("/degree/progress")
+        def degree_progress(request: Request):
+            if request.url.query:
+                raise oauth.OAuthError()
+            from app.core.degree_progress import format_degree_receipt
+            data=format_degree_receipt(provider.degree_progress(request))
+            return success({**data,"degree_url":settings.app_origin+"/tools/degree"},
+                request_id=str(uuid4()),data_version="degree-progress-v1")
+
+    if settings.cloud_degree_agent_write_enabled and hasattr(provider,"degree_import"):
+        async def degree_body(request,limit):
+            def unique(items):
+                result={}
+                for key,value in items:
+                    if key in result:
+                        raise ValueError('duplicate key')
+                    result[key]=value
+                return result
+            try:
+                if request.headers.get('Content-Type','').split(';',1)[0]!='application/json':
+                    raise ValueError('expected json')
+                raw=bytearray()
+                async for chunk in request.stream():
+                    raw.extend(chunk)
+                    if len(raw)>limit:
+                        raise ValueError('oversize')
+                return json.loads(raw,object_pairs_hook=unique)
+            except (ValueError, RecursionError):
+                raise AppError(422,'VALIDATION_ERROR','Expected bounded JSON degree request without duplicate fields') from None
+
+        @site.post("/degree/import-drafts")
+        async def degree_prepare(request: Request):
+            if request.url.query:
+                raise oauth.OAuthError()
+            arguments=await degree_body(request,300000)
+            return success(provider.degree_import(request,arguments,'prepare'),
+                request_id=str(uuid4()),data_version="degree-agent-v1")
+
+        @site.post("/degree/import-confirm")
+        async def degree_confirm(request: Request):
+            if request.url.query:
+                raise oauth.OAuthError()
+            arguments=await degree_body(request,8192)
+            return success(provider.degree_import(request,arguments,'confirm'),
+                request_id=str(uuid4()),data_version="degree-agent-v1")
 
     if settings.cloud_agent_device_binding_enabled and hasattr(provider,"bind_device"):
         @site.post("/devices/bind")

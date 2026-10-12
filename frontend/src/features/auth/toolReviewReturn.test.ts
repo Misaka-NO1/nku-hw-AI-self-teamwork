@@ -5,7 +5,7 @@ import { toolReviewLoginUrl, toolReviewReturnPath } from "./toolReviewReturn";
 const origin = "https://pilot.example.invalid";
 const outer = (value: string) => "?" + new URLSearchParams({ return_to: value });
 describe("controlled tool review login returns", () => {
-  it.each(["/tools/tasks", "/tools/import", "/tools/calendar", "/tools/timetable", "/tools/import?source=eamis-auto&transfer_id=12345678-abcd-abcd-abcd-123456789abc", "/tools/tasks?draft_id=draft_ABC-123", "/tools/import?draft_id=schedule_draft_123"])(
+  it.each(["/tools/tasks", "/tools/import", "/tools/calendar", "/tools/timetable", "/tools/degree", "/tools/degree?source=eamis-auto&transfer_id=12345678-abcd-abcd-abcd-123456789abc", "/tools/import?source=eamis-auto&transfer_id=12345678-abcd-abcd-abcd-123456789abc", "/tools/tasks?draft_id=draft_ABC-123", "/tools/import?draft_id=schedule_draft_123"])(
     "preserves only the review address %s", value => {
       expect(toolReviewReturnPath(outer(value), origin)).toBe(value);
       expect(toolReviewLoginUrl(value, origin)).toBe("/tools/login" + outer(value));
@@ -21,7 +21,7 @@ describe("controlled tool review login returns", () => {
     "/tools/import?source=eamis-auto&transfer_id=bad",
     "/tools/import?source=eamis-auto&source=eamis-auto",
     "/tools/import?source=eamis-auto&transfer_id=12345678-abcd-abcd-abcd-123456789abc&owner=other",
-    "/tools/degree", "/tools/import/../tasks", "/oauth/approve?decision=allow"])(
+    "/tools/degree?owner=other", "/tools/degree?draft_id=a", "/tools/import/../tasks", "/oauth/approve?decision=allow"])(
     "rejects unsafe destinations %s", value => {
       expect(toolReviewReturnPath(outer(value), origin)).toBeNull();
       expect(toolReviewLoginUrl(value, origin)).toBeNull();

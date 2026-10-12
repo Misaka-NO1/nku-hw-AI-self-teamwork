@@ -35,7 +35,7 @@ def build(name: str, *, backend_only: bool = False) -> dict:
         # maps, tickets, browser storage or private runtime configuration.
         reader = output / "frontend/dist/assets/campus-schedule-reader.zip"
         extension = ROOT / "extension"
-        required = [extension / "manifest.json", *[extension / "dist" / name for name in ("background.js", "content.js", "app-bridge.js", "preview.js", "preview.html")]]
+        required = [extension / "manifest.json",extension / "README.md", *[extension / "dist" / name for name in ("background.js", "content.js", "degree-content.js", "eamis-content.js", "app-bridge.js", "preview.js", "preview.html")]]
         if any(not path.is_file() for path in required):
             raise ValueError("Build the timetable reader extension before packaging")
         with zipfile.ZipFile(reader, "w", zipfile.ZIP_DEFLATED) as bundle:
@@ -55,6 +55,9 @@ def build(name: str, *, backend_only: bool = False) -> dict:
     for name in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql", "visitor-identity-first-migration.sql", "native-identity-registry-migration.sql", "native-browser-binding-migration.sql"):
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / name, output / name)
     (output / "fixtures").mkdir()
+    shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/degree-progress-migration.sql",output / "degree-progress-migration.sql")
+    shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/degree-agent-import-migration.sql",output / "degree-agent-import-migration.sql")
+    shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/degree-in-progress-migration.sql",output / "degree-in-progress-migration.sql")
     for filename in READ_ONLY_FIXTURES:
         # These do not seed owner data or alter the fixture DB.
         shutil.copy2(ROOT / "fixtures" / filename, output / "fixtures" / filename)

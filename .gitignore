@@ -8,8 +8,11 @@ htmlcov/
 backend/data/
 backend/.test-tmp-*/
 backend/.test-native-*/
+backend/.test-degree-progress-*/
+backend/.test-degree-qa-*/
 backend/.test-python-deps/
 /.test-tmp-*/
+/.test-extension-switch-package-*/
 /artifacts/
 .local-notice-pilot-data/
 node_modules/

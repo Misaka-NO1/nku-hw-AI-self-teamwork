@@ -11,6 +11,8 @@ export function oauthReturnPath(search: string, origin: string): string | null {
     const competition = !next.searchParams.has("code_challenge") && !next.searchParams.has("code_challenge_method");
     const consentScopes = new Set(["demo:read", "demo:read tasks:read", "demo:read tasks:read tasks:write",
       "demo:read devices:bind", "demo:read tasks:read devices:bind", "demo:read tasks:read tasks:write devices:bind"]);
+    for(const scope of [...consentScopes])consentScopes.add(scope+" degree:read");
+    for(const scope of [...consentScopes])if(scope.endsWith(" degree:read"))consentScopes.add(scope+" degree:write");
     const required = competition ? base : [...base, "code_challenge", "code_challenge_method"];
     const keys = [...next.searchParams.keys()];
     if (keys.length !== required.length || required.some(key => next.searchParams.getAll(key).length !== 1)) return null;

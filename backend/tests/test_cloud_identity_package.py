@@ -27,20 +27,24 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         "backend/data/auth-pilot-config.json": "DO_NOT_PACKAGE_PRIVATE_CONFIG",
         ".env": "DO_NOT_PACKAGE_SERVER_KEY",
         "extension/manifest.json": "{}",
+        "extension/README.md": "shared timetable/completion reader",
         "extension/dist/background.js": "/* reader worker */",
         "extension/dist/content.js": "/* course area only */",
+        "extension/dist/degree-content.js": "/* completion area only */",
+        "extension/dist/eamis-content.js": "/* shared navigation lifecycle */",
         "extension/dist/app-bridge.js": "/* one-shot transfer */",
         "extension/dist/preview.js": "/* local preview */",
         "extension/dist/preview.html": "<html></html>",
         "deploy/cloudbase-identity-pilot/Dockerfile": "FROM python:3.12-slim-bookworm",
         "deploy/cloudbase-identity-pilot/README.md": "Deployment candidate only",
+        "deploy/cloudbase-identity-pilot/manual-reset-private-spaces.sql": "DO_NOT_PACKAGE_DESTRUCTIVE_MAINTENANCE",
     }.items():
         (tmp_path / file).write_text(value, encoding="utf-8")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/schema.sql", tmp_path / "deploy/cloudbase-identity-pilot/schema.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/competition-oauth-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/notice-text-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/notice-text-migration.sql")
     shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql", tmp_path / "deploy/cloudbase-identity-pilot/task-calendar-migration.sql")
-    for migration in ("task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql", "visitor-identity-first-migration.sql", "native-identity-registry-migration.sql", "native-browser-binding-migration.sql"):
+    for migration in ("degree-in-progress-migration.sql", "degree-agent-import-migration.sql", "degree-progress-migration.sql", "task-oauth-scopes-migration.sql", "personal-tasks-migration.sql", "persistent-auth-migration.sql", "personal-schedules-migration.sql", "device-login-migration.sql", "agent-device-binding-migration.sql", "task-delete-migration.sql", "browser-visitor-migration.sql", "visitor-identity-first-migration.sql", "native-identity-registry-migration.sql", "native-browser-binding-migration.sql"):
         shutil.copy2(ROOT / "deploy/cloudbase-identity-pilot" / migration, tmp_path / "deploy/cloudbase-identity-pilot" / migration)
     for filename in builder.FIXTURES + builder.READ_ONLY_FIXTURES:
         shutil.copy2(ROOT / "fixtures" / filename, tmp_path / "fixtures" / filename)
@@ -53,6 +57,7 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         assert ("frontend/dist/index.html" in names) is not backend_only
         assert ("Dockerfile" in names) is not backend_only
         assert not any("data/" in name or ".env" in name or "node_modules" in name for name in names)
+        assert not any("manual-reset" in name or "sql-tests" in name for name in names)
         assert sorted(n for n in names if n.startswith("fixtures/")) == sorted("fixtures/" + n for n in builder.FIXTURES + builder.READ_ONLY_FIXTURES)
         manifest = json.loads(archive.read("package-manifest.json"))
         assert set(manifest) == set(names) - {"package-manifest.json"}

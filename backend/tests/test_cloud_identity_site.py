@@ -52,6 +52,8 @@ class RealPostgresPipeStore:
     def personal_call(self,op,args): return self.call('__personal__:'+op,args)
     def agent_device_call(self,op,args): return self.call('__agent_device__:'+op,args)
     def native_identity_call(self,op,args): return self.call('__native__:'+op,args)
+    def degree_call(self,op,args): return self.call('__degree__:'+op,args)
+    def degree_agent_call(self,op,args): return self.call('__degree_agent__:'+op,args)
     def shutdown(self):
         self.process.stdin.close(); self.process.wait(timeout=20)
 
