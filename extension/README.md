@@ -1,6 +1,12 @@
 # 教务共用拓展（课表＋培养计划）
 
-## 使用流程（0.3.3）
+## 安装（0.3.4，课表与培养计划共用一份）
+
+下载 `campus-reader-0.3.4.zip` 并解压。电脑 Chrome 地址栏打开 `chrome://extensions`，Edge 打开 `edge://extensions`；启用开发者模式，点击“加载已解压的扩展程序”，选择含 `manifest.json` 的文件夹。核对名称“南开校园助手 · 教务课表与培养计划”、版本 0.3.4；停用或移除旧副本，刷新已经打开的教务页。手机可接收电脑导出的 JSON，再上传给 Agent，不支持在手机 Chrome 安装此拓展。
+
+0.3.4 统一显式版本下载入口和可见安装引导；旧 `campus-schedule-reader.zip` 地址兼容返回同一份新版。提取逻辑、权限和确认保存流程不变。
+
+## 使用流程
 
 1. 使用原课表拓展，不安装第二个。构建：pnpm --filter @campus/extension verify，Chrome重新加载整个extension目录。
 2. 本人登录教务，打开 https://eamis.nankai.edu.cn/eams/myPlanCompl.action 的“计划完成情况”，等待表格加载。

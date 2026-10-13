@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "南开校园助手 · 教务课表与培养计划",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "共用扩展提取课表、导出分类学分 JSON 给 Agent 核对并确认保存。不导出课程成绩、姓名或学号，不读取认证信息。",
   "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "host_permissions": [

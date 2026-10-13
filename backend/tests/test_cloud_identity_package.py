@@ -26,7 +26,7 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         "frontend/dist-identity/assets/main.js": "/* public asset */",
         "backend/data/auth-pilot-config.json": "DO_NOT_PACKAGE_PRIVATE_CONFIG",
         ".env": "DO_NOT_PACKAGE_SERVER_KEY",
-        "extension/manifest.json": "{}",
+        "extension/manifest.json": '{"version":"0.3.4"}',
         "extension/README.md": "shared timetable/completion reader",
         "extension/dist/background.js": "/* reader worker */",
         "extension/dist/content.js": "/* course area only */",
@@ -90,6 +90,9 @@ def test_candidate_contains_only_allowlisted_runtime_files(tmp_path, monkeypatch
         assert "native-identity-registry-migration.sql" in names and "native-browser-binding-migration.sql" in names
         assert "backend/app/visitor_site.py" in names
         assert ("frontend/dist/assets/campus-schedule-reader.zip" in names) is not backend_only
+        if not backend_only:
+            current = "frontend/dist/assets/campus-reader-0.3.4.zip"
+            assert archive.read(current) == archive.read("frontend/dist/assets/campus-schedule-reader.zip")
         assert all((i.external_attr >> 16) & 0o444 == 0o444 for i in archive.infolist())
         assert report["calendar_frontend_source_present"] is False
     with pytest.raises(ValueError, match="overwritten"):
