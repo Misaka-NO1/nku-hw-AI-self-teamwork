@@ -2,6 +2,22 @@
 
 这是团队共享仓库。开始任何模块开发前，先阅读：
 
+[文档导航与阅读顺序](docs/README.md)汇总各模块入口、交接记录和验收材料。下表帮助定位文件；目录位置不代表功能已上线或验收通过。
+
+| 目录 | 内容 |
+|---|---|
+| [`frontend/`](frontend/) | 工具站页面与前端测试 |
+| [`backend/`](backend/README.md) | REST、MCP、身份与领域服务、后端测试 |
+| [`extension/`](extension/) | 教务读取浏览器插件 |
+| [`packages/import-core/`](packages/import-core/) | 插件与前端共用的解析、规范化逻辑 |
+| [`contracts/`](contracts/) | 跨模块约定和数据结构 |
+| [`knowledge/`](knowledge/) | 知识库、资料、目录及生成脚本 |
+| [`fixtures/`](fixtures/) | 虚构测试数据 |
+| [`deploy/`](deploy/) | 部署、迁移、平台工作流与配置模板 |
+| [`prompts/`](prompts/) | Agent 提示词 |
+| [`scripts/`](scripts/) | Windows 便携包等辅助工具 |
+| [`docs/`](docs/README.md) | 任务书、交接、阻塞项和验收证据 |
+
 当前成果与线上边界见 [`N26 当前交接`](docs/handoffs/N26-current-release-and-team-use-2026-10-07.md)；2026-10-08 的收尾任务、权限约束与最新执行结果见 [`收尾执行记录`](docs/handoffs/收尾执行记录-2026-10-08.md)。早期进度文档保留历史，应以更晚验收证据判断现状。
 
 - [`contracts/integration-conventions.md`](contracts/integration-conventions.md)：跨 Agent 的唯一命名、路由、配置和函数映射约定
