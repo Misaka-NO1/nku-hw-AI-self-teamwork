@@ -4,7 +4,7 @@ import { useBrowserSession } from "../auth/useBrowserSession";
 import { deleteCalendar, loadCalendar, loadCandidates, updateCalendar, type CalendarUpdate } from "./api";
 import { calendarErrorText as errorText, confirmationText } from "./messages";
 import { calendarIcs, dueDay, exactCandidates, formatTime, isOverdue, monthDays, occursOn,
-  plannedRange, plannedRanges, READ_ONLY, reminderKey, reminderTarget, remindersDue, shanghaiDay, shiftMonth, summary,
+  plannedRange, plannedRanges, READ_ONLY, shanghaiDay, shiftMonth, summary,
   type CalendarData, type Candidate, type TaskStatus } from "./model";
 import "./calendar.css";
 
@@ -29,11 +29,7 @@ export default function CalendarPage() {
   const [choice,setChoice]=useState<Candidate|null>(null);
   const [confirmed,setConfirmed]=useState(false);
   const [deleteConfirm,setDeleteConfirm]=useState(false);
-  const [reminder,setReminder]=useState<number|null>(15);
-  const [notifications,setNotifications]=useState(false);
-  const [notificationText,setNotificationText]=useState("");
   const [clock,setClock]=useState(()=>new Date());
-  const delivered=useRef(new Set<string>());
   const writeAttempt=useRef<{signature:string;key:string}|null>(null);
   const scope=useRef("");
   const selectedRef=useRef(selected);
@@ -56,29 +52,14 @@ export default function CalendarPage() {
     return ()=>{active=false;controller.abort();};
   },[auth.session?.workspaceRef,reload]);
   useEffect(()=>{
-    setCandidates([]);setChoice(null);setConfirmed(false);setDeleteConfirm(false);setReminder(task?.reminderMinutes??null);
+    setCandidates([]);setChoice(null);setConfirmed(false);setDeleteConfirm(false);
   },[selected,task?.calendarRevision]);
-  useEffect(()=>{setNotifications(false);delivered.current.clear();},[auth.session?.workspaceRef]);
   useEffect(()=>{
     const tick=()=>setClock(new Date());
     const timer=window.setInterval(tick,30000);
     window.addEventListener("focus",tick);
     return ()=>{window.clearInterval(timer);window.removeEventListener("focus",tick);};
   },[]);
-  useEffect(()=>{
-    if(!notifications || error || loading || auth.checking || !auth.session || Date.parse(auth.session.expiresAt)<=clock.getTime()
-      || typeof Notification==="undefined" || Notification.permission!=="granted") return;
-    for(const item of remindersDue(data.items,clock)) {
-      const key=scope.current+":"+reminderKey(item,clock);
-      if(delivered.current.has(key)) continue;
-      try {
-        const notification=new Notification("南开校园助手 · 待办提醒",{
-          body:`${item.notice.title} · ${formatTime(reminderTarget(item,clock))}`,tag:key});
-        delivered.current.add(key);
-        notification.onclick=()=>{window.focus();setSelected(item.taskId);const at=reminderTarget(item,clock)!;setDay(shanghaiDay(at));setMonth(shanghaiDay(at).slice(0,7));notification.close();};
-      } catch {setNotificationText("此浏览器无法显示桌面通知；请使用页内提醒或导出日历。");}
-    }
-  },[clock,notifications,data,auth.session,auth.checking,error,loading]);
 
   async function perform(action:()=>Promise<void>) {
     if(busyRef.current)return;
@@ -113,7 +94,7 @@ export default function CalendarPage() {
     const currentScope=scope.current;
     const update:CalendarUpdate={expected_revision:task.calendarRevision,status:nextStatus,
       scheduled_start:choice?.start??task.scheduledStart,scheduled_end:choice?.end??task.scheduledEnd,
-      reminder_minutes:reminder};
+      reminder_minutes:task.reminderMinutes};
     await perform(async()=>{
       if(!auth.session)return;
       if(Date.parse(auth.session.expiresAt)<=Date.now())throw new Error("会话已过期，请重新登录后保存。");
@@ -127,20 +108,11 @@ export default function CalendarPage() {
       const saved=fresh.items.find(t=>t.taskId===task.taskId);
       const sameTime=(a:string|null,b:string|null)=>a===null||b===null?a===b:Date.parse(a)===Date.parse(b);
       if(!saved || fresh.legacy || saved.calendarRevision<=task.calendarRevision || saved.status!==nextStatus
-        || !sameTime(saved.scheduledStart,update.scheduled_start) || !sameTime(saved.scheduledEnd,update.scheduled_end) || saved.reminderMinutes!==reminder)
+        || !sameTime(saved.scheduledStart,update.scheduled_start) || !sameTime(saved.scheduledEnd,update.scheduled_end) || saved.reminderMinutes!==update.reminder_minutes)
         throw new Error("写入后读回不一致，请刷新核对；重试将沿用同一幂等键。");
       setData(fresh);setChoice(null);setConfirmed(false);writeAttempt.current=null;
       setMessage("安排已保存并从后端读回。");
     });
-  }
-  async function enableNotifications() {
-    if(notifications) {setNotifications(false);setNotificationText("桌面提醒已关闭。");return;}
-    if(typeof Notification==="undefined" || !window.isSecureContext) {setNotificationText("此环境不支持桌面通知，请使用页内提醒或导出日历。");return;}
-    try {
-      const permission=await Notification.requestPermission();
-      setNotifications(permission==="granted");
-      setNotificationText(permission==="granted"?"仅在本页面保持运行且登录有效时提醒；关闭页面后不保证提醒。":"通知未授权，可在浏览器设置中修改；页内提醒仍可使用。");
-    } catch {setNotifications(false);setNotificationText("浏览器未能开启通知，请使用页内提醒或导出日历。");}
   }
   async function removeTask() {
     if(!task||!editable||!deleteConfirm||!data.capabilities.deletion)return;
@@ -164,7 +136,7 @@ export default function CalendarPage() {
     const url=URL.createObjectURL(blob),link=document.createElement("a");
     link.href=url;link.download="南开-待办安排.ics";
     document.body.append(link);link.click();link.remove();window.setTimeout(()=>URL.revokeObjectURL(url),1000);
-    setMessage("已交给浏览器下载。导入系统日历后由日历应用提醒；是否提醒取决于应用设置，导出后不会自动同步。");
+    setMessage("已交给浏览器下载，可导入日历应用查看。导出的日历文件不会自动同步更新。");
   }
   const visible=data.items.filter(t=>(statusFilter==="all"||t.status===statusFilter)&&(allDays||occursOn(t,day)));
   const currentExpired=auth.session && Date.parse(auth.session.expiresAt)<=clock.getTime();
@@ -177,7 +149,7 @@ export default function CalendarPage() {
       {auth.checking && <p role="status">正在核验当前浏览器会话…</p>}
       {(!auth.session && !auth.checking || currentExpired) && <p className="calendar-warning">请先<a href="/tools/login?return_to=%2Ftools%2Fcalendar">登录后返回日历</a>。不会自动新建工作区、保存或排期。</p>}
       {auth.recoveryError!=null && <p role="alert">{errorText(auth.recoveryError)} <button onClick={auth.retryRecovery}>重新核验浏览器会话</button></p>}
-      {data.legacy && <p className="calendar-warning">已读取现有待办。D 的日历扩展接口尚未接通：当前只读，不支持完成、改期或保存提醒；截止时间不是已安排时间。</p>}
+      {data.legacy && <p className="calendar-warning">已读取现有待办，当前只读，不支持完成或改期；截止时间不是已安排时间。</p>}
     </>
     {error && <p className="calendar-error" role="alert">{error}</p>}
     {message && <p className="calendar-message" role="status">{message}</p>}
@@ -186,7 +158,6 @@ export default function CalendarPage() {
         <div className="calendar-stats" aria-label="待办摘要">{[["未完成",counts.pending],["今天",counts.today],["已逾期",counts.overdue],["待安排",counts.unplanned]].map(([label,value])=>
           <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>
         <p className="calendar-summary" role="status">{counts.pending?`你还有 ${counts.pending} 件未完成事项，今天 ${counts.today} 件${counts.overdue?`，其中 ${counts.overdue} 件已逾期`:""}。`:"当前没有未完成事项。"}</p>
-        {remindersDue(data.items,clock).length>0 && <p className="calendar-warning">即将开始／正在进行：{remindersDue(data.items,clock).map(t=>t.notice.title).join("、")}</p>}
         <div className="calendar-workspace"><div className="calendar-month">
           <div className="calendar-month-toolbar"><button aria-label="上个月" onClick={()=>setMonth(shiftMonth(month,-1))}>‹</button><h2>{month.replace("-"," 年 ")} 月</h2><button aria-label="下个月" onClick={()=>setMonth(shiftMonth(month,1))}>›</button></div>
           <div className="calendar-weekdays">{["一","二","三","四","五","六","日"].map(d=><span key={d}>{d}</span>)}</div>
@@ -225,14 +196,12 @@ export default function CalendarPage() {
             <div className="calendar-actions"><button disabled={!editable} onClick={()=>setDeleteConfirm(false)}>保留事项</button>
               <button disabled={!editable} onClick={removeTask}>{busy?"删除中…":"确认删除事项"}</button></div></div>}
           {candidates.length>0&&<fieldset className="calendar-candidates"><legend>选择一个参考时间</legend>{candidates.map((c,i)=><label key={c.start}><input type="radio" name="calendar-slot" checked={choice?.start===c.start} onChange={()=>{setChoice(c);setConfirmed(false);}}/>方案 {i+1} · {formatTime(c.start)} — {formatTime(c.end)}（{c.durationMinutes} 分钟）</label>)}</fieldset>}
-          <label className="calendar-filter">提前提醒 <select disabled={!editable||!data.capabilities.reminders} value={reminder??"none"} onChange={e=>setReminder(e.target.value==="none"?null:Number(e.target.value))}>
-            <option value="none">不提醒</option>{[0,5,15,30,60].map(n=><option key={n} value={n}>{n===0?"开始时":`${n} 分钟`}</option>)}</select></label>
           {choice&&<label className="calendar-confirm"><input type="checkbox" checked={confirmed} onChange={e=>setConfirmed(e.target.checked)}/>我已核对并确认选定的时间；截止要求保持不变。</label>}
-          <button className="calendar-primary" disabled={!editable||(!choice&&!data.capabilities.reminders)||(!!choice&&!confirmed)} onClick={()=>save()}>{busy?"保存中…":"确认保存安排 / 提醒"}</button>
+          <button className="calendar-primary" disabled={!editable||!choice||!confirmed} onClick={()=>save()}>{busy?"保存中…":"确认保存安排"}</button>
         </article>}
-        <footer className="calendar-reminders"><h2>记下来，也别忘了</h2><p>打开日历可看到待办摘要。桌面通知需要你主动授权，且只在本页面运行、登录有效时工作。</p>
-          <div className="calendar-actions"><button onClick={enableNotifications}>{notifications?"关闭桌面提醒":"开启桌面提醒"}</button><button disabled={!data.items.some(t=>t.status==="pending"&&plannedRange(t))||!!error} onClick={downloadIcs}>导出已安排事项（.ics）</button></div>
-          {notificationText&&<p role="status">{notificationText}</p>}<p className="calendar-muted">关闭网页后，可用系统日历提醒；需导入 .ics 并检查日历应用的通知设置。导出的安排不会自动更新。Agent 启动提醒还需要 D 接入摘要工具，不是本页已经实现的能力。</p>
+        <footer className="calendar-reminders"><h2>导出日历</h2><p>将已安排事项下载为 .ics 文件，导入你使用的日历应用。</p>
+          <div className="calendar-actions"><button disabled={!data.items.some(t=>t.status==="pending"&&plannedRange(t))||!!error} onClick={downloadIcs}>导出已安排事项（.ics）</button></div>
+          <p className="calendar-muted">导出的日历文件不会自动更新。</p>
         </footer>
       </>}
     </>}
