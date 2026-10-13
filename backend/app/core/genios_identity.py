@@ -166,8 +166,17 @@ def guard_native_oauth_owner(request, runtime, database):
         raise AppError(401, "AUTH_REQUIRED", "Original account OAuth required")
     identity_hash = verify_native_headers(request.headers, runtime.genios_native_integration_key.get_secret_value(),
         (runtime.mcp_service_token.get_secret_value(),), credential_header="x-campus-native-key")
-    result = database.native_identity_call("verify_grant", {"identity_hash":identity_hash,
-        "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":runtime.oauth_client_id})
+    try:
+        result = database.native_identity_call("verify_grant", {"identity_hash":identity_hash,
+            "grant_hash":secret_hash(resource_token(request).get_secret_value()),"audience":runtime.oauth_client_id})
+    except AppError as exc:
+        if exc.status_code == 401 and exc.code == "AUTH_REQUIRED":
+            # The fixed identity/proof above was already verified. A missing,
+            # revoked, expired or reset grant is an OAuth token failure, not a
+            # new browser-binding request. Let the OAuth client renew consent.
+            from app.core.oauth_local import OAuthError
+            raise OAuthError("invalid_token", 401) from None
+        raise
     if result != {"owner_consistent":True}:
         raise AppError(403, "FORBIDDEN", "Platform account and tool account differ")
 

@@ -223,6 +223,32 @@ def test_every_private_agent_read_checks_fixed_platform_identity_and_actual_oaut
     assert a.get("/oauth/records",headers=attested).status_code == 403  # Browser cookie cannot attest.
 
 
+def test_reset_or_missing_grant_challenges_oauth_and_renewal_reuses_space(native):
+    _, _, db, tools, a, _ = native
+    _, _, owner = start_and_create(tools, a)
+    counts = db.call("__test_identity_counts__", {})
+    checked = {"Authorization":"Bearer " + "A" * 43,
+        "platform-user-id":"fictional-native-a", "platform-attestation":attest(tools)}
+    for route in ("/oauth/records", "/oauth/tasks/summary", "/oauth/tasks/entries"):
+        rejected = tools.get(route, headers=checked)
+        assert rejected.status_code == 401
+        assert rejected.json() == {"error":"invalid_token"}
+        assert rejected.headers["www-authenticate"] == 'Bearer realm="campus-oauth", error="invalid_token"'
+        assert rejected.headers["cache-control"] == "no-store"
+    # A fresh same-owner consent restores both data readers, without rebinding,
+    # creating another owner, accepting the browser cookie as an Agent token,
+    # or treating a missing grant as an empty timetable/calendar.
+    renewed = {**checked, **grant(a)}
+    for route in ("/oauth/records", "/oauth/tasks/summary", "/oauth/tasks/entries"):
+        assert tools.get(route, headers=renewed).status_code == 200
+    assert current(a)["workspace_ref"] == owner["workspace_ref"]
+    assert db.call("__test_identity_counts__", {})["owners"] == counts["owners"]
+    bad_proof = tools.get("/oauth/records", headers={**renewed,"platform-attestation":"fake"})
+    assert bad_proof.status_code == 401
+    assert bad_proof.json()["error"]["code"] == "AUTH_REQUIRED"
+    assert "www-authenticate" not in bad_proof.headers
+
+
 def test_private_agent_writes_and_binding_cannot_use_other_native_identity(native):
     _, _, _, tools, a, b = native
     code, _, _ = start_and_create(tools, a)

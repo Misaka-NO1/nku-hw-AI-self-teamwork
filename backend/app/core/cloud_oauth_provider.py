@@ -6,6 +6,7 @@ attests a hidden fixed platform ID and checks it against the actual OAuth owner.
 """
 import base64
 import hashlib
+import logging
 import re
 import secrets
 import time
@@ -38,8 +39,14 @@ class CloudOAuthProvider:
 
     def authenticate(self,client_id,client_secret):
         self.gate()
-        if (client_id!=self.settings.oauth_client_id or not 40<=len(client_secret)<=256 or
-          not secrets.compare_digest(secret_hash(client_secret),self.settings.oauth_client_secret_hash.get_secret_value())):
+        # Fixed classifications only; never log either credential, its digest,
+        # the supplied client identifier or exact length.
+        reason=("client_id" if client_id!=self.settings.oauth_client_id else
+                "secret_length" if not 40<=len(client_secret)<=256 else
+                "secret_mismatch" if not secrets.compare_digest(secret_hash(client_secret),
+                    self.settings.oauth_client_secret_hash.get_secret_value()) else None)
+        if reason is not None:
+            logging.getLogger("uvicorn.error").info("campus_oauth_client rejection=%s",reason)
             raise OAuthError("invalid_client",401)
 
     def _browser(self,request,write=False):

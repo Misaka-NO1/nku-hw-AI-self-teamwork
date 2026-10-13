@@ -2,9 +2,10 @@
 import logging
 
 import pytest
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from app.cloud_identity_site import create_cloud_identity_site
+from app.cloud_identity_site import create_cloud_identity_site,install_health_diagnostics
 from app.cloud_tasks_site import ENV_ID
 from app.core.config import Settings
 from app.core.errors import AppError
@@ -108,3 +109,26 @@ def test_bootstrap_diagnostics_do_not_open_identity_or_log_invalid_build(tmp_pat
         assert client.get("/oauth/authorize").status_code==503
         assert client.post("/api/v1/auth/cloudbase/session").status_code==503
         assert messages(caplog)==[]
+
+
+@pytest.mark.parametrize("method,path",[("GET","/oauth/authorize"),("POST","/oauth/approve"),("POST","/oauth/token")])
+def test_oauth_arrival_diagnostic_has_only_fixed_route_and_status(caplog,method,path):
+    site=FastAPI()
+    install_health_diagnostics(site,Settings(_env_file=None,build_id="diagnostic-test-r8"))
+    client=TestClient(site)
+    caplog.set_level(logging.INFO,logger="uvicorn.error")
+    response=client.request(method,path+"?state=DO_NOT_LOG_STATE",headers={
+        "Authorization":"Bearer DO_NOT_LOG_TOKEN","Cookie":"secret=DO_NOT_LOG_COOKIE"},
+        content="transaction=DO_NOT_LOG_TRANSACTION&client_secret=DO_NOT_LOG_SECRET")
+    assert response.status_code==404  # Isolate the logger from business/authentication handlers.
+    logs=[record.getMessage() for record in caplog.records if record.name=="uvicorn.error"
+          and record.getMessage().startswith("campus_oauth ")]
+    assert len(logs)==2
+    assert logs[0]==f"campus_oauth phase=received route={path} build=diagnostic-test-r8"
+    assert "status=404 elapsed_ms=" in logs[1]
+    assert "DO_NOT_LOG" not in " ".join(logs)
+    caplog.clear()
+    client.get("/oauth/token")
+    client.post("/oauth/authorize")
+    client.post("/oauth/approve-extra")
+    assert not any(record.getMessage().startswith("campus_oauth ") for record in caplog.records)

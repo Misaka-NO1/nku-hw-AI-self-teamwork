@@ -3,6 +3,7 @@ import base64
 import binascii
 import html
 import json
+import logging
 import time
 from collections import defaultdict, deque
 from contextlib import asynccontextmanager
@@ -96,6 +97,11 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
     @site.exception_handler(oauth.OAuthError)
     async def protocol_error(_, exc):
         headers = {"WWW-Authenticate": 'Basic realm="oauth-pilot"'} if exc.error == "invalid_client" else {}
+        if exc.error == "invalid_token" and exc.status == 401:
+            # RFC 6750 section 3.1: give OAuth clients an explicit invalid-token
+            # challenge after logout/revoke/reset, rather than a generic
+            # business error that leaves their cached token looking usable.
+            headers = {"WWW-Authenticate": 'Bearer realm="campus-oauth", error="invalid_token"'}
         return JSONResponse({"error": exc.error}, status_code=exc.status, headers=headers)
 
     @site.exception_handler(AppError)
@@ -148,18 +154,23 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
         raise oauth.OAuthError()
 
     def client_auth(request, params):
+        def reject(reason):
+            logging.getLogger("uvicorn.error").info("campus_oauth_client rejection=%s",reason)
+            raise oauth.OAuthError("invalid_client",401)
         auth = request.headers.get("Authorization", "")
         if len(auth) > 2048:
-            raise oauth.OAuthError("invalid_client", 401)
+            reject("header_length")
         if auth:
-            if "client_id" in params or "client_secret" in params or not auth.startswith("Basic "):
-                raise oauth.OAuthError("invalid_client", 401)
+            if "client_id" in params or "client_secret" in params:
+                reject("multiple_methods")
+            if not auth.startswith("Basic "):
+                reject("header_scheme")
             try:
                 raw = base64.b64decode(auth[6:], validate=True).decode("ascii")
                 client_id, secret = raw.split(":", 1)
                 client_id, secret = unquote_plus(client_id), unquote_plus(secret)
             except (ValueError, UnicodeError, binascii.Error):
-                raise oauth.OAuthError("invalid_client", 401) from None
+                reject("header_format")
         else:
             client_id, secret = params.pop("client_id", ""), params.pop("client_secret", "")
         provider.authenticate(client_id, secret)
