@@ -64,12 +64,15 @@ def test_repair_keeps_complete_meeting_periods_and_source_times():
         "只有逐项核对后才描述空闲",
         "同一course的多个meeting只算一门课程",
         "逐项称“上课安排/次数”，不把三次上课说成三门课",
-        "课程名严格使用source course.name",
+        "课程名严格使用source course.title",
+        "优先使用schedule.resolved_meetings的course_title、period_label、time_label",
+        "完整照录后端计算的每次起止时间，不再自行缩短",
         "不根据教室或实验楼给课程改名、加“实验”后缀",
     ):
         assert rule in result
     assert "existing_space表示平台身份已关联唯一空间" in result
     assert "401/invalid_token表示授权失效" in result
+    assert "course.name" not in result
 
 
 def test_campus_rule_uses_current_public_kb_and_preserves_source_boundaries():

@@ -249,6 +249,45 @@ def test_reset_or_missing_grant_challenges_oauth_and_renewal_reuses_space(native
     assert "www-authenticate" not in bad_proof.headers
 
 
+def test_native_owned_schedule_projection_has_complete_times_without_storage_write(native):
+    from copy import deepcopy
+    from test_personal_schedules import personal, create, confirm
+    from test_schedule_read_projection import records as synthetic_records
+    _, _, db, tools, a, b = native
+    _, _, owner = start_and_create(tools, a)
+    start_and_create(tools, b, "fictional-native-b")
+    payload = personal()
+    source = synthetic_records()["schedule"]["timetable"]
+    payload["term"]["periods"] = source["term"]["periods"]
+    payload["term"]["teaching_weeks"] = 5
+    payload["source"]["coverage"]["week_numbers"] = [1, 2, 3, 4, 5]
+    template = deepcopy(payload["courses"][0])
+    payload["courses"] = [{**template, **course, "meetings": [
+        {**meeting, "campus_id": None} for meeting in course["meetings"]]} for course in source["courses"]]
+    draft = create(a, owner, payload, "clock-projection")
+    receipt = confirm(a, owner, draft, "clock-projection")
+    saved = a.post("/api/v1/schedules/commit", json=receipt, headers=headers(owner))
+    assert saved.status_code == 200, saved.text
+    bearer = grant(a)
+    checked = {**bearer, "platform-user-id": "fictional-native-a", "platform-attestation": attest(tools)}
+    before = db.call("__test_identity_counts__", {})
+    response = tools.get("/oauth/records", headers=checked)
+    assert response.status_code == 200, response.text
+    schedule = response.json()["data"]["schedule"]
+    assert [item["time_label"] for item in schedule["resolved_meetings"]] == [
+        "10:00–11:40", "12:55–15:40", "18:30–21:05"]
+    assert schedule["resolved_meetings_meta"]["complete"] is True
+    stored = a.get("/api/v1/schedules/current", params={"workspace_ref": owner["workspace_ref"]}).json()["data"]
+    assert stored["timetable"] == schedule["timetable"] == payload
+    assert "resolved_meetings" not in stored and stored["revision"] == schedule["revision"] == 1
+    assert db.call("__test_identity_counts__", {}) == before
+    bad_token = tools.get("/oauth/records", headers={**checked, "Authorization": "Bearer " + "X" * 43})
+    assert bad_token.status_code == 401 and bad_token.json() == {"error": "invalid_token"}
+    wrong_owner = tools.get("/oauth/records", headers={**checked,
+        "platform-user-id": "fictional-native-b", "platform-attestation": attest(tools, "fictional-native-b")})
+    assert wrong_owner.status_code == 403 and wrong_owner.json()["data"] is None
+
+
 def test_private_agent_writes_and_binding_cannot_use_other_native_identity(native):
     _, _, _, tools, a, b = native
     code, _, _ = start_and_create(tools, a)

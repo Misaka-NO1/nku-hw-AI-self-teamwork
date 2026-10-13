@@ -253,7 +253,8 @@ def create_oauth_adapter(settings: Settings, provider) -> FastAPI:
     @site.get("/records")
     def records(request: Request):
         result = provider.records(request)
-        return success(result, request_id=str(uuid4()), data_version="demo-v1")
+        from app.core.schedule_read_projection import project_schedule_meetings
+        return success(project_schedule_meetings(result), request_id=str(uuid4()), data_version="demo-v1")
 
     if settings.cloud_degree_progress_enabled and hasattr(provider,"degree_progress"):
         @site.get("/degree/progress")
