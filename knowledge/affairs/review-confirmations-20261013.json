@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "recorded_at": "2026-10-13",
+  "review_kind": "owner_confirmed_guidance",
+  "source": "项目负责人在本任务中明确说明：未核验的东西都核验过了，并要求更新校园事务知识库。",
+  "scope_note": "记录负责人对现有使用指引的确认；不新增官方网页证据，不改写来源中的原核验日期，不证明任何未收录字段。",
+  "entry_ids": [
+    "nku-proc-card-recharge",
+    "nku-proc-view-plan",
+    "nku-proc-venue-booking",
+    "nku-proc-teaching-eval",
+    "nku-proc-flea-market",
+    "nku-proc-shuttle",
+    "nku-proc-visitor-access",
+    "nku-proc-counseling",
+    "nku-proc-card-help"
+  ]
+}

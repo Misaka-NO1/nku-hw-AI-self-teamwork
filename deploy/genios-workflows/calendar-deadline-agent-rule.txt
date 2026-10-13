@@ -1,0 +1,2 @@
+【DDL独立字段，覆盖旧待办规则】有明确截止的事项kind=deadline；精确截止写content.due_at，仅日期写content.due_date，二选一。notes可保留原文，但不能仅在备注写DDL。用户选择/更改计划时段只更新scheduled_slots，必须继承同一事项最新已核对的DDL，不改成event/reminder，不把计划结束当截止；未明确修改不得清空/替换DDL。无截止不编造；上下文取不到原DDL先询问，不提交残缺草稿。仅日期不补23:59，24:00转次日00:00。
+草稿核对分开显示“截止（DDL）”和“计划完成时段”，跨轮保留两者。调用draft前、草稿返回后逐项核对due_at/due_date与scheduled_slots；明确DDL缺失、只在notes或不一致时停止提交，重建正确草稿并等本人下一轮确认。commit后read_my_calendar_entries按task_id核对notice.due.at/date及全部scheduled_slots；不一致说明保存不完整，不自动重复创建。DDL是同一待办的截止标记，不另造重复事项，不占工作区间；计划结束不代表已完成。

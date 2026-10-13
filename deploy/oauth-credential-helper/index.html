@@ -2,12 +2,13 @@
 <html lang="zh-CN">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAuth 凭据本机准备</title><link rel="stylesheet" href="/style.css"></head>
 <body><main>
-  <p class="eyebrow">NK-GeniOS · 两账号只读试点</p>
-  <h1>一次准备，分别填写</h1>
-  <p>这不是登录页。仅在本机内存生成新的 OAuth 客户端密钥和 SHA-256 摘要，不联网、不保存文件，也不自动提交腾讯云或学校表单。</p>
-  <aside>仅限 nku-demo-a / nku-demo-b 的虚构课表和待办、demo:read。不要填数据库 Key、登录密码或已有令牌。关闭本页后内容丢失，请保管客户端密钥；不要发送到聊天。</aside>
+  <p class="eyebrow">NK-GeniOS · OAuth 连接恢复</p>
+  <h1>学校填原文，腾讯云填摘要</h1>
+  <p>这不是登录页。仅在本机内存计算 OAuth 客户端密钥的 SHA-256 摘要，不联网、不保存文件，也不自动提交腾讯云或学校表单。</p>
+  <aside>只更换现有 OAuth 客户端凭据，不改账号、空间、课表、日历或权限。不要填数据库 Key、登录密码、MCP Token 或专用身份插件 Token。关闭本页后内容丢失，请用密码管理器保管客户端密钥；不要发送到聊天。</aside>
   <section>
-    <h2>1. 由你创建新密钥</h2>
+    <h2>1. 准备同一串密钥，复制到学校插件</h2>
+    <p>粘贴你准备使用的 40–256 位客户端密钥，或点击生成按钮生成一枚新密钥。点击“复制客户端密钥”，粘贴到学校新插件 campus-private-space-oauth-recovery 的 client_secret 并保存。两端必须使用这一次计算的一对值；复制摘要前不要再次点击生成。</p>
     <button id="generate" type="button">生成一枚新的随机密钥</button>
     <label for="secret">客户端密钥（仅填写学校插件的 client_secret）</label>
     <input id="secret" type="password" autocomplete="off" spellcheck="false" maxlength="256" placeholder="点击生成，或输入新的 40–256 位 ASCII 随机密钥">
@@ -21,8 +22,8 @@
     <p>只用于 nku-campus-identity-pilot 后端配置；不填前端、知识库或 Agent 提示词。</p>
   </section>
   <section><h2>固定配置</h2>
-    <dl><dt>client_id / OAUTH_CLIENT_ID / AGENT_PAIRING_AUDIENCE</dt><dd>nku-genios-identity-read-pilot-20261003</dd><dt>Scope</dt><dd>demo:read</dd><dt>redirect_url / OAUTH_REDIRECT_URI</dt><dd>https://coze.nankai.edu.cn/product/llm/info/oauth</dd></dl>
-    <p>学校表单其余配置已准备。请由你填写密钥并点击学校表单“确定”。腾讯云尚未启用 OAuth；下一步仍要验证学校实际支持 S256/state，不能改为共享令牌或 Client Credential。</p>
+    <dl><dt>client_id / OAUTH_CLIENT_ID</dt><dd>nku-genios-identity-read-pilot-20261003</dd><dt>现有 Scope（不扩大权限）</dt><dd>demo:read tasks:read tasks:write devices:bind degree:read degree:write</dd><dt>redirect_url / OAUTH_REDIRECT_URI</dt><dd>https://coze.nankai.edu.cn/product/llm/info/oauth</dd></dl>
+    <p>只改两个值：学校新插件的 client_secret 填上方原文，腾讯云 OAUTH_CLIENT_SECRET_HASH 填下方摘要。各表单由你亲自保存；不要修改 GENIOS_NATIVE_INTEGRATION_KEY、开关、回调地址或现有权限。两端保存后再验收重新授权。</p>
   </section>
   <p id="status" role="status" aria-live="polite">尚未生成或输入密钥。</p>
 </main><script type="module" src="/credential.mjs"></script></body></html>

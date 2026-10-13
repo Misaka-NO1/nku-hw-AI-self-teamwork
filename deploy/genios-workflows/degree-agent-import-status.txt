@@ -1,4 +1,16 @@
-Status: published_cloud_062_extension_0.3.3_formal_web_v0.2.23
+2026-10-13 attachment update: school-native WF_DegreeAttachment_ReadOnly_20261013
+(db6qtsd4shhbpg918qh0, v0.1.0) now reads the complete degree JSON attachment.
+Real draft Agent attachment -> identity -> preview passed with 31 synthetic modules,
+the source canonical hash, saved=false and confirmation_required=true; no confirm/save.
+Agent config v0.2.30 published; formal Web approved 2026-10-13 13:10:06 +08:00,
+and the channel page shows Web running v0.2.30. A fresh formal session uploaded the synthetic
+attachment and returned a 31-module preview/new draft receipt with the source canonical hash;
+not saved, awaiting explicit confirmation. No confirmation/save was performed.
+Latest handoff and final release evidence: degree-attachment-status-20261013.md.
+This change has no cloud/SQL/permission/timetable/calendar changes.
+The older file-body limitation below is retained as historical evidence.
+
+Historical status (2026-10-12): published_cloud_062_extension_0.3.3_formal_web_v0.2.23
 Current status as of 2026-10-12: cloud 062/r52 normal, 100% traffic;
 formal Web v0.2.23 published with doubao-seed-2-1-lite.
 Final degree-only prompt: degree-progress-qa-fit-live.txt.

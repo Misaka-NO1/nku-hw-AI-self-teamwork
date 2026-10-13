@@ -84,10 +84,14 @@ def install_health_diagnostics(site,runtime):
     @site.middleware("http")
     async def health_diagnostics(request,call_next):
         route=request.url.path
-        if request.method!="GET" or route not in {"/healthz","/__tcb_probe__"}:
+        kind="campus_health" if request.method=="GET" and route in {"/healthz","/__tcb_probe__"} else (
+            "campus_oauth" if (request.method,route) in {
+                ("GET","/oauth/authorize"),("POST","/oauth/approve"),("POST","/oauth/token")
+            } else None)
+        if kind is None:
             return await call_next(request)
         started=time.monotonic()
-        logger.info("campus_health phase=received route=%s build=%s",route,build)
+        logger.info("%s phase=received route=%s build=%s",kind,route,build)
         status=500
         try:
             response=await call_next(request)
@@ -95,8 +99,8 @@ def install_health_diagnostics(site,runtime):
             return response
         finally:
             elapsed=max(0,int((time.monotonic()-started)*1000))
-            logger.info("campus_health phase=completed route=%s build=%s status=%d elapsed_ms=%d",
-                        route,build,status,elapsed)
+            logger.info("%s phase=completed route=%s build=%s status=%d elapsed_ms=%d",
+                        kind,route,build,status,elapsed)
 
 
 def create_cloud_identity_site(frontend_root=None,store=None,settings=None):
