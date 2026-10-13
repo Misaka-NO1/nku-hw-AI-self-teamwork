@@ -222,3 +222,54 @@ def test_midnight_deadline_draft_commit_and_readback(personal):
     assert len(rows) == 1
     assert rows[0]["notice"]["due"]["at"] == "2026-10-14T00:00:00+08:00"
     assert rows[0]["scheduled_slots"] == slots
+
+
+@pytest.mark.parametrize("deadline, expected_due", [
+    ({"due_at": "2026-10-16T21:40:00+08:00"},
+     {"at": "2026-10-16T21:40:00+08:00", "date": None, "precision": "datetime"}),
+    ({"due_date": "2026-10-16"},
+     {"at": None, "date": "2026-10-16", "precision": "date_only"}),
+])
+def test_notice_deadline_and_multiple_arrangements_survive_oauth_readback(personal, deadline, expected_due):
+    """Synthetic notification: a selected work slot must not replace its DDL."""
+    from app.core.notice_plan import resources
+    from app.core.task_calendar import TaskCalendarService
+
+    client, store, runtime, _ = personal
+    owner = login(client)
+    save(client, owner, "schedule", "timetable.demo.json", key="ddl-slots-schedule")
+    slots = [
+        {"start": "2026-10-14T15:00:00+08:00", "end": "2026-10-14T16:00:00+08:00"},
+        {"start": "2026-10-15T18:00:00+08:00", "end": "2026-10-15T19:00:00+08:00"},
+    ]
+    response = draft(client, owner, title="虚构通知：提交练习材料", kind="deadline",
+                     scheduled_slots=slots, **deadline)
+    assert response.status_code == 200, response.text
+    proposal = response.json()["data"]
+    assert proposal["content"][next(iter(deadline))] == next(iter(deadline.values()))
+    assert proposal["content"]["scheduled_slots"] == slots
+    assert calendar(client, owner).json()["data"]["items"] == []
+
+    saved = commit(client, owner, proposal)
+    assert saved.status_code == 200, saved.text
+    item = saved.json()["data"]["item"]
+    assert saved.json()["data"]["readback_verified"] is True
+    assert item["notice"]["due"] == expected_due
+    assert item["scheduled_slots"] == slots
+    assert item["scheduled_start"] == slots[0]["start"]
+    assert item["scheduled_end"] == slots[0]["end"]
+    assert calendar(client, owner).json()["data"]["items"] == [item]
+
+    bearer = grant(client)
+    readback = client.get("/oauth/tasks/entries", headers=bearer)
+    assert readback.status_code == 200, readback.text
+    assert readback.json()["data"]["items"] == [item]
+
+    args = {"principal_kind": "browser", "session_hash": secret_hash(client.cookies.get("campus_session")),
+            "csrf_hash": secret_hash(owner["csrf_token"])}
+    records = TaskCalendarService(runtime, store).records(args)
+    _, busy, _ = resources(records)
+    # Scheduling uses exactly the selected slots, not a fabricated interval ending at the DDL.
+    assert [(n["event"]["start"], n["event"]["end"]) for n in busy] == [
+        (slot["start"], slot["end"]) for slot in slots]
+    assert all(n["due"] == expected_due for n in busy)

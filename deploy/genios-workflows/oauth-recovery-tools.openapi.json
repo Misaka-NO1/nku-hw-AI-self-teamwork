@@ -69,7 +69,7 @@
       "post": {
         "operationId": "draft_my_calendar_entry",
         "summary": "draft_my_calendar_entry",
-        "description": "根据用户通知生成本人待办草稿，不等于已保存。query_json是只编码一次的JSON字符串，严格含content和idempotency_key。content含title、kind(reminder/deadline/event)、due_at或due_date、reminder_at、notes、scheduled_slots(最多8段start/end)、reminder_minutes。单纯提醒不要求结束时间；DDL不要求耗时，可先只保存截止；无选择时scheduled_slots=[]。时间含+08:00，不虚构时间/候选，不填账号/workspace。返回draft_id、payload_hash和规范化content，必须完整展示给用户核对并等待明确确认；不得立即自动提交。需tasks:write。",
+        "description": "生成本人未保存待办草稿。query_json编码一次，恰含content和idempotency_key。content含title、kind、due_at、due_date、reminder_at、notes、scheduled_slots、reminder_minutes。有明确DDL必须kind=deadline并写due_at或due_date，不能只写notes；选择/更改安排必须保留原DDL，同时传全部scheduled_slots（最多8段start/end），计划结束不代替截止，无选择用[]。无截止不编造，仅日期不补时刻；时间含+08:00。无需耗时，不填账号/workspace。调用前与返回后都核对DDL及全部时段；缺失或只在备注则停止提交，重建完整草稿。分别展示截止和计划时段及真实draft_id/payload_hash，等待本人下一轮确认，不能自动提交。需tasks:write。",
         "requestBody": {
           "required": true,
           "content": {

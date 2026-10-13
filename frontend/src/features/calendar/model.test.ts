@@ -2,6 +2,19 @@ import { describe, expect, it } from "vitest";
 import { calendarIcs, exactCandidates, isOverdue, monthDays, occursOn, plannedRange, previewTasks, reminderKey, remindersDue, shanghaiDay, shiftDay, shiftMonth, summary } from "./model";
 
 describe("confirmed own task records",()=>{
+  it.each([
+    {at:"2026-10-16T21:40:00+08:00",date:null,precision:"datetime"},
+    {at:null,date:"2026-10-16",precision:"date_only"},
+  ])("keeps the independent deadline day alongside every planned day: %j",due=>{
+    const task={...previewTasks("2026-10-14")[1],sourceKind:"personal_task_v1" as const,
+      scheduledSlots:[{start:"2026-10-14T15:00:00+08:00",end:"2026-10-14T16:00:00+08:00"},
+        {start:"2026-10-15T16:00:00+08:00",end:"2026-10-15T17:00:00+08:00"}]};
+    task.notice.due=due;
+    for(const day of ["2026-10-14","2026-10-15","2026-10-16"]) expect(occursOn(task,day)).toBe(true);
+    expect(occursOn(task,"2026-10-17")).toBe(false);
+    expect(plannedRange(task)).toEqual(task.scheduledSlots[0]);
+    expect(task.status).toBe("pending");
+  });
   it("shows all selected days and exports every actual interval",()=>{
     const task={...previewTasks("2026-10-07")[1],sourceKind:"personal_task_v1" as const,
       scheduledSlots:[{start:"2026-10-07T18:00:00+08:00",end:"2026-10-07T19:00:00+08:00"},
