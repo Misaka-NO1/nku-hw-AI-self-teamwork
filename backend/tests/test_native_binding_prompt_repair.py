@@ -62,6 +62,10 @@ def test_repair_keeps_complete_meeting_periods_and_source_times():
         "节次缺失就说明无法确定",
         "不从课程名猜实验",
         "只有逐项核对后才描述空闲",
+        "同一course的多个meeting只算一门课程",
+        "逐项称“上课安排/次数”，不把三次上课说成三门课",
+        "课程名严格使用source course.name",
+        "不根据教室或实验楼给课程改名、加“实验”后缀",
     ):
         assert rule in result
     assert "existing_space表示平台身份已关联唯一空间" in result
